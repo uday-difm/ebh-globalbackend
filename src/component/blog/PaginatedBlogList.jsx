@@ -32,13 +32,13 @@ function BlogCard({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabl
                         style={{ transformOrigin: "bottom left" }}
                     />
                     <div
-                        className={`absolute bottom-0 w-full rounded-2xl transition-all bg-blue-200 opacity-60 hover:bg-white transform duration-700 ${isHovered ? 'bg-[rgba(255,255,255,0.9)] backdrop-blur-sm rotate-6' : 'bg-[rgba(0,0,0,0.4)]' ? 'h-full' : 'h-min'}`}
+                        className={`absolute bottom-0 w-full rounded-2xl transition-all bg-blue-200 opacity-60 hover:bg-white transform duration-700 ${isHovered ? 'bg-[rgba(255,255,255,0.9)] opacity-75 backdrop-blur-sm rotate-6' : 'bg-[rgba(0,0,0,0.4)]' ? 'h-full' : 'h-min'}`}
                         style={{
-                            transformOrigin: "center center",
+                            transformOrigin: "center center bg-white",
                             transform: isHovered ? 'rotate(6deg)' : 'rotate(0deg)',
                         }}
                     >
-                        <div className={`h-full p-4 flex flex-col justify-between transition-colors duration-500`}>
+                        <div className={`h-full p-4 flex flex-col justify-between rounded-2xl transition-colors duration-500 ${isHovered ? 'bg-white' : 'bg-blue-200'} opacity-100`}>
                             <div className="overflow-y-auto space-y-2">
                                 <h2 className="text-2xl font-bold mb-2 leading-tight text-black ${isHovered ? 'h-full' : 'h-min'}`">{getShortenedText(blog.blog_title, 40)}</h2>
                                 <p className={`mb-4 transition-opacity duration-500 text-black ${isHovered ? 'h-full' : 'h-min'}`}>{blog.blog_description}</p>
@@ -108,7 +108,7 @@ export default function PaginatedBlogList({ blogs, isAnimationEnabled }) {
 
     return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                 {currentBlogs.map((blog, index) => (
                     <BlogCard 
                         key={blog.blog_id} 

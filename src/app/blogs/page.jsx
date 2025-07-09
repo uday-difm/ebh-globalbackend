@@ -18,9 +18,9 @@ export default async function BlogHomePage() {
                      {/* MODIFIED: Using the new CategoryList component */}
                      <CategoryList categories={categories} />
                 </div>
-                <div className="text-center my-16">
-                    <h1 className="text-4xl md:text-5xl font-bold">Most Recent Blogs</h1>
-                    <p className="text-lg text-gray-600 mt-2">Uncover the most popular reads across various life categories</p>
+                <div className="text-center col-span-2 flex flex-col gap-2 mb-6 pt-7">
+                    <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
+                    <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
                 </div>
                 <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
 
