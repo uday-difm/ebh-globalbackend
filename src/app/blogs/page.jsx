@@ -1,12 +1,10 @@
-import { getAllBlogs, getAllCategories, createSlug } from '@/lib/data';
-import Link from 'next/link';
-import Image from 'next/image';
-import CategorySlider from '@/component/blog/CategorySlider';
-import RecentBlogList from '@/component/blog/RecentBlogList';
+import { getAllBlogs, getAllCategories } from '@/lib/data';
+import PaginatedBlogList from '@/component/blog/PaginatedBlogList';
+import CategoryList from '@/component/blog/CategorySlider'; // MODIFIED: Import renamed component
 
 export const metadata = {
-    title: "Latest Environmental and Science Blogs by Earth by Humans",
-    description: "Stay updated with the latest research and discussions on environmental science from experts around the globe put together in articles on Earth by Humans.",
+    title: "Latest Blogs | Earth by Humans",
+    description: "Explore the latest environmental and science blogs.",
 };
 
 export default async function BlogHomePage() {
@@ -15,20 +13,17 @@ export default async function BlogHomePage() {
 
     return (
         <div className="pt-24 sm:pt-32">
-            <div className="container mx-auto px-4">
-                {/* Category Slider */}
+            <div className="container mx-auto px-4 max-w-[1350]">
                 <div className="my-8">
-                     <CategorySlider categories={categories} />
+                     {/* MODIFIED: Using the new CategoryList component */}
+                     <CategoryList categories={categories} />
                 </div>
-                
-                {/* Heading */}
                 <div className="text-center my-16">
                     <h1 className="text-4xl md:text-5xl font-bold">Most Recent Blogs</h1>
-                    <p className="text-lg text-gray-600 mt-2">Uncover the most popular reads across various life categories.</p>
+                    <p className="text-lg text-gray-600 mt-2">Uncover the most popular reads across various life categories</p>
                 </div>
-                
-                {/* Blog List with Pagination */}
-                <RecentBlogList blogs={allBlogs} />
+                <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
+
             </div>
         </div>
     );

@@ -1,53 +1,62 @@
 import { cache } from 'react';
-import slugify from 'slugify';
-
-// Replace with your actual server URL
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+import db from './db';
 
 export const getAllCategories = cache(async () => {
     try {
-        const res = await fetch(`${serverUrl}/blog/fetchcategory`, { next: { revalidate: 3600 } }); // Revalidate every hour
-        if (!res.ok) return [];
-        return res.json();
+        const sql = "SELECT * FROM `blog_category`";
+        const [data] = await db.query(sql);
+        return data;
     } catch (error) {
-        console.error("Failed to fetch categories:", error);
+        console.error("Database Error (getAllCategories):", error);
         return [];
     }
 });
 
 export const getAllBlogs = cache(async () => {
     try {
-        const res = await fetch(`${serverUrl}/blog/fetchblog`, { next: { revalidate: 3600 } });
-        if (!res.ok) return [];
-        return res.json();
+        const sql = `
+            SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date, 
+                   bc.category_name, bc.category_slug
+            FROM blogs b
+            INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
+            WHERE b.status = 1 ORDER BY b.blog_date_time DESC`;
+        const [data] = await db.query(sql);
+        return data;
     } catch (error) {
-        console.error("Failed to fetch blogs:", error);
+        console.error("Database Error (getAllBlogs):", error);
         return [];
     }
 });
 
 export const getBlogBySlug = cache(async (slug) => {
     try {
-        const res = await fetch(`${serverUrl}/blog/individualBlog/${slug}`, { next: { revalidate: 3600 } });
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data[0]; // The API returns an array
+        const sql = `
+            SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date,
+                   c.category_name, c.category_slug
+            FROM blogs AS b
+            LEFT JOIN blog_category AS c ON b.blog_category_id = c.category_id
+            WHERE b.blog_slug = ? AND b.status = 1`;
+        const [data] = await db.query(sql, [slug]);
+        return data[0] || null;
     } catch (error) {
-        console.error(`Failed to fetch blog by slug ${slug}:`, error);
+        console.error("Database Error (getBlogBySlug):", error);
         return null;
     }
 });
 
 export const getBlogsByCategorySlug = cache(async (categorySlug) => {
     try {
-        const res = await fetch(`${serverUrl}/blog/${categorySlug}`, { next: { revalidate: 3600 } });
-        if (!res.ok) return [];
-        return res.json();
+        const sql = `
+            SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date, 
+                   bc.category_name, bc.category_slug
+            FROM blogs b
+            INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
+            WHERE b.status = 1 AND bc.category_slug = ?
+            ORDER BY b.blog_date_time DESC`;
+        const [data] = await db.query(sql, [categorySlug]);
+        return data;
     } catch (error) {
-        console.error(`Failed to fetch blogs for category ${categorySlug}:`, error);
+        console.error("Database Error (getBlogsByCategorySlug):", error);
         return [];
     }
 });
-
-// Helper to create a clean slug
-export const createSlug = (text) => slugify(text, { lower: true, strict: true });

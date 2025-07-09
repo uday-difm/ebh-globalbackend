@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { MdOutlineMaximize } from "react-icons/md";
+import Cta from '@/common/Cta';
 
 const logos = [
     { url: "https://kladiscope.com/", name: "Kladiscope", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Kladiscope.png" },
@@ -123,52 +124,8 @@ export default function AboutUsContent() {
             </div>
 
             {/* --- CTA Section --- */}
-            <div className="w-full py-28 bg-purple-50">
-                <div className="container mx-auto px-6 py-20">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-[1350px] mx-auto">
+            <Cta />
 
-                        {/* Left Column: Text Content */}
-                        <div className="text-center lg:text-left">
-
-                            {/* MODIFIED: Pill style updated to match screenshot */}
-                            <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 font-semibold px-4 py-1.5 rounded-full mb-6">
-                                <span role="img" aria-label="sparkle">✨</span> Hop on the Fun Wagon!
-                            </div>
-
-                            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-                                Join Our Portal Today!
-                            </h2>
-
-                            <p className="text-gray-600 text-lg max-w-xl mx-auto lg:mx-0 mb-8">
-                                Unlock exclusive benefits and stay updated with the latest in nature, science, and insights by signing up with us. Join now and embark on a journey to enhance your knowledge and experience with us!
-                            </p>
-
-                            <Link href="/contact-us">
-                                <div className="relative group max-w-[150px] overflow-hidden rounded-full cursor-pointer p-1.5">
-                                    <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full" />
-                                    <div className="absolute w-[120px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10" />
-                                    <div className="absolute w-[220px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10" />
-                                    <button className="relative z-20 w-[150px] text-white py-2 px-6 text-sm rounded-full transition-colors duration-300">
-                                        contact-us<span className="p-1.5">➜</span>
-                                    </button>
-                                </div>
-                            </Link>
-
-                        </div>
-
-                        {/* Right Column: Image */}
-                        <div className="flex justify-center">
-                            <Image
-                                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/CTA.png"
-                                alt="A penguin swimming underwater"
-                                width={500}
-                                height={350}
-                                style={{ objectFit: 'cover' }}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     );
 }

@@ -9,11 +9,10 @@ export default function SocialShareButtons({ title }) {
     const [url, setUrl] = useState('');
 
     useEffect(() => {
-        // This ensures window is available
         setUrl(window.location.href);
     }, []);
 
-    if (!url) return null; // Don't render on the server
+    if (!url) return null;
 
     const buttonClass = "w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-800 hover:text-white transition-all duration-300";
 
