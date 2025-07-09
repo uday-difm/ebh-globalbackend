@@ -20,11 +20,11 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full border-t border-b border-gray-200 fixed z-[50] top-0 bg-white text-gray-900 font-bold">
+    <header className="w-full border-t border-b border-gray-200 fixed  top-0 bg-white text-gray-900 font-bold">
 
       <div className="max-w-[1440px] mx-auto">
         {/* Top bar */}
-        <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative z-30">
+        <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative ">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
@@ -57,9 +57,11 @@ const Header = () => {
 
           {/* Desktop Login */}
           <div className="hidden xl:flex gap-3 items-center">
-            <button className="w-36  py-2 text-white rounded-full text-lg font-bold hover:bg-green-600" style={{ backgroundColor: "#54AE47" }}>
-              Login
-            </button>
+            <Link href={`/login`}>
+              <button className="w-36  py-2 text-white rounded-full text-lg font-bold hover:bg-green-600" style={{ backgroundColor: "#54AE47" }}>
+                Login
+              </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Icon */}
