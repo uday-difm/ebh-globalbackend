@@ -101,7 +101,7 @@ const Footer = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   required
-                  className="w-full px-3 py-2 mb-8 text-sm bg-gray-100 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 mb-8 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 <div
                   className="relative group max-w-[130px] overflow-hidden rounded-full cursor-pointer"
