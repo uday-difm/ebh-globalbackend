@@ -5,10 +5,12 @@ import Image from "next/image";
 import { RiMenuLine } from "react-icons/ri";
 import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [list, showList] = useState(false);
+  const pathname = usePathname(); // 👈 detect current page
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -21,10 +23,9 @@ const Header = () => {
 
   return (
     <header className="w-full border-t border-b sticky top-0 border-gray-200 bg-white text-gray-900 font-bold z-50">
-
       <div className="max-w-[1440px] mx-auto">
         {/* Top bar */}
-        <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative ">
+        <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
@@ -43,7 +44,9 @@ const Header = () => {
               <Link
                 key={href}
                 href={href}
-                className={`transition duration-300 ${label === "Home" ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold relative`}
+                className={`transition duration-300 font-bold relative
+                  ${pathname === href ? "text-[#3853a4]" : "text-black"}
+                  hover:text-green-600`}
               >
                 {label}
                 {badge && (
@@ -57,8 +60,12 @@ const Header = () => {
 
           {/* Desktop Login */}
           <div className="hidden xl:flex gap-3 items-center">
-            <Link href={`/login`}>
-              <button className="w-36  py-2 text-white rounded-full text-lg font-bold hover:bg-green-600" style={{ backgroundColor: "#54AE47" }}>
+            
+            <Link href="/login">
+              <button
+                className="w-36 py-2 text-white rounded-full text-lg font-bold hover:bg-green-600"
+                style={{ backgroundColor: "#54AE47" }}
+              >
                 Login
               </button>
             </Link>
@@ -83,8 +90,9 @@ const Header = () => {
               <Link
                 key={href}
                 href={href}
-                className={`transition duration-300 ${label === "Home" ? "text-[#3853a4]" : "text-black"
-                  } hover:text-green-600 font-bold relative`}
+                className={`transition duration-300 font-bold relative
+                  ${pathname === href ? "text-[#3853a4]" : "text-black"}
+                  hover:text-green-600`}
               >
                 {label}
                 {badge && (
@@ -105,7 +113,11 @@ const Header = () => {
                 className="w-10 h-10 rounded-full object-cover object-top"
               />
               <span className="font-bold">User Name</span>
-              <IoMdArrowDropdown size="24px" onClick={() => showList(!list)} className="cursor-pointer" />
+              <IoMdArrowDropdown
+                size="24px"
+                onClick={() => showList(!list)}
+                className="cursor-pointer"
+              />
             </div>
 
             {list && (

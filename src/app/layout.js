@@ -4,6 +4,7 @@ import './globals.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./pagination.css";
+import CookiesBanner from '@/common/CookiesBanner';
 
 export default function RootLayout({ children }) {
   return (
@@ -15,7 +16,7 @@ export default function RootLayout({ children }) {
         <main className="flex-grow">
           {children}
         </main>
-
+         <CookiesBanner />
         <Footer />
       </body>
     </html>

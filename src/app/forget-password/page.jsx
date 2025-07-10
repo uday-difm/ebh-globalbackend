@@ -15,7 +15,7 @@ const ForgetPassword = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white flex items-center justify-center pt-8" style={{ fontFamily: "Poppins, sans-serif" }}>
+        <div className="min-h-screen bg-white flex items-start justify-center pt-8" style={{ fontFamily: "Poppins, sans-serif" }}>
             <div className="flex w-full max-w-6xl min-h-[692px] md:min-h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden">
                 {/* Left: Image Section */}
                 <div className="w-1/2 hidden md:block">
@@ -34,9 +34,7 @@ const ForgetPassword = () => {
 
                     <form className="space-y-6">
                         <div>
-                            <label className="block font-semibold mb-1 text-blue-700">
-                                Username or Email:
-                            </label>
+                            <label className="block font-semibold mb-1 text-blue-700">Username or Email:</label>
                             <input
                                 type="text"
                                 placeholder="Enter your email or username"
@@ -64,7 +62,7 @@ const ForgetPassword = () => {
                     </form>
 
                     <div className="text-center mt-8 text-sm" style={{ fontSize: "16px" }}>
-                        Sign Up If You Haven't Account?{" "}
+                        Sign Up If You Haven't Account?{' '}
                         <a href="/signup" className="text-blue-700 font-semibold hover:underline">
                             Sign Up
                         </a>

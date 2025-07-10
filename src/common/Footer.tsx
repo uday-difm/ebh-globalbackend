@@ -34,7 +34,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="w-full bg-white pb-[2%] pt-[2%]">
+    <footer className="w-full bg-white pb-[2%] pt-[2%] text-black">
       <div className="max-w-[1350px] mx-auto px-4">
         <div className="pt-[60px] px-[50px] pb-[40px]">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 justify-between ">

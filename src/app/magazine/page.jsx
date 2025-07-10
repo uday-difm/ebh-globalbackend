@@ -50,7 +50,7 @@ const Magazine = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-10">Loading magazines...</div>;
+    return <div className="text-center mt-10 text-black">Loading magazines...</div>;
   }
 
   if (error) {
@@ -61,7 +61,7 @@ const Magazine = () => {
     <div className="bg-white min-h-screen">
       <div className="container mx-auto px-4 pt-20 pb-10">
         <div className="flex flex-col items-center gap-10 lg:px-[10%]">
-          <div className="w-full flex justify-center pt-7">
+          <div className="w-full flex justify-center ">
             <h1
               className="font-bold text-center"
               style={{
