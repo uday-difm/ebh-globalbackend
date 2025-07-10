@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-const serverUrl = "https://your-backend-url.com"; // Replace with your actual server URL
+// Define your server URL here
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://your-default-server-url.com";
+
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +17,7 @@ const Footer = () => {
       try {
         const res = await axios.post(`${serverUrl}/contact/subscribe`, { email });
         if (res.status === 200) {
-          setThankyou(res.data?.message);
+          setThankyou((res.data as { message?: string })?.message);
           setEmail("");
         }
       } catch (err) {

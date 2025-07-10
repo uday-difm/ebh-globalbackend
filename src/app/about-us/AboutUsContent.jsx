@@ -46,7 +46,7 @@ export default function AboutUsContent() {
     ];
 
     return (
-        <main className="pt-[96px] bg-white">
+        <main className="pt-[9px] bg-white">
             {/* --- AboutHero Section --- */}
             <div className="md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
