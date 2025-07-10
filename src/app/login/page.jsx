@@ -37,7 +37,7 @@ const LoginPage = () => {
               />
             </div>
             <div className="flex justify-end">
-              <a href="#" className="text-blue-700 text-sm font-medium hover:underline">Forgot Password?</a>
+              <a href="/forget-password" className="text-blue-700 text-sm font-medium hover:underline">Forgot Password?</a>
             </div>
             <button
               type="submit"
