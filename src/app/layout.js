@@ -1,3 +1,5 @@
+// MODIFIED: Import the Script component from Next.js
+import Script from 'next/script';
 import Footer from '@/common/Footer';
 import Header from '@/common/Header';
 import './globals.css';
@@ -8,14 +10,19 @@ import "./pagination.css";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* This script is required for the 3D model */}
+        <Script 
+          src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" 
+          type="module"
+          strategy="beforeInteractive" 
+        />
+      </head>
       <body className="flex flex-col min-h-screen">
         <Header />
-        
-        {/* This padding-top is essential to push all page content down */}
         <main className="flex-grow">
           {children}
         </main>
-
         <Footer />
       </body>
     </html>
