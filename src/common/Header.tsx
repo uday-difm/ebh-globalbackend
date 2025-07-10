@@ -13,14 +13,14 @@ const Header = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about-us", label: "About Us" },
-    { href: "/blog", label: "Blogs" },
+    { href: "/blogs", label: "Blogs" },
     { href: "/magazine", label: "Magazines" },
     { href: "/quizzes", label: "Fun-Zone", badge: "Most Popular" },
     { href: "/contact-us", label: "Contact Us" }
   ];
 
   return (
-    <header className="w-full border-t border-b border-gray-200 fixed  top-0 bg-white text-gray-900 font-bold">
+    <header className="w-full border-t border-b sticky top-0 border-gray-200 bg-white text-gray-900 font-bold z-50">
 
       <div className="max-w-[1440px] mx-auto">
         {/* Top bar */}

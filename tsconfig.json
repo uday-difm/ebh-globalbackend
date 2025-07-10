@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // <<< ADD THIS LINE
+    "paths": {      // <<< ADD THIS ENTIRE BLOCK
+      "@/*": ["./src/*"]
+    },
     "target": "ES2017",
     "lib": [
       "dom",
@@ -27,8 +31,9 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/magazine/page.jsx"  ],
+    "**/*.tsx",
+    "src/app/magazine/page.jsx"
+  ],
   "exclude": [
     "node_modules"
   ]

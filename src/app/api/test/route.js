@@ -1,6 +1,6 @@
 // src/app/api/test/route.js
 import { NextResponse } from 'next/server';
-import db from '../../../../lib/db'; // Import the database connection pool
+import db from '../../../lib/db'; // Import the database connection pool
 
 /**
  * Handles GET requests to /api/test
