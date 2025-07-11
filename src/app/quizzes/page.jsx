@@ -1,11 +1,14 @@
+"use client";
+
+import React from "react";
 import QuizPage from "./QuizPage";
 
 const Quiz = () => {
   return (
     <div>
-      <QuizPage/>
+      <QuizPage />
     </div>
-  )
-}
+  );
+};
 
-export default Quiz
+export default Quiz;

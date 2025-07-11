@@ -1,4 +1,3 @@
-// MODIFIED: Import the Script component from Next.js
 import Script from 'next/script';
 import Footer from '@/common/Footer';
 import Header from '@/common/Header';
@@ -7,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./pagination.css";
 import CookiesBanner from '@/common/CookiesBanner';
+import ReduxProviderWrapper from './ReduxProviderWrapper';
 
 export default function RootLayout({ children }) {
   return (
@@ -20,12 +20,14 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-         <CookiesBanner />
-        <Footer />
+        <ReduxProviderWrapper>
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <CookiesBanner />
+          <Footer />
+        </ReduxProviderWrapper>
       </body>
     </html>
   );

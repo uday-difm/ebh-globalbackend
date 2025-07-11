@@ -2,31 +2,29 @@
 import React, { useState, useEffect } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { IoMdCheckmark } from "react-icons/io";
-import axios from 'axios';// Assuming this path is correct relative to your Next.js project
-import { useSelector } from 'react-redux'; // Assuming you have Redux set up with Next.js
+import axios from 'axios';
+ import { serverUrl } from '../../Component/common/serverUrl';
 
-const QuizAnalytics = ({ analyticUpdate }) => {
+const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
     const [analytics, setAnalytics] = useState({ currentDay: [], currentWeek: [], currentMonth: [], currentYear: [] });
-    const auth = useSelector(state => state.auth); // Ensure Redux store is accessible
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        if (!userId) return;
         const fetchAnalytics = async () => {
             try {
-                const response = await axios.get(`/quiz/current-quiz-analysis`);
+                const response = await axios.get(`${serverUrl}/quizess/current-quiz-analysis/${userId}`);
                 setAnalytics(response.data);
             } catch (error) {
+                setError('Error fetching quiz analytics');
                 console.error('Error fetching quiz analytics:', error);
             }
         };
-
-        if (auth.userId) { // Only fetch if userId is available
-            fetchAnalytics();
-        }
-    }, [auth.userId, analyticUpdate]);
+        fetchAnalytics();
+    }, [analyticUpdate, userId]);
 
     const renderAnalytics = (data, title) => {
         const correctPercentage = parseFloat(data?.correct_percentage);
-
         return (
             <div className='p-4 bg-gray3 max-w-[340px]'>
                 <div className='text-sm flex justify-between items-center'>
@@ -52,6 +50,9 @@ const QuizAnalytics = ({ analyticUpdate }) => {
             </div>
         );
     };
+
+    if (!userId) return <div className='text-center text-gray-500'>No user selected.</div>;
+    if (error) return <div className='text-center text-red-500'>{error}</div>;
 
     return (
         <div className='mt-4 flex gap-8 flex-wrap items-center justify-center'>

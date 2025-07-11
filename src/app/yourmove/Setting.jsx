@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { editUserProfile } from "../redux/actions/action"; // Adjust path as needed
 
 const Setting = () => {
   const [avatar, setAvatar] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null); // State for image preview
-  const fullData = useSelector(state => state.auth);
-  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
 

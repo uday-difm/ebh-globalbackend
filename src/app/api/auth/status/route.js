@@ -19,4 +19,4 @@ export async function GET() {
     // Token is invalid or expired
     return NextResponse.json({ isAuthenticated: false, user: null });
   }
-}
+} 
