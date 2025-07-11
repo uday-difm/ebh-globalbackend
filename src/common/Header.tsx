@@ -119,7 +119,7 @@ const Header = () => {
             </div>
 
             {list && (
-              <div className="mt-3 w-full border border-gray-300 rounded-md bg-white flex flex-col text-center text-sm font-bold shadow-md">
+              <div className="mt-3 w-full border border-gray-300 rounded-md bg-white flex flex-col text-center text-sm font-bold shadow-md z-50">
                 <Link href="/profile" className="py-2 hover:bg-gray-100">Profile</Link>
                 <hr className="border-gray-200" />
                 <Link href="/edit-profile" className="py-2 hover:bg-gray-100">Edit Profile</Link>
