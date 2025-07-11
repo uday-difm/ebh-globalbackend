@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/app/magazine/page.jsx"
-  ],
+, "src/component/home/Hero.jsx"  ],
   "exclude": [
     "node_modules"
   ]

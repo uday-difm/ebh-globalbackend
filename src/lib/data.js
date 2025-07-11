@@ -1,6 +1,7 @@
 import { cache } from 'react';
-import db from './db';
+import db from './db'; // Import our direct database connection
 
+// --- getAllCategories ---
 export const getAllCategories = cache(async () => {
     try {
         const sql = "SELECT * FROM `blog_category`";
@@ -12,6 +13,7 @@ export const getAllCategories = cache(async () => {
     }
 });
 
+// --- getAllBlogs ---
 export const getAllBlogs = cache(async () => {
     try {
         const sql = `
@@ -28,6 +30,22 @@ export const getAllBlogs = cache(async () => {
     }
 });
 
+// --- getAllMagazines ---
+export const getAllMagazines = cache(async () => {
+    try {
+        // MODIFIED: This now queries the database directly instead of using fetch
+        const sql = `SELECT * FROM magazines ORDER BY magazine_date DESC`;
+        const [data] = await db.query(sql);
+        return data;
+    } catch (error) {
+        console.error("Database Error (getAllMagazines):", error);
+        return [];
+    }
+});
+
+
+
+// --- getBlogBySlug ---
 export const getBlogBySlug = cache(async (slug) => {
     try {
         const sql = `
@@ -44,6 +62,7 @@ export const getBlogBySlug = cache(async (slug) => {
     }
 });
 
+// --- getBlogsByCategorySlug ---
 export const getBlogsByCategorySlug = cache(async (categorySlug) => {
     try {
         const sql = `

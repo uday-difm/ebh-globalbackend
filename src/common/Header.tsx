@@ -22,7 +22,8 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full border-t border-b sticky top-0 border-gray-200 bg-white text-gray-900 font-bold z-50">
+    <header className="w-full border-t border-b sticky top-0 border-gray-200 bg-white text-gray-900 font-bold z-50 mb-0">
+
       <div className="max-w-[1440px] mx-auto">
         {/* Top bar */}
         <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
@@ -60,14 +61,20 @@ const Header = () => {
 
           {/* Desktopppp Login */}
           <div className="hidden xl:flex gap-3 items-center">
+            <Link href={`/login`}>
+              <div className="relative group max-w-[130px] overflow-hidden rounded-full cursor-pointer">
+                  {/* Green Base Background */}
+                  <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
 
-            <Link href="/login">
-              <button
-                className="w-36 py-2 text-white rounded-full text-lg font-bold hover:bg-green-600"
-                style={{ backgroundColor: "#54AE47" }}
-              >
-                Login
-              </button>
+                  {/* Animated Blue Layers on Hover */}
+                  <div className="absolute w-[100px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
+                  <div className="absolute w-[200px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+
+                  {/* Button Text */}
+                  <button className="relative z-20 w-[130px] text-white py-3 font-bold px-6 text-sm rounded-full transition-colors duration-300">
+                        Login   
+                  </button>
+              </div>
             </Link>
           </div>
 
@@ -122,7 +129,7 @@ const Header = () => {
             </div>
 
             {list && (
-              <div className="mt-3 w-full border border-gray-300 rounded-md bg-white flex flex-col text-center text-sm font-bold shadow-md">
+              <div className="mt-3 w-full border border-gray-300 rounded-md bg-white flex flex-col text-center text-sm font-bold shadow-md z-50">
                 <Link href="/profile" className="py-2 hover:bg-gray-100">Profile</Link>
                 <hr className="border-gray-200" />
                 <Link href="/edit-profile" className="py-2 hover:bg-gray-100">Edit Profile</Link>
