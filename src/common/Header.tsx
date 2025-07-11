@@ -1,36 +1,55 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { RiMenuLine } from 'react-icons/ri';
-import { IoMdClose, IoMdArrowDropdown } from 'react-icons/io';
+import Link from "next/link";
+import Image from "next/image";
+import { RiMenuLine } from "react-icons/ri";
+import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
+import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+// Define the type for our auth state
+interface AuthState {
+  isAuthenticated: boolean;
+  user: {
+    id?: string;
+    name?: string;
+    profile?: string;
+  } | null;
+}
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Mocked auth
-  const [user, setUser] = useState({
-    name: 'John Doe',
-    profile: 'https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png',
-  });
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [auth, setAuth] = useState<AuthState>({ isAuthenticated: false, user: null });
+  
+  // const pathname = usePathname();
+  // const router = useRouter();
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
+  // Check user authentication status when the component mounts
   useEffect(() => {
-    setShowMenu(false);
-    setShowDropdown(false);
-  }, [pathname]);
+    const checkAuthStatus = async () => {
+      try {
+        const res = await fetch('/api/auth/status');
+        const data = await res.json();
+        setAuth(data);
+      } catch (error) {
+        console.error("Failed to fetch auth status", error);
+        setAuth({ isAuthenticated: false, user: null });
+      }
+    };
+    checkAuthStatus();
+  }, [pathname]); // Re-check on route change
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleLogout = () => {
-    // Replace with API call if needed
-    setIsAuthenticated(false);
+  // Handle logout
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    setAuth({ isAuthenticated: false, user: null });
+    setShowUserMenu(false);
     router.push('/login');
+    router.refresh(); // Forces a refresh of server components
   };
 
   const navLinks = [
@@ -43,157 +62,92 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full fixed top-0 z-50 border-y border-gray-200 bg-white">
+    <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-50">
       <div className="max-w-[1440px] mx-auto">
-        <div className="flex justify-between items-center py-4 px-4 sm:px-6 relative">
+        <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
+          
           {/* Logo */}
-          <Link href="/" onClick={scrollToTop}>
+          <Link
+            href="/"
+            onClick={(e) => {
+              // Optionally scroll to top and allow navigation
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-              alt="Logo"
-              width={180}
-              height={70}
-              className="h-16 w-auto object-contain"
-              priority
+              alt="Earth by humans logo gif"
+              width={180} height={100} priority
             />
           </Link>
 
           {/* Desktop Menu */}
           <nav className="hidden xl:flex gap-8 items-center">
             {navLinks.map(({ href, label, badge }) => (
-              <Link key={href} href={href}>
-                <span
-                  className={`relative font-medium hover:text-green transition-all duration-300 ${
-                    pathname === href ? 'text-[#3853a4]' : 'text-black'
-                  }`}
-                >
-                  {label}
-                  {badge && (
-                    <span className="absolute -top-3 -right-4 text-[10px] border italic bg-white animate-pulse text-green-600 font-bold py-1 px-2 rounded-2xl">
-                      {badge}
-                    </span>
-                  )}
-                </span>
+              <Link key={href} href={href} className={`transition duration-300 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold relative`}>
+                {label}
+                {badge && (
+                  <span className="absolute -top-3 -right-4 py-1 px-2 rounded-2xl text-[10px] border italic bg-white animate-pulse text-green-600 font-bold">
+                    {badge}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
 
-          {/* Desktop Auth */}
-          <div className="hidden xl:flex items-center gap-3">
-            {isAuthenticated ? (
-              <div className="relative">
-                <div
-                  className="flex items-center gap-2 cursor-pointer"
-                  onClick={() => setShowDropdown(!showDropdown)}
-                >
-                  <Image
-                    src={user.profile}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <span>{user.name}</span>
-                  <IoMdArrowDropdown size={24} />
-                </div>
-
-                {showDropdown && (
-                  <div className="absolute top-12 right-0 bg-white border shadow-md rounded-md w-40 flex flex-col text-sm z-50">
-                    <Link href="/profile" className="hover:bg-gray-100 px-4 py-2">
-                      Profile
-                    </Link>
-                    <Link href="/edit-profile" className="hover:bg-gray-100 px-4 py-2">
-                      Edit Profile
-                    </Link>
-                    <button
-                      className="text-left w-full px-4 py-2 border-t hover:bg-blue-50 text-blue-600"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
+          {/* Desktop Auth/Profile */}
+          <div className="hidden xl:flex items-center gap-4">
+            {auth.isAuthenticated && auth.user ? (
+              <div className="relative" ref={userMenuRef}>
+                <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
+                  <Image src={auth.user.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"} alt="User" width={40} height={40} className="w-10 h-10 rounded-full object-cover" />
+                  <span className="font-bold">{auth.user.name?.split(" ")[0]}</span>
+                  <IoMdArrowDropdown size="20px" />
+                </button>
+                {showUserMenu && (
+                  <div className="absolute right-0 top-12 mt-1 w-48 border border-gray-200 bg-white rounded-md shadow-lg text-sm font-semibold z-50">
+                    <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>Profile</Link>
+                    <Link href="/edit-profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>Edit Profile</Link>
+                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">Logout</button>
                   </div>
                 )}
               </div>
             ) : (
               <Link href="/login">
-                <button className="bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700">
-                  Login
-                </button>
+                <div className="group relative w-36 h-12 overflow-hidden rounded-full cursor-pointer flex items-center justify-center">
+                  <div className="absolute inset-0 bg-green-600 w-[200] z-0 rounded-full"></div>
+                  <div className="absolute w-[90px] h-[200px] bg-blue-600 transform rotate-[35deg] transition-all duration-700 ease-in-out top-[-150%] left-[-80%] group-hover:left-0 z-10"></div>
+                  <div className="absolute w-[200px] h-[90px] bg-blue-600 transform rotate-[125deg] transition-all duration-700 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+                  <span className="relative z-20 text-white text-lg font-bold">Login</span>
+                </div>
               </Link>
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div onClick={() => setShowMenu(!showMenu)} className="xl:hidden cursor-pointer">
-            {showMenu ? <IoMdClose size={30} /> : <RiMenuLine size={30} />}
-          </div>
+          {/* Mobile Menu Icon */}
+          <button onClick={() => setShowMenu(!showMenu)} className="xl:hidden z-50">
+            {showMenu ? <IoMdClose size="30px" /> : <RiMenuLine size="30px" />}
+          </button>
         </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={`xl:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-            showMenu ? 'max-h-screen px-4 py-4' : 'max-h-0 py-0 px-4'
-          }`}
-        >
+        {/* Mobile Nav Menu */}
+        <div className={`xl:hidden bg-white transition-all duration-500 ease-in-out overflow-y-auto absolute top-full left-0 w-full shadow-lg ${showMenu ? "max-h-screen py-4 px-6" : "max-h-0"}`}>
           <nav className="flex flex-col gap-4 text-center">
-            {navLinks.map(({ href, label, badge }) => (
-              <Link key={href} href={href}>
-                <span
-                  className={`relative font-medium hover:text-green transition-all duration-300 ${
-                    pathname === href ? 'text-[#3853a4]' : 'text-black'
-                  }`}
-                >
-                  {label}
-                  {badge && (
-                    <span className="ml-1 py-1 px-2 rounded-2xl text-[10px] border italic bg-white animate-pulse text-green font-bold">
-                      {badge}
-                    </span>
-                  )}
-                </span>
+            {navLinks.map(({ href, label }) => (
+              <Link key={href} href={href} onClick={() => setShowMenu(false)} className={`py-2 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold`}>
+                {label}
               </Link>
             ))}
-
-            {isAuthenticated ? (
-              <div className="flex flex-col items-center mt-4 gap-2">
-                <div
-                  className="flex items-center gap-2 cursor-pointer"
-                  onClick={() => setShowDropdown(!showDropdown)}
-                >
-                  <Image
-                    src={user.profile}
-                    alt="User"
-                    width={40}
-                    height={40}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <span>{user.name}</span>
-                  <IoMdArrowDropdown size={24} />
-                </div>
-
-                {showDropdown && (
-                  <div className="w-full mt-2 border rounded-md bg-white shadow-md text-sm font-bold flex flex-col text-center">
-                    <Link href="/profile" className="py-2 hover:bg-gray-100">
-                      Profile
-                    </Link>
-                    <Link href="/edit-profile" className="py-2 hover:bg-gray-100">
-                      Edit Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="py-2 text-blue-600 border-t hover:bg-blue-50"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link href="/login" className="mt-6">
-                <button className="w-full py-2 bg-green-600 text-white rounded-full hover:bg-green-700">
-                  Login
-                </button>
-              </Link>
-            )}
+            <div className="border-t border-gray-200 mt-4 pt-4">
+              {auth.isAuthenticated && auth.user ? (
+                 <div className="flex flex-col items-center gap-4">
+                    <Link href="/profile" onClick={() => setShowMenu(false)} className="font-bold">Profile</Link>
+                    <button onClick={handleLogout} className="font-bold text-red-500">Logout</button>
+                 </div>
+              ) : (
+                 <Link href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">Login</Link>
+              )}
+            </div>
           </nav>
         </div>
       </div>
