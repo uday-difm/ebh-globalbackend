@@ -58,9 +58,9 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Desktop Login */}
+          {/* Desktopppp Login */}
           <div className="hidden xl:flex gap-3 items-center">
-            
+
             <Link href="/login">
               <button
                 className="w-36 py-2 text-white rounded-full text-lg font-bold hover:bg-green-600"
@@ -81,8 +81,9 @@ const Header = () => {
         </div>
 
         {/* Mobile Nav Menu */}
+        {/* Mobile Nav Menu */}
         <div
-          className={`xl:hidden bg-white transition-all duration-500 ease-in-out overflow-hidden ${showMenu ? "max-h-[400px] py-4 px-6" : "max-h-0 py-0 px-6"
+          className={`xl:hidden bg-white transition-all duration-500 ease-in-out overflow-hidden ${showMenu ? "max-h-screen py-4 px-6 overflow-y-auto" : "max-h-0 py-0 px-6"
             }`}
         >
           <nav className="flex flex-col gap-4 text-center">
@@ -91,8 +92,8 @@ const Header = () => {
                 key={href}
                 href={href}
                 className={`transition duration-300 font-bold relative
-                  ${pathname === href ? "text-[#3853a4]" : "text-black"}
-                  hover:text-green-600`}
+          ${pathname === href ? "text-[#3853a4]" : "text-black"}
+          hover:text-green-600`}
               >
                 {label}
                 {badge && (
@@ -125,11 +126,12 @@ const Header = () => {
                 <Link href="/profile" className="py-2 hover:bg-gray-100">Profile</Link>
                 <hr className="border-gray-200" />
                 <Link href="/edit-profile" className="py-2 hover:bg-gray-100">Edit Profile</Link>
-                <button className="py-2 bg-light-blue text-dark-sky border-t border-gray-200 hover:bg-blue-100">Logout</button>
+                <button className="py-2 border-t border-gray-200  hover:bg-blue-50">Logout</button>
               </div>
             )}
           </nav>
         </div>
+
       </div>
     </header>
   );
