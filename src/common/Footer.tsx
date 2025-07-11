@@ -2,36 +2,49 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import axios from "axios";
 
 // Define your server URL here
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "https://your-default-server-url.com";
 
 
 const Footer = () => {
-  const [email, setEmail] = useState("");
-  const [thankyou, setThankyou] = useState<string | undefined>(undefined);
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSubscribe = async () => {
-    if (email) {
-      try {
-        const res = await axios.post(`${serverUrl}/contact/subscribe`, { email });
-        if (res.status === 200) {
-          setThankyou((res.data as { message?: string })?.message);
-          setEmail("");
-        }
-      } catch (err) {
-        setThankyou(err?.response?.data?.message || "Subscription failed.");
-        alert("Something went wrong. Please try again.");
+  const handleSubscribe = async (e) => {
+    e.preventDefault(); // Prevent page reload on submit
+    setMessage("Subscribing...");
+
+    if (!email) {
+      setMessage("Email is required.");
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await res.json();
+      // Set the success or error message from the API
+      setMessage(result.message);
+
+      // If the submission was successful...
+      if (res.ok) {
+        setEmail(''); // Clear the input field
+
+        // MODIFIED: After 3 seconds, clear the success message
+        setTimeout(() => {
+          setMessage('');
+        }, 3000); 
       }
-    } else {
-      alert("Email is required.");
+    } catch (err) {
+      setMessage("An error occurred. Please try again.");
+      console.error("Subscription failed:", err);
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <footer className="w-full bg-white pb-[2%] pt-[2%]">
@@ -100,7 +113,7 @@ const Footer = () => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}    
                   placeholder="Enter your email address"
                   required
                   className="w-full px-3 py-2 mb-8 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -123,7 +136,7 @@ const Footer = () => {
                 </div>
 
               </div>
-              {thankyou && <p className="text-green-600 mt-2 text-sm">{thankyou}</p>}
+              {message && <p className="text-green-600 mt-2 text-sm">{message}</p>}
             </div>
           </div>
         </div>
