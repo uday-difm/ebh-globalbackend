@@ -1,14 +1,19 @@
 "use client";
 
+"use client";
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../redux/actions/action';
 
 export default function LoginPage() {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +27,24 @@ export default function LoginPage() {
       });
 
       if (res.ok) {
+        // Fetch auth status after login
+        const statusRes = await fetch('/api/auth/status');
+        const statusData = await statusRes.json();
+
+        if (statusData.isAuthenticated) {
+          console.log('Dispatching setAuth with:', statusData);
+          dispatch(setAuth(
+            statusData.isAuthenticated,
+            statusData.user?.id,
+            statusData.user?.name,
+            statusData.user?.profile,
+            statusData.user?.username,
+            statusData.user?.profession,
+            statusData.user?.email,
+            statusData.user?.bio
+          ));
+        }
+
         router.push('/'); // Redirect to homepage on successful login
       } else {
         const data = await res.json();
@@ -62,4 +85,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-} 
+}

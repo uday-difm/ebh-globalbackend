@@ -6,6 +6,7 @@ import { ImCross } from 'react-icons/im';
 import { TiTick } from 'react-icons/ti';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 
 const AllPlayedQuiz = () => {
   const [detailedAnalytics, setDetailedAnalytics] = useState([]);
@@ -14,14 +15,13 @@ const AllPlayedQuiz = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const questionsPerPage = 10;
 
-
   const router = useRouter();
+  const userId = useSelector((state) => state.auth.userId);
 
   useEffect(() => {
     const fetchDetailedAnalytics = async () => {
       try {
-        const response = await axios.get(
-          // `/api/quizess/all-ip-quiz/${auth?.userId}`,
+        const response = await axios.get(`/api/quizess/all-ip-quiz/${userId}`,
           { withCredentials: true }
         );
         setDetailedAnalytics(response.data);
@@ -32,12 +32,13 @@ const AllPlayedQuiz = () => {
       }
     };
 
-    if (auth?.userId) {
+    if (userId) {
       fetchDetailedAnalytics();
     } else {
       setLoading(false);
     }
-  }, [auth?.userId]);
+  }, [userId]);
+
 
   const scrollToTop = () =>
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -54,13 +55,12 @@ const AllPlayedQuiz = () => {
     return (
       <div
         key={idx}
-        className={`w-full h-[4rem] flex justify-between my-2 items-center border-2 rounded-xl px-6 cursor-pointer transition-colors duration-300 ${
-          selected
+        className={`w-full h-[4rem] flex justify-between my-2 items-center border-2 rounded-xl px-6 cursor-pointer transition-colors duration-300 ${selected
             ? correct
               ? 'bg-light-green border-green'
               : 'bg-red1 border-red'
             : ''
-        } ${correct ? 'bg-light-green border-green' : ''}`}
+          } ${correct ? 'bg-light-green border-green' : ''}`}
       >
         <div className="flex gap-5 items-center">
           <input type="radio" checked={selected} readOnly />
@@ -81,11 +81,10 @@ const AllPlayedQuiz = () => {
         <div className="flex gap-5 items-center">
           <span>Quiz #{idx + 1}</span>
           <span
-            className={`px-3 py-1 font-medium rounded-md ${
-              data.choose_option - 1 === data.correctAnswer
+            className={`px-3 py-1 font-medium rounded-md ${data.choose_option - 1 === data.correctAnswer
                 ? 'bg-light-green text-dark-green'
                 : 'bg-red text-red2'
-            }`}
+              }`}
           >
             {data.choose_option - 1 === data.correctAnswer
               ? 'Correct'
@@ -157,11 +156,10 @@ const AllPlayedQuiz = () => {
                   <button
                     key={i + 1}
                     onClick={() => paginate(i + 1)}
-                    className={`px-3 py-1 border rounded-md ${
-                      currentPage === i + 1
+                    className={`px-3 py-1 border rounded-md ${currentPage === i + 1
                         ? 'bg-blue text-white'
                         : 'bg-gray text-black'
-                    }`}
+                      }`}
                   >
                     {i + 1}
                   </button>

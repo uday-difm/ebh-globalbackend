@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { RxCross2 } from "react-icons/rx";
 import { IoMdCheckmark } from "react-icons/io";
 import axios from 'axios';
- import { serverUrl } from '../../Component/common/serverUrl';
+import { serverUrl } from '../../Component/common/serverUrl';
 
 const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
     const [analytics, setAnalytics] = useState({ currentDay: [], currentWeek: [], currentMonth: [], currentYear: [] });
@@ -13,7 +13,7 @@ const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
         if (!userId) return;
         const fetchAnalytics = async () => {
             try {
-                const response = await axios.get(`${serverUrl}/quizess/current-quiz-analysis/${userId}`);
+                const response = await axios.get(`${serverUrl}/quizess/current-quiz-analysis?userId=${userId}`);
                 setAnalytics(response.data);
             } catch (error) {
                 setError('Error fetching quiz analytics');

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import db from '@/lib/db'; // Adjust the import path as necessary
 
-export async function GET(request, { params }) {
-  const { id } = params;
-  const userId = id || null;
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
 
   if (!userId) {
     return NextResponse.json({ error: 'Missing user ID' }, { status: 400 });

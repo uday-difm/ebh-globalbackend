@@ -5,37 +5,73 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import LineChart from '../../common/LineChart';
+import DoughnutChart from '../../common/DoughnutChart';
+
 
 const YourMove = ({ analyticUpdate }) => {
   const auth = useSelector(state => state.auth);
   const [analytics, setAnalytics] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
       if (!auth?.userId) return;
       try {
-        console.log('Fetching analytics for userId:', auth.userId);
+        setLoading(true);
+        console.log('Fetching analytics for userId:', auth.userId, 'with analyticUpdate:', analyticUpdate);
         const response = await axios.get(`/api/quizess/current-quiz-analysis/${auth.userId}`);
         console.log('Analytics response:', response.data);
         setAnalytics(response.data);
+        setLoading(false);
       } catch (err) {
         setError('Error fetching analytics data');
         console.error(err);
+        setLoading(false);
       }
     };
     fetchAnalytics();
   }, [auth?.userId, analyticUpdate]);
 
   if (error) return <div className="text-center text-red-500">{error}</div>;
-  if (!analytics) return <div className="text-center text-gray-500">Loading analytics...</div>;
+  if (loading) return <div className="text-center text-gray-500">Loading analytics...</div>;
+  if (!analytics) return <div className="text-center text-gray-500">No analytics data available.</div>;
+
+  const hasData =
+    (analytics.currentDay && analytics.currentDay.length > 0) ||
+    (analytics.currentWeek && analytics.currentWeek.length > 0) ||
+    (analytics.currentMonth && analytics.currentMonth.length > 0) ||
+    (analytics.currentYear && analytics.currentYear.length > 0);
+
+  // Calculate total, correct, wrong counts for DoughnutChart
+  const totalCorrect = analytics.currentMonth?.reduce((acc, item) => acc + (parseInt(item.correct_count) || 0), 0) || 0;
+  const totalWrong = analytics.currentMonth?.reduce((acc, item) => acc + (parseInt(item.wrong_count) || 0), 0) || 0;
+  const totalQuestions = totalCorrect + totalWrong;
 
   return (
-    <div className="mt-4 flex gap-8 flex-wrap items-center justify-center">
-      {analytics.currentDay?.length > 0 && renderAnalytics(analytics.currentDay[0], 'Current Day')}
-      {analytics.currentWeek?.length > 0 && renderAnalytics(analytics.currentWeek[0], 'Current Week')}
-      {analytics.currentMonth?.length > 0 && renderAnalytics(analytics.currentMonth[0], 'Current Month')}
-      {analytics.currentYear?.length > 0 && renderAnalytics(analytics.currentYear[0], 'Current Year')}
+    <div className="mt-4 flex flex-col items-center gap-8">
+      {!hasData ? (
+        <div className="text-center text-gray-500 w-full">No analytics data available.</div>
+      ) : (
+        <>
+          <div className="flex flex-wrap justify-center gap-6 w-full max-w-6xl">
+            {analytics.currentDay?.length > 0 && renderAnalytics(analytics.currentDay[0], 'Current Day')}
+            {analytics.currentWeek?.length > 0 && renderAnalytics(analytics.currentWeek[0], 'Current Week')}
+            {analytics.currentMonth?.length > 0 && renderAnalytics(analytics.currentMonth[0], 'Current Month')}
+            {analytics.currentYear?.length > 0 && renderAnalytics(analytics.currentYear[0], 'Current Year')}
+          </div>
+          <div className="flex flex-wrap justify-center gap-8 w-full max-w-6xl">
+            <div className="w-full md:w-2/3">
+              <LineChart dailyResults={analytics.currentMonth || []} />
+            </div>
+            <div className="w-full md:w-1/3 flex justify-center">
+              <DoughnutChart data={[totalCorrect, totalWrong]} total={totalQuestions} />
+            </div>
+             
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -7,26 +7,30 @@ import "slick-carousel/slick/slick-theme.css";
 import "./pagination.css";
 import CookiesBanner from '@/common/CookiesBanner';
 import ReduxProviderWrapper from './ReduxProviderWrapper';
+import AuthProvider from './AuthProvider';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* This script is required for the 3D model */}
+        {/* This script is required for the 3D model */} 
         <Script 
           src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" 
           type="module"
-          strategy="beforeInteractive" 
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
         />
       </head>
       <body className="flex flex-col min-h-screen">
         <ReduxProviderWrapper>
-          <Header />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <CookiesBanner />
-          <Footer />
+          <AuthProvider>
+            <Header />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <CookiesBanner />
+            <Footer />
+          </AuthProvider>
         </ReduxProviderWrapper>
       </body>
     </html>
