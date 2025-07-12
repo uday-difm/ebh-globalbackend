@@ -8,9 +8,9 @@ import PopupBox from './PopupBox';
 import ConfettiExplosion from 'react-confetti-explosion';
  import { serverUrl } from '../common/serverUrl';
 
-import { useSelector } from 'react-redux';
 
-const Quiz = ({ setAnalyticUpdate }) => {
+
+const Quiz = ({ setAnalyticUpdate, userId }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -20,69 +20,14 @@ const Quiz = ({ setAnalyticUpdate }) => {
   const [isExploding, setIsExploding] = useState(false);
   const [isMobileWidth, setIsMobileWidth] = useState(false);
 
-  const userId = useSelector(state => state.auth?.userId || null);
+  // userId is now expected as a prop
   console.log('Quiz component userId:', userId);
 
-  const handleClosePopup = () => setShowPopup(false);
-
-  const handleClickOption = async (index) => {
-    console.log('handleClickOption userId:', userId);
-    if (!userId) {
-      alert('Please log in to play the quiz.');
-      return;
-    }
-    if (selectedOption !== null || played) return;
-
-    // Reset played state if userId changes or on new quiz start
-    if (played) {
-      setPlayed(false);
-      setSelectedOption(null);
-    }
-
-    try {
-      const response = await axios.get(`${serverUrl}/quizess/quiz-play`);
-      if (response?.data[0]?.played) {
-        setShowPopup(true);
-        setPlayed(true);
-        return;
-      }
-    } catch (error) {
-      console.error('Error checking play status:', error);
-    }
-
-    const correct = index === questions[currentQuestion].correctAnswer;
-
-    if (correct) {
-      setIsExploding(true);
-      setTimeout(() => setIsExploding(false), 3000);
-    }
-
-    // Calculate dynamic time_taken (example: current ISO string)
-    const timeTaken = new Date().toISOString();
-
-    const sendData = {
-      userId: userId, // Pass userId from Redux
-      quizId: questions[currentQuestion]._id,
-      correct,
-      choose_option: index + 1,
-      time_taken: timeTaken
-    };
-
-    try {
-      await axios.post(`${serverUrl}/quizess/quiz-analytic-save`, sendData);
-      setAnalyticUpdate(prev => prev + 1);
-    } catch (error) {
-      console.error('Error saving quiz analytic: ', error);
-      alert('Error saving quiz: ' + error.message);
-    }
-
-    if (!played) {
-      setSelectedOption(index + 1);
-      setPlayedQuestion(prev => prev + 1);
-    }
-  };
 
   const handleClosePopup = () => setShowPopup(false);
+
+
+  // (Removed duplicate handleClickOption definition)
 
   useEffect(() => {
     setIsMobileWidth(window.innerWidth < 1024);

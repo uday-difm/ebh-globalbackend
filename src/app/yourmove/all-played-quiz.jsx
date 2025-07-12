@@ -21,7 +21,7 @@ const AllPlayedQuiz = () => {
     const fetchDetailedAnalytics = async () => {
       try {
         const response = await axios.get(
-          `/api/quizess/all-ip-quiz/${auth?.userId}`,
+          // `/api/quizess/all-ip-quiz/${auth?.userId}`,
           { withCredentials: true }
         );
         setDetailedAnalytics(response.data);
