@@ -70,17 +70,17 @@ const EditProfile = () => {
         const uploadData = new FormData();
         uploadData.append('image', formData.profileFile);
 
-        const uploadResponse = await fetch('/api/upload-image', {
-          method: 'POST',
-          body: uploadData,
-        });
+      const uploadResponse = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: uploadData,
+      });
 
-        if (!uploadResponse.ok) {
-          throw new Error('Failed to upload image');
-        }
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload image');
+      }
 
-        const uploadResult = await uploadResponse.json();
-        uploadedImageUrl = uploadResult.imageUrl;
+      const uploadResult = await uploadResponse.json();
+      uploadedImageUrl = uploadResult.imageUrl;
       }
 
       const response = await fetch('/api/auth/update-user', {

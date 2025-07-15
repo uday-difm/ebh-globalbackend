@@ -6,10 +6,10 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 const CookiesBanner = () => {
-  const [lang] = useState('en'); // Reserved for i18n use if needed
+  const [lang] = useState('en');
 
   const handleAccept = () => {
-    Cookies.set('cookieAccepted', 'true', { expires: 365 }); // 1 year
+    Cookies.set('cookieAccepted', 'true', { expires: 365 });
   };
 
   const scrollToTop = () => {
@@ -25,10 +25,24 @@ const CookiesBanner = () => {
       buttonText="Accept"
       declineButtonText="Close"
       cookieName="cookieAccepted"
-      style={{ background: '#000' }} // Tailwind can’t be used directly here
-      buttonWrapperClasses="flex gap-4"
-      buttonClasses="bg-green-600 text-white font-bold text-base rounded px-6 py-2 "
-      declineButtonClasses="bg-white text-black font-bold text-base rounded px-6 py-2"
+      style={{ background: '#000' }}
+      buttonStyle={{
+        background: 'green',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '16px',
+        borderRadius: '6px',
+        padding: '10px 24px',
+      }}
+      declineButtonStyle={{
+        background: 'red',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '16px',
+        borderRadius: '6px',
+        padding: '10px 24px',
+
+      }}
       setDeclineCookie={false}
       onAccept={({ acceptedByScrolling }) => {
         if (!acceptedByScrolling) handleAccept();
@@ -51,7 +65,6 @@ const CookiesBanner = () => {
         >
           Terms & Conditions
         </Link>
-        
       </span>
     </CookieConsent>
   );

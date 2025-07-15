@@ -121,14 +121,15 @@ const Dashboard = ({ analyticUpdate }) => {
           </div>
 
           <div className='p-[30px] w-full col-span-12 lg:col-span-4 mx-auto bg-gray-100 h-[400px] rounded-lg'>
-            <div className='flex justify-between'>
+            <div className='flex justify-between mt-5'>
               <h2 className='text-2xl font-bold'>Overall</h2>
               <button onClick={() => router.push('/all-played-quiz')} className="bg-blue-200 px-4 text-blue-700 font-medium rounded-md">View</button> {/* Placeholder button, add functionality if needed */}
             </div>
-            <div className='relative z-10'>
+            <div className='flex items-center justify-center h-full'>
               <DoughnutChart data={totalResult} total={totalResult[0] + totalResult[1]} />
             </div>
-            
+
+
           </div>
         </div>
       </div>
