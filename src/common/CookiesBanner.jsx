@@ -27,8 +27,8 @@ const CookiesBanner = () => {
       cookieName="cookieAccepted"
       style={{ background: '#000' }} // Tailwind can’t be used directly here
       buttonWrapperClasses="flex gap-4"
-      buttonClasses="bg-[#54AE47] text-white font-bold text-base rounded px-6 py-2 hover:bg-green-700 transition-all"
-      declineButtonClasses="bg-white text-black font-bold text-base rounded px-6 py-2 hover:bg-gray-200 transition-all"
+      buttonClasses="bg-green-600 text-white font-bold text-base rounded px-6 py-2 "
+      declineButtonClasses="bg-white text-black font-bold text-base rounded px-6 py-2"
       setDeclineCookie={false}
       onAccept={({ acceptedByScrolling }) => {
         if (!acceptedByScrolling) handleAccept();

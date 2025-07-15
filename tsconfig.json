@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": ".", // <<< ADD THIS LINE
-    "paths": {      // <<< ADD THIS ENTIRE BLOCK
-      "@/*": ["./src/*"]
+    "paths": { // <<< ADD THIS ENTIRE BLOCK
+      "@/*": [
+        "./src/*"
+      ]
     },
     "target": "ES2017",
     "lib": [
@@ -25,15 +27,17 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/magazine/page.jsx"
-, "src/component/home/Hero.jsx"  ],
+    "src/app/magazine/page.jsx",
+    "src/component/home/Hero.jsx"
+  ],
   "exclude": [
     "node_modules"
   ]

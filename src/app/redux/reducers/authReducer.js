@@ -3,6 +3,7 @@ import { SET_AUTH, EDIT_USER } from "../actions/action";
 const initialState = {
   isAuthenticated: false,
   userId: null,
+  name: '',
   username: '',
   role: '',
   profile: '',

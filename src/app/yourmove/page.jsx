@@ -62,13 +62,14 @@ const YourMove = ({ analyticUpdate }) => {
             {analytics.currentYear?.length > 0 && renderAnalytics(analytics.currentYear[0], 'Current Year')}
           </div>
           <div className="flex flex-wrap justify-center gap-8 w-full max-w-6xl">
-            <div className="w-full md:w-2/3">
+            <div className="h-[400px] sm:h-[500px] md:h-[600px] w-full">
               <LineChart dailyResults={analytics.currentMonth || []} />
             </div>
+
             <div className="w-full md:w-1/3 flex justify-center">
               <DoughnutChart data={[totalCorrect, totalWrong]} total={totalQuestions} />
             </div>
-             
+
           </div>
         </>
       )}

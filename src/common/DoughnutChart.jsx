@@ -52,7 +52,6 @@ const DoughnutChart = ({ data = [0, 0], total = 0 }) => {
     return (
         <div style={{ position: 'relative', height: '300px', width: '300px' }}>
             <canvas ref={chartRef} />
-            {/* Centered stats overlay */}
             <div style={{
                 position: 'absolute',
                 top: '50%',
@@ -63,8 +62,6 @@ const DoughnutChart = ({ data = [0, 0], total = 0 }) => {
             }}>
                 <div style={{ fontWeight: 'bold', fontSize: 22 }}>All Question</div>
                 <div style={{ fontWeight: 'bold', fontSize: 32 }}>{total}</div>
-                <div style={{ fontSize: 14, color: '#54ae47', marginTop: 4 }}>Correct: {data[0]}</div>
-                <div style={{ fontSize: 14, color: '#3853a4' }}>Wrong: {data[1]}</div>
             </div>
         </div>
     );

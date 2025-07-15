@@ -4,8 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { RiMenuLine } from "react-icons/ri";
 import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 // Define the type for our auth state
 interface AuthState {
@@ -22,31 +23,12 @@ const Header = () => {
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [auth, setAuth] = useState<AuthState>({ isAuthenticated: false, user: null });
-  
-  // const pathname = usePathname();
-  // const router = useRouter();
+  const auth = useSelector((state: any) => state.auth);
   const userMenuRef = useRef<HTMLDivElement>(null);
-
-  // Check user authentication status when the component mounts
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const res = await fetch('/api/auth/status');
-        const data = await res.json();
-        setAuth(data);
-      } catch (error) {
-        console.error("Failed to fetch auth status", error);
-        setAuth({ isAuthenticated: false, user: null });
-      }
-    };
-    checkAuthStatus();
-  }, [pathname]); // Re-check on route change
 
   // Handle logout
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
-    setAuth({ isAuthenticated: false, user: null });
     setShowUserMenu(false);
     router.push('/login');
     router.refresh(); // Forces a refresh of server components
@@ -97,11 +79,11 @@ const Header = () => {
 
           {/* Desktop Auth/Profile */}
           <div className="hidden xl:flex items-center gap-4">
-            {auth.isAuthenticated && auth.user ? (
+            {auth.isAuthenticated && auth.userId ? (
               <div className="relative" ref={userMenuRef}>
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
-                  <Image src={auth.user.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"} alt="User" width={40} height={40} className="w-10 h-10 rounded-full object-cover" />
-                  <span className="font-bold">{auth.user.name?.split(" ")[0]}</span>
+                  <Image src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"} alt="User" width={40} height={40} className="w-10 h-10 rounded-full object-cover" />
+                  <span className="font-bold">{auth.name?.split(" ")[0]}</span>
                   <IoMdArrowDropdown size="20px" />
                 </button>
                 {showUserMenu && (
@@ -139,7 +121,7 @@ const Header = () => {
               </Link>
             ))}
             <div className="border-t border-gray-200 mt-4 pt-4">
-              {auth.isAuthenticated && auth.user ? (
+              {auth.isAuthenticated && auth.userId ? (
                  <div className="flex flex-col items-center gap-4">
                     <Link href="/profile" onClick={() => setShowMenu(false)} className="font-bold">Profile</Link>
                     <button onClick={handleLogout} className="font-bold text-red-500">Logout</button>
