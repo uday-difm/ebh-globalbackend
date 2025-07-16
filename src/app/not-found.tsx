@@ -16,12 +16,12 @@ export default function NotFound() {
         <h1 className="text-6xl font-extrabold text-gray-800 tracking-tight">404</h1>
         <p className="mt-4 text-2xl font-medium text-gray-700">
           Oops! Page not found
-        </p>
+        </p>       
         <p className="mt-2 text-gray-500">
           The page you are looking for does not exist or has been moved.
         </p>
         <Link
-          href="/"
+          href="/"                
           className="mt-6 inline-block px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-xl  hover:scale-105 transition-transform duration-200 shadow-lg"
         >
           Return to Homepage

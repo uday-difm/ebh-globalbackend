@@ -1,0 +1,249 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
+import Head from 'next/head';
+import DashboardLayout from '../../../component/DashboardLayout';
+import ReactPaginate from 'react-paginate';
+import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+
+// Define interface for Blog
+interface Blog {
+  blog_id: string;
+  blog_title: string;
+  blog_slug: string;
+  formatted_blog_date: string;
+}
+
+// Define interface for the API response
+interface ApiResponse {
+  blogs: Blog[];  // We assume `blogs` will always be an array
+  total_blogs: number;
+}
+
+export default function BlogTable() {
+  const [blogs, setBlogs] = useState<Blog[]>([]); 
+  const [totalBlogs, setTotalBlogs] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+  const blogsPerPage = 10;
+  const router = useRouter();
+
+  // Fetch blogs from the API
+  const fetchBlogs = async (page: number, limit: number) => {
+    try {
+      
+      setIsLoading(true);
+      const res = await fetch(`/api/dashboard/blogs/fetchblog?page=${page + 1}&limit=${limit}`);
+      const data: ApiResponse = await res.json();
+
+      // Check if the response is valid
+      if (res.ok) {
+        // Ensure 'blogs' is always an array, even if the response is empty
+        const fetchedBlogs = Array.isArray(data.blogs) ? data.blogs : [];
+        setBlogs(fetchedBlogs);
+        setTotalBlogs(data.total_blogs);
+      } else {
+        toast.error('Failed to fetch blogs');
+      }
+    } catch (err) {
+      setError((err as Error).message);
+      toast.error('Error fetching blogs');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch blogs on page change
+  useEffect(() => {
+    fetchBlogs(currentPage, blogsPerPage);
+  }, [currentPage]);
+
+  // Handle page change for pagination
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
+  };
+
+  // Handle "View All Blogs" button click
+  const handleViewAllClick = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch('/api/dashboard/blogs/fetchblog?page=1&limit=10000');  // Large limit to fetch all blogs
+      const data: ApiResponse = await res.json();
+      
+      if (res.ok) {
+        setBlogs(data.blogs);
+        setTotalBlogs(data.total_blogs);
+      } else {
+        toast.error('Failed to fetch all blogs');
+      }
+    } catch (err) {
+      setError((err as Error).message);
+      toast.error('Error fetching all blogs');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Delete a blog
+  const deleteBlog = async (blogId: string) => {
+    try {
+      // Making a PUT request to the delete API, passing blogId as a query parameter
+      const response = await fetch(`/api/dashboard/blogs/delete-blog?id=${blogId}`, { method: 'PUT' });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Failed to delete the blog');
+        return;
+      }
+
+      toast.success('Blog deleted successfully');
+      // Update the local state to remove the deleted blog
+      setBlogs(blogs.filter(blog => blog.blog_id !== blogId));
+    } catch (error) {
+      console.error('Error deleting blog:', error);
+      toast.error('An error occurred while deleting the blog');
+    }
+  };
+
+  // Handle download blogs as CSV
+  const downloadBlogs = () => {
+    const csvContent = 'data:text/csv;charset=utf-8,';
+    const headers = ['Blog Title', 'Slug', 'Date'];
+    const rows = blogs.map(blog => [
+      blog.blog_title,
+      blog.blog_slug,
+      blog.formatted_blog_date,
+    ]);
+    
+    const csvData = [headers, ...rows].map(row => row.join(',')).join('\n');
+    const encodedUri = encodeURI(csvContent + csvData);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'blogs.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <DashboardLayout>
+      <Head>
+        <title>Blog Table</title>
+        <meta name="description" content="Paginated blog list" />
+      </Head>
+
+      <div className="px-4 sm:px-6 lg:px-8 py-8">
+        <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 shadow-md p-4 sm:p-6 space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+              Total Blogs: {totalBlogs}
+            </h2>
+            <div>
+              <button
+                onClick={handleViewAllClick}
+                className="bg-primary text-white py-2 px-4 rounded-md"
+              >
+                View All Blogs
+              </button>
+              <button
+                onClick={downloadBlogs}
+                className="bg-green-500 text-white py-2 px-4 rounded-md ml-4"
+              >
+                Download Blogs
+              </button>
+            </div>
+          </div>
+
+          {isLoading ? (
+            <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">Error: {error}</p>
+          ) : (
+            <div>
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full table-auto text-sm border-collapse">
+                  <thead>
+                    <tr className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200">
+                      <th className="px-4 py-3 text-left">S.no</th>
+                      <th className="px-4 py-3 text-left">Blog Title</th>
+                      <th className="px-4 py-3 text-left">Date</th>
+                      <th className="px-4 py-3 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {blogs.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="text-center py-4 text-gray-500">
+                          No blogs available
+                        </td>
+                      </tr>
+                    ) : (
+                      blogs.map((data, index) => (
+                        <tr
+                          key={data.blog_id}
+                          className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                        >
+                          <td className="px-4 py-3 text-gray-700 dark:text-gray-200">
+                            {currentPage * blogsPerPage + index + 1}
+                          </td>
+                          <td className="px-4 py-3 text-gray-800 dark:text-white">
+                            {data.blog_title}
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                              {data.formatted_blog_date}
+                            </span>
+                          </td>
+                          <td className="py-3">
+                            <div className="flex space-x-3">
+                              <Link href={`/blog/${data.blog_slug}`}>
+                                <Eye className="w-4 h-4 text-slate-500 hover:text-blue-600 cursor-pointer" />
+                              </Link>
+                              <button
+                                onClick={() => {
+                                  toast.success(`Editing blog: ${data.blog_title}`);
+                                  router.push(`/dashboard/edit-blog/${data.blog_id}`);
+                                }}
+                              >
+                                <Pencil className="w-4 h-4 text-slate-500 hover:text-yellow-500 cursor-pointer" />
+                              </button>
+                              <button onClick={() => deleteBlog(data.blog_id)}>
+                                <Trash2 className="w-4 h-4 text-slate-500 hover:text-red-600 cursor-pointer" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              {/* Pagination */}
+              <div className="pt-4 flex justify-center">
+                <ReactPaginate
+                  pageCount={Math.ceil(totalBlogs / blogsPerPage)}
+                  onPageChange={handlePageChange}
+                  forcePage={currentPage}
+                  containerClassName="flex flex-wrap gap-2"
+                  pageClassName="px-3 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-primary dark:hover:bg-gray-600 dark:text-white cursor-pointer"
+                  activeClassName="bg-primary text-white"
+                  previousLabel="Prev"
+                  nextLabel="Next"
+                  breakLabel="..."
+                  previousClassName="px-3 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-primary dark:hover:bg-gray-600 dark:text-white cursor-pointer"
+                  nextClassName="px-3 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-primary dark:hover:bg-gray-600 dark:text-white cursor-pointer"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <ToastContainer /> {/* Add ToastContainer for toasts */}
+    </DashboardLayout>
+  );
+}

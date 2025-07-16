@@ -35,7 +35,7 @@ const CookiesBanner = () => {
         padding: '10px 24px',
       }}
       declineButtonStyle={{
-        background: 'red',
+        background: 'gray',
         color: 'white',
         fontWeight: 'bold',
         fontSize: '16px',

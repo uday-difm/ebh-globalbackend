@@ -70,7 +70,7 @@ const AllPlayedQuiz = () => {
     <div className="p-4 bg-gray-200 w-full mb-4 rounded-md shadow-md" key={index}>
       <div className="text-sm flex justify-between items-center">
         <div className="flex gap-5 items-center">
-          <span>Quiz #{index + 1}</span>
+          <span className="text-black font-bold">Quiz #{index + 1}</span>
           <span
             className={`px-3 py-1 font-medium rounded-md ${
               data.choose_option - 1 === data.correctAnswer ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
