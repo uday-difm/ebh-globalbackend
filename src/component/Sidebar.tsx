@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
         <img
             src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
           alt="Logo"
-          className="h-20 w-20 rounded-full shadow-md" // Increased logo size
+          className="h-20 w-35 shadow-md" // Increased logo size
         />
         <span className="text-2xl font-extrabold tracking-wider uppercase text-white mt-3">
           Dashboard
