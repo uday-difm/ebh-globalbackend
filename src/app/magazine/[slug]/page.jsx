@@ -29,14 +29,13 @@ const MagazineDetails = () => {
       setLoading(false);
       return;
     }
-
     const fetchMagazine = async () => {
       try {
         console.log("Fetching magazine for slug:", slug);
-        const res = await axios.get(`/api/magazine-details/${slug}`, { timeout: 30000 });
+        const res = await axios.get(`/api/magazine/${slug}`, { timeout: 30000 });
         console.log("Fetched magazine data:", res.data);
         let fetched = Array.isArray(res.data) ? res.data[0] : res.data;
-        if (res.status === 200 && fetched) {
+        if (res.status === 200 && fetched && Object.keys(fetched).length > 0 && !fetched.error) {
           fetched.formatted_date = formatDate(fetched.formatted_date || fetched.magazine_date);
           setMagazine(fetched);
           console.log("Magazine state set:", fetched);
@@ -54,6 +53,9 @@ const MagazineDetails = () => {
 
     fetchMagazine();
   }, [slug]);
+
+  // Log magazine state before render
+  console.log("Rendering magazine:", magazine);
 
   if (loading) {
     return <div className="text-center py-20">Loading magazine...</div>;
@@ -77,7 +79,7 @@ const MagazineDetails = () => {
         <meta property="og:image" content={magazine.magazine_cover_image || ""} />
       </Head>
 
-      <div className="max-w-[1400px] mx-auto px-5 py-16 text-black">
+      <div className="max-w-[1400px] mx-auto px-5 mt-15 py-16 text-black">
         <h2 className="text-4xl font-bold text-[#54AE47] mb-4">{magazine.magazine_title || "No Title"}</h2>
 
         <div className="flex items-center text-sm gap-4 text-gray-700 mb-8">
@@ -145,3 +147,6 @@ const MagazineDetails = () => {
 };
 
 export default MagazineDetails;
+
+
+

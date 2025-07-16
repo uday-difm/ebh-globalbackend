@@ -14,7 +14,7 @@ interface Blog {
   blog_id: string;
   blog_title: string;
   blog_slug: string;
-  formatted_blog_date: string;
+  blog_date_time: string;
 }
 
 // Define interface for the API response
@@ -33,22 +33,13 @@ export default function BlogTable() {
   const router = useRouter();
 
   // Fetch blogs from the API
-  const fetchBlogs = async (page: number, limit: number) => {
+  const fetchBlogs = async () => {
     try {
-      
       setIsLoading(true);
-      const res = await fetch(`/api/dashboard/blogs/fetchblog?page=${page + 1}&limit=${limit}`);
-      const data: ApiResponse = await res.json();
-
-      // Check if the response is valid
-      if (res.ok) {
-        // Ensure 'blogs' is always an array, even if the response is empty
-        const fetchedBlogs = Array.isArray(data.blogs) ? data.blogs : [];
-        setBlogs(fetchedBlogs);
-        setTotalBlogs(data.total_blogs);
-      } else {
-        toast.error('Failed to fetch blogs');
-      }
+      const res = await fetch('/api/dashboard/blog');
+      const data = await res.json();
+      setBlogs(Array.isArray(data) ? data : []);
+      setTotalBlogs((data && data.length) || 0);
     } catch (err) {
       setError((err as Error).message);
       toast.error('Error fetching blogs');
@@ -57,10 +48,13 @@ export default function BlogTable() {
     }
   };
 
-  // Fetch blogs on page change
+  // Fetch blogs on mount
   useEffect(() => {
-    fetchBlogs(currentPage, blogsPerPage);
-  }, [currentPage]);
+    fetchBlogs();
+  }, []);
+
+  // Pagination logic for frontend
+  const paginatedBlogs = blogs.slice(currentPage * blogsPerPage, (currentPage + 1) * blogsPerPage);
 
   // Handle page change for pagination
   const handlePageChange = ({ selected }: { selected: number }) => {
@@ -116,7 +110,7 @@ export default function BlogTable() {
     const rows = blogs.map(blog => [
       blog.blog_title,
       blog.blog_slug,
-      blog.formatted_blog_date,
+      blog.blog_date_time,
     ]);
     
     const csvData = [headers, ...rows].map(row => row.join(',')).join('\n');
@@ -176,14 +170,14 @@ export default function BlogTable() {
                     </tr>
                   </thead>
                   <tbody>
-                    {blogs.length === 0 ? (
+                    {paginatedBlogs.length === 0 ? (
                       <tr>
                         <td colSpan={4} className="text-center py-4 text-gray-500">
                           No blogs available
                         </td>
                       </tr>
                     ) : (
-                      blogs.map((data, index) => (
+                      paginatedBlogs.map((data, index) => (
                         <tr
                           key={data.blog_id}
                           className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
@@ -196,7 +190,11 @@ export default function BlogTable() {
                           </td>
                           <td className="px-4 py-3">
                             <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
-                              {data.formatted_blog_date}
+                              {data.blog_date_time ? new Date(data.blog_date_time).toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric',
+                              }) : ''}
                             </span>
                           </td>
                           <td className="py-3">

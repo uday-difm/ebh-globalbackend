@@ -24,13 +24,13 @@ export default function MagazinesDashboard() {
   const router = useRouter();
 
   // Fetch magazines data from the API
-  const fetchMagazines = async (page = 1) => {
+  const fetchMagazines = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/dashboard/magazine/view-magazine?page=${page}&limit=${itemsPerPage}`);
+      const res = await fetch('/api/dashboard/magazine');
       const data = await res.json();
-      setMagazines(data.data || []);
-      setTotal(data.total || 0);
+      setMagazines(data || []);
+      setTotal((data && data.length) || 0);
     } catch (err) {
       console.error('Failed to fetch magazines:', err);
     } finally {
@@ -39,9 +39,11 @@ export default function MagazinesDashboard() {
   };
 
   useEffect(() => {
-    fetchMagazines(currentPage);
-  }, [currentPage]);
+    fetchMagazines();
+  }, []);
 
+  // Pagination logic for frontend
+  const paginatedMagazines = magazines.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   const totalPages = Math.ceil(total / itemsPerPage);
 
   // Function to delete a magazine
@@ -97,7 +99,7 @@ export default function MagazinesDashboard() {
                     </td>
                   </tr>
                 ) : (
-                  magazines.map((mag, index) => (
+                  paginatedMagazines.map((mag, index) => (
                     <tr
                       key={mag.idMagazines}
                       className="border-b hover:bg-gray-50 text-sm transition-colors"

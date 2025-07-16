@@ -11,7 +11,7 @@ const Card = ({ data }) => {
         <p className="text-3xl xl:h-14 2xl:h-auto font-bold text-blue-700">
           {data.magazine_title}
         </p>
-        <Link href={`/magazine-details/${data.magazine_slug}`}>
+        <Link href={`magazine/${data.magazine_slug}`}>
           <img
             src={data.magazine_cover_image}
             alt={data.magazine_title}
