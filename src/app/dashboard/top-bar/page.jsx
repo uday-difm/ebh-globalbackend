@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation'; // Navigation hook from next/navigation
 
-const Header: React.FC = () => {
+const Header = () => {
   const router = useRouter(); // Navigation hook from next/navigation
 
   return (

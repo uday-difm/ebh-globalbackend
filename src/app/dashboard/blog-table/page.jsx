@@ -9,26 +9,12 @@ import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 
-// Define interface for Blog
-interface Blog {
-  blog_id: string;
-  blog_title: string;
-  blog_slug: string;
-  blog_date_time: string;
-}
-
-// Define interface for the API response
-interface ApiResponse {
-  blogs: Blog[];  // We assume `blogs` will always be an array
-  total_blogs: number;
-}
-
 export default function BlogTable() {
-  const [blogs, setBlogs] = useState<Blog[]>([]); 
-  const [totalBlogs, setTotalBlogs] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  const [blogs, setBlogs] = useState([]);
+  const [totalBlogs, setTotalBlogs] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
   const blogsPerPage = 10;
   const router = useRouter();
 
@@ -39,9 +25,9 @@ export default function BlogTable() {
       const res = await fetch('/api/dashboard/blog');
       const data = await res.json();
       setBlogs(Array.isArray(data) ? data : []);
-      setTotalBlogs((data && data.length) || 0);
+      setTotalBlogs(data && data.length ? data.length : 0);
     } catch (err) {
-      setError((err as Error).message);
+      setError(err.message);
       toast.error('Error fetching blogs');
     } finally {
       setIsLoading(false);
@@ -56,18 +42,16 @@ export default function BlogTable() {
   // Pagination logic for frontend
   const paginatedBlogs = blogs.slice(currentPage * blogsPerPage, (currentPage + 1) * blogsPerPage);
 
-  // Handle page change for pagination
-  const handlePageChange = ({ selected }: { selected: number }) => {
+  const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
-  // Handle "View All Blogs" button click
   const handleViewAllClick = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/dashboard/blogs/fetchblog?page=1&limit=10000');  // Large limit to fetch all blogs
-      const data: ApiResponse = await res.json();
-      
+      const res = await fetch('/api/dashboard/blogs/fetchblog?page=1&limit=10000');
+      const data = await res.json();
+
       if (res.ok) {
         setBlogs(data.blogs);
         setTotalBlogs(data.total_blogs);
@@ -75,18 +59,16 @@ export default function BlogTable() {
         toast.error('Failed to fetch all blogs');
       }
     } catch (err) {
-      setError((err as Error).message);
+      setError(err.message);
       toast.error('Error fetching all blogs');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Delete a blog
-  const deleteBlog = async (blogId: string) => {
+  const deleteBlog = async (blog_slug) => {
     try {
-      // Making a PUT request to the delete API, passing blogId as a query parameter
-      const response = await fetch(`/api/dashboard/blogs/delete-blog?id=${blogId}`, { method: 'PUT' });
+      const response = await fetch(`/api/dashboard/blog/${blog_slug}`, { method: 'DELETE' });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -95,26 +77,24 @@ export default function BlogTable() {
       }
 
       toast.success('Blog deleted successfully');
-      // Update the local state to remove the deleted blog
-      setBlogs(blogs.filter(blog => blog.blog_id !== blogId));
+      setBlogs(blogs.filter(blog => blog.blog_slug !== blog_slug));
     } catch (error) {
       console.error('Error deleting blog:', error);
       toast.error('An error occurred while deleting the blog');
     }
   };
 
-  // Handle download blogs as CSV
   const downloadBlogs = () => {
-    const csvContent = 'data:text/csv;charset=utf-8,';
     const headers = ['Blog Title', 'Slug', 'Date'];
     const rows = blogs.map(blog => [
       blog.blog_title,
       blog.blog_slug,
       blog.blog_date_time,
     ]);
-    
+
     const csvData = [headers, ...rows].map(row => row.join(',')).join('\n');
-    const encodedUri = encodeURI(csvContent + csvData);
+    const csvContent = 'data:text/csv;charset=utf-8,' + csvData;
+    const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
     link.setAttribute('download', 'blogs.csv');
@@ -158,7 +138,6 @@ export default function BlogTable() {
             <p className="text-red-500">Error: {error}</p>
           ) : (
             <div>
-              {/* Table */}
               <div className="overflow-x-auto">
                 <table className="w-full table-auto text-sm border-collapse">
                   <thead>
@@ -205,12 +184,12 @@ export default function BlogTable() {
                               <button
                                 onClick={() => {
                                   toast.success(`Editing blog: ${data.blog_title}`);
-                                  router.push(`/dashboard/edit-blog/${data.blog_id}`);
+                                  router.push(`/dashboard/edit-blog/${data.blog_slug}`);
                                 }}
                               >
                                 <Pencil className="w-4 h-4 text-slate-500 hover:text-yellow-500 cursor-pointer" />
                               </button>
-                              <button onClick={() => deleteBlog(data.blog_id)}>
+                              <button onClick={() => deleteBlog(data.blog_slug)}>
                                 <Trash2 className="w-4 h-4 text-slate-500 hover:text-red-600 cursor-pointer" />
                               </button>
                             </div>
@@ -221,7 +200,7 @@ export default function BlogTable() {
                   </tbody>
                 </table>
               </div>
-              {/* Pagination */}
+
               <div className="pt-4 flex justify-center">
                 <ReactPaginate
                   pageCount={Math.ceil(totalBlogs / blogsPerPage)}
@@ -241,7 +220,7 @@ export default function BlogTable() {
           )}
         </div>
       </div>
-      <ToastContainer /> {/* Add ToastContainer for toasts */}
+      <ToastContainer />
     </DashboardLayout>
   );
 }

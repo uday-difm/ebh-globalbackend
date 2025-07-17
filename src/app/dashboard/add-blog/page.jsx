@@ -8,23 +8,6 @@ import DashboardLayout from '../../../component/DashboardLayout';
 // Dynamically import Jodit Editor
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
-interface Category {
-  category_id: string;
-  category_name: string;
-}
-
-interface BlogValues {
-  title: string;
-  tag: string;
-  image: string | File | null;
-  date: string;
-  time: string;
-  category: string;
-  description: string;
-  content: string;
-  slug: string; // Add slug to the state
-}
-
 const editorConfig = {
   readonly: false,
   toolbar: true,
@@ -41,10 +24,10 @@ const editorConfig = {
   },
   width: '100%',
   minHeight: 500,
-} as const;
+};
 
-// Function to generate slug from title if not provided
-const generateSlug = (str: string) => {
+// Generate slug from title
+const generateSlug = (str) => {
   return str
     .toLowerCase()
     .replace(/'/g, '')
@@ -52,12 +35,13 @@ const generateSlug = (str: string) => {
     .replace(/^-+|-+$/g, '');
 };
 
-const AddBlog: React.FC = () => {
+const AddBlog = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState('1');
-  const [categories, setCategories] = useState<Category[]>([]); // To store the fetched categories
-  const [values, setValues] = useState<BlogValues>({
+  const [categories, setCategories] = useState([]);
+
+  const [values, setValues] = useState({
     title: '',
     tag: '',
     image: null,
@@ -66,19 +50,18 @@ const AddBlog: React.FC = () => {
     category: '',
     description: '',
     content: '',
-    slug: '', // Add slug state
+    slug: '',
   });
 
-  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const imageInputRef = useRef(null);
 
   useEffect(() => {
-    // Fetch the categories from the API
     const fetchCategories = async () => {
       try {
         const response = await fetch('/api/dashboard/blog_category');
         const data = await response.json();
         if (response.ok) {
-          setCategories(data); // Assuming the API returns an array of categories
+          setCategories(data);
         } else {
           console.error('Failed to fetch categories');
         }
@@ -90,7 +73,7 @@ const AddBlog: React.FC = () => {
     fetchCategories();
   }, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e) => {
     const image = e.target.files?.[0] ?? null;
     setValues({ ...values, image });
 
@@ -108,18 +91,17 @@ const AddBlog: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent, postStatus: string) => {
+  const handleSubmit = async (e, postStatus) => {
     e.preventDefault();
 
     const required = ['title', 'image', 'date', 'category', 'description', 'content'];
-    if (required.some((key) => values[key as keyof BlogValues] === '')) {
+    if (required.some((key) => values[key] === '')) {
       alert('Please fill in all required fields');
       return;
     }
 
-    // If no slug is provided, generate it from the title
     const finalSlug = values.slug ? values.slug : generateSlug(values.title);
-    setValues({ ...values, slug: finalSlug });
+    setValues((prev) => ({ ...prev, slug: finalSlug }));
 
     if (errorMessage) {
       alert(errorMessage);
@@ -136,12 +118,12 @@ const AddBlog: React.FC = () => {
       formData.append('category', values.category);
       formData.append('description', values.description);
       formData.append('content', values.content);
-      formData.append('slug', finalSlug); // Include the slug
+      formData.append('slug', finalSlug);
       if (values.image instanceof File) {
-        formData.append('image', values.image); 
+        formData.append('image', values.image);
       }
 
-      const response = await fetch('/api/dashboard/blogs/add-blog', {
+      const response = await fetch('/api/dashboard/blog/add-blog', {
         method: 'POST',
         body: formData,
       });
@@ -162,16 +144,12 @@ const AddBlog: React.FC = () => {
         category: '',
         description: '',
         content: '',
-        slug: '', // Reset slug after submission
+        slug: '',
       });
       if (imageInputRef.current) imageInputRef.current.value = '';
       setStatus(postStatus);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        alert(err.message || 'Something went wrong.');
-      } else {
-        alert('An unknown error occurred');
-      }
+    } catch (err) {
+      alert(err.message || 'Something went wrong.');
     } finally {
       setLoading(false);
     }
@@ -184,7 +162,7 @@ const AddBlog: React.FC = () => {
         <meta name="description" content="Add a new blog post" />
       </Head>
 
-      <div className="px-4 sm:px-6 lg:px-8 py-8">
+      <div className="px-4 sm:px-6 lg:px-8 py-8 text-black">
         <div className="rounded border border-stroke bg-white shadow-md dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-5 px-6 dark:border-strokedark">
             <h3 className="text-lg font-semibold text-black dark:text-white">Post a Blog</h3>
@@ -215,7 +193,6 @@ const AddBlog: React.FC = () => {
                 </div>
               </div>
 
-              {/* Manual Slug Field */}
               <div>
                 <label className="mb-2 block text-black dark:text-white">Manual Slug (Optional)</label>
                 <input
@@ -230,7 +207,6 @@ const AddBlog: React.FC = () => {
                 </p>
               </div>
 
-              {/* Image, Date, Time */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                   <label className="mb-2 block text-black dark:text-white">Feature Image</label>
@@ -319,10 +295,10 @@ const AddBlog: React.FC = () => {
                 <button
                   type="button"
                   onClick={(e) => handleSubmit(e, '0')}
-                  className={`rounded bg-primary py-2 px-6 text-white hover:bg-opacity-90 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`rounded bg-black py-2 px-6 text-white hover:bg-opacity-90 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={loading}
                 >
-                  {loading ? 'Drafting...' : 'Draft'}
+                  {loading ? 'Posting...' : 'Save as Draft'}
                 </button>
               </div>
             </div>

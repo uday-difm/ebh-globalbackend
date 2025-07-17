@@ -35,7 +35,6 @@ const Profile = () => {
   return (
     <DashboardLayout>
       <div className="overflow-hidden rounded-lg border border-stroke bg-gradient-to-b from-gray-800 via-gray-700 to-gray-600 shadow-xl">
-
         {/* Reduced Height Cover Image */}
         <div className="relative z-20 h-40 md:h-82">
           <img
@@ -46,13 +45,14 @@ const Profile = () => {
         </div>
 
         <div className="px-4 pb-4 text-center lg:pb-6 xl:pb-8">
-
           {/* Smaller Profile Picture */}
           <div className="relative z-30 mx-auto -mt-20 h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-white shadow-xl border-4 border-gradient-to-tl from-blue-400 to-purple-600 p-1 sm:p-2 flex items-center justify-center">
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
               alt="Earth by humans logo gif"
-              width={150} height={100} priority
+              width={150}
+              height={100}
+              priority
             />
           </div>
 
@@ -62,7 +62,6 @@ const Profile = () => {
             <p className="text-gray-200 text-sm">Admin</p>
 
             {/* Counts */}
-           
             <div className="flex justify-center">
               <div className="mt-4 mb-6 grid grid-cols-2 gap-6 px-4 w-full max-w-xl">
                 <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-white/10 p-5 hover:bg-gray-500 transition-colors duration-200 shadow-md">
@@ -75,8 +74,6 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-
-
 
             {/* About */}
             <div className="mx-auto max-w-3xl px-4">

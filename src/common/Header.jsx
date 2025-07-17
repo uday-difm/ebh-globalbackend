@@ -8,30 +8,19 @@ import { useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
-// Define the type for our auth state
-interface AuthState {
-  isAuthenticated: boolean;
-  user: {
-    id?: string;
-    name?: string;
-    profile?: string;
-  } | null;
-}
-
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const auth = useSelector((state: any) => state.auth);
-  const userMenuRef = useRef<HTMLDivElement>(null);
+  const auth = useSelector((state) => state.auth);
+  const userMenuRef = useRef(null);
 
-  // Handle logout
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     setShowUserMenu(false);
     router.push('/login');
-    router.refresh(); // Forces a refresh of server components
+    router.refresh();
   };
 
   const navLinks = [
@@ -47,26 +36,30 @@ const Header = () => {
     <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-50">
       <div className="max-w-[1440px] mx-auto">
         <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
-          
           {/* Logo */}
           <Link
             href="/"
-            onClick={(e) => {
-              // Optionally scroll to top and allow navigation
+            onClick={() => {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
               alt="Earth by humans logo gif"
-              width={180} height={100} priority
+              width={180}
+              height={100}
+              priority
             />
           </Link>
 
           {/* Desktop Menu */}
           <nav className="hidden xl:flex gap-8 items-center">
             {navLinks.map(({ href, label, badge }) => (
-              <Link key={href} href={href} className={`transition duration-300 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold relative`}>
+              <Link
+                key={href}
+                href={href}
+                className={`transition duration-300 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold relative`}
+              >
                 {label}
                 {badge && (
                   <span className="absolute -top-3 -right-4 py-1 px-2 rounded-2xl text-[10px] border italic bg-white animate-pulse text-green-600 font-bold">
@@ -82,15 +75,27 @@ const Header = () => {
             {auth.isAuthenticated && auth.userId ? (
               <div className="relative" ref={userMenuRef}>
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
-                  <Image src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"} alt="User" width={40} height={40} className="w-10 h-10 rounded-full object-cover" />
+                  <Image
+                    src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"}
+                    alt="User"
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
                   <span className="font-bold">{auth.name?.split(" ")[0]}</span>
                   <IoMdArrowDropdown size="20px" />
                 </button>
                 {showUserMenu && (
                   <div className="absolute right-0 top-12 mt-1 w-48 border border-gray-200 bg-white rounded-md shadow-lg text-sm font-semibold z-50">
-                    <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>Profile</Link>
-                    <Link href="/edit-profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>Edit Profile</Link>
-                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">Logout</button>
+                    <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
+                      Profile
+                    </Link>
+                    <Link href="/edit-profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
+                      Edit Profile
+                    </Link>
+                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>
@@ -116,18 +121,29 @@ const Header = () => {
         <div className={`xl:hidden bg-white transition-all duration-500 ease-in-out overflow-y-auto absolute top-full left-0 w-full shadow-lg ${showMenu ? "max-h-screen py-4 px-6" : "max-h-0"}`}>
           <nav className="flex flex-col gap-4 text-center">
             {navLinks.map(({ href, label }) => (
-              <Link key={href} href={href} onClick={() => setShowMenu(false)} className={`py-2 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold`}>
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setShowMenu(false)}
+                className={`py-2 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold`}
+              >
                 {label}
               </Link>
             ))}
             <div className="border-t border-gray-200 mt-4 pt-4">
               {auth.isAuthenticated && auth.userId ? (
-                 <div className="flex flex-col items-center gap-4">
-                    <Link href="/profile" onClick={() => setShowMenu(false)} className="font-bold">Profile</Link>
-                    <button onClick={handleLogout} className="font-bold text-red-500">Logout</button>
-                 </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Link href="/profile" onClick={() => setShowMenu(false)} className="font-bold">
+                    Profile
+                  </Link>
+                  <button onClick={handleLogout} className="font-bold text-red-500">
+                    Logout
+                  </button>
+                </div>
               ) : (
-                 <Link href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">Login</Link>
+                <Link href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">
+                  Login
+                </Link>
               )}
             </div>
           </nav>
