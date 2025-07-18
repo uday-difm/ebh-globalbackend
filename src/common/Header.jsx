@@ -26,7 +26,7 @@ const Header = () => {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/about-us', label: 'About Us' },
-    { href: '/blog', label: 'Blogs' },
+    { href: '/blogs', label: 'Blogs' },
     { href: '/magazine', label: 'Magazines' },
     { href: '/quizzes', label: 'Fun-Zone', badge: 'Most Popular' },
     { href: '/contact-us', label: 'Contact Us' },
