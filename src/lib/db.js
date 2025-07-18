@@ -2,6 +2,7 @@ import mysql from "mysql2";
 
 // This prevents multiple connection pools from being created during hot-reloading in development.
 // It checks if a pool already exists in the global scope, and reuses it if it does.
+
 const getPool = () => {
   if (!global.mysqlPool) {
     global.mysqlPool = mysql.createPool({

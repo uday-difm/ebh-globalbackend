@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getBlogBySlug, updateBlogBySlug, deleteBlogBySlug } from '../../../../../lib/data.js';
 
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get('slug');
@@ -70,21 +71,3 @@ export async function PUT(request) {
 
 
 
-//-------------------------delete-blog-------------------------------
-export async function DELETE(request, { params }) {
-  const slug = params.slug;
-
-  if (!slug) {
-    return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
-  }
-
-  try {
-    const deleted = await deleteBlogBySlug(slug);
-    if (!deleted) {
-      return NextResponse.json({ message: 'Failed to delete blog' }, { status: 500 });
-    }
-    return NextResponse.json({ message: 'Blog deleted successfully' });
-  } catch (error) {
-    return NextResponse.json({ message: 'Error deleting blog', error: error.message }, { status: 500 });
-  }
-} 

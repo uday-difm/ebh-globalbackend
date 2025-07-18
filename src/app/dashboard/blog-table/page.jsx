@@ -68,7 +68,9 @@ export default function BlogTable() {
 
   const deleteBlog = async (blog_slug) => {
     try {
-      const response = await fetch(`/api/dashboard/blog/${blog_slug}`, { method: 'DELETE' });
+      const response = await fetch(`/api/dashboard/blog/delete-blogs/${blog_slug}`, {
+        method: 'DELETE',
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -79,10 +81,11 @@ export default function BlogTable() {
       toast.success('Blog deleted successfully');
       setBlogs(blogs.filter(blog => blog.blog_slug !== blog_slug));
     } catch (error) {
-      console.error('Error deleting blog:', error);
-      toast.error('An error occurred while deleting the blog');
+      console.error('Delete error:', error);
+      toast.error('Error while deleting the blog');
     }
   };
+
 
   const downloadBlogs = () => {
     const headers = ['Blog Title', 'Slug', 'Date'];
