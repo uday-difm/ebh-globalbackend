@@ -1,6 +1,6 @@
-import { getAllBlogs, getAllCategories, getAllMagazines } from '@/lib/data';
-import Background from '@/component/home/Background';
-import HomePageClient from '@/component/home/HomePageClient';
+import { getAllBlogs, getAllCategories, getAllMagazines } from '../lib/data';
+import Background from '../component/home/Background';
+import HomePageClient from '../component/home/HomePageClient';
 
 // SEO Metadata for the Home Page
 export const metadata = {

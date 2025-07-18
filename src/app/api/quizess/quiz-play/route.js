@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import db from '../../../../lib/db';
 
 function getClientIp(req) {
   const forwarded = req.headers.get('x-forwarded-for');

@@ -1,6 +1,6 @@
-import db from '@/lib/db';
+import db from '../../../../../lib/db';
 import bcrypt from 'bcryptjs';
-import { signToken } from '@/lib/jwt';
+import { signToken } from '../../../../../lib/jwt';
 import { cookies } from 'next/headers';
 
 export async function POST(request) {

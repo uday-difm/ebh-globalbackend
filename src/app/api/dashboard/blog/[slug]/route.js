@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getBlogBySlug, updateBlogBySlug, deleteBlogBySlug } from '@/lib/data';
+import { getBlogBySlug, updateBlogBySlug, deleteBlogBySlug } from '../../../../../lib/data.js';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);

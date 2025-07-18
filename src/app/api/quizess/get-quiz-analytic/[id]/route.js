@@ -1,7 +1,7 @@
 // File: /pages/api/quiz/fetchDaysAndTotalQuestion.js
 
 import { NextResponse } from 'next/server';
-import db from '@/lib/db'; // Make sure this points to your actual DB utility
+import db from '../../../../../lib/db'; // Make sure this points to your actual DB utility
 
 export async function GET(request, { params }) {
   const { id } = params;

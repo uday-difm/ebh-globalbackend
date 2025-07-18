@@ -7,11 +7,11 @@ const HeroWrapper = dynamic(() => import('./HeroWrapper'), {
   ssr: false,
 });
 
-import Magazines from '@/component/home/Magazines';
-import LatestBlog from '@/component/home/LatestBlog';
-import AdvertiseWithUs from '@/common/AdvertiseWithUs';
-import Quiz from '@/app/quizzes/page';
-import Cta from '@/common/Cta';
+import Magazines from '../../component/home/Magazines';
+import LatestBlog from '../../component/home/LatestBlog';
+import AdvertiseWithUs from '../../common/AdvertiseWithUs';
+import Quiz from '../../app/quizzes/page';
+import Cta from '../../common/Cta';
 
 export default function HomePageClient({ magazines, allBlogs, categories }) {
   return (

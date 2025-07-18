@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import db from '../../../../lib/db';
 import crypto from 'crypto';
-import { sendMail } from '@/lib/mail';
-import { EmailOtpTemplate } from '@/lib/EmailOtpTemplate';
+import { sendMail } from '../../../../lib/sendMail';
+import { EmailOtpTemplate } from '../../../../lib/EmailOtpTemplate';
 
 export async function POST(request) {
   try {

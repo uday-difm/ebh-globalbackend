@@ -23,23 +23,7 @@ const DashboardHome = () => {
   const [adminLoading, setAdminLoading] = useState(true);
   const [adminError, setAdminError] = useState("");
 
-  useEffect(() => {
-    const fetchAdminUser = async () => {
-      setAdminLoading(true);
-      setAdminError("");
-      try {
-        const response = await fetch("/api/dashboard/admin/user?id=1");
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Failed to fetch admin user");
-        setAdminUser(data);
-      } catch (err) {
-        setAdminError(err.message || "Error fetching admin user");
-      } finally {
-        setAdminLoading(false);
-      }
-    };
-    fetchAdminUser();
-  }, []);
+
 
   const fetchCounts = async () => {
     try {
@@ -136,7 +120,7 @@ const DashboardHome = () => {
       </Head>
 
       {/* Admin User Card */}
-      <div className="max-w-xl mx-auto mb-8">
+      {/* <div className="max-w-xl mx-auto mb-8">
         {adminLoading ? (
           <div className="bg-white shadow rounded-lg p-6 text-center">Loading admin info...</div>
         ) : adminError ? (
@@ -158,7 +142,7 @@ const DashboardHome = () => {
             </div>
           </div>
         ) : null}
-      </div>
+      </div> */}
 
       {/* Blog & Magazine Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-3 px-35">

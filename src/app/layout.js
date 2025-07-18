@@ -1,13 +1,13 @@
 "use client";
 
 import Script from 'next/script';
-import Footer from '@/common/Footer';
-import Header from '@/common/Header';
+import Footer from '../common/Footer';
+import Header from '../common/Header';
 import './globals.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./pagination.css";
-import CookiesBanner from '@/common/CookiesBanner';
+import CookiesBanner from '../common/CookiesBanner';
 import ReduxProviderWrapper from './ReduxProviderWrapper';
 import AuthProvider from './AuthProvider';
 import { usePathname } from 'next/navigation';

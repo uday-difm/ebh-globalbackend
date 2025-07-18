@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { MdOutlineMaximize } from "react-icons/md";
-import Cta from '@/common/Cta';
+import Cta from '../../common/Cta';
 
 const logos = [
     { url: "https://kladiscope.com/", name: "Kladiscope", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Kladiscope.png" },

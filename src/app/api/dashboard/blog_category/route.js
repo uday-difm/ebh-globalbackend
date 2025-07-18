@@ -1,4 +1,4 @@
-import db from '@/lib/db'; // Update if path differs
+import db from '../../../../lib/db'; // Update if path differs
 
 export async function GET() {
   try {

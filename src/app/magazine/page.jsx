@@ -6,9 +6,9 @@ import Link from "next/link"; // ✅ Correct import for Next.js
 
 const Card = ({ data }) => {
   return (
-    <div className="bg-white p-4 flex justify-center">
+    <div className="bg-white p-4  flex justify-center">
       <div className="flex flex-col gap-6 mb-5">
-        <p className="text-3xl xl:h-14 2xl:h-auto font-bold text-blue-700">
+        <p className="text-3xl xl:h-14 2xl:h-auto  font-bold text-blue-700">
           {data.magazine_title}
         </p>
         <Link href={`magazine/${data.magazine_slug}`}>
@@ -63,7 +63,7 @@ const Magazine = () => {
         <div className="flex flex-col items-center gap-10 lg:px-[10%]">
           <div className="w-full flex justify-center ">
             <h1
-              className="font-bold text-center"
+              className="font-bold text-center mt-10"
               style={{
                 color: "#54AE47",
                 fontFamily: "Poppins, sans-serif",

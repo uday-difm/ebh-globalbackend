@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { deleteMagazineBySlug,updateMagazineBySlug ,getMagazineBySlug} from '@/lib/data';
+import { deleteMagazineBySlug,updateMagazineBySlug ,getMagazineBySlug} from '../.../../../../../../lib/data';
 
 export async function DELETE(request, { params }) {
     const slug = params.slug;
