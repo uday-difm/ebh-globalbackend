@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db'; // Make sure db is a configured MySQL connection
+import db from '../../../../../lib/db'; // Make sure db is a configured MySQL connection
 
 // Convert db.query to return a Promise for async/await
 const queryDb = (sql, values) => {
