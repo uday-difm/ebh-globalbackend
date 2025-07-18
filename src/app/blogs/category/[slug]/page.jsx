@@ -26,7 +26,7 @@ export default async function CategoryPage({ params }) {
     }
 
     return (
-        <div className="pt-24 sm:pt-32">
+        <div className="pt-24 sm:pt-32 text-black">
             <div className="container mx-auto px-4 max-w-[1350]">
                 <div className="my-8">
                      <CategorySlider categories={categories} />

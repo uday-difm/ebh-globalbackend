@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import CategorySlider from "../blog/CategorySlider";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import HomeBlogCard from "@/component/home/HomeBlogCard"; // MODIFIED: Import the new card
+import HomeBlogCard from "../../component/home/HomeBlogCard"; // MODIFIED: Import the new card
 
 export default function LatestBlog({ initialBlogs, categories }) {
   const [filteredBlogs, setFilteredBlogs] = useState(initialBlogs);

@@ -1,12 +1,6 @@
-import { getAllBlogs, getAllCategories, getAllMagazines } from '@/lib/data';
-import Hero from '@/component/home/Hero';
-import Magazines from '@/component/home/Magazines';
-import LatestBlog from '@/component/home/LatestBlog';
-import Background from '@/component/home/Background';
-import Cta from '@/common/Cta';
-import AdvertiseWithUs from '@/common/AdvertiseWithUs';
-// import Quiz from '@/component/common/Quiz';
-// import YourMove from '@/component/common/YourMove';
+import { getAllBlogs, getAllCategories, getAllMagazines } from '../lib/data';
+import Background from '../component/home/Background';
+import HomePageClient from '../component/home/HomePageClient';
 
 // SEO Metadata for the Home Page
 export const metadata = {
@@ -24,18 +18,7 @@ export default async function HomePage() {
   return (
     <div>
       <Background />
-      <Hero />
-      <Magazines magazines={magazines} />
-      <LatestBlog initialBlogs={allBlogs} categories={categories} />
-      {/* <Quiz /> */}
-      {/* <div className="container mx-auto 2xl:px-16 py-[60px] px-[15px]">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-blue-800 text-center font-bold">
-            Track Your Score
-        </h2>
-        <YourMove />
-      </div> */}
-      <AdvertiseWithUs />
-      <Cta />
+      <HomePageClient magazines={magazines} allBlogs={allBlogs} categories={categories} />
     </div>
   );
 }

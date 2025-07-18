@@ -6,12 +6,12 @@ import Link from "next/link"; // ✅ Correct import for Next.js
 
 const Card = ({ data }) => {
   return (
-    <div className="bg-white p-4 flex justify-center">
+    <div className="bg-white p-4  flex justify-center">
       <div className="flex flex-col gap-6 mb-5">
-        <p className="text-3xl xl:h-14 2xl:h-auto font-bold text-blue-700">
+        <p className="text-3xl xl:h-14 2xl:h-auto  font-bold text-blue-700">
           {data.magazine_title}
         </p>
-        <Link href={`/magazine-details/${data.magazine_slug}`}>
+        <Link href={`magazine/${data.magazine_slug}`}>
           <img
             src={data.magazine_cover_image}
             alt={data.magazine_title}
@@ -50,7 +50,7 @@ const Magazine = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-10">Loading magazines...</div>;
+    return <div className="text-center mt-10 text-black">Loading magazines...</div>;
   }
 
   if (error) {
@@ -61,9 +61,9 @@ const Magazine = () => {
     <div className="bg-white min-h-screen">
       <div className="container mx-auto px-4 pt-20 pb-10">
         <div className="flex flex-col items-center gap-10 lg:px-[10%]">
-          <div className="w-full flex justify-center pt-7">
+          <div className="w-full flex justify-center ">
             <h1
-              className="font-bold text-center"
+              className="font-bold text-center mt-10"
               style={{
                 color: "#54AE47",
                 fontFamily: "Poppins, sans-serif",

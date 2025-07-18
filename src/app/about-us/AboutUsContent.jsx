@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { MdOutlineMaximize } from "react-icons/md";
-import Cta from '@/common/Cta';
+import Cta from '../../common/Cta';
 
 const logos = [
     { url: "https://kladiscope.com/", name: "Kladiscope", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Kladiscope.png" },
@@ -83,7 +83,7 @@ export default function AboutUsContent() {
             </div>
 
             {/* --- Partner Section --- */}
-            <div className="bg-gray-50">
+            <div className="bg-gray-50 text-black">
                 <div className="py-2 max-w-[1350px] mx-auto px-4">
                     <div className="text-center container mx-auto py-7 flex flex-col justify-center items-center">
                         <h2 className="text-3xl md:text-6xl font-bold mb-9">Our Partners</h2>
@@ -101,7 +101,7 @@ export default function AboutUsContent() {
             </div>
 
             {/* --- Advertise Section --- */}
-            <div className="bg-gray-50">
+            <div className="bg-gray-50 text-black">
                 <div className="py-20 max-w-[1350px] mx-auto px-4">
                     <div className="text-center px-4">
                         <h2 className="text-4xl md:text-5xl font-bold mb-4">Advertise With Us!</h2>
@@ -112,7 +112,7 @@ export default function AboutUsContent() {
                             {features.map((feature, i) => (
                                 <div key={i} className="bg-gray-50 p-6 rounded-lg border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center">
                                     <div className="grid grid-cols-12 gap-4">
-                                        <div className="p-4 col-span-12 sm:col-span-3 rounded-full h-16 w-16 border border-light-green flex items-center justify-center">{feature.icon}</div>
+                                        <div className="p-4 col-span-12 sm:col-span-3 rounded-full h-16 w-16 border border-green-200 flex items-center justify-center">{feature.icon}</div>
                                         <h3 className="text-xl col-span-12 sm:col-span-9">{feature.title}</h3>
                                     </div>
                                     <p className="mt-5 text-justify md:text-start text-pretty">{feature.description}</p>

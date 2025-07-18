@@ -60,14 +60,14 @@ export default function ContactUsPage() {
 
   return (
     <div>
-      <section className=" dark:bg-slate-800" id="contact">
+      <section className=" bg-white text-black" id="contact">
         <div className="mx-auto max-w-[1350] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="mb-4">
-            <div className="max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
-              <p className="text-base font-semibold uppercase tracking-wide text-black dark:text-blue-200">
+            <div className="max-w-3xl text-center  sm:text-center  md:mx-auto md:mb-12">
+              <p className="text-base font-semibold mt-10 text-black  uppercase tracking-wide text-black ">
                 Contact
               </p>
-              <h2 className="font-heading mb-4 font-bold tracking-tight text-green-600 dark:text-white text-3xl sm:text-5xl">
+              <h2 className="font-heading m-8 font-bold tracking-tight  text-green-600 text-md sm:text-5xl">
                 Get in Touch
               </h2>
               <p className="text-justify md:text-center px-2 md:px-0">
@@ -78,7 +78,7 @@ export default function ContactUsPage() {
           <div className="flex items-stretch justify-center">
             <div className="grid md:grid-cols-2 gap-8 w-full">
               <div className="h-full pr-6">
-                <p className="mt-3 mb-10 text-md text-gray-600 text-justify px-2 md:px-0">
+                <p className="mt-3 mb-10 text-md text-justify px-2 md:px-0">
                   You can reach out to us using the contact form below or through the contact information provided. Our dedicated support team is always ready to assist you and will strive to respond to your inquiries as quickly as possible.
                   <br />
                   <br />
@@ -112,9 +112,9 @@ export default function ContactUsPage() {
                   </li>
                 </ul>
               </div>
-              <div className="card h-fit max-w-6xl p-5 rounded-lg shadow-md bg-white">
-                <h2 className="mb-1 text-2xl text-blue-900 font-bold dark:text-white">Contact Form</h2>
-                <p className="mb-4 text-sm text-gray-600">Your email address will not be published. Required fields are marked *</p>
+              <div className="card h-fit max-w-6xl p-5 rounded-lg  bg-white">
+                <h2 className="mb-1 text-2xl text-blue-800 font-bold ">Contact Form</h2>
+                <p className="mb-4 text-sm text-black">Your email address will not be published. Required fields are marked *</p>
                 <form id="contactForm" onSubmit={handleSubmit}>
                   <div className="mb-6 space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">

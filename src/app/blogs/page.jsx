@@ -13,7 +13,7 @@ export default async function BlogHomePage() {
 
     return (
         <div className="pt-20 sm:pt-10">
-            <div className="container mx-auto px-4 max-w-[1350]">
+            <div className="container mx-auto px-4 max-w-[1350] text-black">
                 <div className="my-8">
                      {/* MODIFIED: Using the new CategorySlider component */}
                      <CategorySlider categories={categories} />

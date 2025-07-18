@@ -99,5 +99,6 @@ export default function ForgetPasswordPage() {
                 </div>
             </div>
         </div>
+
     );
 };

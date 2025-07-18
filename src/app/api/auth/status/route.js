@@ -3,10 +3,15 @@ import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
 export async function GET() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('token');
 
   if (!token) {
+    return NextResponse.json({ isAuthenticated: false, user: null });
+  }
+
+  if (!process.env.JWT_SECRET_KEY) {
+    console.error('JWT_SECRET_KEY is not set in environment variables');
     return NextResponse.json({ isAuthenticated: false, user: null });
   }
 
@@ -16,6 +21,7 @@ export async function GET() {
     const user = { id: decoded.userId, name: decoded.name, role: decoded.role };
     return NextResponse.json({ isAuthenticated: true, user: user });
   } catch (error) {
+    console.error('JWT verification error:', error);
     // Token is invalid or expired
     return NextResponse.json({ isAuthenticated: false, user: null });
   }
