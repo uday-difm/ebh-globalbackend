@@ -30,19 +30,6 @@ export const getAllBlogs = cache(async () => {
   }
 });
 
-// --- getAllMagazines ---
-export const getAllMagazines = cache(async () => {
-  try {
-    // MODIFIED: This now queries the database directly instead of using fetch
-    const sql = `SELECT * FROM magazines ORDER BY magazine_date DESC`;
-    const [data] = await db.query(sql);
-    return data;
-  } catch (error) {
-    console.error("Database Error (getAllMagazines):", error);
-    return [];
-  }
-});
-
 
 
 // --- getBlogBySlug ---
@@ -144,80 +131,8 @@ export async function deleteBlogBySlug(slug) {
 }
 
 
-//---------deletemagazinebySlug-----------------
-export async function deleteMagazineBySlug(slug) {
-  try {
-    const sql = 'DELETE FROM magazines WHERE magazine_slug = ?';
-    const [result] = await db.query(sql, [slug]);
-    return result.affectedRows > 0;
-  } catch (error) {
-    console.error('Database Error (deleteMagazineBySlug):', error);
-    return false;
-  }
-}
-
-
-// --- updatemagazineBySlug ---
-export async function updateMagazineBySlug(slug, {
-  magazine_id,
-  magazine_title,
-  magazine_description,
-  magazine_tags,
-  magazine_category,
-  magazine_cover_image,
-  magazine_link,
-  magazine_date,
-  MagCloudLink,
-  magazine_slug,
-}) {
-  try {
-    const sql = `UPDATE magazines SET 
-      magazine_id = ?,
-      magazine_title = ?,
-      magazine_description = ?,
-      magazine_tags = ?,
-      magazine_category = ?,
-      magazine_cover_image = ?,
-      magazine_link = ?,
-      magazine_date = ?,
-      MagCloudLink = ?,
-      magazine_slug = ?
-      WHERE magazine_slug = ?`;
-    const [result] = await db.query(sql, [
-      magazine_id,
-      magazine_title,
-      magazine_description,
-      magazine_tags,
-      magazine_category,
-      magazine_cover_image,
-      magazine_link,
-      magazine_date,
-      MagCloudLink,
-      magazine_slug,
-      slug,
-    ]);
-    return result.affectedRows > 0;
-  } catch (error) {
-    console.error('Database Error (updatemagazineBySlug):', error);
-    return false;
-  }
-}
 
 
 
-// --- getMagazineBySlug ---
-export const getMagazineBySlug = cache(async (slug) => {
-  try {
-    const sql = `
-    SELECT *, DATE_FORMAT(Magazine_date, '%e %M %Y') AS formatted_date
-    FROM Magazines
-    WHERE Magazine_slug = ?
-  `;
 
-    const [data] = await db.query(sql, [slug]);
-    return data[0] || null;
-  } catch (error) {
-    console.error("Database Error (getMagazineBySlug):", error);
-    return null;
-  }
-});
+

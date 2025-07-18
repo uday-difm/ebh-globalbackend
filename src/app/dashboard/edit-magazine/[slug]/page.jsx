@@ -51,10 +51,10 @@ export default function EditMagazinePage() {
 
   useEffect(() => {
     if (!slug) return;
-
+    // GET /api/dashboard/magazine/fetchMagzineBySlug?slug=april-2025-edition
     const fetchMagazine = async () => {
       try {
-        const res = await fetch(`/api/dashboard/magazine/getMagazineBySlug?slug=${slug}`);
+        const res = await fetch(`/api/dashboard/magazine/fetchMagzineBySlug/${slug}`);
         const data = await res.json();
 
         if (res.ok) {
@@ -123,7 +123,7 @@ export default function EditMagazinePage() {
     }
     formData.append('credits', JSON.stringify(form.credits));
 
-    const res = await fetch(`/api/dashboard/magazine/${slug}?slug=${slug}`, {
+    const res = await fetch(`/api/dashboard/magazine/update-magazine/${slug}?slug=${slug}`, {
       method: 'PUT',
       body: formData,
     });
