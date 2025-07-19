@@ -55,7 +55,7 @@ export default function EditBlogPage() {
 
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`/api/dashboard/blog/fetchAllBlog?slug=${slug}`);
+        const res = await fetch(`/api/dashboard/blog/getBlogBySlug/${slug}`);
         if (!res.ok) {
           const errorData = await res.json();
           toast.error(errorData.message || 'Failed to fetch blog data');
@@ -174,7 +174,7 @@ export default function EditBlogPage() {
       formData.append('existing_image_url', existingImageUrl);
     }
 
-    const res = await fetch(`/api/dashboard/blog/${slug}?slug=${slug}`, {
+    const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
       method: 'PUT',
       body: formData,
     });
