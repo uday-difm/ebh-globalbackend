@@ -1,4 +1,4 @@
-import { getAllBlogs, getAllCategories, getAllMagazines } from '../lib/data';
+import { getAllBlogs, getAllCategories} from '../lib/data';
 import Background from '../component/home/Background';
 import HomePageClient from '../component/home/HomePageClient';
 
@@ -13,7 +13,10 @@ export default async function HomePage() {
   // Fetch all necessary data on the server for best performance
   const allBlogs = await getAllBlogs();
   const categories = await getAllCategories();
-  const magazines = await getAllMagazines();
+
+
+  const res = await fetch('http://localhost:3000/api/magazine/magazineFetch', { cache: 'no-store' });
+  const magazines = await res.json();
 
   return (
     <div>

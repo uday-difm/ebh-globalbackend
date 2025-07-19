@@ -50,7 +50,7 @@ export default function Magazines({ magazines }) {
               className='text-gray-500 line-clamp-4'
               dangerouslySetInnerHTML={{ __html: latestMagazine.magazine_description || '' }}
             />
-            <Link href={`/magazine-details/${latestMagazine.magazine_slug}`}>
+            <Link href={`/magazine/slug/${latestMagazine.magazine_slug}`}>
               <div className="relative group max-w-[200px] overflow-hidden rounded-full cursor-pointer">
                 {/* Green Base Background */}
                 <div className="absolute inset-0 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>

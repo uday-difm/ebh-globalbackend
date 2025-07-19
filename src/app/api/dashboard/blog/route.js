@@ -3,7 +3,8 @@ import db from '../../../../lib/db';
 
 export async function GET(request) {
   try {
-    const sql = `SELECT * FROM blogs ORDER BY blog_date_time DESC`;
+    // Only fetch blogs where status is 1 (i.e., active blogs)
+    const sql = `SELECT * FROM blogs WHERE status = 1 ORDER BY blog_date_time DESC`;
     const [rows] = await db.query(sql);
     return NextResponse.json(rows);
   } catch (error) {
