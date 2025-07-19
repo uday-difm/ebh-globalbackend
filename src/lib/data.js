@@ -32,103 +32,12 @@ export const getAllBlogs = cache(async () => {
 
 
 
-// --- getBlogBySlug ---
-export const getBlogBySlug = cache(async (slug) => {
-  try {
-    const sql = `
-            SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date,
-                   c.category_name, c.category_slug
-            FROM blogs AS b
-            LEFT JOIN blog_category AS c ON b.blog_category_id = c.category_id
-            WHERE b.blog_slug = ? AND b.status = 1`;
-    const [data] = await db.query(sql, [slug]);
-    return data[0] || null;
-  } catch (error) {
-    console.error("Database Error (getBlogBySlug):", error);
-    return null;
-  }
-});
 
-// --- getBlogsByCategorySlug ---
-export const getBlogsByCategorySlug = cache(async (categorySlug) => {
-  try {
-    const sql = `
-            SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date, 
-                   bc.category_name, bc.category_slug
-            FROM blogs b
-            INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
-            WHERE b.status = 1 AND bc.category_slug = ?
-            ORDER BY b.blog_date_time DESC`;
-    const [data] = await db.query(sql, [categorySlug]);
-    return data;
-  } catch (error) {
-    console.error("Database Error (getBlogsByCategorySlug):", error);
-    return [];
-  }
-});
 
-// --- updateBlogBySlug ---
-export async function updateBlogBySlug(slug, {
-  blogTitle,
-  blogTag,
-  blogCategory,
-  blogDescription,
-  blogContent,
-  blogDate,
-  blogTime,
-  blogSlug,
-  image,
-  existingImageUrl,
-}) {
-  try {
-    // Combine date and time for blog_date_time
-    const blogDateTime = blogDate && blogTime ? `${blogDate} ${blogTime}` : null;
-    let imageUrl = existingImageUrl;
-    // If a new image is provided, handle upload and set imageUrl accordingly
-    if (image && typeof image === 'object' && image.name) {
-      // You need to implement your image upload logic here
-      // For now, just set imageUrl to a placeholder or keep existing
-      // imageUrl = await uploadImage(image); // Implement this if needed
-    }
-    const sql = `UPDATE blogs SET 
-      blog_title = ?,
-      blog_tag = ?,
-      blog_category_id = ?,
-      blog_description = ?,
-      blog_content = ?,
-      blog_date_time = ?,
-      blog_slug = ?,
-      blog_feature_image = ?
-      WHERE blog_slug = ?`;
-    const [result] = await db.query(sql, [
-      blogTitle,
-      blogTag,
-      blogCategory,
-      blogDescription,
-      blogContent,
-      blogDateTime,
-      blogSlug,
-      imageUrl,
-      slug,
-    ]);
-    return result.affectedRows > 0;
-  } catch (error) {
-    console.error('Database Error (updateBlogBySlug):', error);
-    return false;
-  }
-}
 
-// --- deleteBlogBySlug ---
-export async function deleteBlogBySlug(slug) {
-  try {
-    const sql = 'DELETE FROM blogs WHERE blog_slug = ?';
-    const [result] = await db.query(sql, [slug]);
-    return result.affectedRows > 0;
-  } catch (error) {
-    console.error('Database Error (deleteBlogBySlug):', error);
-    return false;
-  }
-}
+
+
+
 
 
 

@@ -55,7 +55,7 @@ export default function EditBlogPage() {
 
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`/api/dashboard/blog/fetchblogbyslug?slug=${slug}`);
+        const res = await fetch(`/api/dashboard/blog/fetchAllBlog?slug=${slug}`);
         if (!res.ok) {
           const errorData = await res.json();
           toast.error(errorData.message || 'Failed to fetch blog data');
