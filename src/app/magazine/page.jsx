@@ -43,7 +43,7 @@ const Magazine = () => {
         setError("Error fetching magazines");
       } finally {
         setLoading(false);
-      }
+      }    
     };
 
     fetchMagazines();
