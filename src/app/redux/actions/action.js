@@ -22,6 +22,12 @@ export const setAuth = (isAuthenticated, userId, name, profile, username, profes
     payload: { isAuthenticated, userId, name, profile, username, profession, email, bio },
   });
 
+export const LOGOUT = 'LOGOUT';
+
+export const logout = () => ({
+  type: LOGOUT,
+});
+
 
   //============================== Edit Admin Action Creator=============================
   export const editUserProfile = (id, updatedData) => async (dispatch) => {

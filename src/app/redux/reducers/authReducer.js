@@ -1,4 +1,4 @@
-import { SET_AUTH, EDIT_USER } from "../actions/action";
+import { SET_AUTH, EDIT_USER, LOGOUT } from "../actions/action";
 
 const initialState = {
   isAuthenticated: false,
@@ -35,6 +35,9 @@ const authReducer = (state = initialState, action) => {
         email:action.payload.email,
         bio:action.payload.bio,
       };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

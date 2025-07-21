@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "next/head";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 
 const formatDate = (dateString) => {
@@ -17,8 +17,9 @@ const formatDate = (dateString) => {
 
 const MagazineDetails = () => {
   const params = useParams();
+  const router = useRouter();
+
   let slug = params?.slug;
-  console.log("Params from useParams():", params, "slug:", slug);
   if (Array.isArray(slug)) slug = slug.join("-");
 
   const [magazine, setMagazine] = useState(null);
@@ -26,26 +27,23 @@ const MagazineDetails = () => {
 
   useEffect(() => {
     if (!slug) {
-      setLoading(false);
+      router.replace('/not-found'); // 🚨 Invalid URL structure
       return;
     }
+
     const fetchMagazine = async () => {
       try {
-        console.log("Fetching magazine for slug:", slug);
-        const res = await axios.get(`/api/magazine/${slug}`, { timeout: 30000 });
-        console.log("Fetched magazine data:", res.data);
-        let fetched = Array.isArray(res.data) ? res.data[0] : res.data;
+        const res = await axios.get(`/api/magazine/${slug}`);
+        const fetched = Array.isArray(res.data) ? res.data[0] : res.data;
+
         if (res.status === 200 && fetched && Object.keys(fetched).length > 0 && !fetched.error) {
           fetched.formatted_date = formatDate(fetched.formatted_date || fetched.magazine_date);
           setMagazine(fetched);
-          console.log("Magazine state set:", fetched);
         } else {
-          console.warn("No data found for slug:", slug);
-          setMagazine(null);
+          router.replace("/not-found"); // 🚨 No data found
         }
       } catch (err) {
-        console.error("Error fetching magazine:", err);
-        setMagazine(null);
+        router.replace("/not-found"); // 🚨 API error or 404
       } finally {
         setLoading(false);
       }
@@ -54,42 +52,35 @@ const MagazineDetails = () => {
     fetchMagazine();
   }, [slug]);
 
-  // Log magazine state before render
-  console.log("Rendering magazine:", magazine);
-
   if (loading) {
     return <div className="text-center py-20">Loading magazine...</div>;
   }
 
-  if (!slug) {
-    return <div className="text-center py-20 text-red-500">No slug found in URL.</div>;
-  }
-
   if (!magazine) {
-    return <div className="text-center py-20 text-red-500">Magazine not found.</div>;
+    return null; // Prevent rendering if no magazine data after loading
   }
 
   return (
     <>
       <Head>
-        <title>Earth By Humans | Blog - {magazine.magazine_title || ""}</title>
-        <meta name="keywords" content={magazine.magazine_tags || ""} />
-        <meta property="og:title" content={magazine.magazine_title || ""} />
-        <meta property="og:url" content={`http://localhost:3000/magazine-details/${magazine.magazine_slug || slug}`} />
-        <meta property="og:image" content={magazine.magazine_cover_image || ""} />
+        <title>Earth By Humans | Blog - {magazine?.magazine_title || ""}</title>
+        <meta name="keywords" content={magazine?.magazine_tags || ""} />
+        <meta property="og:title" content={magazine?.magazine_title || ""} />
+        <meta property="og:url" content={`https://yourdomain.com/magazine/slug/${magazine?.magazine_slug || slug}`} />
+        <meta property="og:image" content={magazine?.magazine_cover_image || ""} />
       </Head>
 
       <div className="max-w-[1400px] mx-auto px-5 mt-15 py-16 text-black">
-        <h2 className="text-4xl font-bold text-[#54AE47] mb-4">{magazine.magazine_title || "No Title"}</h2>
+        <h2 className="text-4xl font-bold text-[#54AE47] mb-4">{magazine.magazine_title}</h2>
 
         <div className="flex items-center text-sm gap-4 text-gray-700 mb-8">
           <span className="flex items-center gap-1">
             <FaCalendarAlt className="text-green-600" />
-            {magazine.formatted_date || "No Date"}
+            {magazine.formatted_date}
           </span>
           <span className="flex items-center gap-1">
             <FaTag className="text-green-600" />
-            {magazine.magazine_category || "No Category"}
+            {magazine.magazine_category}
           </span>
         </div>
 
@@ -97,7 +88,7 @@ const MagazineDetails = () => {
           <div className="col-span-12 lg:col-span-3 flex flex-col items-center gap-4">
             <img
               src={magazine.magazine_cover_image || "/no-image.png"}
-              alt={magazine.magazine_title || "No Title"}
+              alt={magazine.magazine_title}
               className="h-[400px] w-[300px] object-cover shadow-xl"
             />
             {magazine.MagCloudLink && (
@@ -115,7 +106,9 @@ const MagazineDetails = () => {
           <div className="col-span-12 lg:col-span-9 lg:px-[10%] text-lg">
             <div
               className="bg-white px-4 tracking-wide font-poppins"
-              dangerouslySetInnerHTML={{ __html: magazine.magazine_description || "No Description" }}
+              dangerouslySetInnerHTML={{
+                __html: magazine.magazine_description || "No Description",
+              }}
             />
           </div>
         </div>
@@ -147,6 +140,3 @@ const MagazineDetails = () => {
 };
 
 export default MagazineDetails;
-
-
-

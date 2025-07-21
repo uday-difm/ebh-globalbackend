@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/lib/config.js", "src/app/sitemap_index.xml/route.jsx", "src/app/post-sitemap.xml/route.jsx", "src/app/pages-sitemap.xml/route.jsx", "src/app/magazine-sitemap.xml/route.jsx"  ],
   "exclude": [
     "node_modules"
   ]

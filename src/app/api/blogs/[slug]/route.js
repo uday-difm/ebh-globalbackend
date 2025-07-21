@@ -1,6 +1,6 @@
 // ✅ Correct API for dynamic slug
 import { NextResponse } from 'next/server';
-import { getAllBlogs, getAllCategories } from '@/lib/data';
+import { getAllBlogs, getAllCategories } from '../../../../lib/data';
 
 export async function GET(request, context) {
   // ⚠️ Properly extract params

@@ -3,10 +3,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { logout } from '../app/redux/actions/action';
 
 const TopBar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
   const dropdownRef = useRef(null);
 
   const handleProfileClick = () => {
@@ -108,7 +111,22 @@ const TopBar = () => {
                 <div className="border-t border-gray-100 my-1"></div>
                 <button
                   className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left text-red-600"
-                  onClick={() => handleNavigate('/dashboard/login')}
+                  onClick={async () => {
+                    try {
+                      const response = await fetch('/api/dashboard/admin/logout', {
+                        method: 'POST',
+                        credentials: 'include',
+                      });
+                      if (response.ok) {
+                        dispatch(logout());
+                        router.push('/dashboard/login');
+                      } else {
+                        alert('Logout failed');
+                      }
+                    } catch (error) {
+                      alert('Logout error');
+                    }
+                  }}
                 >
                   Log Out
                 </button>
