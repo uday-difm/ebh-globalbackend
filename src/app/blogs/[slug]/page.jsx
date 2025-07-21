@@ -157,8 +157,22 @@ export default function CombinedSlugPage() {
     }, [slug]);
 
     if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
-    if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
-    if (!content) return <div className="flex justify-center items-center h-screen">Content not found.</div>;
+
+    if (error) {
+        // Redirect to not-found page on error
+        if (typeof window !== 'undefined') {
+            window.location.href = '/not-found';
+        }
+        return null;
+    }
+
+    if (!content) {
+        // Redirect to not-found page if content is null
+        if (typeof window !== 'undefined') {
+            window.location.href = '/not-found';
+        }
+        return null;
+    }
 
     // Conditional rendering logic is fine
     if (content.type === 'post') {
