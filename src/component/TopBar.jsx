@@ -52,7 +52,7 @@ const TopBar = () => {
       <div className="flex items-center space-x-2">
         <div className="flex flex-col items-end">
           <span className="text-lg font-semibold text-gray-800" style={{ fontFamily: "poppins" }}>Earth BY Human</span>
-          <span className="text-md font-medium text-gray-900 font-bold">Super Admin</span>
+          <span className="text-md text-gray-900 font-bold">Super Admin</span>
         </div>
         <div className="relative">
           <button
