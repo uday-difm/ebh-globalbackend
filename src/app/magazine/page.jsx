@@ -58,30 +58,37 @@ const Magazine = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen">
-      <div className="container mx-auto px-4 pt-20 pb-10">
-        <div className="flex flex-col items-center gap-10 lg:px-[10%]">
-          <div className="w-full flex justify-center ">
-            <h1
-              className="font-bold text-center mt-10"
-              style={{
-                color: "#54AE47",
-                fontFamily: "Poppins, sans-serif",
-                fontSize: "36px",
-              }}
-            >
-              Edition Spotlight: Discover and Dive into the Newest Magazine
-            </h1>
-          </div>
+    <>
+      <title> Magazine Explore Editions Of Our Content | Earth by Humans</title>
+      <meta name="description" content=" Explore all past and current editions of Earth by Humans Magazine. Dive into captivating content on nature, science, and sustainability." />
+      <meta name="keywords" content=" magazine, editions, nature, science, sustainability, conservation, environment, digital magazine, archives, publications" />
+      <meta property="og:description" content=" Explore all past and current editions of Earth by Humans Magazine. Dive into captivating content on nature, science, and sustainability." />
+      <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+      <div className="bg-white min-h-screen">
+        <div className="container mx-auto px-4 pt-20 pb-10">
+          <div className="flex flex-col items-center gap-10 lg:px-[10%]">
+            <div className="w-full flex justify-center ">
+              <h1
+                className="font-bold text-center mt-10"
+                style={{
+                  color: "#54AE47",
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "36px",
+                }}
+              >
+                Edition Spotlight: Discover and Dive into the Newest Magazine
+              </h1>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-            {magazines.map((data, index) => (
-              <Card key={index} data={data} />
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+              {magazines.map((data, index) => (
+                <Card key={index} data={data} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

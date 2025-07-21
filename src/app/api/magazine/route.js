@@ -1,16 +1,19 @@
+// app/api/magazines/route.js
 import { NextResponse } from 'next/server';
-
-import db from "../../../lib/db";
+import db from "../../../lib/db"; // Ensure this path is correct relative to this file
 
 export async function GET(request) {
   try {
+    // SQL query to select all magazines, ordered by date
     const sql = `SELECT * FROM magazines ORDER BY magazine_date DESC`;
-    const [rows] = await db.query(sql);
+    const [rows] = await db.query(sql); // db.query typically returns [rows, fields]
+
+    // Return the fetched rows as JSON response
     return NextResponse.json(rows);
   } catch (error) {
-    console.error("Error in GET /api/magazine:", error);
+    // Log the error for debugging purposes
+    console.error("Error in GET /api/magazines:", error);
+    // Return a 500 Internal Server Error response
     return NextResponse.json({ error: "Error fetching magazines" }, { status: 500 });
   }
 }
-
-

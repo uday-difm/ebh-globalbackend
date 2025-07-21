@@ -305,20 +305,29 @@ export default function BlogHomePage() {
   if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
 
   return (
-    <div className="relative">
-      <Sidebar categories={categories} allBlogs={allBlogs} />
-      <main>
-        <div className="pt-20 sm:pt-10">
-          <div className="container mx-auto px-4 max-w-[1350]">
-            <div className="my-8"><CategorySlider categories={categories} /></div>
-            <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
-              <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
-              <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
+    <>
+      <title> Recent Blogs Latest Insights On Nature | Earth by Humans</title>
+      <meta name="description" content=" Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <meta name="keywords" content=" blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
+      <meta property="og:description" content=" Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+
+      <div className="relative">
+        <Sidebar categories={categories} allBlogs={allBlogs} />
+        <main>
+          <div className="pt-20 sm:pt-10">
+            <div className="container mx-auto px-4 max-w-[1350]">
+              <div className="my-8"><CategorySlider categories={categories} isHomePage={false} /></div>
+              <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
+                <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
+                <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
+              </div>
+              <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
             </div>
-            <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+
+    </>
   );
 }

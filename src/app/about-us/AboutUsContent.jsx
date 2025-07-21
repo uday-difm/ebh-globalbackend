@@ -46,86 +46,95 @@ export default function AboutUsContent() {
     ];
 
     return (
-        <main className="pt-[9px] bg-white">
-            {/* --- AboutHero Sectionnnnn --- */}
-            <div className="md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="flex flex-col gap-8 my-auto px-[15px]">
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center md:text-start mt-5">
-                            About Earth By Humans
-                        </h1>
-                        <p className="text-lg text-justify">
-                            In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness. With a commitment to authenticity and clarity, we delve into the intricate tapestry of Earth, exploring both its natural wonders and the innovations that shape its future.
-                        </p>
-                        <div className="flex justify-center md:justify-start">
-                            <Link href="/contact-us">
-                                <div className="relative group max-w-[150px] overflow-hidden rounded-full cursor-pointer p-1.5">
-                                    <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full" />
-                                    <div className="absolute w-[120px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10" />
-                                    <div className="absolute w-[220px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10" />
-                                    <button className="relative z-20 w-[150px] text-white py-2 px-6 text-sm rounded-full transition-colors duration-300">
-                                        contact-us<span className="p-1.5">➜</span>
-                                    </button>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="flex justify-center items-center">
-                        <Image
-                            src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/About.png"
-                            alt="An illustrative image of planet Earth"
-                            width={500}
-                            height={500}
-                            priority
-                        />
-                    </div>
-                </div>
-            </div>
 
-            {/* --- Partner Section --- */}
-            <div className="bg-gray-50 text-black">
-                <div className="py-2 max-w-[1350px] mx-auto px-4">
-                    <div className="text-center container mx-auto py-7 flex flex-col justify-center items-center">
-                        <h2 className="text-3xl md:text-6xl font-bold mb-9">Our Partners</h2>
-                        <div className="md:flex grid grid-cols-1 justify-center items-center space-x-4">
-                            {visibleLogos.map((logo) => (
-                                <div key={logo.name} className="flex justify-center grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                                    <a href={logo.url} target="_blank" rel="noopener noreferrer">
-                                        <Image src={logo.src} alt={logo.name} width={180} height={60} style={{ objectFit: "contain" }} />
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <>
+            <title>Our Story of Nature & Innovation | Earth by Humans</title>
+            <meta name="description" content=" Discover Earth by Humans: passionate about our planet, offering insights into nature, sustainability, and innovation. Learn more about us." />
+            <meta name="keywords" content="Earth by Humans, nature, environment, sustainability, conservation, planet, science, mission, vision, earth insights" />
+            <meta property="og:description" content=" Discover Earth by Humans: passionate about our planet, offering insights into nature, sustainability, and innovation. Learn more about us." />
+            <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
 
-            {/* --- Advertise Section --- */}
-            <div className="bg-gray-50 text-black">
-                <div className="py-20 max-w-[1350px] mx-auto px-4">
-                    <div className="text-center px-4">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4">Advertise With Us!</h2>
-                        <p className="mt-8 text-justify md:text-center mb-8">
-                            Ready to take your brand to the next level? Partner with us and reach a wider audience through our print and digital channels. Our platform offers prime opportunities to showcase your products and services to a highly engaged community. Let's work together to create campaigns that captivate and convert. Advertise with us and watch your business grow!
-                        </p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {features.map((feature, i) => (
-                                <div key={i} className="bg-gray-50 p-6 rounded-lg border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center">
-                                    <div className="grid grid-cols-12 gap-4">
-                                        <div className="p-4 col-span-12 sm:col-span-3 rounded-full h-16 w-16 border border-green-200 flex items-center justify-center">{feature.icon}</div>
-                                        <h3 className="text-xl col-span-12 sm:col-span-9">{feature.title}</h3>
+            <main className="pt-[20px] bg-white">
+                {/* --- AboutHero Sectionnnnn --- */}
+                <div className="md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div className="flex flex-col gap-8 my-auto px-[15px]">
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center md:text-start mt-5">
+                                About Earth By Humans
+                            </h1>
+                            <p className="text-lg text-justify">
+                                In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness. With a commitment to authenticity and clarity, we delve into the intricate tapestry of Earth, exploring both its natural wonders and the innovations that shape its future.
+                            </p>
+                            <div className="flex justify-center md:justify-start">
+                                <Link href="/contact-us">
+                                    <div className="relative group max-w-[150px] overflow-hidden rounded-full cursor-pointer p-1.5">
+                                        <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full" />
+                                        <div className="absolute w-[120px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10" />
+                                        <div className="absolute w-[220px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10" />
+                                        <button className="relative z-20 w-[150px] text-white py-2 px-6 text-sm rounded-full transition-colors duration-300">
+                                            contact-us<span className="p-1.5">➜</span>
+                                        </button>
                                     </div>
-                                    <p className="mt-5 text-justify md:text-start text-pretty">{feature.description}</p>
-                                </div>
-                            ))}
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="flex justify-center items-center">
+                            <Image
+                                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/About.png"
+                                alt="An illustrative image of planet Earth"
+                                width={500}
+                                height={500}
+                                priority
+                            />
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* --- CTA Section --- */}
-            <Cta />
+                {/* --- Partner Section --- */}
+                <div className="bg-gray-50 text-black">
+                    <div className="py-2 max-w-[1350px] mx-auto px-4">
+                        <div className="text-center container mx-auto py-7 flex flex-col justify-center items-center">
+                            <h2 className="text-3xl md:text-6xl font-bold mb-9">Our Partners</h2>
+                            <div className="md:flex grid grid-cols-1 justify-center items-center space-x-4">
+                                {visibleLogos.map((logo) => (
+                                    <div key={logo.name} className="flex justify-center grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                                        <a href={logo.url} target="_blank" rel="noopener noreferrer">
+                                            <Image src={logo.src} alt={logo.name} width={180} height={60} style={{ objectFit: "contain" }} />
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </main>
+                {/* --- Advertise Section --- */}
+                <div className="bg-gray-50 text-black">
+                    <div className="py-20 max-w-[1350px] mx-auto px-4">
+                        <div className="text-center px-4">
+                            <h2 className="text-4xl md:text-5xl font-bold mb-4">Advertise With Us!</h2>
+                            <p className="mt-8 text-justify md:text-center mb-8">
+                                Ready to take your brand to the next level? Partner with us and reach a wider audience through our print and digital channels. Our platform offers prime opportunities to showcase your products and services to a highly engaged community. Let's work together to create campaigns that captivate and convert. Advertise with us and watch your business grow!
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {features.map((feature, i) => (
+                                    <div key={i} className="bg-gray-50 p-6 rounded-lg border border-gray-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center">
+                                        <div className="grid grid-cols-12 gap-4">
+                                            <div className="p-4 col-span-12 sm:col-span-3 rounded-full h-16 w-16 border border-green-200 flex items-center justify-center">{feature.icon}</div>
+                                            <h3 className="text-xl col-span-12 sm:col-span-9">{feature.title}</h3>
+                                        </div>
+                                        <p className="mt-5 text-justify md:text-start text-pretty">{feature.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- CTA Section --- */}
+                <Cta />
+
+            </main>
+        </>
     );
 }
