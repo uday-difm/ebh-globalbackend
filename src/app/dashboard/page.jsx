@@ -20,6 +20,8 @@ const DashboardHome = () => {
     }
   }, [isAuthenticated, router]);
 
+
+
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -120,7 +122,6 @@ const DashboardHome = () => {
   return (
     <DashboardLayout>
       {/* Blog & Magazine Cards */}
-      <div>Loading.......</div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-3 px-35">
         {[{ label: "Total Blogs", count: totalBlogs }, { label: "Total Magazines", count: totalMagazines }].map(
           (item, index) => (

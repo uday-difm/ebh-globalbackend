@@ -10,18 +10,18 @@ const HeroWrapper = dynamic(() => import('./HeroWrapper'), {
 import Magazines from '../../component/home/Magazines';
 import LatestBlog from '../../component/home/LatestBlog';
 import AdvertiseWithUs from '../../common/AdvertiseWithUs';
-import Quiz from '../../app/quizzes/page';
 import Cta from '../../common/Cta';
+import QuizPage from '../../app/quizzes/QuizPage'
 
 export default function HomePageClient({ magazines, allBlogs, categories }) {
   return (
     <div>
       <HeroWrapper />
-     
+
       <Magazines magazines={magazines} />
       <LatestBlog initialBlogs={allBlogs} categories={categories} />
-      <Quiz />
-       <AdvertiseWithUs />
+        <QuizPage />
+      <AdvertiseWithUs />
       <Cta />
     </div>
   );

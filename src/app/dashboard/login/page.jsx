@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/actions/action';
 

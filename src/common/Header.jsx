@@ -33,7 +33,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-50">
+    <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-50 shadow-lg">
       <div className="max-w-[1440px] mx-auto">
         <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
           {/* Logo */}
