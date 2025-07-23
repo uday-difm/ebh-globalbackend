@@ -18,9 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* This script is required for the 3D model */} 
-        <Script 
-          src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" 
+        {/* This script is required for the 3D model */}
+        <Script
+          src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
           type="module"
           strategy="beforeInteractive"
           crossOrigin="anonymous"
@@ -29,12 +29,12 @@ export default function RootLayout({ children }) {
       <body className="flex flex-col min-h-screen">
         <ReduxProviderWrapper>
           <AuthProvider>
-            { !pathname.startsWith('/dashboard') && <Header /> }
+            {!pathname.startsWith('/dashboard') && <Header />}
             <main className="flex-grow">
               {children}
             </main>
             <CookiesBanner />
-              { !pathname.startsWith('/dashboard') && <Footer /> }
+            {!pathname.startsWith('/dashboard') && <Footer />}
           </AuthProvider>
         </ReduxProviderWrapper>
       </body>

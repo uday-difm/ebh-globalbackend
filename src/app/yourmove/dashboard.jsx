@@ -89,9 +89,7 @@ const Dashboard = ({ analyticUpdate }) => {
   }, [userId, analyticUpdate]);
 
   return (
-    <div className='max-w-[1400px] mx-auto relative bg-white rounded-xl p-8 md:p-12 shadow-xl border border-gray-200/50 
-            transform transition-all duration-500 hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-3 
-            hover:shadow-xl perspective-1000'>
+    <div className='max-w-[1400px] mx-auto relative rounded-xl p-8 '>
       <div>
         <h2 className='text-[30px] lg:text-[55px] text-center font-bold text-blue-900' style={{ fontFamily: "Poppins" }}>
           Track Your Score

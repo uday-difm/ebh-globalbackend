@@ -1,89 +1,75 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import CategorySlider from "../blog/CategorySlider";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import BlogCard from "../../component/home/HomeBlogCard";
 import { FaArrowRight } from "react-icons/fa";
-import HomeBlogCard from "../../component/home/HomeBlogCard";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import Link from "next/link";
 
-export default function LatestBlog({ initialBlogs, categories }) {
-  const [filteredBlogs, setFilteredBlogs] = useState(initialBlogs);
-  const [activeCategory, setActiveCategory] = useState("All");
+const LatestBlog = () => {
+  const [blogData, setBlogData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(4);
 
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch("/api/home-blogs");
+        const data = await res.json();
+        setBlogData(Array.isArray(data.blogs) ? data.blogs : []);
+        setCount(Math.min(4, data.blogs?.length || 0));
+      } catch (err) {
+        console.error("Blog fetch failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
   }, []);
 
-  useEffect(() => {
-    setFilteredBlogs(initialBlogs);
-    setActiveCategory("All");
-  }, [initialBlogs]);
-
-  const handleFilterClick = (categoryName) => {
-    setActiveCategory(categoryName);
-    if (categoryName === "All") {
-      setFilteredBlogs(initialBlogs);
-    } else {
-      const filtered = initialBlogs.filter(blog => blog.category_name === categoryName);
-      setFilteredBlogs(filtered);
-    }
-  };
-
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-gray-100 py-24 px-4">
-      <div className="container mx-auto max-w-[1400px]">
-        <div className="mb-12 text-center" data-aos="fade-up">
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
-            Latest <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-600">Blogs</span>
-          </h2>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto leading-relaxed">
-            Discover the most recent blogs from Earth By Humans and explore the wonders of our planet and beyond.
-          </p>
-        </div>
+    <div className="relative">
+      <div className="container mx-auto px-4 2xl:px-16 py-10 mt-10 bg-white text-black">
+        <div className="flex flex-col gap-10">
+          {/* Heading */}
+          <div className="col-span-2 flex flex-col gap-5">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Latest Blogs</h2>
+            <h4 className="text-xl text-gray-700">
+              Discover the most recent blog from Earth By Humans.
+            </h4>
+          </div>
 
-        <div className="mb-12" data-aos="fade-up" data-aos-delay="100">
-          <CategorySlider 
-            categories={categories} 
-            onClick={handleFilterClick} 
-            active={activeCategory}
-            className="flex flex-wrap justify-center gap-3"
-          />
-        </div>
-
-        {/* Grid of Blog Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 perspective-1000">
-          {filteredBlogs.slice(0, 4).map((blog, index) => (
-            <div
-              key={blog.blog_id}
-              data-aos="fade-up"
-              data-aos-delay={index * 150}
-              className="relative bg-white rounded-2xl shadow-xl border border-gray-200/50 
-                transform transition-all duration-500 hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-3 
-                hover:shadow-2xl overflow-hidden"
-            >
-              <HomeBlogCard blog={blog} />
-            </div>
-          ))}
-        </div>
-
-        {/* View More Button */}
-        <div className="mt-16 flex justify-center" data-aos="zoom-in" data-aos-delay="300">
-          <Link href="/blogs">
-            <div className="group relative inline-block perspective-1000">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-teal-600 
-                rounded-full blur-lg opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
-              <button className="relative z-10 px-8 py-3.5 text-white font-semibold 
-                bg-gradient-to-r from-green-600 to-teal-600 rounded-full text-sm md:Text-base 
-                shadow-lg transform transition-all duration-300 hover:-translate-y-1 
-                hover:shadow-xl flex items-center gap-2 hover:scale-105">
-                View More <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </Link>
+          {/* Blog Cards */}
+          <div className="grid md:grid-cols-2 gap-6 xl:gap-16">
+            {!loading ? (
+              blogData.length > 0 ? (
+                blogData.slice(0, count).map((blog, i) => (
+                  <BlogCard key={i} blog={blog} category_name={blog.category_name} />
+                ))
+              ) : (
+                <p className="text-gray-500">No blogs available.</p>
+              )
+            ) : (
+              <p className="text-lg">Loading blogs...</p>
+            )}
+          </div>
         </div>
       </div>
-    </section>
+
+      {/* View More Button */}
+      <div className="mx-auto w-48 ">
+        <Link href="/blogs" scroll={true}>
+          <div className="group relative bg-green text-white py-4 rounded-full flex items-center justify-center overflow-hidden">
+            <div className="absolute w-[100px] h-[200px] bg-blue rotate-[35deg] transition-all duration-500 top-[-135%] left-[-80%] group-hover:left-0"></div>
+            <div className="absolute w-[200px] h-[90px] bg-blue rotate-[125deg] transition-all duration-500 top-[15%] left-[90%] group-hover:left-[20%]"></div>
+            <span className="transition-colors bg-green-600 p-4 rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+              View More <FaArrowRight />
+            </span>
+          </div>
+        </Link>
+      </div>
+    </div>
   );
-}
+};
+
+export default LatestBlog;

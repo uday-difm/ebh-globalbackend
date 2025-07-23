@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaArrowRight, FaStar } from "react-icons/fa";
@@ -11,9 +12,9 @@ export default function Cta() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-white to-green-50 py-20 relative z-10">
-      <div className="container mx-auto px-6 max-w-[1350px]">
-        <div className="bg-white/60 backdrop-blur-lg border border-gray-200 shadow-2xl rounded-3xl p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center transition-all">
+    <section className="bg-gradient-to-br from-white to-green-50  relative z-10">
+      <div className="container mx-auto px-6 w-full p-10">
+        <div className="bg-white/60  p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center transition-all">
 
           {/* Text Section */}
           <div className="text-center lg:text-left" data-aos="fade-up text-black">
@@ -40,7 +41,7 @@ export default function Cta() {
 
           {/* Image Section */}
           <div className="flex justify-center" data-aos="zoom-in">
-            <div className="overflow-hidden rounded-2xl shadow-2xl border border-gray-200">
+            <div className="overflow-hidden  shadow-2xl ">
               <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/CTA.png"
                 alt="CTA - Penguin underwater"

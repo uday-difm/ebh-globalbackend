@@ -150,14 +150,13 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
         </p>
       </div>
 
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8  className="hover:-translate-y-2 hover:rotate-x-3 hover:rotate-y-3 
-            hover:shadow-2xl perspective-1000"'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 '>
         <div className='bg-gray-100 rounded-lg p-8 flex flex-col justify-center shadow-md w-full' data-aos="zoom-in-up">
           <p className='text-xl font-extrabold mb-4 rounded-lg p-4 text-left'>Question:</p>
-          <p className='text-lg text-left rounded-lg p-6 bg-white shadow-sm'>{question?.question}</p>
+          <p className='text-lg text-left rounded-lg p-6 bg-white '>{question?.question}</p>
         </div>
 
-        <div className='rounded-lg p-8 border border-gray-300 flex flex-col gap-6 shadow-md w-full' data-aos="fade-left">
+        <div className='rounded-lg p-8 border border-gray-300 flex flex-col gap-6  w-full' data-aos="fade-left">
           {question?.options.map((option, index) => (
             <QuizOption
               key={index}
@@ -171,7 +170,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
             />
           ))}
           <button
-            className='self-end py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out shadow'
+            className='self-end py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
             onClick={handleNextQuestion}
             data-aos="fade-up"
             data-aos-delay="100"

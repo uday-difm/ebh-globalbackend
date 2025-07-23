@@ -33,7 +33,7 @@ const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
   const renderAnalytics = (data, title) => {
     const correctPercentage = parseFloat(data?.correct_percentage);
     return (
-      <div className="bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-2xl p-6 w-full sm:max-w-[340px] border border-gray-100">
+      <div className="bg-white  transition-shadow duration-300  p-6 w-full sm:max-w-[340px] border border-gray-100">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
           <span className="text-xs px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">

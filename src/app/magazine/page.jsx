@@ -35,6 +35,7 @@ const Magazine = () => {
   const [loading, setLoading] = useState(true);
   const [magazines, setMagazines] = useState([]);
   const [error, setError] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(9);
 
   useEffect(() => {
     const fetchMagazines = async () => {
@@ -60,6 +61,10 @@ const Magazine = () => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 3);
+  };
+
   if (loading) {
     return <div className="text-center mt-10 text-black">Loading magazines...</div>;
   }
@@ -81,14 +86,22 @@ const Magazine = () => {
               <br className="hidden md:block" />
               <span className="text-gray-700"> Discover & Dive into the Newest Magazine</span>
             </h1>
-
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-            {magazines.map((data, index) => (
+            {magazines.slice(0, visibleCount).map((data, index) => (
               <Card key={index} data={data} />
             ))}
           </div>
+
+          {visibleCount < magazines.length && (
+            <button
+              onClick={loadMore}
+              className="mt-6 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+            >
+              Load More
+            </button>
+          )}
         </div>
       </div>
     </div>

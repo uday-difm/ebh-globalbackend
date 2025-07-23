@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import Slider from "react-slick";
-import ReactPaginate from 'react-paginate';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import '../pagination.css';
 
@@ -15,8 +14,6 @@ const getAllData = async () => {
   if (!res.ok) throw new Error('Failed to fetch blogs and categories');
   return res.json(); // should return { blogs: [], categories: [] }
 };
-
-
 
 // --- Internal Components ---
 const Sidebar = ({ categories = [], allBlogs = [] }) => {
@@ -164,16 +161,11 @@ export const CategorySlider = ({ categories }) => {
 
 
 export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(9);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const blogsPerPage = 12;
-  const handlePageClick = ({ selected }) => {
-    setCurrentPage(selected);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const offset = currentPage * blogsPerPage;
-  const currentBlogs = blogs.slice(offset, offset + blogsPerPage);
-  const pageCount = Math.ceil(blogs.length / blogsPerPage);
+
+  const currentBlogs = blogs.slice(0, visibleCount);
+
   const BlogCard = ({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabled }) => {
     if (!blog) return null;
     const getShortenedText = (text, length) => {
@@ -213,13 +205,26 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
         </div>
       </Link>
     );
-  }
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 9);
+  };
+
   return (
     <>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black'>
-        {currentBlogs.map((blog, index) => (<BlogCard key={blog.blog_id} blog={blog} index={index} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} isAnimationEnabled={isAnimationEnabled} />))}
+        {currentBlogs.map((blog, index) => (
+          <BlogCard key={blog.blog_id} blog={blog} index={index} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} isAnimationEnabled={isAnimationEnabled} />
+        ))}
       </div>
-      {pageCount > 1 && (<div id="react-paginate" className="my-16"><ReactPaginate previousLabel={"Prev"} nextLabel={"Next"} breakLabel={"..."} pageCount={pageCount} onPageChange={handlePageClick} containerClassName={"pagination"} activeClassName={"active"} /></div>)}
+      {visibleCount < blogs.length && (
+        <div className="flex justify-center my-8">
+          <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+            Load More
+          </button>
+        </div>
+      )}
     </>
   );
 }
@@ -271,8 +276,3 @@ export default function BlogHomePage() {
     </div>
   );
 }
-
-
-
-
-
