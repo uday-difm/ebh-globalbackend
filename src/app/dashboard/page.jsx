@@ -7,21 +7,11 @@ import Image from "next/image";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const DashboardHome = () => {
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/dashboard/login');
-      return;
-    }
-  }, [isAuthenticated, router]);
-
-
-
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -30,6 +20,11 @@ const DashboardHome = () => {
   const [totalMagazines, setTotalMagazines] = useState(0);
   const [blogsPerPage] = useState(10);
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/dashboard/login");
+    }
+  }, [isAuthenticated, router]);
 
   const fetchCounts = async () => {
     try {
@@ -82,9 +77,11 @@ const DashboardHome = () => {
   };
 
   useEffect(() => {
-    fetchBlogs(currentPage);
-    fetchCounts();
-  }, [currentPage]);
+    if (isAuthenticated) {
+      fetchBlogs(currentPage);
+      fetchCounts();
+    }
+  }, [currentPage, isAuthenticated]);
 
   const handlePageChange = (page) => {
     if (page > 0 && page <= Math.ceil(totalBlogs / blogsPerPage)) {

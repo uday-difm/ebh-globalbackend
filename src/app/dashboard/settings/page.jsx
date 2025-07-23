@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import DashboardLayout from '../../../component/DashboardLayout';
-import { useSelector } from 'react-redux';
 
 const SettingsPage = () => {
   const [photo, setPhoto] = useState(null);
@@ -17,21 +16,15 @@ const SettingsPage = () => {
   const [adminLoading, setAdminLoading] = useState(false);
   const [adminError, setAdminError] = useState('');
 
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  // Fetch admin user data only if authenticated
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     const fetchAdminUser = async () => {
       setAdminLoading(true);
       setAdminError('');
       try {
-        const response = await fetch('/api/dashboard/admin/user?id=1');
+        const response = await fetch('/api/dashboard/admin/user');
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'Failed to fetch admin user');
 
-        // Update form fields
         setFormData({
           fullName: data.name || '',
           email: data.email || '',
@@ -50,7 +43,7 @@ const SettingsPage = () => {
     };
 
     fetchAdminUser();
-  }, [isAuthenticated]);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +80,7 @@ const SettingsPage = () => {
           <div className="bg-white shadow rounded-lg p-6 text-center mb-6">Loading...</div>
         ) : adminError ? (
           <div className="bg-red-100 text-red-700 p-4 rounded-lg text-center mb-6">{adminError}</div>
-        ) : isAuthenticated ? (
+        ) : (
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left Section: Personal Information */}
             <div className="flex-1 bg-white shadow-lg rounded-lg p-6 space-y-8">
@@ -238,7 +231,7 @@ const SettingsPage = () => {
               </div>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </DashboardLayout>
   );

@@ -1,14 +1,24 @@
 import db from '../../../../../lib/db';
+import { verifyToken } from '../../../../../lib/jwt';
+import { cookies } from 'next/headers';
 
 export async function GET(request) {
   try {
-    // For simplicity, get userId from query param (in real app, get from auth token/session)
-    const url = new URL(request.url);
-    const userId = url.searchParams.get('id');
+    // Get auth_token cookie
+    const cookieStore = cookies();
+    const token = cookieStore.get('auth_token')?.value;
 
-    if (!userId) {
-      return new Response(JSON.stringify({ error: 'User ID is required' }), { status: 400 });
+    if (!token) {
+      return new Response(JSON.stringify({ error: 'Authentication token missing' }), { status: 401 });
     }
+
+    // Verify token
+    const payload = await verifyToken(token);
+    if (!payload || !payload.id) {
+      return new Response(JSON.stringify({ error: 'Invalid or expired token' }), { status: 401 });
+    }
+
+    const userId = payload.id;
 
     const sql = `
       SELECT id as Id, name, email, image, number, bio 
