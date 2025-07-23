@@ -5,7 +5,7 @@ export default function HomeBlogCard({ blog }) {
   if (!blog) return null;
 
   return (
-    <Link href={`/blogs/post/${blog.blog_slug}`} className="block group">
+    <Link href={`/blogs/${blog.blog_slug}`} className="block group">
       {/* Main card container with two columns */}
       <div className="grid grid-cols-3 gap-4 border border-gray-200 rounded-xl p-4 h-full transition-shadow hover:shadow-lg">
         
