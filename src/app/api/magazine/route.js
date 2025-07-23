@@ -4,11 +4,8 @@ import db from "../../../lib/db"; // Ensure this path is correct relative to thi
 
 export async function GET(request) {
   try {
-    // SQL query to select all magazines, ordered by date
-    const sql = `SELECT * FROM magazines ORDER BY magazine_date DESC`;
-    const [rows] = await db.query(sql); // db.query typically returns [rows, fields]
-
-    // Return the fetched rows as JSON response
+    const sql = `SELECT * FROM magazines WHERE status = 1 ORDER BY magazine_date DESC`;
+    const [rows] = await db.query(sql);
     return NextResponse.json(rows);
   } catch (error) {
     // Log the error for debugging purposes
@@ -17,3 +14,17 @@ export async function GET(request) {
     return NextResponse.json({ error: "Error fetching magazines" }, { status: 500 });
   }
 }
+
+// New API: /api/magazine/magazineFetch
+export async function magazineFetch(request) {
+  try {
+    const sql = `SELECT * FROM magazines WHERE status = 1 ORDER BY magazine_date DESC`;
+    const [rows] = await db.query(sql);
+    return NextResponse.json(rows);
+  } catch (error) {
+    console.error("Error in magazineFetch /api/magazine:", error);
+    return NextResponse.json({ error: "Error fetching magazines" }, { status: 500 });
+  }
+}
+
+

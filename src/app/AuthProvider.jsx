@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
             data.user?.username,
             data.user?.profession,
             data.user?.email,
-            data.user?.bio
+            data.user?.bio           
           ));
         }
       } catch (error) {

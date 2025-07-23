@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import axios from 'axios';
-import PopupBox from './PopupBox';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { serverUrl } from '../common/serverUrl';
 

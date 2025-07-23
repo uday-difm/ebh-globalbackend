@@ -1,13 +1,20 @@
+
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../app/redux/actions/action';
 
 const TopBar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
   const dropdownRef = useRef(null);
+
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, name, profile } = auth;
 
   const handleProfileClick = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -49,74 +56,91 @@ const TopBar = () => {
       </div>
 
       {/* User Profile */}
-      <div className="flex items-center space-x-2">
-        <div className="flex flex-col items-end">
-          <span className="text-lg font-semibold text-gray-800" style={{ fontFamily: "poppins" }}>Earth BY Human</span>
-          <span className="text-md text-gray-900 font-bold">Super Admin</span>
-        </div>
-        <div className="relative">
-          <button
-            className="flex items-center space-x-2 text-gray-800 hover:text-blue-600 transition-all duration-300 ease-in-out"
-            onClick={handleProfileClick}
-          >
-            <div className="w-14 h-14 bg-black rounded-full flex items-center justify-center overflow-hidden shadow-lg">
-              <Image
-                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-                alt="Profile Image"
-                width={48}
-                height={48}
-                className="object-cover"
-              />
-            </div>
-            <svg width="24" height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-gray-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
+      {isAuthenticated ? (
+        <div className="flex items-center space-x-2">
+          <div className="flex flex-col items-end">
+            <span className="text-lg font-semibold text-gray-800" style={{ fontFamily: "poppins" }}>{ 'Earth BY Human'}</span>
+            <span className="text-md font-medium text-gray-900">Super Admin</span>
+          </div>
+          <div className="relative">
+            <button
+              className="flex items-center space-x-2 text-gray-800 hover:text-blue-600 transition-all duration-300 ease-in-out"
+              onClick={handleProfileClick}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-
-          <div ref={dropdownRef} className="relative">
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg py-2 z-50 ring-1 ring-black ring-opacity-5">
-                <button
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                  onClick={() => handleNavigate('/dashboard/profile')}
-                >
-                  My Profile
-                </button>
-                <button
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                  onClick={() => handleNavigate('/dashboard/blog-table')}
-                >
-                  View Blog
-                </button>
-                <button
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                  onClick={() => handleNavigate('/dashboard/settings')}
-                >
-                  Account Setting
-                </button>
-                <div className="border-t border-gray-100 my-1"></div>
-                <button
-                  className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left text-red-600"
-                  onClick={() => handleNavigate('/dashboard/login')}
-                >
-                  Log Out
-                </button>
+              <div className="w-14 h-14 bg-black rounded-full flex items-center justify-center overflow-hidden shadow-lg">
+                <Image
+                  src={profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"}
+                  alt="Profile Image"
+                  width={48}
+                  height={48}
+                  className="object-cover"
+                />
               </div>
-            )}
+              <svg width="24" height="24"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            <div ref={dropdownRef} className="relative">
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg py-2 z-50 ring-1 ring-black ring-opacity-5">
+                  <button
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                    onClick={() => handleNavigate('/dashboard/profile')}
+                  >
+                    My Profile
+                  </button>
+                  <button
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                    onClick={() => handleNavigate('/dashboard/blog-table')}
+                  >
+                    View Blog
+                  </button>
+                  <button
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                    onClick={() => handleNavigate('/dashboard/settings')}
+                  >
+                    Account Setting
+                  </button>
+                  <div className="border-t border-gray-100 my-1"></div>
+                  <button
+                    className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left text-red-600"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch('/api/dashboard/admin/logout', {
+                          method: 'POST',
+                          credentials: 'include',
+                        });
+                        if (response.ok) {
+                          dispatch(logout());
+                          router.push('/dashboard/login');
+                        } else {
+                          alert('Logout failed');
+                        }
+                      } catch (error) {
+                        alert('Logout error');
+                      }
+                    }}
+                  >
+                    Log Out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </header>
   );
 };

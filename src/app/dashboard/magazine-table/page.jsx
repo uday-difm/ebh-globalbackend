@@ -49,7 +49,7 @@ export default function MagazinesDashboard() {
 
     if (confirmation.isConfirmed) {
       try {
-        const response = await fetch(`/api/dashboard/magazine/${magazine_slug}`, {
+        const response = await fetch(`/api/dashboard/magazine/delete-magazine/${magazine_slug}`, {
           method: 'DELETE',
         });
 

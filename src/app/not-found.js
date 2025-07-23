@@ -1,6 +1,16 @@
+"use client";
+
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function NotFound() {
+    useEffect(() => {
+    // Simulate the 404 response
+    document.title = "404 - Page Not Found";
+    window.history.replaceState({}, "404 - Page Not Found", window.location.href);
+  }, []);
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-blue-50 p-6">
       <div className="text-center max-w-md">

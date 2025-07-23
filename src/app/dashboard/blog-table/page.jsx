@@ -68,9 +68,7 @@ export default function BlogTable() {
 
   const deleteBlog = async (blog_slug) => {
     try {
-      const response = await fetch(`/api/dashboard/blog/delete-blogs/${blog_slug}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(`/api/dashboard/blog/delete-blog/${blog_slug}`, { method: 'DELETE' });
 
       if (!response.ok) {
         const errorData = await response.json();

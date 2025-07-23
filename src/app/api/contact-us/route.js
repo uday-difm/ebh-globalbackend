@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db'; // Using our shared database connection
+import db from '../../../lib/db'; // Using our shared database connection
 
 export async function POST(request) {
   try {

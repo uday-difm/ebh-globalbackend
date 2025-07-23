@@ -1,6 +1,12 @@
 import { destroyCookie } from 'nookies';
 
-export default function handler(req, res) {
+export async function POST(req) {
+  const res = new Response();
+
   destroyCookie({ res }, 'auth_token', { path: '/dashboard/login' });
-  res.status(200).json({ message: 'Logged out' });
+
+  return new Response(JSON.stringify({ message: 'Logged out' }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }

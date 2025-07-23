@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/actions/action';
 
 const SignIn = () => {
     const [errors, setErrors] = useState('');
@@ -10,6 +12,7 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Enable cookies for cross-origin (only if necessary)
@@ -31,6 +34,21 @@ const SignIn = () => {
             const data = await res.json();
 
             if (res.ok) {
+                // Fetch auth status and dispatch setAuth
+                const statusRes = await fetch('/api/auth/status');
+                const statusData = await statusRes.json();
+                if (statusData.isAuthenticated) {
+                    dispatch(setAuth(
+                        statusData.isAuthenticated,
+                        statusData.user?.id,
+                        statusData.user?.name,
+                        statusData.user?.profile,
+                        statusData.user?.username,
+                        statusData.user?.profession,
+                        statusData.user?.email,
+                        statusData.user?.bio
+                    ));
+                }
                 router.push('/dashboard');
             } else {
                 setErrors(data.error || 'Login failed');

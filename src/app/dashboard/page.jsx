@@ -7,9 +7,18 @@ import Image from "next/image";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { useSelector } from 'react-redux';
 
 const DashboardHome = () => {
   const router = useRouter();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace('/dashboard/login');
+      return;
+    }
+  }, [isAuthenticated, router]);
 
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,11 +27,6 @@ const DashboardHome = () => {
   const [totalBlogs, setTotalBlogs] = useState(0);
   const [totalMagazines, setTotalMagazines] = useState(0);
   const [blogsPerPage] = useState(10);
-
-  const [adminUser, setAdminUser] = useState(null);
-  const [adminLoading, setAdminLoading] = useState(true);
-  const [adminError, setAdminError] = useState("");
-
 
 
   const fetchCounts = async () => {
@@ -115,36 +119,8 @@ const DashboardHome = () => {
 
   return (
     <DashboardLayout>
-      <Head>
-        <title>Dashboard</title>
-      </Head>
-
-      {/* Admin User Card */}
-      {/* <div className="max-w-xl mx-auto mb-8">
-        {adminLoading ? (
-          <div className="bg-white shadow rounded-lg p-6 text-center">Loading admin info...</div>
-        ) : adminError ? (
-          <div className="bg-red-100 text-red-700 p-4 rounded-lg text-center">{adminError}</div>
-        ) : adminUser ? (
-          <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
-            <div className="flex-shrink-0">
-              <img
-                src={adminUser.image || "/public/uploads/user.png-1752569350865-75181634.png"}
-                alt={adminUser.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-green-500 shadow-md"
-              />
-            </div>
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-800 mb-1">{adminUser.name}</h2>
-              <p className="text-gray-600 mb-1">Email: {adminUser.email}</p>
-              <p className="text-gray-600 mb-1">Number: {adminUser.number}</p>
-              <p className="text-gray-600">{adminUser.bio}</p>
-            </div>
-          </div>
-        ) : null}
-      </div> */}
-
       {/* Blog & Magazine Cards */}
+      <div>Loading.......</div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-3 px-35">
         {[{ label: "Total Blogs", count: totalBlogs }, { label: "Total Magazines", count: totalMagazines }].map(
           (item, index) => (

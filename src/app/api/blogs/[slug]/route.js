@@ -22,7 +22,6 @@ async function getBlogBySlugFromDB(slug) {
       JOIN blog_category bc ON b.blog_category_id = bc.category_id
       WHERE b.blog_slug = ?;
     `;
-    console.log("Executing SQL query for single blog:", sql, "with slug:", slug);
     const [rows] = await db.query(sql, [slug]);
     return rows[0] || null; // Return the first matching blog or null if not found
   } catch (error) {
@@ -35,7 +34,6 @@ async function getBlogBySlugFromDB(slug) {
 async function getCategoryBySlugFromDB(slug) {
   try {
     const sql = `SELECT category_id, category_name, category_slug FROM blog_category WHERE category_slug = ?;`;
-    console.log("Executing SQL query for single category:", sql, "with slug:", slug);
     const [rows] = await db.query(sql, [slug]);
     return rows[0] || null; // Return the first matching category or null
   } catch (error) {
@@ -65,7 +63,6 @@ async function getBlogsInCategoryFromDB(categorySlug) {
       WHERE bc.category_slug = ?
       ORDER BY b.blog_timestamp DESC;
     `;
-    console.log("Executing SQL query for blogs in category:", sql, "with categorySlug:", categorySlug);
     const [rows] = await db.query(sql, [categorySlug]);
     return rows;
   } catch (error) {

@@ -34,9 +34,7 @@ async function getLatestBlogsFromDB({ categorySlug = null, limit = 4, sortBy = '
     queryParams.push(limit);
 
 
-    console.log("Executing SQL query for home blogs:", sql, "with params:", queryParams);
     const [rows] = await db.query(sql, queryParams);
-    console.log("Rows returned for home blogs:", rows);
     return rows;
   } catch (error) {
     console.error("Error fetching latest blogs from DB in /api/home-blogs/route.js:", error);

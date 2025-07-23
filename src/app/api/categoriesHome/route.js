@@ -13,9 +13,7 @@ async function getAllCategoriesFromDB() {
       FROM blog_category
       ORDER BY category_name ASC;
     `;
-    console.log("Executing SQL query for all categories (Home):", sql);
     const [rows] = await db.query(sql);
-    console.log("Rows returned for all categories (Home):", rows);
 
     // Manually add an "All" category at the beginning of the list
     const categoriesWithAll = [{

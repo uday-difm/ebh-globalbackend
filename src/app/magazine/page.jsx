@@ -23,7 +23,7 @@ const Card = ({ data }) => {
     </div>
   );
 };
-
+//--------------------------------------
 const Magazine = () => {
   const [loading, setLoading] = useState(true);
   const [magazines, setMagazines] = useState([]);
@@ -43,7 +43,7 @@ const Magazine = () => {
         setError("Error fetching magazines");
       } finally {
         setLoading(false);
-      }
+      }    
     };
 
     fetchMagazines();

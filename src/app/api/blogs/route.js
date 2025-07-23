@@ -20,9 +20,7 @@ async function getAllBlogsFromDB() {
       JOIN blog_category bc ON b.blog_category_id = bc.category_id
       ORDER BY b.blog_timestamp DESC;
     `;
-    console.log("Executing SQL query for blogs:", sql); // Log the SQL query
     const [rows] = await db.query(sql); // db.query typically returns [rows, fields]
-    console.log("Rows returned for blogs:", rows); // Log the actual rows returned by the DB
     return rows;
   } catch (error) {
     console.error("Error fetching blogs from DB in /api/blogs/route.js:", error);
@@ -33,9 +31,7 @@ async function getAllBlogsFromDB() {
 async function getAllCategoriesFromDB() {
   try {
     const sql = `SELECT category_id, category_name, category_slug FROM blog_category ORDER BY category_name ASC;`;
-    console.log("Executing SQL query for categories:", sql); // Log the SQL query
     const [rows] = await db.query(sql);
-    console.log("Rows returned for categories:", rows); // Log the actual rows returned by the DB
     return rows;
   } catch (error) {
     console.error("Error fetching categories from DB in /api/blogs/route.js:", error);
