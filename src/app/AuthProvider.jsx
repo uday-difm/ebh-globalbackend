@@ -1,17 +1,19 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAuth } from './redux/actions/action';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAuthStatus = async () => {
       try {
         const res = await fetch('/api/auth/status');
         const data = await res.json();
+        console.log('AuthProvider fetchAuthStatus data:', data);
         if (data.isAuthenticated) {
           dispatch(setAuth(
             data.isAuthenticated,
@@ -23,14 +25,21 @@ const AuthProvider = ({ children }) => {
             data.user?.email,
             data.user?.bio           
           ));
+          console.log('AuthProvider dispatched setAuth with profile:', data.user?.profile);
         }
       } catch (error) {
         console.error('Failed to fetch auth status:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchAuthStatus();
   }, [dispatch]);
+
+  if (loading) {
+    return null; // or a loading spinner component
+  }
 
   return <>{children}</>;
 };

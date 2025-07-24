@@ -89,8 +89,8 @@ export const CategorySlider = ({ categories }) => {
     <div
       onClick={!isDisabled ? onClick : undefined}
       className={`w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md transition-opacity ${isDisabled
-          ? 'opacity-20 cursor-not-allowed'
-          : 'cursor-pointer hover:bg-gray-100'
+        ? 'opacity-20 cursor-not-allowed'
+        : 'cursor-pointer hover:bg-gray-100'
         }`}
     >
       {children}
@@ -119,8 +119,8 @@ export const CategorySlider = ({ categories }) => {
             <Link
               href="/blogs"
               className={`${baseClasses} ${isAllActive
-                  ? 'bg-green-600 text-white'
-                  : 'bg-gray-100 text-gray-700'
+                ? 'bg-green-600 text-white'
+                : 'bg-gray-100 text-gray-700'
                 }`}
             >
               All
@@ -132,8 +132,8 @@ export const CategorySlider = ({ categories }) => {
               <Link
                 href={`/blogs/${cat.category_slug}`}
                 className={`${baseClasses} ${isActive(cat.category_slug)
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-green-100'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-green-100'
                   }`}
               >
                 {cat.category_name}
@@ -213,10 +213,20 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
   return (
     <>
+
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black'>
         {currentBlogs.map((blog, index) => (
           <BlogCard key={blog.blog_id} blog={blog} index={index} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} isAnimationEnabled={isAnimationEnabled} />
         ))}
+      </div>
+      {/* Ad Section */}
+      <div className="w-full bg-gray-800 my-16 py-4 rounded">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-gray-100 text-xl font-bold">Advertisement Space</p>
+          <p className="text-gray-300 text-base mt-4">
+            Your ad could be here! Contact us for details.
+          </p>
+        </div>
       </div>
       {visibleCount < blogs.length && (
         <div className="flex justify-center my-8">
@@ -259,20 +269,27 @@ export default function BlogHomePage() {
   if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
 
   return (
-    <div className="relative">
-      <Sidebar categories={categories} allBlogs={allBlogs} />
-      <main>
-        <div className="pt-20 sm:pt-10 text-black">
-          <div className="container mx-auto px-4 max-w-[1350]">
-            <div className="my-8"><CategorySlider categories={categories} /></div>
-            <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
-              <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
-              <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
+    <>
+      <title> Recent Blogs Latest Insights On Nature | Earth by Humans</title>
+      <meta name="description" content=" Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <meta name="keywords" content=" blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
+      <meta property="og:description" content=" Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+      <div className="relative">
+        <Sidebar categories={categories} allBlogs={allBlogs} />
+        <main>
+          <div className="pt-20 sm:pt-10 text-black">
+            <div className="container mx-auto px-4 max-w-[1350]">
+              <div className="my-8"><CategorySlider categories={categories} /></div>
+              <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
+                <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
+                <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
+              </div>
+              <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
             </div>
-            <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }

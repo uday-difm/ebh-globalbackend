@@ -5,23 +5,25 @@ import QuizPage from "./quizzes/QuizPage";
 import AdvertiseWithUs from "../common/AdvertiseWithUs";
 import Cta from '../common/Cta'
 
-export const metadata = {
-  title: "Exploring Science and Nature of Earth | Earth by humans",
-  description: "Dive into the wonders of Earth with Earth By Humans as we explore its natural beauty and the scientific efforts to preserve the earth",
-};
-
 
 export default async function HomePage() {
 
 
   return (
-    <div >
-      <Hero />
-      <LatestMagazine />
-      <LatestBlog />
-      <QuizPage />
-      <AdvertiseWithUs />
-      <Cta />
-    </div>
+    <>
+      <title>  Healing Our Earth Through Exploration | Earth by Humans</title>
+      <meta name="description" content=" Explore Earth by Humans for videos, magazines, blogs, and quizzes on nature, conservation, and sustainability. Join our mission!" />
+      <meta name="keywords" content=" Nature, conservation, sustainability, environment, ecology, wildlife, climate change, earth, science, quizzes" />
+      <meta property="og:description" content="Explore Earth by Humans for videos, magazines, blogs, and quizzes on nature, conservation, and sustainability. Join our mission!" />
+      <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+      <div >
+        <Hero />
+        <LatestMagazine />
+        <LatestBlog />
+        <QuizPage />
+        <AdvertiseWithUs />
+        <Cta />
+      </div>
+    </>
   );
 }

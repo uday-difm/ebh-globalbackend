@@ -12,7 +12,6 @@ export const metadata = {
     description: "Learn everything you need to know about Earth by Humans and our mission to educate and inspire action for a sustainable future for all humans and animals.",
   },
 };
-
 // The main page component for the /about-us route
 export default function AboutUsPage() {
   // It renders the client component which contains all the visual content.

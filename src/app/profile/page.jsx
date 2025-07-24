@@ -80,7 +80,7 @@ const Profile = () => {
               <p>{name}</p>
             </div>
             <Link href="/edit-profile" onClick={scrollToTop}>
-              <p className="cursor-pointer bg-light-sky hover:bg-light-green hover:text-dark-green transition-all duration-500 py-3 px-6 rounded-3xl text-dark-sky">
+              <p className="cursor-pointer bg-gray-600 text-white bg-light-sky hover:bg-light-green hover:text-dark-green transition-all duration-500 py-3 px-6 rounded-3xl text-dark-sky">
                 Edit Profile
               </p>
             </Link>

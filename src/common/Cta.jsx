@@ -12,7 +12,7 @@ export default function Cta() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-white to-green-50  relative z-10">
+    <section className="bg-gradient-to-br   relative z-10">
       <div className="container mx-auto px-6 w-full p-10">
         <div className="bg-white/60  p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center transition-all">
 
@@ -46,8 +46,8 @@ export default function Cta() {
               <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/CTA.png"
                 alt="CTA - Penguin underwater"
-                width={520}
-                height={360}
+                width={400}
+                height={300}
                 className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
               />
             </div>

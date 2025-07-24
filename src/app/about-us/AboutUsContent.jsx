@@ -65,7 +65,7 @@ export default function AboutUsContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-black">
                     {/* Left Column */}
                     <div
-                        className="flex flex-col gap-8 my-auto px-[15px]"
+                        className="flex flex-col mt-30 gap-8 my-auto px-[15px]"
                         data-aos="fade-right"
                         data-aos-duration="800"
                     >
@@ -125,10 +125,8 @@ export default function AboutUsContent() {
                         </p>
                     </div>
 
-                    <div className="bg-gradient-to-b from-white to-gray-100 py-16 px-4">
+                    <div className="bg-gradient-to-b  py-16 px-4">
                         <div className="max-w-[1350px] mx-auto">
-
-
 
                             <div className="flex flex-wrap justify-center gap-8">
                                 {visibleLogos.map((logo) => (

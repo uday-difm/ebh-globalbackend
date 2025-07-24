@@ -51,7 +51,7 @@ export default function AdvertiseWithUs() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-white to-green-50">
+    <section className="py-20 bg-gradient-to-br ">
       <div className="container mx-auto px-6 max-w-[1350px] text-center">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
           Advertise <span className="text-green-600">With Us</span>
