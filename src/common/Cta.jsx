@@ -32,6 +32,7 @@ export default function Cta() {
             </p>
 
             <Link href="/contact-us">
+            
               <button className="group bg-green-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-500 text-lg flex items-center gap-3">
                 Contact Us
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />

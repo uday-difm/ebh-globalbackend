@@ -10,7 +10,7 @@ export default function ContactUsPage() {
     name: "",
     email: "",
     phone: "",
-    subject: "",
+    subject: "",  
     textArea: "",
   });
   const [status, setStatus] = useState({ message: '', type: '' });

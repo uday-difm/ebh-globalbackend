@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { FaArrowRight } from 'react-icons/fa';
+
 
 import {
     FaUsers,
@@ -81,11 +83,13 @@ export default function AboutUsContent() {
                                     <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full" />
                                     <div className="absolute w-[120px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10" />
                                     <div className="absolute w-[220px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10" />
-                                    <button className="relative z-20 w-[180px] text-white py-3 px-8 text-base rounded-full transition-colors duration-300">
-                                        contact-us<span className="p-1.5">➜</span>
-                                    </button>
 
+                                    <button className="relative z-20 px-5 py-2 w-full text-white text-base rounded-full transition-colors duration-300 flex items-center justify-center gap-2">
+                                        contact-us <FaArrowRight />
+                                    </button>
                                 </div>
+
+
                             </Link>
                         </div>
                     </div>

@@ -37,7 +37,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="w-full bg-white pb-[2%] pt-[2%] text-black">
+    <footer className="w-full bg-white pb-[2%] pt-[2%] text-black" style={{fontSize:"20px", fontFamily:"poppins , sans-serif"}}>
       <div className="max-w-[1350px] mx-auto px-4">
         <div className="pt-[60px] px-[50px] pb-[40px]">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 justify-between">
@@ -51,7 +51,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="mt-6 text-justify text-sm">
-                Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond...
+                Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories, and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
               </p>
             </div>
 
@@ -132,7 +132,7 @@ const Footer = () => {
 
         <hr className="my-10 border-gray-200" />
 
-        <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600">
+        <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 pb-15">
           <p className="text-center md:text-left">
             © 2025 Created by <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">Do It For Me LLC</Link> All Rights Reserved.
           </p>
