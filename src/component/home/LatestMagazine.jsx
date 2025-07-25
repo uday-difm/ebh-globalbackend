@@ -32,7 +32,7 @@ const LatestMagazine = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="container mx-auto relative">
+    <div className="container mx-auto relative mt-[110px]">
       <div className="grid grid-cols-12 py-5 gap-5 text-black">
         {/* Left Column */}
         <div className="col-span-12 md:col-span-5 rounded-xl flex flex-col items-center gap-10 pt-10 pb-5">

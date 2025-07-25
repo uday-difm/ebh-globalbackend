@@ -68,9 +68,9 @@ export default function ContactUsPage() {
       <div>
         <section className=" bg-gradient-to-br from-white to-gray-100 text-black" id="contact w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm bg-gradient-to-br from-white to-green-50">
           <div className="mx-auto max-w-[1350] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-            <div className="mb-4">
+            <div className="mb-4 ">
               <div className="max-w-3xl text-center  sm:text-center  md:mx-auto md:mb-12">
-                <p className="text-base font-semibold mt-10 text-black  uppercase tracking-wide text-black ">
+                <p className="text-base font-semibold mt-20 text-black  uppercase tracking-wide text-black font-bold">
                   Contact
                 </p>
                 <h2 className="font-heading m-8 font-bold tracking-tight  text-green-600 text-md sm:text-5xl">

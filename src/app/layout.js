@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         <ReduxProviderWrapper>
           <AuthProvider>
             {!pathname.startsWith('/dashboard') && <Header />}
-            <main className="flex-grow">
+            <main className="flex-grow ">
               {children}
             </main>
             <CookiesBanner />

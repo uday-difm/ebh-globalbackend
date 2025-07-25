@@ -44,7 +44,7 @@ const IndividualPostView = ({ blog }) => {
         const [url, setUrl] = useState('');
         useEffect(() => { setUrl(window.location.href); }, []);
         if (!url) return null;
-        const buttonClass = "w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-800 hover:text-white transition-all duration-300";
+        const buttonClass = "w-10 h-10 flex text-black items-center justify-center rounded-full bg-gray-200 text-gray-700 hover:bg-gray-800 hover:text-white transition-all duration-300";
         return (
             <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold mr-2">Share:</span>
@@ -63,7 +63,7 @@ const IndividualPostView = ({ blog }) => {
     const cleanContent = (blog.blog_content || '').replace(/font-family:[^;]*;?/g, '');
 
     return (
-        <article className="max-w-4xl mx-auto px-4 py-24 sm:py-32">
+        <article className="max-w-4xl text-black mx-auto px-4 py-24 sm:py-32">
             <header className="mb-8">
                 <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6">
                     <Image src={blog.blog_feature_image} alt={blog.blog_title} fill className="object-cover" priority />
@@ -88,7 +88,7 @@ const IndividualPostView = ({ blog }) => {
                 <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row items-center gap-6">
                     <Image src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" alt="Author" width={80} height={80} className="rounded-full flex-shrink-0" />
                     <div>
-                        <h4 className="text-xl font-bold">Earth By Humans</h4>
+                        <h4 className="text-xl text-green-600 font-bold">Earth By Humans</h4>
                         <p className="text-gray-600 mt-1">Your online sanctuary for exploring the wonders of our planet and beyond.</p>
                     </div>
                 </div>
