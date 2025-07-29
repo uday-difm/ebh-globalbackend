@@ -7,18 +7,20 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../redux/actions/action';
+import { Loader } from '../../common/Loader';
 
 export default function LoginPage() {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+    setLoading(true);
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -52,6 +54,8 @@ export default function LoginPage() {
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,6 +67,11 @@ export default function LoginPage() {
       <meta property="og:description" content=" Log in to your Earth by Humans account to explore captivating nature videos, inspiring stories, and engaging quizzes. Your journey awaits!" />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
       <div className="min-h-screen bg-white flex items-center justify-center pt-8">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-50">
+            <Loader />
+          </div>
+        )}
         <div className="flex w-full max-w-6xl min-h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden">
           <div className="w-1/2 hidden md:block">
             <img src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Login visual" className="object-cover w-full h-full" />

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../../component/home/HomeBlogCard";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
+import { Loader } from '../../common/Loader';
 
 const LatestBlog = () => {
   const [blogData, setBlogData] = useState([]);
@@ -50,7 +51,7 @@ const LatestBlog = () => {
                 <p className="text-gray-500">No blogs available.</p>
               )
             ) : (
-              <p className="text-lg">Loading blogs...</p>
+              <div className="flex justify-center items-center w-full py-10"><Loader /></div>
             )}
           </div>
         </div>

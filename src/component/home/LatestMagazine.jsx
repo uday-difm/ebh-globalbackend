@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import Link from 'next/link';
+import { Loader } from '../../common/Loader';
 
 const LatestMagazine = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const LatestMagazine = () => {
     fetchAllData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="flex justify-center items-center w-full py-10"><Loader /></div>;
   if (error) return <div>Error: {error}</div>;
 
   return (

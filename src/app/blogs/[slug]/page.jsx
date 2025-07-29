@@ -10,6 +10,7 @@ import Cta from '../../../common/Cta';
 
 // --- IMPORT THE REUSABLE COMPONENTS ---
 import { CategorySlider, PaginatedBlogList } from '../page'; // <-- Key change #1
+import { Loader } from '../../../common/Loader';
 
 // Icon imports (your existing code is fine)
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -156,7 +157,7 @@ export default function CombinedSlugPage() {
         fetchData();
     }, [slug]);
 
-    if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    if (loading) return <div className="flex justify-center items-center h-screen"><Loader /></div>;
 
     if (error) {
         // Redirect to not-found page on error

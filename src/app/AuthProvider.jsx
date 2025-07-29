@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAuth } from './redux/actions/action';
+import { Loader } from '../common/Loader';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const AuthProvider = ({ children }) => {
   }, [dispatch]);
 
   if (loading) {
-    return null; // or a loading spinner component
+    return <div className="flex items-center justify-center min-h-screen"><Loader /></div>;
   }
 
   return <>{children}</>;
