@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from '../../../../../lib/db';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import { uploadToS3 } from '../../../../../../utils/s3Utility';
 
 export async function POST(request) {
   try {
@@ -40,19 +38,12 @@ export async function POST(request) {
           }, { status: 400 });
         }
 
-        const fileName = `${uuidv4()}.${ext}`;
-        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-        
-        // Ensure uploads directory exists
-        try {
-          await mkdir(uploadsDir, { recursive: true });
-        } catch (mkdirError) {
-          console.error('Error creating uploads directory:', mkdirError);
-        }
-        
-        const uploadPath = path.join(uploadsDir, fileName);
-        await writeFile(uploadPath, buffer);
-        imageUrl = `/uploads/${fileName}`;
+        // Upload to S3
+        imageUrl = await uploadToS3('blogs', {
+          originalname: image.name,
+          buffer,
+          mimetype: image.type
+        });
       } catch (uploadError) {
         console.error('Error uploading image:', uploadError);
         return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });

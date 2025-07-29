@@ -5,7 +5,7 @@ import db from '../../../../../../lib/db';
 // Utility function to fetch blog by slug using raw SQL query
 async function getBlogBySlug(slug) {
   try {
-    const [rows] = await db.query('SELECT * FROM blogs WHERE blog_slug = ? LIMIT 1', [slug]);
+    const [rows] = await db.query('SELECT * FROM blogs WHERE blog_slug = ? AND status = 1 LIMIT 1', [slug]);
     if (rows.length === 0) {
       return null;
     }

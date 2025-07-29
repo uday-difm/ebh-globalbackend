@@ -1,6 +1,6 @@
 // ✅ Correct API for dynamic slug
 import { NextResponse } from 'next/server';
-import { getAllBlogs, getAllCategories } from '../../../../lib/data';
+import db from '../../../../lib/db';
 
 export async function GET(request, context) {
   // ⚠️ Properly extract params
@@ -8,8 +8,16 @@ export async function GET(request, context) {
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
   try {
-    const allBlogs = await getAllBlogs();
-    const allCategories = await getAllCategories();
+    const blogsSql = `
+      SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date,
+             bc.category_name, bc.category_slug
+      FROM blogs b
+      INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
+      WHERE b.status = 1 ORDER BY b.blog_date_time DESC`;
+    const [allBlogs] = await db.query(blogsSql);
+
+    const categoriesSql = 'SELECT * FROM `blog_category`';
+    const [allCategories] = await db.query(categoriesSql);
 
     // Blog match
     const matchedBlog = allBlogs.find(b => b.blog_slug === slug);

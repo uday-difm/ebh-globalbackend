@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from '../../../../../../lib/db';
+import { uploadToS3 } from '../../../../../../../utils/s3Utility';
 
 // Utility function to update blog by slug using raw SQL query
 async function updateBlogBySlug(slug, data) {
@@ -69,12 +70,20 @@ export async function PUT(request) {
 
     // If a new image is uploaded (File type), upload it and get a URL
     if (image instanceof File) {
-      // You need to implement this based on your image hosting logic
-      // Example placeholder:
       const buffer = await image.arrayBuffer();
-      const fileName = `${Date.now()}-${image.name}`;
-      // Upload to storage (e.g., AWS S3, Cloudinary, etc.) and get `uploadedImageUrl`
-      const uploadedImageUrl = await uploadImageToStorage(buffer, fileName);
+      const ext = image.name.split('.').pop().toLowerCase();
+      const allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+      if (!allowedTypes.includes(ext)) {
+        return NextResponse.json({ 
+          error: 'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp' 
+        }, { status: 400 });
+      }
+      // Upload to S3
+      const uploadedImageUrl = await uploadToS3('blogs', {
+        originalname: image.name,
+        buffer: Buffer.from(buffer),
+        mimetype: image.type
+      });
       imageUrl = uploadedImageUrl;
     }
 
