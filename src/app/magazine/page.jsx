@@ -39,19 +39,26 @@ const Card = ({ data }) => {
 
 const AdCard = () => (
   <div
-    className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-gray-900 to-gray-50 p-6 min-h-[220px]"
+    className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-white via-green-100 to-green-300 p-6 min-h-[220px]"
     data-aos="zoom-in"
     data-aos-delay="100"
   >
-    <p className="text-xl text-center text-gray-800 font-medium" style={{ fontFamily: 'Poppins' }}>
-      Showcase your brand to a large audience. Contact us for details
-    </p>
-
-    <Link href="/contact-us">
-      <button className="px-5 py-2 text-sm bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 hover:bg-blue-700 transition duration-300">
-        Contact us <FaArrowRight className="text-xs" />
-      </button>
-    </Link>
+   <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-8">
+        <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 shadow-md">
+          <FaArrowRight size={24} className="text-green-500" />
+        </div>
+        <h3 className="text-2xl font-bold text-green-800 mb-4">
+          Advertise With Us
+        </h3>
+        <p className="text-green-700 text-lg leading-relaxed mb-8 max-w-sm">
+          Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
+        </p>
+        <Link href={'/contact-us'}>
+          <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 shadow-lg">
+            Get Started <FaArrowRight className="text-sm" />
+          </button>
+        </Link>
+      </div>
   </div>
 
 
@@ -149,14 +156,24 @@ const Magazine = () => {
 
 
             {/* Ad Section */}
-            <div className="w-full bg-gray-800  py-4 rounded">
-              <div className="max-w-7xl mx-auto px-6 text-center">
-                <p className="text-gray-100 text-xl font-bold">Advertisement Space</p>
-                <p className="text-gray-300 text-base mt-4">
-                  Your ad could be here! Contact us for details.
-                </p>
+            <div className="w-full bg-gradient-to-r from-green-600 to-emerald-600 mt-8 py-8 rounded-2xl shadow-lg">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <FaArrowRight size={20} className="text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Advertisement Space</h3>
               </div>
+              <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
+                Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
+              </p>
+              <Link href="/contact-us">
+                <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 mx-auto shadow-lg">
+                  Contact Us <FaArrowRight className="text-sm" />
+                </button>
+              </Link>
             </div>
+          </div>
             {visibleCount < magazines.length && (
               <button
                 onClick={loadMore}

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import Slider from "react-slick";
@@ -15,6 +14,16 @@ const getAllData = async () => {
   return res.json();
 };
 
+// 🧠 Strip HTML Tags
+const stripHtml = (html) => html?.replace(/<[^>]*>/g, '') || '';
+
+// 📖 Calculate Reading Time
+const calculateReadingTime = (text) => {
+  const plainText = stripHtml(text);
+  const words = plainText.trim().split(/\s+/).length || 0;
+  const minutes = Math.ceil(words / 200);
+  return `${minutes} min read`;
+};
 // ---------------- Sidebar ----------------
 const Sidebar = ({ categories = [], allBlogs = [] }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -56,7 +65,7 @@ const Sidebar = ({ categories = [], allBlogs = [] }) => {
           <form onSubmit={handleSearchSubmit} className="mb-6">
             <div className="flex">
               <input type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className="p-3 text-black outline-none w-full border border-r-0 border-gray-300 rounded-l-md" />
-              <button type="submit" className="px-6 bg-gray-800 text-white font-bold rounded-r-md hover:bg-gray-700">Search</button>
+              <button type="submit" className="px-6 py-3 bg-green-600 text-white font-semibold rounded-r-md hover:bg-green-700 transition duration-300 shadow-md">Search</button>
             </div>
           </form>
 
@@ -95,7 +104,7 @@ const Sidebar = ({ categories = [], allBlogs = [] }) => {
       </div>
 
       <div className="fixed bottom-5 left-5 z-[101]">
-        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center shadow-lg focus:outline-none">
+        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300 focus:outline-none">
           {isSidebarOpen ? '✕' : '☰'}
         </button>
       </div>
@@ -129,9 +138,9 @@ export const CategorySlider = ({ categories }) => {
   const ArrowButton = ({ onClick, children, isDisabled }) => (
     <div
       onClick={!isDisabled ? onClick : undefined}
-      className={`w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md transition-opacity ${isDisabled
+      className={`w-8 h-8 bg-green-600 rounded-full flex items-center justify-center shadow-md transition-all duration-300 ${isDisabled
         ? 'opacity-20 cursor-not-allowed'
-        : 'cursor-pointer hover:bg-gray-100'
+        : 'cursor-pointer hover:bg-green-700 hover:scale-105'
         }`}
     >
       {children}
@@ -142,7 +151,7 @@ export const CategorySlider = ({ categories }) => {
     <div className="relative flex items-center container group mx-auto mt-30 px-2 max-w-screen-xl">
       <div className={`transition-opacity duration-300 mr-2 ${showPrevArrow ? 'opacity-100' : 'opacity-0'}`}>
         <ArrowButton onClick={() => sliderRef.current?.slickPrev()} isDisabled={!showPrevArrow}>
-          <FaArrowLeft size={12} className="text-green-600" />
+          <FaArrowLeft size={12} className="text-white" />
         </ArrowButton>
       </div>
 
@@ -169,7 +178,7 @@ export const CategorySlider = ({ categories }) => {
 
       <div className={`transition-opacity duration-300 ml-2 ${showNextArrow ? 'opacity-100' : 'opacity-0'}`}>
         <ArrowButton onClick={() => sliderRef.current?.slickNext()} isDisabled={!showNextArrow}>
-          <FaArrowRight size={12} className="text-green-600" />
+          <FaArrowRight size={12} className="text-white" />
         </ArrowButton>
       </div>
     </div>
@@ -184,69 +193,89 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
   const BlogCard = ({ blog, index }) => {
     const isHovered = hoveredIndex === index;
-    const getShortenedText = (text, length) => text?.length > length ? text.substring(0, length) + "..." : text;
+    const getShortenedText = (text, length) =>
+      text?.length > length ? text.substring(0, length) + "..." : text;
 
-    if (isAnimationEnabled) {
-      return (
-        <Link href={`/blogs/${blog.blog_slug}`} className="block group">
-          <div
-            className={`relative h-[28rem] bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 transition-transform duration-300 group-hover:scale-[1.03] ${isHovered ? "-translate-y-4" : ""}`}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <div className="relative h-2/5 w-full overflow-hidden">
-              <img
-                src={blog.blog_feature_image}
-                alt={blog.blog_title}
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-40000 ease-in-out ${isHovered ? "!-rotate-[6deg] scale-110" : ""}`}
-                style={{ transformOrigin: "bottom left" }}
-              />
-              {/* Overlay gradient for readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
-              {/* Category badge */}
-              <span className="absolute top-4 left-4 z-20 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                {blog.category_name}
-              </span>
-              {/* Date badge */}
-              <span className="absolute top-4 right-4 z-20 bg-white/80 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full shadow-md">
-                {blog.formatted_date}
-              </span>
-            </div>
-            <div className={`absolute bottom-0 w-full rounded-b-3xl transition-all bg-white/90 backdrop-blur-md p-6 duration-40000 ease-in-out ${isHovered ? 'bg-white/95' : 'bg-white/90'}`}>
-              <h2 className="text-2xl font-extrabold mb-2 leading-tight text-gray-900 group-hover:text-green-700 transition-colors duration-300">
-                {getShortenedText(blog.blog_title, 50)}
-              </h2>
-              <p className="mb-4 text-gray-700 text-base leading-relaxed line-clamp-3">
-                {blog.blog_description}
-              </p>
-              <div className="flex gap-2 mt-2">
-                <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
-                  {blog.category_name}
-                </span>
-                <span className="inline-block bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded-full">
-                  {blog.formatted_date}
-                </span>
+    return (
+      <Link href={`/blogs/${blog.blog_slug}`} className="block group">
+        <div
+          className={`relative h-[32rem] bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden border border-gray-100 transition-all duration-500 group-hover:scale-[1.02] group-hover:-translate-y-1`}
+          onMouseEnter={() => setHoveredIndex(index)}
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
+          <div className="relative h-3/5 w-full overflow-hidden">
+            <img
+              src={blog.blog_feature_image}
+              alt={blog.blog_title}
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${isHovered ? 'scale-110' : 'scale-100'}`}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
+                <FaArrowRight size={14} className="text-green-600" />
               </div>
             </div>
           </div>
-        </Link>
-      );
-    }
 
-    // Non-animated fallback card (if needed)
-    return null;
+          <div className="absolute bottom-0 w-full bg-white/95 backdrop-blur-md p-6 rounded-t-3xl">
+            <div className="flex items-center justify-between mb-3">
+              <span className="inline-block bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">
+                {blog.formatted_date}
+              </span>
+              <div className="flex items-center gap-1 text-gray-400">
+                <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                <span className="text-xs">
+                  {calculateReadingTime(blog.blog_content || blog.blog_description)}
+                </span>
+              </div>
+            </div>
+
+            <h2 className="text-xl font-bold mb-3 leading-tight text-gray-900 group-hover:text-green-700 transition-colors duration-300 line-clamp-2">
+              {getShortenedText(blog.blog_title, 60)}
+            </h2>
+
+            <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">
+              {blog.blog_description}
+            </p>
+
+            <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                  <span className="text-green-600 text-xs font-bold">EBH</span>
+                </div>
+                {/* <span className="text-xs text-gray-500 font-medium">Earth by Humans</span> */}
+              </div>
+              <div className="flex items-center rounded-full bg-green-300 gap-3 text-xs text-black">
+                <div className="flex items-center gap-1 p-1">
+                  <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
+                  <span>{blog.category_name}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
   };
 
   const AdCard = () => (
-    <div className="hover:rotate-[0deg]  text-white transition-transform duration-500 gap-4 mb-5 transition-transform shadow-md transform hover:-translate-y-2 hover:scale-105 duration-500 ease-in-out shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] rounded-xl bg-gradient-to-br from-green-800 to-gray-50 p-4" data-aos="zoom-in" data-aos-delay="100">
-      <p className="text-xl pt-30 text-center text-gray-800" style={{ fontFamily: 'poppins' }}>
-        Showcase your brand to a large audience. Contact us for details
-      </p>
-      <Link href={'/contact-us'}>
-        <button className="px-4 py-1.5  text-sm bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-blue-700 transition duration-300">
-          Contact us <FaArrowRight className="text-xs" />
-        </button>
-      </Link>
+    <div className="relative h-[32rem] bg-gradient-to-br from-white via-green-100 to-green-300 rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 group">
+      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-8">
+        <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 shadow-md">
+          <FaArrowRight size={24} className="text-green-500" />
+        </div>
+        <h3 className="text-2xl font-bold text-green-800 mb-4">
+          Advertise With Us
+        </h3>
+        <p className="text-green-700 text-lg leading-relaxed mb-8 max-w-sm">
+          Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
+        </p>
+        <Link href={'/contact-us'}>
+          <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 shadow-lg">
+            Get Started <FaArrowRight className="text-sm" />
+          </button>
+        </Link>
+      </div>
     </div>
   );
 
@@ -273,21 +302,29 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
         </div>
       )}
 
-
       {currentBlogs.length > 0 && (
         <>
-          {/* Ad Section */}
-          <div className="w-full bg-gray-800 mt-5  py-4 rounded">
+          <div className="w-full bg-gradient-to-r from-green-600 to-emerald-600 mt-8 py-8 rounded-2xl shadow-lg">
             <div className="max-w-7xl mx-auto px-6 text-center">
-              <p className="text-gray-100 text-xl font-bold">Advertisement Space</p>
-              <p className="text-gray-300 text-base mt-4">
-                Your ad could be here! Contact us for details.
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <FaArrowRight size={20} className="text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Advertisement Space</h3>
+              </div>
+              <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
+                Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
               </p>
+              <Link href="/contact-us">
+                <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 mx-auto shadow-lg">
+                  Contact Us <FaArrowRight className="text-sm" />
+                </button>
+              </Link>
             </div>
           </div>
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">
-              <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white rounded-3xl hover:bg-green-700 transition-colors">
+              <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 shadow-lg">
                 Load More
               </button>
             </div>
@@ -297,6 +334,7 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
     </>
   );
 };
+
 
 // ---------------- BlogHomePage ----------------
 export default function BlogHomePage() {
