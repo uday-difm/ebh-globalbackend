@@ -31,7 +31,7 @@ const BlobAnimation = () => {
 
 export default function Hero() {
   return (
-    <div className="relative">
+    <div className="relative font-poppins">
       {/* Background SVG Animation */}
       <BlobAnimation />
 
