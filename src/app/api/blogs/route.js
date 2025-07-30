@@ -1,4 +1,4 @@
-// /app/api/blogs/route.js
+// src/app/api/blogs/route.js
 import { NextResponse } from 'next/server';
 import db from '../../../lib/db';
 

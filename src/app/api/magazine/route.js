@@ -1,6 +1,6 @@
+// app/api/magazines/route.js
 import { NextResponse } from 'next/server';
-
-import db from "../../../lib/db";
+import db from "../../../lib/db"; // Ensure this path is correct relative to this file
 
 export async function GET(request) {
   try {
@@ -8,7 +8,9 @@ export async function GET(request) {
     const [rows] = await db.query(sql);
     return NextResponse.json(rows);
   } catch (error) {
-    console.error("Error in GET /api/magazine:", error);
+    // Log the error for debugging purposes
+    console.error("Error in GET /api/magazines:", error);
+    // Return a 500 Internal Server Error response
     return NextResponse.json({ error: "Error fetching magazines" }, { status: 500 });
   }
 }

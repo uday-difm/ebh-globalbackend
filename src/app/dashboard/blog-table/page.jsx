@@ -79,10 +79,11 @@ export default function BlogTable() {
       toast.success('Blog deleted successfully');
       setBlogs(blogs.filter(blog => blog.blog_slug !== blog_slug));
     } catch (error) {
-      console.error('Error deleting blog:', error);
-      toast.error('An error occurred while deleting the blog');
+      console.error('Delete error:', error);
+      toast.error('Error while deleting the blog');
     }
   };
+
 
   const downloadBlogs = () => {
     const headers = ['Blog Title', 'Slug', 'Date'];
