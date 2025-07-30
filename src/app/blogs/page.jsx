@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slider from "react-slick";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import '../pagination.css';
+import { Loader } from '../../common/Loader';
 
 const getAllData = async () => {
   const res = await fetch('/api/blogs');
@@ -187,25 +188,44 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
     if (isAnimationEnabled) {
       return (
-        <Link href={`/blogs/${blog.blog_slug}`} className="block max-w-[1350] group">
-          <div className={`relative h-[24rem] transform transition-transform duration-100 text-black ${isHovered ? "-translate-y-4" : ""}`}
-            onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
-            <img src={blog.blog_feature_image} alt={blog.blog_title}
-              className={`absolute inset-0 w-full h-full rounded-2xl object-cover shadow-lg transition-all duration-2000 ease-in-out ${isHovered ? "!-rotate-[9deg] -translate-y-18" : ""}`}
-              style={{ transformOrigin: "bottom left" }} />
-            <div className={`absolute bottom-0 w-full rounded-2xl transition-all bg-blue-200 opacity-60 hover:bg-white transform duration-2000 ease-in-out ${isHovered ? 'bg-[rgba(255,255,255,0.9)] opacity-75 backdrop-blur-sm rotate-6' : 'bg-[rgba(0,0,0,0.4)]'}`}>
-              <div className={`h-full p-4 flex flex-col justify-between rounded-2xl transition-colors duration-500 ${isHovered ? 'bg-white' : 'bg-blue-200'} opacity-100`}>
-                <div className="overflow-y-auto space-y-2">
-                  <h2 className="text-2xl font-bold mb-2 leading-tight text-black">{getShortenedText(blog.blog_title, 40)}</h2>
-                  <p className={`mb-4 transition-opacity duration-500 text-black`}>{blog.blog_description}</p>
-                </div>
-                <div className="flex flex-col items-start gap-2 flex-wrap">
-                  <button className={`flex flex-wrap items-center px-2 border-2 transition-colors duration-500 ${isHovered ? 'border-black' : 'border-white'}`}>
-                    <span>{blog.formatted_date}</span></button>
-                  <button className={`flex items-center px-2 text-xs border-2 transition-colors duration-500 ${isHovered ? 'border-black' : 'border-white'}`}>
-                    <span>{blog.category_name}</span>
-                  </button>
-                </div>
+        <Link href={`/blogs/${blog.blog_slug}`} className="block group">
+          <div
+            className={`relative h-[28rem] bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 transition-transform duration-300 group-hover:scale-[1.03] ${isHovered ? "-translate-y-4" : ""}`}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <div className="relative h-2/5 w-full overflow-hidden">
+              <img
+                src={blog.blog_feature_image}
+                alt={blog.blog_title}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-40000 ease-in-out ${isHovered ? "!-rotate-[6deg] scale-110" : ""}`}
+                style={{ transformOrigin: "bottom left" }}
+              />
+              {/* Overlay gradient for readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
+              {/* Category badge */}
+              <span className="absolute top-4 left-4 z-20 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                {blog.category_name}
+              </span>
+              {/* Date badge */}
+              <span className="absolute top-4 right-4 z-20 bg-white/80 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                {blog.formatted_date}
+              </span>
+            </div>
+            <div className={`absolute bottom-0 w-full rounded-b-3xl transition-all bg-white/90 backdrop-blur-md p-6 duration-40000 ease-in-out ${isHovered ? 'bg-white/95' : 'bg-white/90'}`}>
+              <h2 className="text-2xl font-extrabold mb-2 leading-tight text-gray-900 group-hover:text-green-700 transition-colors duration-300">
+                {getShortenedText(blog.blog_title, 50)}
+              </h2>
+              <p className="mb-4 text-gray-700 text-base leading-relaxed line-clamp-3">
+                {blog.blog_description}
+              </p>
+              <div className="flex gap-2 mt-2">
+                <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
+                  {blog.category_name}
+                </span>
+                <span className="inline-block bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded-full">
+                  {blog.formatted_date}
+                </span>
               </div>
             </div>
           </div>
@@ -218,20 +238,15 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
   };
 
   const AdCard = () => (
-    <div className="hover:rotate-[0deg] transition-transform duration-500" data-aos="zoom-in" data-aos-delay="100">
-      <div className="flex flex-col pb-5 gap-4 mb-5 transition-transform shadow-md transform hover:-translate-y-2 hover:scale-105 duration-500 ease-in-out shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] rounded-xl bg-gradient-to-br from-white to-gray-50 p-4">
-        <img src="https://res.cloudinary.com/dtjjgiitl/image/upload/q_auto:good,f_auto,fl_progressive/v1753426444/lueoutuyoznwvlhab3ez.jpg"
-          alt="Advertisement"
-          className="w-full h-auto  p-5 object-cover rounded-2xl cursor-pointer transition duration-300 hover:opacity-90" />
-        <p className="text-xl text-center text-gray-800" style={{ fontFamily: 'poppins' }}>
-          Showcase your brand to a large audience. Contact us for details
-        </p>
-        <Link href={'/contact-us'}>
-          <button className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-blue-700 transition duration-300">
-            Contact us <FaArrowRight className="text-xs" />
-          </button>
-        </Link>
-      </div>
+    <div className="hover:rotate-[0deg]  text-white transition-transform duration-500 gap-4 mb-5 transition-transform shadow-md transform hover:-translate-y-2 hover:scale-105 duration-500 ease-in-out shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] rounded-xl bg-gradient-to-br from-green-800 to-gray-50 p-4" data-aos="zoom-in" data-aos-delay="100">
+      <p className="text-xl pt-30 text-center text-gray-800" style={{ fontFamily: 'poppins' }}>
+        Showcase your brand to a large audience. Contact us for details
+      </p>
+      <Link href={'/contact-us'}>
+        <button className="px-4 py-1.5  text-sm bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-blue-700 transition duration-300">
+          Contact us <FaArrowRight className="text-xs" />
+        </button>
+      </Link>
     </div>
   );
 
@@ -294,7 +309,7 @@ export default function BlogHomePage() {
     fetchData();
   }, []);
 
-  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen"><Loader /></div>;
   if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
 
   return (

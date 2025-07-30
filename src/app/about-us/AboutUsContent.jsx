@@ -84,8 +84,8 @@ export default function AboutUsContent() {
                                     <div className="absolute w-[120px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10" />
                                     <div className="absolute w-[220px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10" />
 
-                                    <button className="relative z-20 px-5 py-2 w-full text-white text-base rounded-full transition-colors duration-300 flex items-center justify-center gap-2">
-                                        contact-us <FaArrowRight />
+                                    <button className="relative z-20 px-3 py-2 w-full text-white text-base rounded-full transition-colors duration-300 flex items-center justify-center gap-2">
+                                        Contact Us <FaArrowRight />
                                     </button>
                                 </div>
 

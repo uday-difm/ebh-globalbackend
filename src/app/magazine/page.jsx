@@ -26,7 +26,7 @@ const Card = ({ data }) => {
           <p className="text-xl font-bold text-blue-700 text-center">
             {data.magazine_title}
           </p>
-          <button className="px-4 py-1.5 text-sm bg-green-600 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-green-700 transition duration-300">
+          <button className="px-4 py-1.5 text-sm bg-green-600 mt-4 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-green-700 transition duration-300">
             Read more <FaArrowRight className="text-xs" />
           </button>
         </Link>
@@ -37,33 +37,26 @@ const Card = ({ data }) => {
 
 // ------------------ Ad Card ------------------
 
-const AdCard = () => {
-  return (
-    <div
-      className="hover:rotate-[0deg] transition-transform duration-500"
-      data-aos="zoom-in"
-      data-aos-delay="100"
-    >
-      <div className="flex flex-col pb-30 gap-4 mb-5 transition-transform shadow-md transform hover:-translate-y-2 hover:scale-105 duration-500 ease-in-out shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] rounded-xl bg-gradient-to-br from-white to-gray-50 p-4">
-        <img
-          src="https://res.cloudinary.com/dtjjgiitl/image/upload/q_auto:good,f_auto,fl_progressive/v1753426444/lueoutuyoznwvlhab3ez.jpg"
-          alt="Advertisement"
-          className="w-full h-auto mt-20 p-5 object-cover rounded-2xl cursor-pointer transition duration-300 hover:opacity-90"
-        />
-        <p className="text-xl text-center text-gray-800" style={{ fontFamily: 'poppins' }}>
-          Showcase your brand to a large audience. Contact us for details
-        </p>
-        <Link href="/contact-us">
-          <button className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-blue-700 transition duration-300">
-            Contact us <FaArrowRight className="text-xs" />
-          </button>
-        </Link>
-      </div>
-    </div>
-  );
-};
+const AdCard = () => (
+  <div
+    className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-gray-900 to-gray-50 p-6 min-h-[220px]"
+    data-aos="zoom-in"
+    data-aos-delay="100"
+  >
+    <p className="text-xl text-center text-gray-800 font-medium" style={{ fontFamily: 'Poppins' }}>
+      Showcase your brand to a large audience. Contact us for details
+    </p>
+
+    <Link href="/contact-us">
+      <button className="px-5 py-2 text-sm bg-blue-600 text-white rounded-full flex items-center justify-center gap-2 hover:bg-blue-700 transition duration-300">
+        Contact us <FaArrowRight className="text-xs" />
+      </button>
+    </Link>
+  </div>
 
 
+
+)
 
 // ------------------ Magazine Page ------------------
 const Magazine = () => {
