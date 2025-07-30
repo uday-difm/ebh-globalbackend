@@ -1,48 +1,19 @@
 // src/app/api/blogs/route.js
 import { NextResponse } from 'next/server';
-import db from "../../../lib/db"; // Ensure this path is correct for your database connection
-
-async function getAllBlogsFromDB() {
-  try {
-    const sql = `
-      SELECT
-        b.blog_id,
-        b.blog_title,
-        b.blog_slug,
-        b.blog_description,
-        b.blog_feature_image,
-        b.blog_content,
-        DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
-        DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
-        bc.category_name,
-        bc.category_slug
-      FROM blogs b
-      JOIN blog_category bc ON b.blog_category_id = bc.category_id
-      ORDER BY b.blog_timestamp DESC;
-    `;
-    const [rows] = await db.query(sql); // db.query typically returns [rows, fields]
-    return rows;
-  } catch (error) {
-    console.error("Error fetching blogs from DB in /api/blogs/route.js:", error);
-    return []; // Return empty array on error
-  }
-}
-
-async function getAllCategoriesFromDB() {
-  try {
-    const sql = `SELECT category_id, category_name, category_slug FROM blog_category ORDER BY category_name ASC;`;
-    const [rows] = await db.query(sql);
-    return rows;
-  } catch (error) {
-    console.error("Error fetching categories from DB in /api/blogs/route.js:", error);
-    return []; // Return empty array on error
-  }
-}
+import db from '../../../lib/db';
 
 export async function GET() {
   try {
-    const blogs = await getAllBlogsFromDB();
-    const categories = await getAllCategoriesFromDB();
+    const blogsSql = `
+      SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date,
+             bc.category_name, bc.category_slug
+      FROM blogs b
+      INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
+      WHERE b.status = 1 ORDER BY b.blog_date_time DESC`;
+    const [blogs] = await db.query(blogsSql);
+
+    const categoriesSql = 'SELECT * FROM `blog_category`';
+    const [categories] = await db.query(categoriesSql);
 
     return NextResponse.json({
       blogs,

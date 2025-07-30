@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { RiMenuLine } from "react-icons/ri";
 import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
-import { useState, useRef } from "react";
+import { useState, useRef ,useEffect} from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
@@ -13,8 +13,13 @@ const Header = () => {
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [hydrated, setHydrated] = useState(false); // ✅ hydration check
   const auth = useSelector((state) => state.auth);
   const userMenuRef = useRef(null);
+
+   useEffect(() => {
+    setHydrated(true); // ✅ enable rendering after hydration
+  }, []);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -33,7 +38,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-50">
+    <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-[999] shadow-md">
       <div className="max-w-[1440px] mx-auto">
         <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
           {/* Logo */}
@@ -72,10 +77,11 @@ const Header = () => {
 
           {/* Desktop Auth/Profile */}
           <div className="hidden xl:flex items-center gap-4">
-            {auth.isAuthenticated && auth.userId ? (
+            {hydrated && auth.isAuthenticated && auth.userId ? (
               <div className="relative" ref={userMenuRef}>
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
                   <Image
+                    key={auth.profile} // force re-render on profile change
                     src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"}
                     alt="User"
                     width={40}
@@ -99,7 +105,7 @@ const Header = () => {
                   </div>
                 )}
               </div>
-            ) : (
+            ) : hydrated && (
               <Link href="/login">
                 <div className="group relative w-36 h-12 overflow-hidden rounded-full cursor-pointer flex items-center justify-center">
                   <div className="absolute inset-0 bg-green-600 w-[200] z-0 rounded-full"></div>
@@ -110,6 +116,7 @@ const Header = () => {
               </Link>
             )}
           </div>
+
 
           {/* Mobile Menu Icon */}
           <button onClick={() => setShowMenu(!showMenu)} className="xl:hidden z-50">

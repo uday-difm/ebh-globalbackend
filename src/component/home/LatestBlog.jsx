@@ -1,117 +1,68 @@
-// --- MODIFIED Code for: src/component/home/LatestBlog.jsx ---
+'use client';
 
-"use client";
-
-import { useState, useEffect } from "react";
-import { CategorySlider } from "../blog/CategorySlider";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import BlogCard from "../../component/home/HomeBlogCard";
 import { FaArrowRight } from "react-icons/fa";
-import HomeBlogCard from "../../component/home/HomeBlogCard";
+import Link from "next/link";
 
-// LatestBlog now receives activeCategorySlug and onCategoryClick from HomePageClient
-export default function LatestBlog({ categories, activeCategorySlug, onCategoryClick }) {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const LatestBlog = () => {
+  const [blogData, setBlogData] = useState([]);
+  const [count, setCount] = useState(4);
 
-  // Function to fetch blogs from the backend API
-  const fetchBlogs = async (category) => {
-    setLoading(true);
-    setError(null);
-    try {
-      // Construct the API URL using a relative path directly
-      let apiUrl = '/api/home-blogs?limit=4'; // Start with base path and limit
-
-      if (category && category !== "All") {
-        apiUrl += `&category=${category}`; // Append category if not "All"
-      }
-
-      console.log("Fetching blogs for LatestBlog:", apiUrl);
-      // Use the relative URL directly in the fetch call
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
-        throw new Error(`Failed to fetch blogs: ${response.status} - ${errorData.message}`);
-      }
-
-      const data = await response.json();
-      setBlogs(data.blogs || []); // Expecting { blogs: [...] } from the API
-    } catch (err) {
-      console.error("Error fetching blogs in LatestBlog:", err);
-      setError("Failed to load blogs. Please try again.");
-      setBlogs([]); // Clear blogs on error
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // useEffect to fetch blogs whenever activeCategorySlug changes
   useEffect(() => {
-    fetchBlogs(activeCategorySlug);
-  }, [activeCategorySlug]); // Dependency array: re-run effect when activeCategorySlug changes
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch("/api/home-blogs");
+        const data = await res.json();
+        setBlogData(Array.isArray(data.blogs) ? data.blogs : []);
+        setCount(Math.min(4, data.blogs?.length || 0));
+      } catch (err) {
+        console.error("Blog fetch failed:", err);
+      }
+    };
 
-  // Determine the display title and the "View All" link based on the active category
-  const activeCategoryName = categories.find(cat => cat.category_slug === activeCategorySlug)?.category_name || "All";
-  const displayTitle = activeCategorySlug === "All" ? "Latest Blogs" : `Latest ${activeCategoryName} Blogs`;
-  const viewAllLink = activeCategorySlug === "All" ? "/blogs" : `/blogs/category/${activeCategorySlug}`;
-
+    fetchBlog();
+  }, []);
 
   return (
-    <div className="container mx-auto px-4 py-16 max-w-[1350]">
-      <div className="mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold">{displayTitle}</h2> {/* Dynamic title */}
-        <p className="text-xl text-gray-600 mt-2">
-          Discover the most recent blogs from Earth By Humans.
-        </p>
-      </div>
+    <div className="relative">
+      <div className="container mx-auto px-4 2xl:px-16 py-10 mt-10 bg-white text-black">
+        <div className="flex flex-col gap-10">
+          {/* Heading */}
+          <div className="col-span-2 flex flex-col gap-5">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Latest Blogs</h2>
+            <h4 className="text-xl text-gray-700">
+              Discover the most recent blog from Earth By Humans.
+            </h4>
+          </div>
 
-      <div className="mb-12">
-        {/* Pass categories, activeCategorySlug, and onCategoryClick to CategorySlider */}
-        <CategorySlider
-          categories={categories}
-          activeCategorySlug={activeCategorySlug}
-          onCategoryClick={onCategoryClick} // Pass the handler from HomePageClient
-          isHomePage={true} // Add this prop if CategorySlider needs to behave differently on home
-        />
-      </div>
-
-      {loading && <p className="text-center text-gray-600">Loading blogs...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
-      {!loading && !error && blogs.length === 0 && (
-        <p className="text-center text-gray-600">No blogs found for this category yet.</p>
-      )}
-
-      {/* Grid of Blog Cards */}
-      {!loading && !error && blogs.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {blogs.map(blog => (
-            <HomeBlogCard blog={blog} key={blog.blog_id} />
-          ))}
+          {/* Blog Cards */}
+          <div className="grid md:grid-cols-2 gap-6 xl:gap-16">
+            {blogData.length > 0 ? (
+              blogData.slice(0, count).map((blog, i) => (
+                <BlogCard key={i} blog={blog} category_name={blog.category_name} />
+              ))
+            ) : (
+              <p className="text-gray-500">No blogs available.</p>
+            )}
+          </div>
         </div>
-      )}
+      </div>
 
       {/* View More Button */}
-      {/* Conditionally render "View More" if there are blogs */}
-      {!loading && !error && blogs.length > 0 && (
-        <div className="text-center flex justify-center mt-12">
-          <Link href={viewAllLink}> {/* Dynamic Link */}
-            <div className="relative group max-w-[150px] overflow-hidden rounded-full cursor-pointer">
-              {/* Green Base Background */}
-              <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-
-              {/* Animated Blue Layers on Hover */}
-              <div className="absolute w-[130px] h-[200px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
-              <div className="absolute w-[200px] h-[90px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-
-              {/* Button Text */}
-              <button className="relative z-20 w-[250px] text-white py-3 border border-gray-300 flex items-center mx-auto gap-2 font-bold px-8 text-sm rounded-full transition-colors duration-300">
-                View More <FaArrowRight />
-              </button>
-            </div>
-          </Link>
-        </div>
-      )}
+      <div className="mx-auto w-48 ">
+        <Link href="/blogs" scroll={true}>
+          <div className="group relative bg-green-600 text-white py-4 rounded-full flex items-center justify-center overflow-hidden">
+            <div className="absolute w-[100px] h-[200px] bg-blue-700 rotate-[35deg] transition-all duration-500 top-[-135%] left-[-80%] group-hover:left-0"></div>
+            <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] transition-all duration-500 top-[15%] left-[90%] group-hover:left-[20%]"></div>
+            <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+              View More <FaArrowRight />
+            </span>
+          </div>
+        </Link>
+      </div>
     </div>
   );
-}
+};
+
+export default LatestBlog;

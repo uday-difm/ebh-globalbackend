@@ -42,16 +42,13 @@ export default function EditMagazinePage() {
     description: '',
     age_verification_required: false,
     email_verification_required: false,
-    credits: [],
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage] = useState('');
   const [existingImageUrl, setExistingImageUrl] = useState('');
 
   useEffect(() => {
     if (!slug) return;
-    // GET /api/dashboard/magazine/fetchMagzineBySlug?slug=april-2025-edition
     const fetchMagazine = async () => {
       try {
         const res = await fetch(`/api/dashboard/magazine/fetchMagzineBySlug/${slug}`);
@@ -69,8 +66,6 @@ export default function EditMagazinePage() {
             PdfLink: data.magazine_link || '',
             description: data.magazine_description || '',
             age_verification_required: !!data.age_verification_required,
-            email_verification_required: !!data.email_verification_required,
-            credits: data.credits || [],
           });
           setExistingImageUrl(data.magazine_cover_image || '');
         } else {
@@ -83,24 +78,6 @@ export default function EditMagazinePage() {
 
     fetchMagazine();
   }, [slug]);
-
-  const updateCredit = (index, field, value) => {
-    const updated = [...form.credits];
-    updated[index][field] = field === 'sno' ? value : String(value);
-    setForm({ ...form, credits: updated });
-  };
-
-  const addCredit = () => {
-    setForm({
-      ...form,
-      credits: [...form.credits, { sno: '', instalink: '', image: '', credits: '' }],
-    });
-  };
-
-  const removeCredit = (index) => {
-    const updated = form.credits.filter((_, i) => i !== index);
-    setForm({ ...form, credits: updated });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,12 +93,12 @@ export default function EditMagazinePage() {
     formData.append('MagCloudLink', form.MagCloudLink);
     formData.append('magazine_link', form.PdfLink);
     formData.append('magazine_description', form.description);
+
     if (form.image) {
       formData.append('magazine_cover_image', form.image);
     } else if (existingImageUrl) {
       formData.append('magazine_cover_image', existingImageUrl);
     }
-    formData.append('credits', JSON.stringify(form.credits));
 
     const res = await fetch(`/api/dashboard/magazine/update-magazine/${slug}?slug=${slug}`, {
       method: 'PUT',
@@ -149,7 +126,6 @@ export default function EditMagazinePage() {
 
           <form onSubmit={handleSubmit}>
             <div className="p-6 space-y-8 text-gray-600">
-              {/* Title & Tags */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="mb-2 block text-black dark:text-white">Magazine Title</label>
@@ -171,7 +147,6 @@ export default function EditMagazinePage() {
                 </div>
               </div>
 
-              {/* More inputs */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div>
                   <label className="mb-2 block text-black dark:text-white">Magazine Keywords</label>
@@ -202,7 +177,6 @@ export default function EditMagazinePage() {
                 </div>
               </div>
 
-              {/* Image Display */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                   <label className="mb-2 block text-black dark:text-white">Feature Image</label>
@@ -221,7 +195,6 @@ export default function EditMagazinePage() {
                 </div>
               </div>
 
-              {/* Links */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="mb-2 block text-black dark:text-white">MagCloud Link</label>
@@ -243,7 +216,6 @@ export default function EditMagazinePage() {
                 </div>
               </div>
 
-              {/* Editor */}
               <div>
                 <label className="mb-2 block text-black dark:text-white">Content</label>
                 <JoditEditor
@@ -251,71 +223,6 @@ export default function EditMagazinePage() {
                   value={form.description}
                   onChange={(val) => setForm({ ...form, description: val })}
                 />
-              </div>
-
-              {/* Credits */}
-              <div className="border-t border-gray-300 pt-6">
-                <h3 className="text-xl font-semibold mb-4 text-black dark:text-white">Credits</h3>
-
-                {form.credits.map((credit, idx) => (
-                  <div key={idx} className="mb-4 rounded border border-stroke p-4 dark:border-form-strokedark">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                      <div>
-                        <label className="mb-1 block text-black dark:text-white">Sno</label>
-                        <input
-                          type="number"
-                          min={1}
-                          value={credit.sno}
-                          onChange={(e) => updateCredit(idx, 'sno', Number(e.target.value))}
-                          className="w-full rounded border border-stroke py-2 px-3 dark:border-form-strokedark dark:bg-form-input"
-                        />
-                      </div>
-                      <div>
-                        <label className="mb-1 block text-black dark:text-white">Instagram Link</label>
-                        <input
-                          type="text"
-                          value={credit.instalink}
-                          onChange={(e) => updateCredit(idx, 'instalink', e.target.value)}
-                          className="w-full rounded border border-stroke py-2 px-3 dark:border-form-strokedark dark:bg-form-input"
-                        />
-                      </div>
-                      <div>
-                        <label className="mb-1 block text-black dark:text-white">Image URL</label>
-                        <input
-                          type="text"
-                          value={credit.image}
-                          onChange={(e) => updateCredit(idx, 'image', e.target.value)}
-                          className="w-full rounded border border-stroke py-2 px-3 dark:border-form-strokedark dark:bg-form-input"
-                        />
-                      </div>
-                      <div>
-                        <label className="mb-1 block text-black dark:text-white">Credits</label>
-                        <input
-                          type="text"
-                          value={credit.credits}
-                          onChange={(e) => updateCredit(idx, 'credits', e.target.value)}
-                          className="w-full rounded border border-stroke py-2 px-3 dark:border-form-strokedark dark:bg-form-input"
-                          placeholder="e.g. Photographer: Jane Doe"
-                        />
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeCredit(idx)}
-                      className="mt-2 text-sm text-red-600 hover:underline"
-                    >
-                      Remove Credit
-                    </button>
-                  </div>
-                ))}
-
-                <button
-                  type="button"
-                  onClick={addCredit}
-                  className="mt-4 rounded bg-primary py-2 px-4 text-white hover:bg-primary-dark"
-                >
-                  Add Credit
-                </button>
               </div>
 
               <div className="flex justify-end gap-4 pt-4">

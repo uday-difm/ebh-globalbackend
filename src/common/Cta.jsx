@@ -1,47 +1,59 @@
+"use client"
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaArrowRight, FaStar } from "react-icons/fa";
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Cta() {
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
   return (
-    <div className="bg-gray-50">
-        <div className="container mx-auto px-6 py-20 max-w-[1350]">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                
-                {/* Left Column: Text Content */}
-                <div className="text-center lg:text-left">
-                    <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 font-semibold px-4 py-1.5 rounded-full mb-6">
-                        <FaStar className="text-yellow-500" />
-                        Hop on the Fun Wagon!
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-                        Join Our Portal Today!
-                    </h2>
-                    <p className="text-gray-600 text-lg max-w-xl mx-auto lg:mx-0 mb-8">
-                        Unlock exclusive benefits and stay updated with the latest in nature, science, and insights by signing up with us. Join now and embark on a journey to enhance your knowledge and experience with us!
-                    </p>
-                    <Link href="/contact-us">
-                        <button className="bg-green-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition-colors duration-300 text-lg inline-flex items-center gap-2">
-                            Contact Us
-                            <FaArrowRight />
-                        </button>
-                    </Link>
-                </div>
+    <section className="bg-gradient-to-br   relative z-10">
+      <div className="container mx-auto px-6 w-full p-10">
+        <div className="bg-white/60  p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center transition-all">
 
-                {/* Right Column: Image */}
-                <div className="flex justify-center">
-                    <Image
-                        src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/CTA.png"
-                        alt="A penguin swimming underwater"
-                        width={500}
-                        height={350}
-                        className="rounded-2xl shadow-xl"
-                        style={{ objectFit: 'cover' }}
-                    />
-                </div>
-
+          {/* Text Section */}
+          <div className="text-center lg:text-left" data-aos="fade-up text-black">
+            <div className="inline-flex items-center gap-2 bg-white border border-gray-300 text-gray-700 font-medium px-4 py-2 rounded-full mb-6 shadow-sm">
+              <FaStar className="text-yellow-400 animate-bounce" />
+              Hop on the Fun Wagon!
             </div>
+
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+              Join Our Portal Today!
+            </h2>
+
+            <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+              Unlock exclusive benefits and stay updated with the latest in nature, science, and insights. Join us and embark on a journey of learning and exploration.
+            </p>
+
+            <Link href="/contact-us">
+            
+              <button className="group bg-green-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-500 text-lg flex items-center gap-3">
+                Contact Us
+                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </div>
+
+          {/* Image Section */}
+          <div className="flex justify-center" data-aos="zoom-in">
+            <div className="overflow-hidden  shadow-2xl ">
+              <Image
+                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/CTA.png"
+                alt="CTA - Penguin underwater"
+                width={400}
+                height={300}
+                className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
+              />
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
   );
 }

@@ -8,7 +8,7 @@ export async function GET() {
 
   if (res.ok) {
     const data = await res.json();
-    magazines = data.magazines || []; // Adjust this based on your API shape
+    magazines = data || []; // Adjust this based on your API shape
   } else {
     console.error('Failed to fetch magazines for sitemap');
   }

@@ -5,6 +5,7 @@ import axios from "axios";
 import Head from "next/head";
 import { useParams, useRouter } from "next/navigation";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
+import { Loader } from '../../../common/Loader';
 
 const formatDate = (dateString) => {
   const months = [
@@ -53,7 +54,7 @@ const MagazineDetails = () => {
   }, [slug]);
 
   if (loading) {
-    return <div className="text-center py-20">Loading magazine...</div>;
+    return <div className="flex justify-center items-center h-screen"><Loader /></div>;
   }
 
   if (!magazine) {
@@ -70,7 +71,7 @@ const MagazineDetails = () => {
         <meta property="og:image" content={magazine?.magazine_cover_image || ""} />
       </Head>
 
-      <div className="max-w-[1400px] mx-auto px-5 mt-15 py-16 text-black">
+      <div className="max-w-[1400px] mx-auto px-5 mt-20 py-16 text-black">
         <h2 className="text-4xl font-bold text-[#54AE47] mb-4">{magazine.magazine_title}</h2>
 
         <div className="flex items-center text-sm gap-4 text-gray-700 mb-8">

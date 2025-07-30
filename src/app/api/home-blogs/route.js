@@ -19,28 +19,29 @@ async function getLatestBlogsFromDB({ categorySlug = null, limit = 4, sortBy = '
         bc.category_slug
       FROM blogs b
       JOIN blog_category bc ON b.blog_category_id = bc.category_id
+      WHERE b.status = 1
     `;
 
     const queryParams = [];
 
-    // Add WHERE clause if a specific categorySlug is provided and it's not "All"
+    // If category filter is applied (and not "All"), add to WHERE clause
     if (categorySlug && categorySlug !== "All") {
-      sql += ` WHERE bc.category_slug = ?`;
+      sql += ` AND bc.category_slug = ?`;
       queryParams.push(categorySlug);
     }
 
-    // Add ORDER BY and LIMIT clauses
-    sql += ` ORDER BY b.${sortBy} ${order} LIMIT ?;`;
+    // Add ORDER BY and LIMIT
+    sql += ` ORDER BY b.${sortBy} ${order} LIMIT ?`;
     queryParams.push(limit);
-
 
     const [rows] = await db.query(sql, queryParams);
     return rows;
   } catch (error) {
     console.error("Error fetching latest blogs from DB in /api/home-blogs/route.js:", error);
-    return []; // Return empty array on error
+    return [];
   }
 }
+
 
 export async function GET(request) {
   try {

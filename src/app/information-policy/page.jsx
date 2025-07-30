@@ -7,7 +7,6 @@ export const metadata = {
 
 export default function InformationPolicyPage() {
   return (
-
     <>
       <title>Information Policy | Earth by Humans Our Commitment</title>
       <meta name="description" content=" Learn about Earth by Humans' commitment to accurate, transparent, and credible information. Our policy ensures reliable content." />

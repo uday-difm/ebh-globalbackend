@@ -12,9 +12,8 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const response = await fetch(`/api/auth/profile?userId=${fullData.userId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch profile data");
-        }
+        if (!response.ok) throw new Error("Failed to fetch profile data");
+
         const data = await response.json();
         dispatch(
           setAuth(
@@ -33,17 +32,12 @@ const Profile = () => {
       }
     };
 
-    if (fullData.userId) {
-      fetchProfile();
-    }
+    if (fullData.userId) fetchProfile();
   }, [fullData.userId, dispatch]);
 
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -60,75 +54,45 @@ const Profile = () => {
     "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png";
 
   return (
-    <div className="container py-28 max-w-[1200px] mx-auto px-[15px] flex justify-center items-center">
-      <div className="w-full flex shadow-xl rounded-2xl py-20 flex-col items-start gap-5 px-[5%] text-black">
-        <p className="text-3xl font-bold">Profile details</p>
-        <hr className="black border-1 border-gray2 w-full" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-10">
+        <div className="flex items-center justify-between flex-wrap mb-10">
+          <h2 className="text-3xl font-bold text-gray-800">Profile Details</h2>
+          <Link href="/edit-profile" onClick={scrollToTop}>
+            <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full transition">
+              Edit Profile
+            </button>
+          </Link>
+        </div>
 
-        {/* Profile Section */}
-        <div className="w-full grid grid-cols-6 gap-5 md:gap-0 py-8">
-          <div className="col-span-6 md:col-span-2 flex md:flex-row flex-col items-center">
-            <p className="font-semibold text-xl">Profile</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-10">
+          <div className="flex flex-col items-center gap-4">
+            <img
+              src={profile || defaultProfileImage}
+              alt="Profile"
+              className="w-32 h-32 rounded-full object-cover border-4 border-green-500 shadow"
+            />
+            <p className="text-xl font-semibold text-gray-800">{name}</p>
           </div>
-          <div className="col-span-6 md:col-span-4 flex md:flex-row flex-col justify-between gap-5">
-            <div className="flex md:flex-row flex-col gap-5 items-center">
-              <img
-                src={profile || defaultProfileImage}
-                alt="Profile"
-                className="w-[100px] h-[100px] object-cover rounded-full"
-              />
-              <p>{name}</p>
+          <div className="md:col-span-2 grid grid-cols-1 gap-6">
+            <div>
+              <p className="text-sm text-gray-500 font-medium">Username</p>
+              <p className="text-lg text-gray-700 font-semibold">{username}</p>
             </div>
-            <Link href="/edit-profile" onClick={scrollToTop}>
-              <p className="cursor-pointer bg-light-sky hover:bg-light-green hover:text-dark-green transition-all duration-500 py-3 px-6 rounded-3xl text-dark-sky">
-                Edit Profile
-              </p>
-            </Link>
+            <div>
+              <p className="text-sm text-gray-500 font-medium">Email</p>
+              <p className="text-lg text-gray-700 font-semibold">{email}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500 font-medium">Profession</p>
+              <p className="text-lg text-gray-700 font-semibold">{profession}</p>
+            </div>
           </div>
         </div>
 
-        {/* About */}
-        <hr className="black border-1 border-gray2 w-full" />
-        <div className="w-full grid grid-cols-6 gap-5 md:gap-0 py-6">
-          <div className="col-span-6 md:col-span-2 text-xl flex items-center">
-            <p className="font-semibold">About</p>
-          </div>
-          <div className="col-span-6 md:col-span-4 flex items-center">
-            <p>{bio}</p>
-          </div>
-        </div>
-
-        {/* Profession */}
-        <hr className="black border-1 border-gray2 w-full" />
-        <div className="w-full grid grid-cols-6 gap-5 md:gap-0 py-6">
-          <div className="col-span-6 md:col-span-2 text-xl flex items-center">
-            <p className="font-semibold">Profession</p>
-          </div>
-          <div className="col-span-6 md:col-span-4 flex items-center">
-            <p>{profession}</p>
-          </div>
-        </div>
-
-        {/* Username */}
-        <hr className="black border-1 border-gray2 w-full" />
-        <div className="w-full grid grid-cols-6 gap-5 md:gap-0 py-4">
-          <div className="col-span-6 md:col-span-2 text-xl flex items-center">
-            <p className="font-semibold">Username</p>
-          </div>
-          <div className="col-span-6 md:col-span-4 flex items-center">
-            <p>{username}</p>
-          </div>
-        </div>
-
-        {/* Email */}
-        <hr className="black border-1 border-gray2 w-full" />
-        <div className="w-full grid grid-cols-6 gap-5 md:gap-0 pt-4">
-          <div className="col-span-6 md:col-span-2 text-xl flex items-center">
-            <p className="font-semibold">Email</p>
-          </div>
-          <div className="col-span-6 md:col-span-4 flex items-center">
-            <p>{email}</p>
-          </div>
+        <div className="mt-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">About</h3>
+          <p className="text-gray-700">{bio}</p>
         </div>
       </div>
     </div>

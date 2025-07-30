@@ -8,7 +8,6 @@ export const metadata = {
 
 export default function TermsOfUsePage() {
   return (
-
     <>
       <title>  Terms of Use | Earth by Humans Guide to Our Platform</title>
       <meta name="description" content="  Understand the terms of use for Earth by Humans. Learn about intellectual property, user conduct, and our commitment to you." />

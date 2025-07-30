@@ -60,7 +60,7 @@ const MagazinePostForm = () => {
       'magazine_slug',
     ];
 
-    if (required.some((field) => values[field] === '')) {
+    if (required.some((field) => values[field] === '' || values[field] === null)) {
       alert('Please fill in all necessary data');
       setIsSubmitting(false);
       return;
@@ -73,25 +73,19 @@ const MagazinePostForm = () => {
     }
 
     try {
-      const payload = {
-        magazine_id: values.magazine_id,
-        magazine_title: values.magazine_title,
-        magazine_description: values.magazine_description,
-        magazine_tags: values.magazine_tags,
-        magazine_cover_image: typeof values.magazine_cover_image === 'string' ? values.magazine_cover_image : '',
-        magazine_link: values.magazine_link,
-        magazine_date: values.magazine_date,
-        magazine_category: values.magazine_category,
-        MagCloudLink: values.MagCloudLink,
-        magazine_slug: values.magazine_slug,
-      };
+      const formData = new FormData();
+      for (const key in values) {
+        if (key === 'magazine_cover_image' && values[key] instanceof File) {
+          formData.append(key, values[key]);
+        } else {
+          formData.append(key, values[key]);
+        }
+      }
 
       const res = await fetch('/api/dashboard/magazine/add-magzine', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+        body: formData,
+        // Do NOT set Content-Type header!
       });
 
       const data = await res.json();
@@ -111,7 +105,7 @@ const MagazinePostForm = () => {
         });
         if (imageInputRef.current) imageInputRef.current.value = '';
       } else {
-        alert(data.error || 'Something went wrong!');
+        alert(data.error || data.message || 'Something went wrong!');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -181,12 +175,12 @@ const MagazinePostForm = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="mb-2 block text-black dark:text-white">Cover Image URL</label>
+                  <label className="mb-2 block text-black dark:text-white">Cover Image</label>
                   <input
-                    type="text"
-                    value={typeof values.magazine_cover_image === 'string' ? values.magazine_cover_image : ''}
-                    placeholder="Enter cover image URL"
-                    onChange={(e) => setValues({ ...values, magazine_cover_image: e.target.value })}
+                    type="file"
+                    accept="image/*"
+                    ref={imageInputRef}
+                    onChange={(e) => setValues({ ...values, magazine_cover_image: e.target.files[0] })}
                     className="w-full rounded border border-stroke py-3 px-4 dark:border-form-strokedark dark:bg-form-input"
                   />
                 </div>

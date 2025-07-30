@@ -6,6 +6,8 @@ import { TiTick } from "react-icons/ti";
 import axios from 'axios';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { serverUrl } from '../common/serverUrl';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Quiz = ({ setAnalyticUpdate, userId }) => {
   const [questions, setQuestions] = useState([]);
@@ -36,6 +38,10 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
     };
 
     fetchQuizData();
+  }, []);
+
+  useEffect(() => {
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   const handleClickOption = async (index) => {
@@ -137,16 +143,20 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
           />
         </div>
       )}
-      <div className='text-center mb-10'>
+      <div className='text-center mb-10' data-aos="fade-up">
         <h1 className='text-4xl font-bold'>Quiz</h1>
-        <p className='text-lg font-semibold text-gray-700'>Test your knowledge and gain valuable insights</p>
+        <p className='text-lg font-semibold text-gray-700'>
+          Test your knowledge and gain valuable insights
+        </p>
       </div>
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-        <div className='bg-gray-100 rounded-lg p-8 flex flex-col justify-center shadow-md w-full'>
+
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 '>
+        <div className='bg-gray-100 rounded-lg p-8 flex flex-col justify-center shadow-md w-full' data-aos="zoom-in-up">
           <p className='text-xl font-extrabold mb-4 rounded-lg p-4 text-left'>Question:</p>
-          <p className='text-lg text-left rounded-lg p-6 bg-white shadow-sm'>{question?.question}</p>
+          <p className='text-lg text-left rounded-lg p-6 bg-white '>{question?.question}</p>
         </div>
-        <div className='rounded-lg p-8 border border-gray-300 flex flex-col gap-6 shadow-md w-full'>
+
+        <div className='rounded-lg p-8 border border-gray-300 flex flex-col gap-6  w-full' data-aos="fade-left">
           {question?.options.map((option, index) => (
             <QuizOption
               key={index}
@@ -160,13 +170,16 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
             />
           ))}
           <button
-            className='self-end py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out shadow'
+            className='self-end py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
             onClick={handleNextQuestion}
+            data-aos="fade-up"
+            data-aos-delay="100"
           >
             Next
           </button>
         </div>
       </div>
+
     </div>
   );
 };
@@ -181,7 +194,7 @@ const QuizOption = ({ label, text, correct, handleClickOption, selected, selecte
     style={{ pointerEvents: selectedOption !== null ? 'none' : 'auto' }}
   >
     <div className='flex gap-5 items-center'>
-      <input type='radio' name='option' checked={selected} readOnly className='w-5 h-5 accent-blue-600'/>
+      <input type='radio' name='option' checked={selected} readOnly className='w-5 h-5 accent-blue-600' />
       <div className='flex flex-col'>
         <p className='font-semibold text-base'>{text}</p>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import QuizPage from "./QuizPage";
+import Cta from "../../common/Cta";
 
 const Quiz = () => {
   return (
@@ -12,6 +13,10 @@ const Quiz = () => {
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
       <div>
         <QuizPage />
+        <section className=" p-6 md:p-10  w-full "
+          data-aos="fade-up">
+          <Cta />
+        </section>
       </div>
     </>
   );

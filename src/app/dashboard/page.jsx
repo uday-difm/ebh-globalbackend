@@ -1,25 +1,16 @@
 "use client";
 
-import Head from "next/head";
+import { toast, ToastContainer } from 'react-toastify';
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../../component/DashboardLayout";
 import Image from "next/image";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const DashboardHome = () => {
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/dashboard/login');
-      return;
-    }
-  }, [isAuthenticated, router]);
-
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -28,6 +19,11 @@ const DashboardHome = () => {
   const [totalMagazines, setTotalMagazines] = useState(0);
   const [blogsPerPage] = useState(10);
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/dashboard/login");
+    }
+  }, [isAuthenticated, router]);
 
   const fetchCounts = async () => {
     try {
@@ -46,7 +42,7 @@ const DashboardHome = () => {
 
   const fetchBlogs = async (page = 1, limit = blogsPerPage) => {
     try {
-      const response = await fetch(`/api/dashboard/latest_blog?page=${page}&limit=${limit}`);
+      const response = await fetch(`/api/dashboard/blog`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -56,12 +52,12 @@ const DashboardHome = () => {
       let blogsArr = [];
       let total = 0;
 
-      if (Array.isArray(data.blogs)) {
-        blogsArr = data.blogs;
-        total = data.total_blogs || data.blogs.length || 0;
-      } else if (Array.isArray(data)) {
+      if (Array.isArray(data)) {
         blogsArr = data;
         total = data.length;
+      } else if (Array.isArray(data.blogs)) {
+        blogsArr = data.blogs;
+        total = data.total_blogs || data.blogs.length || 0;
       } else if (Array.isArray(data.data)) {
         blogsArr = data.data;
         total = data.total_blogs || data.data.length || 0;
@@ -80,9 +76,11 @@ const DashboardHome = () => {
   };
 
   useEffect(() => {
-    fetchBlogs(currentPage);
-    fetchCounts();
-  }, [currentPage]);
+    if (isAuthenticated) {
+      fetchBlogs(currentPage);
+      fetchCounts();
+    }
+  }, [currentPage, isAuthenticated]);
 
   const handlePageChange = (page) => {
     if (page > 0 && page <= Math.ceil(totalBlogs / blogsPerPage)) {
@@ -90,37 +88,55 @@ const DashboardHome = () => {
     }
   };
 
-  const deleteBlog = async (blogId) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "This blog will be permanently deleted!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    });
+  // const deleteBlog = async (blogSlug) => {
+  //   const result = await Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "This blog will be permanently deleted!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "#3085d6",
+  //     confirmButtonText: "Yes, delete it!",
+  //   });
+  //   if (result.isConfirmed) {
+  //     try {
+  //       const response = await fetch(`/api/dashboard/blog/delete-blog/${blogSlug}`, { method: 'DELETE' });
 
-    if (result.isConfirmed) {
-      try {
-        const response = await fetch(`/api/dashboard/blog/${blogId}`, { method: 'DELETE' });
+  //       if (response.ok) {
+  //         Swal.fire("Deleted!", "The blog has been deleted.", "success");
+  //         setLoading(true);
+  //         await fetchBlogs(currentPage);
+  //       } else {
+  //         Swal.fire("Error", "Failed to delete the blog.", "error");
+  //       }
+  //     } catch {
+  //       Swal.fire("Error", "Something went wrong.", "error");
+  //     }
+  //   }
+  // };
+const deleteBlog = async (blog_slug) => {
+  try {
+    const response = await fetch(`/api/dashboard/blog/delete-blog/${blog_slug}`, { method: 'DELETE' });
 
-        if (response.ok) {
-          Swal.fire("Deleted!", "The blog has been deleted.", "success");
-          fetchBlogs(currentPage);
-        } else {
-          Swal.fire("Error", "Failed to delete the blog.", "error");
-        }
-      } catch {
-        Swal.fire("Error", "Something went wrong.", "error");
-      }
+    if (!response.ok) {
+      const errorData = await response.json();
+      toast.error(errorData.message || 'Failed to delete the blog');
+      return;
     }
-  };
+
+    toast.success('Blog deleted successfully');
+    await fetchBlogs(currentPage); // 🟢 ensures updated list from server
+  } catch (error) {
+    console.error('Error deleting blog:', error);
+    toast.error('An error occurred while deleting the blog');
+  }
+};
+ 
 
   return (
     <DashboardLayout>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
       {/* Blog & Magazine Cards */}
-      <div>Loading.......</div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-3 px-35">
         {[{ label: "Total Blogs", count: totalBlogs }, { label: "Total Magazines", count: totalMagazines }].map(
           (item, index) => (

@@ -7,7 +7,6 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-
     <>
       <title> Privacy Policy | Earth by Humans Protecting Your Data</title>
       <meta name="description" content=" Learn how Earth by Humans protects your privacy. Our policy outlines data collection, use, and safeguarding measures for your peace of mind." />

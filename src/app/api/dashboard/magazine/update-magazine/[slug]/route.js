@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from '../../../../../../lib/db';
+import {uploadToS3} from '../../../../../../../utils/s3Utility';
 
 
 //-------------------------UPDATE Magazine-------------------------------
@@ -26,6 +27,29 @@ export async function PUT(request) {
       const magazine_slug = formData.get('magazine_slug');
       // idMagazines and magazine_timestamp are not updated directly
   
+      // Handle image upload
+      let imageUrl = magazine_cover_image;
+      if (magazine_cover_image && typeof magazine_cover_image === 'object' && 'arrayBuffer' in magazine_cover_image) {
+        try {
+          const buffer = Buffer.from(await magazine_cover_image.arrayBuffer());
+          const ext = magazine_cover_image.name.split('.').pop().toLowerCase();
+          const allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+          if (!allowedTypes.includes(ext)) {
+            return NextResponse.json({ 
+              error: 'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp' 
+            }, { status: 400 });
+          }
+          imageUrl = await uploadToS3('magazines', {
+            originalname: magazine_cover_image.name,
+            buffer,
+            mimetype: magazine_cover_image.type
+          });
+        } catch (uploadError) {
+          console.error('Error uploading image:', uploadError);
+          return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
+        }
+      }
+  
       const sql = `UPDATE magazines SET 
         magazine_id = ?,
         magazine_title = ?,
@@ -44,7 +68,7 @@ export async function PUT(request) {
         magazine_description,
         magazine_tags,
         magazine_category,
-        magazine_cover_image,
+        imageUrl,
         magazine_link,
         magazine_date,
         MagCloudLink,

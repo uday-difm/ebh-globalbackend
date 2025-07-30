@@ -105,7 +105,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-20">
+    <div className="min-h-screen bg-gray-50  mt-10 flex items-center justify-center px-4 py-20">
       <div className="w-full max-w-3xl bg-white shadow-2xl rounded-2xl p-10 text-black" >
         <h2 className="text-4xl font-bold text-dark-sky mb-6">Edit Profile</h2>
         <hr className="mb-6 border-gray-300" />
@@ -192,10 +192,10 @@ const EditProfile = () => {
             )}
           </div>
 
-          <div className="col-span-1 md:col-span-2 mt-4 bg-gray-900 p-4 rounded-md">
+          <div className="col-span-1 md:col-span-2 mt-4  p-4 rounded-md">
             <button
               type="submit"
-              className="bg-dark-sky hover:bg-light-green text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out w-full md:w-auto"
+              className="bg-dark-sky hover:bg-light-green bg-green-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 ease-in-out w-full md:w-auto"
             >
               Save Changes
             </button>

@@ -1,6 +1,5 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { uploadToS3 } from '../../../../utils/s3Utility';
 
 export const config = {
   api: {
@@ -20,15 +19,16 @@ export async function POST(request) {
     const arrayBuffer = await imageFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const ext = path.extname(imageFile.name);
-    const fileName = uuidv4() + ext;
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    const filePath = path.join(uploadDir, fileName);
-
-    await fs.mkdir(uploadDir, { recursive: true });
-    await fs.writeFile(filePath, buffer);
-
-    const imageUrl = `/uploads/${fileName}`;
+    // Prepare file object for s3Utility
+    const ext = imageFile.name ? imageFile.name.split('.').pop() : 'jpg';
+    const fileName = uuidv4() + '.' + ext;
+    const file = {
+      originalname: fileName,
+      buffer: buffer,
+      mimetype: imageFile.type || 'image/jpeg',
+    };
+    // Upload to S3 and get public URL
+    const imageUrl = await uploadToS3('profile', file);
 
     return new Response(JSON.stringify({ imageUrl }), { status: 200 });
   } catch (error) {

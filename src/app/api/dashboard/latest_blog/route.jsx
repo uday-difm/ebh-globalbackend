@@ -4,7 +4,7 @@ import db from '../../../../lib/db';
 export async function GET() {
   try {
     const [rows] = await db.query(
-      "SELECT * FROM blogs ORDER BY blog_timestamp DESC"
+      "SELECT * FROM blogs WHERE status = 1 ORDER BY blog_timestamp DESC"
     );
     if (rows.length === 0) {
       return NextResponse.json({ message: "No blogs found" }, { status: 404 });
