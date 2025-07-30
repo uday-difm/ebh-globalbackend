@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import BlogCard from "../../component/home/HomeBlogCard";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
-import { Loader } from '../../common/Loader';
 
 const LatestBlog = () => {
   const [blogData, setBlogData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(4);
 
   useEffect(() => {
@@ -20,8 +18,6 @@ const LatestBlog = () => {
         setCount(Math.min(4, data.blogs?.length || 0));
       } catch (err) {
         console.error("Blog fetch failed:", err);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -42,16 +38,12 @@ const LatestBlog = () => {
 
           {/* Blog Cards */}
           <div className="grid md:grid-cols-2 gap-6 xl:gap-16">
-            {!loading ? (
-              blogData.length > 0 ? (
-                blogData.slice(0, count).map((blog, i) => (
-                  <BlogCard key={i} blog={blog} category_name={blog.category_name} />
-                ))
-              ) : (
-                <p className="text-gray-500">No blogs available.</p>
-              )
+            {blogData.length > 0 ? (
+              blogData.slice(0, count).map((blog, i) => (
+                <BlogCard key={i} blog={blog} category_name={blog.category_name} />
+              ))
             ) : (
-              <div className="flex justify-center items-center w-full py-10"><Loader /></div>
+              <p className="text-gray-500">No blogs available.</p>
             )}
           </div>
         </div>

@@ -3,11 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAuth } from './redux/actions/action';
-import { Loader } from '../common/Loader';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAuthStatus = async () => {
@@ -30,17 +28,11 @@ const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error('Failed to fetch auth status:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchAuthStatus();
   }, [dispatch]);
-
-  if (loading) {
-    return <div className="flex items-center justify-center min-h-screen"><Loader /></div>;
-  }
 
   return <>{children}</>;
 };

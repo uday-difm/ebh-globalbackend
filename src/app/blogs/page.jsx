@@ -254,31 +254,45 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-        {currentBlogs.map((blog, index) => (
-          <React.Fragment key={index}>
-            <BlogCard blog={blog} index={index} />
-            {(index + 1) % 4 === 0 && <AdCard />}
-          </React.Fragment>
-        ))}
-      </div>
+      {currentBlogs.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+          {currentBlogs.map((blog, index) => (
+            <React.Fragment key={index}>
+              <BlogCard blog={blog} index={index} />
+              {(index + 1) % 4 === 0 && <AdCard />}
+            </React.Fragment>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16">
+          <h3 className="text-2xl font-bold text-gray-700 mb-4">No blogs found</h3>
+          <p className="text-gray-500 mb-8">There are currently no blogs available in this category.</p>
+          <Link href="/blogs" className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+            View All Blogs
+          </Link>
+        </div>
+      )}
 
 
-      {/* Ad Section */}
-      <div className="w-full bg-gray-800 mt-5  py-4 rounded">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-gray-100 text-xl font-bold">Advertisement Space</p>
-          <p className="text-gray-300 text-base mt-4">
-            Your ad could be here! Contact us for details.
-          </p>
-        </div>
-      </div>
-      {visibleCount < blogs.length && (
-        <div className="flex justify-center my-8">
-          <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
-            Load More
-          </button>
-        </div>
+      {currentBlogs.length > 0 && (
+        <>
+          {/* Ad Section */}
+          <div className="w-full bg-gray-800 mt-5  py-4 rounded">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+              <p className="text-gray-100 text-xl font-bold">Advertisement Space</p>
+              <p className="text-gray-300 text-base mt-4">
+                Your ad could be here! Contact us for details.
+              </p>
+            </div>
+          </div>
+          {visibleCount < blogs.length && (
+            <div className="flex justify-center my-8">
+              <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+                Load More
+              </button>
+            </div>
+          )}
+        </>
       )}
     </>
   );
