@@ -20,10 +20,10 @@ const Card = ({ data }) => {
           <img
             src={data.magazine_cover_image}
             alt={data.magazine_title}
-            className="object-cover rounded-xl cursor-pointer transition duration-300 hover:opacity-90"
+            className="object-cover rounded-xl cursor-pointer transition duration-300 hover:opacity-90 mt-2"
             style={{ width: "500px", height: "auto" }}
           />
-          <p className="text-xl font-bold text-blue-700 text-center">
+          <p className="text-xl font-bold text-blue-700 text-center mt-3">
             {data.magazine_title}
           </p>
           <button className="px-4 py-1.5 text-sm bg-green-600 mt-4 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-green-700 transition duration-300">
@@ -63,7 +63,7 @@ const Magazine = () => {
   const [loading, setLoading] = useState(true);
   const [magazines, setMagazines] = useState([]);
   const [error, setError] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(9);
+  const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
     const fetchMagazines = async () => {
@@ -160,7 +160,7 @@ const Magazine = () => {
             {visibleCount < magazines.length && (
               <button
                 onClick={loadMore}
-                className="mt-6 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                className="mt-6 px-6 py-3 bg-green-600 text-white rounded-3xl hover:bg-green-700 transition"
               >
                 Load More
               </button>

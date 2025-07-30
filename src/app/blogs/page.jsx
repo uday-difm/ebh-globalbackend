@@ -287,7 +287,7 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
           </div>
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">
-              <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+              <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white rounded-3xl hover:bg-green-700 transition-colors">
                 Load More
               </button>
             </div>
