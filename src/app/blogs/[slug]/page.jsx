@@ -240,28 +240,15 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
               <img
                 src={blog.blog_feature_image}
                 alt={blog.blog_title}
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-40000 ease-in-out ${isHovered ? "!-rotate-[6deg] scale-110" : ""}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-40000 ease-in-out`}
                 style={{ transformOrigin: "bottom left" }}
               />
               {/* Overlay gradient for readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
-              {/* Category badge */}
-              <span className="absolute top-4 left-4 z-20 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                {blog.category_name}
-              </span>
-              {/* Date badge */}
-              <span className="absolute top-4 right-4 z-20 bg-white/80 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full shadow-md">
-                {blog.formatted_date}
-              </span>
+              
             </div>
             <div className={`absolute bottom-0 w-full rounded-b-3xl transition-all bg-white/90 backdrop-blur-md p-6 duration-40000 ease-in-out ${isHovered ? 'bg-white/95' : 'bg-white/90'}`}>
-              <h2 className="text-2xl font-extrabold mb-2 leading-tight text-gray-900 group-hover:text-green-700 transition-colors duration-300">
-                {getShortenedText(blog.blog_title, 50)}
-              </h2>
-              <p className="mb-4 text-gray-700 text-base leading-relaxed line-clamp-3">
-                {blog.blog_description}
-              </p>
-              <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mb-3">
                 <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
                   {blog.category_name}
                 </span>
@@ -269,6 +256,13 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
                   {blog.formatted_date}
                 </span>
               </div>
+              <h2 className="text-2xl font-extrabold mb-2 leading-tight text-gray-900 group-hover:text-green-700 transition-colors duration-300">
+                {getShortenedText(blog.blog_title, 50)}
+              </h2>
+              <p className="mb-4 text-gray-700 text-base leading-relaxed line-clamp-3">
+                {blog.blog_description}
+              </p>
+            
             </div>
           </div>
         </Link>
