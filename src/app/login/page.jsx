@@ -91,7 +91,7 @@ export default function LoginPage() {
               <div className="flex justify-end">
                 <Link href="/forget-password" className="text-blue-700 text-sm font-medium hover:underline">Forgot Password?</Link>
               </div>
-              <button type="submit" className="w-full bg-green-600 text-white font-bold py-2 rounded transition-colors hover:bg-green-700" style={{ backgroundColor: "#54AE47" }}>Log In</button>
+              <button type="submit" className="w-full bg-green-600 text-white font-bold py-2 rounded transition-colors hover:bg-blue-700" >Log In</button>
             </form>
             <div className="text-center mt-8 text-sm">
               Don’t have an account? <Link href="/signup" className="text-blue-700 font-semibold hover:underline">Sign Up</Link>

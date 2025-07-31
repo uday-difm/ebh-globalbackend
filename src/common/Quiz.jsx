@@ -170,7 +170,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
             />
           ))}
           <button
-            className='self-end py-3 px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
+           className='self-end py-2 px-5 bg-blue-600 hover:bg-green-600 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
             onClick={handleNextQuestion}
             data-aos="fade-up"
             data-aos-delay="100"

@@ -10,9 +10,11 @@ export default function ScrollProgressBar() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollHeight =
         document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (scrollTop / scrollHeight) * 100;
+
+      const scrolled = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
       setScrollWidth(scrolled);
     };
+
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
@@ -42,18 +44,20 @@ export default function ScrollProgressBar() {
           cx={radius}
           cy={radius}
         />
-        <circle
-          stroke="#16a34a"
-          fill="transparent"
-          strokeWidth={stroke}
-          strokeDasharray={`${circumference} ${circumference}`}
-          style={{ strokeDashoffset }}
-          strokeLinecap="round"
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-          className="transition-all duration-200 ease-out"
-        />
+        {!isNaN(strokeDashoffset) && (
+          <circle
+            stroke="#16a34a"
+            fill="transparent"
+            strokeWidth={stroke}
+            strokeDasharray={`${circumference} ${circumference}`}
+            style={{ strokeDashoffset }}
+            strokeLinecap="round"
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+            className="transition-all duration-200 ease-out"
+          />
+        )}
       </svg>
 
       {/* Arrow in center */}

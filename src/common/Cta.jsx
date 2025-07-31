@@ -14,7 +14,7 @@ export default function Cta() {
   return (
     <section className="relative z-10  px-2 sm:px-6 lg:px-12 2xl:px-24 overflow-hidden">
       {/* Decorative blurred circles */}
-  
+
       <div className="container mx-auto px-6 w-full p-10 relative z-10">
         <div className="bg-white/80 backdrop-blur-md p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center transition-all ">
 
@@ -26,7 +26,7 @@ export default function Cta() {
             </div>
             <div className="flex items-center gap-3 mb-2 justify-center lg:justify-start">
               <div className="w-10 h-1 "></div>
-              
+
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
               Join Our Portal Today!
@@ -34,11 +34,17 @@ export default function Cta() {
             <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
               Unlock exclusive benefits and stay updated with the latest in nature, science, and insights. Join us and embark on a journey of learning and exploration.
             </p>
-            <Link href="/contact-us">
-              <button className="group bg-green-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-500 text-lg flex items-center gap-3">
-                Contact Us
-                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </button>
+            <Link href="/contact-us" scroll={true} passHref>
+              <div className="group relative w-[180px] bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-100%] group-hover:left-[-20%] z-10">
+                </div>
+                <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+                </div>
+                <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+                  Contact Us
+                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
             </Link>
           </div>
 

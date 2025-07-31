@@ -89,10 +89,15 @@ export default function AboutUsContent() {
             </p>
             <div className="flex justify-center md:justify-start">
               <Link href="/contact-us">
-                <div className="relative group max-w-[180px] overflow-hidden rounded-full cursor-pointer p-1.5 bg-green-600 hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  <div className="relative z-20 px-6 py-3 w-full text-white text-base rounded-full flex items-center justify-center gap-2 font-semibold">
-                    Contact Us <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-300" />
+                <div className="group relative w-[180px] bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                  <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-100%] group-hover:left-[-20%] z-10">
                   </div>
+                  <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+                  </div>
+                  <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+                    Contact Us
+                    <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </div>
               </Link>
             </div>

@@ -119,7 +119,7 @@ const Footer = () => {
                   <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] top-[-15%] left-[100%] group-hover:left-[20%] z-10 transition-all duration-600 ease-in-out"></div>
 
                   {/* Button Text */}
-                  <button className="relative z-20 w-[130px] text-white py-2 px-6 text-sm rounded-full transition-colors">
+                  <button className="relative z-20 w-[130px] text-white py-3 px-5 text-sm rounded-full transition-colors">
                     Subscribe
                   </button>
                 </div>
