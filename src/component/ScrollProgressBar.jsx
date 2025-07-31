@@ -8,7 +8,8 @@ export default function ScrollProgressBar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = (scrollTop / scrollHeight) * 100;
       setScrollWidth(scrolled);
     };
@@ -19,18 +20,19 @@ export default function ScrollProgressBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const radius = 40;
+  const radius = 50;
   const stroke = 6;
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (scrollWidth / 100) * circumference;
 
   return (
-    <div className="fixed bottom-4 right-4 z-[1000] bg-white  rounded-full p-1">
+    <div className="fixed bottom-6 right-6 z-[1000]  rounded-full w-[100px] h-[100px] flex items-center justify-center">
+      {/* Progress Circle */}
       <svg
         height={radius * 2}
         width={radius * 2}
-        className="rotate-[-90deg]"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-90deg]"
       >
         <circle
           stroke="#e5e7eb"
@@ -53,12 +55,18 @@ export default function ScrollProgressBar() {
           className="transition-all duration-200 ease-out"
         />
       </svg>
-      {/* Arrow icon overlay */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <svg width="16" height="16" viewBox="0 0 20 20" className="rotate-180 text-green-600 fill-current">
-          <polygon points="5,12 10,6 15,12" />
-        </svg>
-      </div>
+
+      {/* Arrow in center */}
+      <svg
+        width="26"
+        height="26"
+        viewBox="0 0 24 24"
+        fill="#16a34a"
+        xmlns="http://www.w3.org/2000/svg"
+        className="z-10"
+      >
+        <path d="M12 4L6 12H10V20H14V12H18L12 4Z" />
+      </svg>
     </div>
   );
 }
