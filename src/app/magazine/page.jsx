@@ -6,6 +6,7 @@ import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaArrowRight } from "react-icons/fa";
+import { FcAdvertising } from "react-icons/fc";
 
 // ------------------ Magazine Card ------------------
 const Card = ({ data }) => {
@@ -44,8 +45,8 @@ const AdCard = () => (
     data-aos-delay="100"
   >
     <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-8">
-      <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 shadow-md">
-        <FaArrowRight size={24} className="text-green-500" />
+      <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 ">
+        <FcAdvertising size={50} className="text-green-500" />
       </div>
       <h3 className="text-2xl font-bold text-green-800 mb-4">
         Advertise With Us
@@ -159,8 +160,8 @@ const Magazine = () => {
             <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
               <div className="max-w-7xl mx-auto px-6 text-center">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <div className="w-10 h-10 bg-green-500 backdrop-blur-sm rounded-full flex items-center justify-center">
-                    <FaArrowRight size={18} className="text-white" />
+                  <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <FcAdvertising size={25} className="text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
                 </div>

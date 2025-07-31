@@ -52,12 +52,12 @@ export default function AdvertiseWithUs() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br ">
+    <section className="bg-gradient-to-br ">
       <div className="container mx-auto px-6 max-w-[1350px] text-center">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
           Advertise <span className="text-green-600">With Us</span>
         </h2>
-        <p className="text-lg text-gray-600   mb-16">
+        <p className="text-md text-black mt-8  mb-16">
         Ready to take your brand to the next level? Partner with us and reach a wider audience through our print and digital channels. Our platform offers prime opportunities
          to showcase your products and services 
         to a highly engaged community. Let's work together to create campaigns that captivate and convert. Advertise with us and watch your business grow!

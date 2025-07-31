@@ -77,12 +77,12 @@ const PostFooter = ({ blog }) => (
             ? blog.blog_tag.split(',').map((tag, index) => (
               <span
                 key={index}
-                className="text-xs font-semibold bg-gray-50 rounded-md px-3 py-2 mr-2 mb-2 inline-block"
+                className="text-xs font-semibold text-black bg-gray-50 rounded-md  py-2 mr-2 mb-2 inline-block"
               >
                 <span className='bg-gray-300 p-2 rounded-full'>{tag.trim()}</span>
               </span>
             ))
-            : <span className="text-sm text-gray-500">No tags</span>}
+            : <span className="text-sm text-white">No tags</span>}
         </div>
       </div>
       <SocialShareButtons

@@ -12,7 +12,7 @@ export default function Cta() {
   }, []);
 
   return (
-    <section className="relative z-10 py-16 px-2 sm:px-6 lg:px-12 2xl:px-24 overflow-hidden">
+    <section className="relative z-10  px-2 sm:px-6 lg:px-12 2xl:px-24 overflow-hidden">
       {/* Decorative blurred circles */}
   
       <div className="container mx-auto px-6 w-full p-10 relative z-10">
