@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
+import { Loader } from '../../../common/Loader';
 
 import { CategorySlider, PaginatedBlogList } from '../page';
 
@@ -19,6 +20,7 @@ import {
   WhatsappShareButton
 } from "react-share";
 
+// --- Data fetching helpers ---
 const getContentBySlug = async (slug) => {
   const res = await fetch(`/api/blogs/${slug}`);
   if (!res.ok) {
@@ -35,6 +37,7 @@ const getAllCategories = async () => {
   return data.categories;
 };
 
+// --- Social Buttons ---
 const SocialShareButtons = ({ url, title, media }) => {
   const buttonClass =
     "w-10 h-10 flex items-center justify-center rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-300";
@@ -68,6 +71,7 @@ const SocialShareButtons = ({ url, title, media }) => {
   );
 };
 
+// --- Post Footer ---
 const PostFooter = ({ blog }) => (
   <footer className="pt-3 border-t border-gray-200">
     <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-50 p-6 rounded-xl shadow-sm">
@@ -75,11 +79,8 @@ const PostFooter = ({ blog }) => (
         <div className="flex flex-wrap gap-2">
           {blog.blog_tag
             ? blog.blog_tag.split(',').map((tag, index) => (
-              <span
-                key={index}
-                className="text-xs font-semibold text-black bg-gray-50 rounded-md  py-2 mr-2 mb-2 inline-block"
-              >
-                <span className='bg-gray-300 p-2 rounded-full'>{tag.trim()}</span>
+              <span key={index} className="text-xs font-semibold text-black bg-gray-50 rounded-md py-2 mr-2 mb-2 inline-block">
+                <span className="bg-gray-300 p-2 rounded-full">{tag.trim()}</span>
               </span>
             ))
             : <span className="text-sm text-white">No tags</span>}
@@ -106,36 +107,16 @@ const PostFooter = ({ blog }) => (
           Earth by Humans is your online sanctuary for exploring the wonders of our planet and beyond.
         </p>
         <div className="flex justify-center sm:justify-start gap-4">
-          <a
-            href="https://www.facebook.com/earthbyhumans"
-            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://www.facebook.com/earthbyhumans" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
             <FontAwesomeIcon icon={faFacebookF} />
           </a>
-          <a
-            href="https://www.instagram.com/earth_by_humans/"
-            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://www.instagram.com/earth_by_humans/" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
             <FontAwesomeIcon icon={faInstagram} />
           </a>
-          <a
-            href="https://x.com/earthbyhumans"
-            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://x.com/earthbyhumans" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
             <FontAwesomeIcon icon={faTwitter} />
           </a>
-          <a
-            href="https://www.linkedin.com/company/earth-by-humans/"
-            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://www.linkedin.com/company/earth-by-humans/" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
             <FontAwesomeIcon icon={faLinkedin} />
           </a>
         </div>
@@ -144,6 +125,7 @@ const PostFooter = ({ blog }) => (
   </footer>
 );
 
+// --- Individual Post View ---
 const IndividualPostView = ({ blog }) => {
   const wordsPerMinute = 200;
   const plainText = blog.blog_content?.replace(/<[^>]*>/g, '') || '';
@@ -171,27 +153,24 @@ const IndividualPostView = ({ blog }) => {
         <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{blog.blog_title}</h1>
       </header>
 
-      {/* ✅ Updated: blog-content wrapper added */}
       <div
         className="blog-content text-justify text-[16px] font-[Poppins] leading-relaxed"
-        style={{ fontFamily: 'Poppins, sans-serif' }}
         dangerouslySetInnerHTML={{ __html: cleanContent }}
       />
-
       <PostFooter blog={blog} />
       <style jsx>{`
         .blog-content a {
-          color: #047857; 
+          color: #047857;
           text-decoration: none;
         }
       `}</style>
     </article>
   );
 };
-;
 
+// --- Category Page View ---
 const CategoryPageView = ({ category, blogs, allCategories }) => (
-  <div className="pt-20 sm:pt-24 ">
+  <div className="pt-20 sm:pt-24">
     <div className="container mx-auto px-4 max-w-[1350px]">
       <div className="my-8">
         <CategorySlider categories={allCategories} />
@@ -236,9 +215,17 @@ export default function CombinedSlugPage() {
     fetchData();
   }, [slug]);
 
-  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
-  if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
-  if (!content) return <div className="flex justify-center items-center h-screen">Content not found.</div>;
+  if (loading || !slug) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
+  }
+
+  if (!content) {
+    return <div className="flex justify-center items-center h-screen">Content not found.</div>;
+  }
 
   if (content.type === 'post') {
     return <IndividualPostView blog={content.data} />;
