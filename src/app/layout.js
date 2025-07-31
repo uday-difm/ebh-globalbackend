@@ -11,6 +11,7 @@ import CookiesBanner from '../common/CookiesBanner';
 import ReduxProviderWrapper from './ReduxProviderWrapper';
 import AuthProvider from './AuthProvider';
 import { usePathname } from 'next/navigation';
+import ScrollProgressBar from '../component/ScrollProgressBar';
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* This script is required for the 3D model */}
+        {/* This script is required for the 3D model */} 
         <Script
           src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
           type="module"
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
       <body className="flex flex-col min-h-screen">
         <ReduxProviderWrapper>
           <AuthProvider>
+            <ScrollProgressBar />
             {!pathname.startsWith('/dashboard') && <Header />}
             <main className="flex-grow ">
               {children}

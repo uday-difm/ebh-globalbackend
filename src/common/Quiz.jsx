@@ -14,14 +14,13 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [playedQuestion, setPlayedQuestion] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
   const [played, setPlayed] = useState(false);
   const [isExploding, setIsExploding] = useState(false);
   const [isMobileWidth, setIsMobileWidth] = useState(false);
 
   console.log('Quiz component userId:', userId);
 
-  const handleClosePopup = () => setShowPopup(false);
+
 
   useEffect(() => {
     setIsMobileWidth(window.innerWidth < 1024);
@@ -55,7 +54,6 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
       console.log('Quiz play status response:', response.data);
       if (response?.data?.played) {
         if (!userId) {
-          setShowPopup(true);
           setPlayed(true);
           return;
         }
@@ -112,7 +110,6 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
         console.error('Error saving IP play:', error);
         alert('Error: ' + error.message);
       }
-      setShowPopup(true);
       return;
     }
 
@@ -125,12 +122,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
 
   return (
     <div className='max-w-screen-xl mx-auto px-6 py-10 text-gray-900'>
-      {showPopup && (
-        <PopupBox
-          message="You have reached the end of the quiz.<br/> Please log in for access to more quizzes."
-          onClose={handleClosePopup}
-        />
-      )}
+      
       {isExploding && (
         <div className='fixed inset-0 flex justify-center items-center z-50'>
           <ConfettiExplosion

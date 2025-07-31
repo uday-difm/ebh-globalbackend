@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import db from '../../../lib/db';
+import { sendEmail } from '../../../lib/subscribeEmail';
 
 export async function POST(request) {
   try {
@@ -20,6 +21,13 @@ export async function POST(request) {
     // Insert the new subscriber
     const insertSql = "INSERT INTO `subscribers` (`email`) VALUES (?)";
     await db.query(insertSql, [email]);
+
+    // Send thank you email asynchronously, handle errors gracefully
+    sendEmail(email).then(() => {
+      console.log(`Subscription email sent to ${email}`);
+    }).catch((err) => {
+      console.error(`Failed to send subscription email to ${email}:`, err);
+    });
 
     return NextResponse.json({ message: "Successfully subscribed!" }, { status: 200 });
 

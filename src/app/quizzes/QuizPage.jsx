@@ -37,18 +37,18 @@ const QuizPage = () => {
         />
       </Head>
 
-      <main className="mt-[96px] px-4 md:px-8 lg:px-16 2xl:px-32 py-16 min-h-screen bg-white text-gray-900 relative">
-        <section
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
-          <Quiz setAnalyticUpdate={setAnalyticUpdate} userId={userId} />
+      <main className="relative mt-4 px-4 md:px-8 lg:px-16 2xl:px-32 py-8 min-h-screen overflow-hidden">
+        {/* Decorative blurred circles */}
+      
+        <section className="relative z-10 bg-white/80   p-8 md:p-12 mb-10">
+          <section
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <Quiz setAnalyticUpdate={setAnalyticUpdate} userId={userId} />
+          </section>
         </section>
-
-        <section
-          data-aos="fade-up"
-          data-aos-delay="200"
-        >
+        <section className="relative z-10 bg-white/80    p-8 md:p-12">
           {userId ? (
             <Dashboard analyticUpdate={analyticUpdate} />
           ) : (
@@ -69,7 +69,7 @@ const QuizPage = () => {
                   <h2 className="text-2xl font-extrabold mb-2 text-green-700 drop-shadow-sm">Login Required</h2>
                   <p className="mb-6 text-gray-600 text-base font-medium">You need to log in to view this content and track your quiz score.</p>
                   <a href="/login" className="w-full flex justify-center">
-                    <button className="w-full max-w-xs px-6 py-3 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg font-semibold text-lg shadow-lg hover:from-green-500 hover:to-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">Login</button>
+                    <button className="w-full max-w-xs px-6 py-3  text-white bg-[#18a54c] rounded-3xl font-semibold text-lg shadow-lg hover:from-green-500 hover:to-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">Login</button>
                   </a>
                 </div>
               </div>

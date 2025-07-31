@@ -26,7 +26,7 @@ const LatestBlog = () => {
 
   return (
     <div className="relative">
-      <div className="container mx-auto px-4 2xl:px-16 py-10 mt-10 bg-white text-black">
+      <div className="container mx-auto px-4  2xl:px-16 py-10 mt-10 bg-white text-black">
         <div className="flex flex-col gap-10">
           {/* Heading */}
           <div className="col-span-2 flex flex-col gap-5">
@@ -37,7 +37,7 @@ const LatestBlog = () => {
           </div>
 
           {/* Blog Cards */}
-          <div className="grid md:grid-cols-2 gap-6 xl:gap-16">
+          <div className="grid md:grid-cols-2 gap-6 xl:gap-16 ">
             {blogData.length > 0 ? (
               blogData.slice(0, count).map((blog, i) => (
                 <BlogCard key={i} blog={blog} category_name={blog.category_name} />

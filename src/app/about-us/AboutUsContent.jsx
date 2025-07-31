@@ -72,57 +72,76 @@ export default function AboutUsContent() {
   return (
     <main className="pt-[9px] bg-white">
       {/* Hero Section */}
-      <div className="md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-black">
-          <div className="flex flex-col gap-8 my-auto px-[15px]" data-aos="fade-right">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center md:text-start mt-5">About Earth By Humans</h1>
-            <p className="text-lg text-justify">
-              In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness.
+      <div className="relative py-12 md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-black relative z-10">
+          {/* Text Column */}
+          <div className="flex flex-col gap-8 my-auto" data-aos="fade-right">
+            <div className="space-y-2">
+              {/* === FOCUS HERE FOR H1 FIX === */}
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-start leading-tight mt-20 whitespace-nowrap">
+                About Earth By Humans
+              </h2>
+              {/* === END FOCUS === */}
+            </div>
+            <p className="text-base text-gray-700 text-justify leading-relaxed">
+              In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness. With a commitment to authenticity and clarity, we delve into the intricate tapestry of Earth,
+              exploring both its natural wonders and the innovations that shape its future.
             </p>
             <div className="flex justify-center md:justify-start">
               <Link href="/contact-us">
-                <div className="relative group max-w-[150px] overflow-hidden rounded-full cursor-pointer p-1.5">
-                  <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full" />
-                  <div className="absolute w-[120px] h-[200px] bg-blue-700 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10" />
-                  <div className="absolute w-[220px] h-[90px] bg-blue-700 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10" />
-                  <button className="relative z-20 px-3 py-2 w-full text-white text-base rounded-full flex items-center justify-center gap-2">
-                    Contact Us <FaArrowRight />
-                  </button>
+                <div className="relative group max-w-[180px] overflow-hidden rounded-full cursor-pointer p-1.5 bg-green-600 hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <div className="relative z-20 px-6 py-3 w-full text-white text-base rounded-full flex items-center justify-center gap-2 font-semibold">
+                    Contact Us <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
                 </div>
               </Link>
             </div>
           </div>
 
-          <div className="flex justify-center items-center mt-12" data-aos="zoom-in">
-            <Image
-              src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/About.png"
-              alt="Earth Illustration"
-              width={500}
-              height={500}
-              priority
-            />
+          {/* Image Column */}
+          <div className="flex justify-center ps-10 mt-10 items-center mt-8 md:mt-12 relative" data-aos="zoom-in">
+            <div className="relative">
+              <div className="absolute  inset-0 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
+              <Image
+                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/About.png"
+                alt="Earth Illustration"
+                width={400}
+                height={400}
+                priority
+                className="relative z-10 drop-shadow-2xl max-w-full h-auto"
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Partners */}
-      <div className="bg-gradient-to-b from-white to-gray-100 text-black py-12">
+      <div className="text-black py-12">
         <div className="max-w-[1350px] mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-extrabold text-gray-800 tracking-tight">
-              Our <span className="text-blue-600">Partners</span>
+              Our <span className="text-[#3853a4]">Partners</span>
             </h2>
             <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
               We’re proud to collaborate with these amazing organizations.
             </p>
           </div>
-
-          <div className="py-16 px-4">
+          <div className="w-full flex justify-center mb-8">
+            <div className="w-32 h-1 bg-gradient-to-r from-green-400 via-[#3853a4] to-green-400 rounded-full opacity-40"></div>
+          </div>
+          <div className="py-12 px-4">
             <div className="flex flex-wrap justify-center gap-8">
               {visibleLogos.map((logo) => (
                 <a key={logo.name} href={logo.url} target="_blank" rel="noopener noreferrer"
-                  className="p-5 bg-white/70 backdrop-blur-md rounded-2xl border border-gray-200 hover:border-blue-400 shadow-sm hover:shadow-xl grayscale hover:grayscale-0 opacity-80 hover:opacity-100 transition-all duration-700 ease-in-out transform hover:scale-105">
-                  <Image src={logo.src} alt={logo.name} width={180} height={60} style={{ objectFit: "contain" }} />
+                  className="group p-6 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200 shadow-md hover:shadow-2xl hover:border-[#3853a4] transition-all duration-500 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#3853a4] flex flex-col items-center w-[200px] min-h-[120px]">
+                  <div className="flex flex-col items-center">
+                    <div className="w-[180px] h-[60px] flex items-center justify-center mb-3">
+                      <Image src={logo.src} alt={logo.name} width={160} height={50} style={{ objectFit: 'contain' }} className="transition-all duration-500 group-hover:drop-shadow-lg" />
+                    </div>
+                    <div className="text-center font-bold text-gray-800 text-base tracking-wide mt-1 mb-1 group-hover:text-[#3853a4] transition-colors duration-300">
+                      {logo.name}
+                    </div>
+                  </div>
                 </a>
               ))}
             </div>
@@ -131,24 +150,29 @@ export default function AboutUsContent() {
       </div>
 
       {/* Advertise Section */}
-      <div className="bg-gradient-to-b from-gray-50 to-white text-black">
+      <div className="text-black">
         <div className="py-20 max-w-[1350px] mx-auto px-4">
           <div className="text-center" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-              Advertise <span className="text-blue-600">With Us!</span>
-            </h2>
+            <div className="flex flex-col items-center mb-2">
+              <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-[#3853a4] text-white shadow-lg mb-3">
+                <FaHandHoldingHeart size={28} />
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-2 relative inline-block">
+                Advertise <span className="text-[#3853a4]">With Us!</span>
+                <span className="block w-16 h-1 to-green-400 rounded-full mt-2 mx-auto opacity-40"></span>
+              </h2>
+            </div>
             <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
               Ready to take your brand to the next level? Partner with us and reach a wider audience through our print and digital channels.
             </p>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, i) => (
                 <div key={i} data-aos="fade-up" data-aos-delay={i * 100}
-                  className="bg-white p-8 rounded-3xl border border-gray-200 hover:border-blue-400 shadow-md hover:shadow-xl transform transition-transform duration-700 ease-in-out hover:scale-[1.05] flex flex-col items-center text-center">
-                  <div className="bg-blue-50 p-4 rounded-full border border-blue-200 mb-4">
+                  className="relative bg-white p-8 rounded-3xl border-t-4 border-green-700 hover:border-[#3853a4] border border-gray-200 shadow-md hover:shadow-xl transform transition-transform duration-700 ease-in-out hover:scale-[1.05] flex flex-col items-center text-center group">
+                  <div className=" p-5 rounded-full border border-[#3853a4]/20 mb-4 shadow group-hover:shadow-lg transition-all duration-500">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">{feature.title}</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-[#3853a4] transition-colors duration-300">{feature.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
                 </div>
               ))}

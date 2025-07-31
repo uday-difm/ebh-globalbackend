@@ -13,6 +13,7 @@ async function getBlogBySlugFromDB(slug) {
         b.blog_description,
         b.blog_feature_image,
         b.blog_content,
+        b.blog_tag,
         DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
         DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
         -- b.blog_views_count AS views, -- Removed as per your instruction
@@ -53,6 +54,7 @@ async function getBlogsInCategoryFromDB(categorySlug) {
         b.blog_description,
         b.blog_feature_image,
         b.blog_content,
+        b.blog_tag,
         DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
         DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
         -- b.blog_views_count AS views, -- Removed as per your instruction

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { FaUsers, FaPuzzlePiece, FaLightbulb, FaHandHoldingHeart } from "react-icons/fa";
 import { MdOutlineMaximize } from "react-icons/md";
+import { PiSparkle } from "react-icons/pi";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -13,51 +14,53 @@ export default function AdvertiseWithUs() {
 
   const features = [
     {
-      icon: <BsGraphUpArrow size={28} />,
+      icon: <PiSparkle size={28} color="#4ade80" />, // green
       title: "Boost Your Brand",
       description:
-        "Advertise with us and connect with an audience passionate about nature and science. Our trusted platform enhances your brand’s visibility.",
+        "Advertise with us and connect with an audience passionate about nature and science. Our trusted magazine and website offer ideal platforms to showcase your brand, increasing visibility and engagement.",
     },
     {
-      icon: <FaUsers size={28} />,
+      icon: <PiSparkle size={28} color="#4ade80" />,
       title: "Reach a Highly Engaged Audience",
       description:
-        "Connect with a community that values authenticity. Our readers support brands aligned with their values.",
+        "Connect with a community that values authenticity and depth. Our engaged readers are more likely to respond to your advertising, supporting brands that share their values.",
     },
     {
-      icon: <MdOutlineMaximize size={28} />,
+      icon: <PiSparkle size={28} color="#4ade80" />,
       title: "Maximize Your Impact",
       description:
-        "Reach wider audiences through print, digital, and social platforms with our integrated multi-channel campaigns.",
+        "Maximize your impact with our multi-channel approach. Reach a wide audience through our visually stunning magazine and dynamic digital platform, amplifying your message.",
     },
     {
-      icon: <FaPuzzlePiece size={28} />,
+      icon: <PiSparkle size={28} color="#4ade80" />,
       title: "Engage Through Interactive Content",
       description:
-        "Use our quizzes to create memorable and educational brand experiences your audience will love.",
+        "Tap into our popular quiz section, offering fun and educational quizzes on nature and science. Create memorable brand associations and engage your target audience uniquely.",
     },
     {
-      icon: <FaLightbulb size={28} />,
+      icon: <PiSparkle size={28} color="#4ade80" />,
       title: "Leverage Our Blog",
       description:
-        "Position your brand as a thought leader by advertising alongside expert insights and trending topics.",
+        "Advertise alongside our insightful blog content, positioning your brand as knowledgeable and credible. Our readers seek the latest in nature and science, providing the perfect context for your ads.",
     },
     {
-      icon: <FaHandHoldingHeart size={28} />,
+      icon: <PiSparkle size={28} color="#4ade80" />,
       title: "Join a Mission-Driven Platform",
       description:
-        "Align your brand with our mission to protect the planet and elevate your reputation with purpose.",
+        "Align your brand with our mission to heal and understand the planet. Partner with Earth by Humans to enhance your brand's reputation and impact through our sustainability-focused content.",
     },
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br ">
+    <section className="bg-gradient-to-br ">
       <div className="container mx-auto px-6 max-w-[1350px] text-center">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
           Advertise <span className="text-green-600">With Us</span>
         </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-16">
-          Partner with Earth by Humans to amplify your brand, connect authentically, and leave a lasting impact.
+        <p className="text-md text-black mt-8  mb-16">
+        Ready to take your brand to the next level? Partner with us and reach a wider audience through our print and digital channels. Our platform offers prime opportunities
+         to showcase your products and services 
+        to a highly engaged community. Let's work together to create campaigns that captivate and convert. Advertise with us and watch your business grow!
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

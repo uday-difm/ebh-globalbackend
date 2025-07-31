@@ -100,7 +100,7 @@ const Dashboard = ({ analyticUpdate }) => {
             <h2 className="text-2xl p-1 font-semibold mb-4 text-green-600" style={{ fontFamily: "Poppins" }}>
               Hi {userName || 'User'},<br />Welcome to Dashboard
             </h2>
-            <div className='mt-4 flex gap-8 flex-wrap items-center justify-center p-2'>
+            <div className='mt-4 flex gap-8 flex-wrap items-center text-black justify-center p-2'>
               <StatsCard title="Current Day" stats={dayStats} />
               <StatsCard title="Current Week" stats={weekStats} />
               <StatsCard title="Current Month" stats={monthStats} />
@@ -113,7 +113,7 @@ const Dashboard = ({ analyticUpdate }) => {
         <div className='mt-[50px] grid grid-cols-12 lg:gap-10'>
           <div className='p-[15px] col-span-12 lg:col-span-8'>
             <div className='flex justify-between'>
-              <h2 className='text-2xl font-bold'>Current Month Analytics</h2>
+              <h2 className='text-2xl text-black font-bold'>Current Month Analytics</h2>
             </div>
             <div className=''>
               <LineChart dailyResults={dailyResults} />
@@ -122,7 +122,7 @@ const Dashboard = ({ analyticUpdate }) => {
 
           <div className='p-[30px] w-full col-span-12 lg:col-span-4 mx-auto bg-white h-[400px] rounded-lg'>
             <div className='flex justify-between mt-5'>
-              <h2 className='text-2xl font-bold'>Overall</h2>
+              <h2 className='text-2xl text-black font-bold'>Overall</h2>
               <button onClick={() => router.push('/all-played-quiz')} className="bg-blue-200 px-4 text-blue-700 font-medium rounded-md">View</button> {/* Placeholder button, add functionality if needed */}
             </div>
             <div className='flex items-center justify-center h-full'>
