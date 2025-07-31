@@ -39,8 +39,8 @@ export const sendEmail = async (email) => {
               <p style="font-size: 16px; color: #333333;">Best regards,</p>
               <p style="font-size: 16px; color: #333333;">The Team</p>
               <p style="font-size: 14px; color: #777777;">
-                <a href="https://www.wmhindia.com/" style="color: #777777; text-decoration: none; font-weight: bold;">
-                  WMH India
+                <a href="https://www.earthbyhumans.com/" style="color: #777777; text-decoration: none; font-weight: bold;">
+                   Earth By Human
                 </a>
               </p>
             </div>
