@@ -100,7 +100,7 @@ const Dashboard = ({ analyticUpdate }) => {
             <h2 className="text-2xl p-1 font-semibold mb-4 text-green-600" style={{ fontFamily: "Poppins" }}>
               Hi {userName || 'User'},<br />Welcome to Dashboard
             </h2>
-            <div className='mt-4 flex gap-8 flex-wrap items-center justify-center p-2'>
+            <div className='mt-4 flex gap-8 flex-wrap items-center text-black justify-center p-2'>
               <StatsCard title="Current Day" stats={dayStats} />
               <StatsCard title="Current Week" stats={weekStats} />
               <StatsCard title="Current Month" stats={monthStats} />
