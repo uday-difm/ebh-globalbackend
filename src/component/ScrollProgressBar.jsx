@@ -10,7 +10,7 @@ export default function ScrollProgressBar() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollHeight =
         document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (scrollTop / scrollHeight) * 100;
+      const scrolled = scrollHeight === 0 ? 0 : (scrollTop / scrollHeight) * 100;
       setScrollWidth(scrolled);
     };
 
