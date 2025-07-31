@@ -304,24 +304,25 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
       {currentBlogs.length > 0 && (
         <>
-          <div className="w-full bg-gradient-to-r from-green-600 to-emerald-600 mt-8 py-8 rounded-2xl shadow-lg">
+          <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
             <div className="max-w-7xl mx-auto px-6 text-center">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <FaArrowRight size={20} className="text-white" />
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <div className="w-10 h-10 bg-green-500 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <FaArrowRight size={18} className="text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">Advertisement Space</h3>
+                <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
               </div>
-              <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
+              <p className="text-black/90 text-base mb-4 max-w-xl mx-auto">
                 Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
               </p>
               <Link href="/contact-us">
-                <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 mx-auto shadow-lg">
+                <button className="px-5 py-2.5 bg-green-600 text-white font-medium rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 mx-auto shadow-md">
                   Contact Us <FaArrowRight className="text-sm" />
                 </button>
               </Link>
             </div>
           </div>
+
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">
               <button onClick={handleLoadMore} className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 shadow-lg">

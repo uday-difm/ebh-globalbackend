@@ -72,19 +72,20 @@ export default function AboutUsContent() {
   return (
     <main className="pt-[9px] bg-white">
       {/* Hero Section */}
-      <div className="relative md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4 overflow-hidden">
-       
-        
+      <div className="relative py-12 md:py-[100px] 2xl:px-16 max-w-[1350px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-black relative z-10">
-          <div className="flex flex-col gap-8 my-auto px-[15px]" data-aos="fade-right">
-            <div className="space-y-4">
-              
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center md:text-start mt-5 leading-tight">
+          {/* Text Column */}
+          <div className="flex flex-col gap-8 my-auto" data-aos="fade-right">
+            <div className="space-y-2">
+              {/* === FOCUS HERE FOR H1 FIX === */}
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-start leading-tight mt-20 whitespace-nowrap">
                 About Earth By Humans
-              </h1>
+              </h2>
+              {/* === END FOCUS === */}
             </div>
-            <p className="text-lg text-gray-700 text-justify leading-relaxed">
-              In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness.
+            <p className="text-base text-gray-700 text-justify leading-relaxed">
+              In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness. With a commitment to authenticity and clarity, we delve into the intricate tapestry of Earth,
+              exploring both its natural wonders and the innovations that shape its future.
             </p>
             <div className="flex justify-center md:justify-start">
               <Link href="/contact-us">
@@ -97,16 +98,17 @@ export default function AboutUsContent() {
             </div>
           </div>
 
-          <div className="flex justify-center items-center mt-12 relative" data-aos="zoom-in">
+          {/* Image Column */}
+          <div className="flex justify-center ps-10 mt-10 items-center mt-8 md:mt-12 relative" data-aos="zoom-in">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
+              <div className="absolute  inset-0 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
               <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/About.png"
                 alt="Earth Illustration"
-                width={500}
-                height={500}
+                width={400}
+                height={400}
                 priority
-                className="relative z-10 drop-shadow-2xl"
+                className="relative z-10 drop-shadow-2xl max-w-full h-auto"
               />
             </div>
           </div>
@@ -148,7 +150,7 @@ export default function AboutUsContent() {
       </div>
 
       {/* Advertise Section */}
-      <div className="  text-black">
+      <div className="text-black">
         <div className="py-20 max-w-[1350px] mx-auto px-4">
           <div className="text-center" data-aos="fade-up">
             <div className="flex flex-col items-center mb-2">

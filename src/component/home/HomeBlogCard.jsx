@@ -6,7 +6,7 @@ export default function HomeBlogCard({ blog, category_name }) {
 
   return (
     <Link href={`/blogs/${blog.blog_slug}`} className="block group">
-      <div className="grid grid-cols-3 gap-4 bg-white p-4 h-full transition-transform duration-300 hover:scale-[1.025] hover:shadow-md rounded-2xl">
+      <div className="grid grid-cols-3 border border-gray-300 gap-4 bg-white p-4 h-full transition-transform duration-300 hover:scale-[1.025] hover:shadow-md rounded-2xl">
         {/* Gradient accent bar */}
        
         <div className="col-span-2 flex flex-col relative">

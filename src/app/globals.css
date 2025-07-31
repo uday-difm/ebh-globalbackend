@@ -26,3 +26,17 @@ body {
   @apply bg-white;
 }
 
+/* Force override of inline link styles inside blog content */
+.blog-content a,
+.blog-content a * {
+  color: #18a54c !important;         /* Tailwind green-700 */
+  text-decoration: none !important;  /* Remove underline */
+    font-weight: bolder !important;
+}
+
+.blog-content a:hover,
+.blog-content a:hover * {
+  color: #12bd53 !important;         /* Tailwind green-800 */
+    font-weight: bolder !important;
+}
+

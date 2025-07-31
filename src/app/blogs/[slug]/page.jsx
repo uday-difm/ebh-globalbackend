@@ -6,15 +6,12 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
 
-// --- Reusable Components from main blog page ---
 import { CategorySlider, PaginatedBlogList } from '../page';
 
-// FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faCalendarDays, faClock } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faLinkedin, faPinterest, faWhatsapp, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-// Social Share
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -22,9 +19,6 @@ import {
   WhatsappShareButton
 } from "react-share";
 
-// ----------------------------------------------
-// Fetch Functions
-// ----------------------------------------------
 const getContentBySlug = async (slug) => {
   const res = await fetch(`/api/blogs/${slug}`);
   if (!res.ok) {
@@ -41,9 +35,6 @@ const getAllCategories = async () => {
   return data.categories;
 };
 
-// ----------------------------------------------
-// Social Share Buttons
-// ----------------------------------------------
 const SocialShareButtons = ({ url, title, media }) => {
   const buttonClass =
     "w-10 h-10 flex items-center justify-center rounded-full bg-green-500 text-white hover:bg-green-600 transition-all duration-300";
@@ -77,28 +68,22 @@ const SocialShareButtons = ({ url, title, media }) => {
   );
 };
 
-
-// ----------------------------------------------
-// Post Footer with Tags + Author Info
-// ----------------------------------------------
 const PostFooter = ({ blog }) => (
   <footer className="pt-3 border-t border-gray-200">
-    {/* Tags + Sharing */}
-    <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-100 p-6 rounded-xl shadow-sm">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-50 p-6 rounded-xl shadow-sm">
       <div className="flex-1 w-full md:w-auto">
         <div className="flex flex-wrap gap-2">
           {blog.blog_tag
             ? blog.blog_tag.split(',').map((tag, index) => (
               <span
                 key={index}
-                className="text-xs font-semibold  bg-gray-100 rounded-md px-3 py-2 mr-2 mb-2 inline-block"
+                className="text-xs font-semibold bg-gray-50 rounded-md px-3 py-2 mr-2 mb-2 inline-block"
               >
                 <span className='bg-gray-300 p-2 rounded-full'>{tag.trim()}</span>
               </span>
             ))
             : <span className="text-sm text-gray-500">No tags</span>}
         </div>
-
       </div>
       <SocialShareButtons
         url={typeof window !== 'undefined' ? window.location.href : ''}
@@ -107,7 +92,6 @@ const PostFooter = ({ blog }) => (
       />
     </div>
 
-    {/* Author Box */}
     <div className="mt-14 p-6 sm:p-8 bg-white shadow-md rounded-3xl flex flex-col sm:flex-row items-center text-center sm:text-left gap-6 border border-gray-100">
       <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
@@ -122,48 +106,44 @@ const PostFooter = ({ blog }) => (
           Earth by Humans is your online sanctuary for exploring the wonders of our planet and beyond.
         </p>
         <div className="flex justify-center sm:justify-start gap-4">
-  <a
-    href="https://www.facebook.com/earthbyhumans"
-    className="text-gray-500 hover:text-green-600"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <FontAwesomeIcon icon={faFacebookF} />
-  </a>
-  <a
-    href="https://www.instagram.com/earth_by_humans/"
-    className="text-gray-500 hover:text-pink-500"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <FontAwesomeIcon icon={faInstagram} />
-  </a>
-  <a
-    href="https://x.com/earthbyhumans"
-    className="text-gray-500 hover:text-blue-400"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <FontAwesomeIcon icon={faTwitter} />
-  </a>
-  <a
-    href="https://www.linkedin.com/company/earth-by-humans/"
-    className="text-gray-500 hover:text-blue-600"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <FontAwesomeIcon icon={faLinkedin} />
-  </a>
-</div>
-
+          <a
+            href="https://www.facebook.com/earthbyhumans"
+            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faFacebookF} />
+          </a>
+          <a
+            href="https://www.instagram.com/earth_by_humans/"
+            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faInstagram} />
+          </a>
+          <a
+            href="https://x.com/earthbyhumans"
+            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faTwitter} />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/earth-by-humans/"
+            className="text-white hover:text-pink-500 bg-green-500 p-2 w-10 text-center rounded-full"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faLinkedin} />
+          </a>
+        </div>
       </div>
     </div>
   </footer>
 );
 
-// ----------------------------------------------
-// Individual Blog Post UI
-// ----------------------------------------------
 const IndividualPostView = ({ blog }) => {
   const wordsPerMinute = 200;
   const plainText = blog.blog_content?.replace(/<[^>]*>/g, '') || '';
@@ -191,21 +171,25 @@ const IndividualPostView = ({ blog }) => {
         <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{blog.blog_title}</h1>
       </header>
 
-      {/* ✅ Justified + Custom font + font size */}
+      {/* ✅ Updated: blog-content wrapper added */}
       <div
-        className="prose prose-lg text-justify text-[16px] font-[Poppins] leading-relaxed"
+        className="blog-content text-justify text-[16px] font-[Poppins] leading-relaxed"
         style={{ fontFamily: 'Poppins, sans-serif' }}
         dangerouslySetInnerHTML={{ __html: cleanContent }}
       />
 
       <PostFooter blog={blog} />
+      <style jsx>{`
+        .blog-content a {
+          color: #047857; 
+          text-decoration: none;
+        }
+      `}</style>
     </article>
   );
 };
+;
 
-// ----------------------------------------------
-// Category Page View
-// ----------------------------------------------
 const CategoryPageView = ({ category, blogs, allCategories }) => (
   <div className="pt-20 sm:pt-24 ">
     <div className="container mx-auto px-4 max-w-[1350px]">
@@ -222,9 +206,6 @@ const CategoryPageView = ({ category, blogs, allCategories }) => (
   </div>
 );
 
-// ----------------------------------------------
-// Combined Dynamic Slug Page
-// ----------------------------------------------
 export default function CombinedSlugPage() {
   const { slug } = useParams();
   const [content, setContent] = useState(null);
