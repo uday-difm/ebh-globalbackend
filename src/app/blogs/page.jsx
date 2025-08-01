@@ -104,11 +104,11 @@ const Sidebar = ({ categories = [], allBlogs = [] }) => {
         </div>
       </div>
 
-      <div className="fixed bottom-5 left-5 z-[101]">
+      {/* <div className="fixed bottom-5 left-5 z-[101]">
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300 focus:outline-none">
           {isSidebarOpen ? '✕' : '☰'}
         </button>
-      </div>
+      </div> */}
     </>
   );
 };
@@ -262,8 +262,7 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
   const AdCard = () => (
     <div
       className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-white via-green-100 to-green-300 p-6 min-h-[220px]"
-      data-aos="zoom-in"
-      data-aos-delay="100"
+    
     >
       <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-8">
         <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 ">
@@ -315,31 +314,31 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
       {currentBlogs.length > 0 && (
         <>
-          <div className="w-full bg-gradient-to-r from-green-200 to-emerald-400 mt-8 py-8 rounded-2xl shadow-lg">
-            <div className="max-w-7xl mx-auto px-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <FcAdvertising size={25} className="text-white" />
+           <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
+              <div className="max-w-7xl mx-auto px-6 text-center">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <FcAdvertising size={25} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
                 </div>
-                <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
+                <p className="text-black/90 text-base mb-4 max-w-xl mx-auto">
+                  Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
+                </p>
+                <Link href="/contact-us" scroll={true} passHref>
+                  <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                    <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
+                    </div>
+                    <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+                    </div>
+                    <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
+                      Contact Us
+                      <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
+                </Link>
               </div>
-              <p className="text-white text-lg mb-6 max-w-2xl mx-auto">
-                Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
-              </p>
-              <Link href="/contact-us" scroll={true} passHref>
-                <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-                  <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
-                  </div>
-                  <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
-                  </div>
-                  <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
-                    Contact Us
-                    <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </div>
-              </Link>
             </div>
-          </div>
 
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">

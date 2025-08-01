@@ -28,7 +28,7 @@ export default function ScrollProgressBar() {
   const strokeDashoffset = circumference - (scrollWidth / 100) * circumference;
 
   return (
-    <div className="fixed bottom-5 right-5 z-[1000] flex items-center justify-center">
+    <div className="fixed bottom-13 right-5 z-[1000] flex items-center justify-center">
       <div className="relative w-[75px] h-[75px] rounded-full flex items-center justify-center ">
         {/* Progress circle with white background */}
         <svg

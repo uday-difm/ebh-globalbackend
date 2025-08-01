@@ -63,14 +63,24 @@ const MagazineDetails = () => {
 
   return (
     <>
-      <Head>
-        <title>Earth By Humans | Blog - {magazine?.magazine_title || ""}</title>
-        <meta name="keywords" content={magazine?.magazine_tags || ""} />
-        <meta property="og:title" content={magazine?.magazine_title || ""} />
-        <meta property="og:url" content={`https://yourdomain.com/magazine/slug/${magazine?.magazine_slug || slug}`} />
-        <meta property="og:image" content={magazine?.magazine_cover_image || ""} />
-      </Head>
-
+      <title>{magazine.magazine_title}</title>
+      <meta
+        name="description"
+        content="Explore all past and current editions of Earth by Humans Magazine. Dive into captivating content on nature, science, and sustainability."
+      />
+      <meta
+        name="keywords"
+        content="magazine, editions, nature, science, sustainability, conservation, environment, digital magazine, archives, publications"
+      />
+      <meta
+        property="og:description"
+        content="Explore all past and current editions of Earth by Humans Magazine. Dive into captivating content on nature, science, and sustainability."
+      />
+      <link
+        rel="icon"
+        href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
+        type="image/png"
+      />
       <div className="max-w-[1400px] mx-auto px-5 mt-20 py-16 text-black">
         <h2 className="text-4xl font-bold text-[#54AE47] mb-4">{magazine.magazine_title}</h2>
 
@@ -126,13 +136,13 @@ const MagazineDetails = () => {
           <p className="text-green-700 text-2xl font-semibold">Tags:</p>
           {magazine.magazine_tags
             ? magazine.magazine_tags.split(", ").map((tag, index) => (
-                <span
-                  key={index}
-                  className="border border-gray-300 text-gray-700 px-2 py-1 rounded-md"
-                >
-                  {tag}
-                </span>
-              ))
+              <span
+                key={index}
+                className="border border-gray-300 text-gray-700 px-2 py-1 rounded-md"
+              >
+                {tag}
+              </span>
+            ))
             : <span className="text-gray-400">No tags</span>}
         </div>
       </div>
