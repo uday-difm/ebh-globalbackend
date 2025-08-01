@@ -8,6 +8,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import '../pagination.css';
 import { Loader } from '../../common/Loader';
 import { FcAdvertising } from "react-icons/fc";
+import Image from 'next/image'
 
 const getAllData = async () => {
   const res = await fetch('/api/blogs');
@@ -81,7 +82,7 @@ const Sidebar = ({ categories = [], allBlogs = [] }) => {
                   <img src={blog.blog_feature_image} alt={blog.blog_title} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
                   <div>
                     <p className="font-bold leading-tight group-hover:text-green-600 transition-colors">{blog.blog_title}</p>
-                    <p className="text-sm text-gray-500">{blog.formatted_date}</p>
+
                   </div>
                 </Link>
               ))}
@@ -220,8 +221,8 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
           <div className="absolute bottom-0 w-full bg-white/95 backdrop-blur-md p-6 rounded-t-3xl">
             <div className="flex items-center justify-between mb-3">
-              <span className="inline-block bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">
-                {blog.formatted_date}
+              <span className="inline-block text-blacktext-gray-600 bg-gray-300 text-xs font-medium px-2.5 py-1 rounded-full">
+                {blog.category_name}
               </span>
               <div className="flex items-center gap-1 text-gray-400">
                 <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
@@ -240,19 +241,19 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
             </p>
 
             <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-                  <span className="text-green-600 text-xs font-bold">EBH</span>
-                </div>
-                {/* <span className="text-xs text-gray-500 font-medium">Earth by Humans</span> */}
+              {/* Author Section */}
+              <div className="flex items-center gap-3">
+                <img
+                  src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
+                  className="w-10 h-10 rounded-full object-cover border border-gray-300 "
+                />
+                <span className="text-sm text-gray-600 font-medium">Earth By Humans</span>
               </div>
-              <div className="flex items-center rounded-full bg-green-300 gap-3 text-xs text-black">
-                <div className="flex items-center gap-1 p-1">
-                  <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-                  <span>{blog.category_name}</span>
-                </div>
-              </div>
+
+              {/* Date Section */}
+              <p className="text-xs text-gray-500">{blog.formatted_date}</p>
             </div>
+
           </div>
         </div>
       </Link>
@@ -262,7 +263,6 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
   const AdCard = () => (
     <div
       className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-white via-green-100 to-green-300 p-6 min-h-[220px]"
-    
     >
       <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-8">
         <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 ">
@@ -276,10 +276,8 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
         </p>
         <Link href="/contact-us" scroll={true} passHref>
           <div className="group relative w-[150px] bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-            <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
-            </div>
-            <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
-            </div>
+            <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10" />
+            <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10" />
             <span className="transition-colors rounded-full duration-500 text-md z-50 group-hover:text-white flex gap-2 items-center">
               Get Started
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -288,7 +286,8 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
         </Link>
       </div>
     </div>
-  )
+  );
+
   const handleLoadMore = () => setVisibleCount((prev) => prev + 9);
 
   return (
@@ -314,41 +313,40 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
       {currentBlogs.length > 0 && (
         <>
-           <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
-              <div className="max-w-7xl mx-auto px-6 text-center">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
-                    <FcAdvertising size={25} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
+          <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <div className="w-10 h-10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <FcAdvertising size={25} className="text-white" />
                 </div>
-                <p className="text-black/90 text-base mb-4 max-w-xl mx-auto">
-                  Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
-                </p>
-                <Link href="/contact-us" scroll={true} passHref>
-                  <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-                    <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
-                    </div>
-                    <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
-                    </div>
-                    <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
-                      Contact Us
-                      <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
-                </Link>
+                <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
               </div>
+              <p className="text-black/90 text-base mb-4 max-w-xl mx-auto">
+                Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
+              </p>
+              <Link href="/contact-us" scroll={true} passHref>
+                <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                  <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10" />
+                  <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10" />
+                  <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
+                    Contact Us
+                    <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
+              </Link>
             </div>
+          </div>
 
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">
-              <div className="relative group overflow-hidden rounded-full cursor-pointer">
-                <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-                <div className="absolute w-[115px] h-[200px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-100%] group-hover:left-0 z-10"></div>
-                <div className="absolute w-[200px] h-[90px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                <button onClick={handleLoadMore} className="relative z-20 text-white py-3 font-bold px-6 text-sm rounded-full transition-colors duration-300">
+              <div className="relative group overflow-hidden rounded-full">
+                <button
+                  onClick={handleLoadMore}
+                  className="bg-green-600 text-white px-6 py-2 rounded-full text-sm font-semibold z-10 relative"
+                >
                   Load More
                 </button>
+                <div className="absolute inset-0 bg-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               </div>
             </div>
           )}
@@ -357,6 +355,7 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
     </>
   );
 };
+
 
 
 // ---------------- BlogHomePage ----------------
