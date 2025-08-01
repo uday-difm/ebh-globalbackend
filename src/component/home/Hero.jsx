@@ -47,31 +47,29 @@ export default function Hero() {
             </p>
 
             {/* Buttons */}
-            <div className="w-full flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start">
-              {/* Play Quiz Button */}
-              <Link href="/quizzes">
-                <div className="relative group w-full sm:w-auto overflow-hidden rounded-full cursor-pointer">
-                  <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-                  <div className="absolute w-[130px] h-[200px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
-                  <div className="absolute w-[200px] h-[90px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                  <button className="relative z-20 w-full sm:w-[130px] text-white py-4 font-bold px-6 text-sm rounded-full transition-colors duration-300">
-                    Play Quiz
-                  </button>
-                </div>
-              </Link>
+              <div className="w-full flex gap-5 md:gap-8 flex-wrap mt-2 lg:mt-[50px] justify-center lg:justify-start">
+                <Link href='/quizzes'>
+                  <div className="relative group overflow-hidden rounded-full cursor-pointer">
+                    <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+                    <div className="absolute w-[115px] h-[200px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
+                    <div className="absolute w-[200px] h-[90px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+                    <button className="relative z-20 text-white py-4 font-bold px-6 text-sm rounded-full transition-colors duration-300">
+                      Play Quiz
+                    </button>
+                  </div>
+                </Link>
 
-              {/* Sign Up Button */}
-              <Link href="/login">
-                <div className="relative group w-full sm:w-auto overflow-hidden rounded-full cursor-pointer">
-                  <div className="absolute inset-0 bg-blue-800 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-                  <div className="absolute w-[130px] h-[200px] bg-green-500 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
-                  <div className="absolute w-[200px] h-[90px] bg-green-500 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                  <button className="relative z-20 w-full sm:w-[130px] text-white py-4 font-bold px-6 text-sm rounded-full transition-colors duration-300">
-                    Sign Up
-                  </button>
-                </div>
-              </Link>
-            </div>
+                <Link href='/login'>
+                  <div className="relative group w-full sm:w-auto overflow-hidden rounded-full cursor-pointer">
+                    <div className="absolute inset-0 bg-blue-800 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+                    <div className="absolute w-[110px] h-[200px] bg-green-500 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
+                    <div className="absolute w-[200px] h-[90px] bg-green-500 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+                    <button className="relative z-20 w-full sm:w-[130px] text-white py-4 font-bold px-6 text-sm rounded-full transition-colors duration-300">
+                      Sign Up
+                    </button>
+                  </div>
+                </Link>
+              </div>
           </div>
 
           {/* Right Column */}

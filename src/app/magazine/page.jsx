@@ -27,9 +27,18 @@ const Card = ({ data }) => {
           <p className="text-xl font-bold text-blue-700 text-center mt-3">
             {data.magazine_title}
           </p>
-          <button className="px-4 py-1.5 text-sm bg-green-600 mt-4 text-white rounded-full flex items-center justify-center gap-2 mx-auto hover:bg-green-700 transition duration-300">
-            Read more <FaArrowRight className="text-xs" />
-          </button>
+          <div className="flex justify-center mt-3">
+            <div className="group relative  w-[120px] bg-green-600 text-white py-1 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+              <div className="absolute w-[100px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-400%] left-[-100%] group-hover:left-[-20%] z-10">
+              </div>
+              <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+              </div>
+              <span className="transition-colors rounded-full text-sm duration-500 text-lg z-50 group-hover:text-white flex gap-1 items-center">
+                Read More
+                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </span>
+            </div>
+          </div>
         </Link>
       </div>
     </div>
@@ -54,16 +63,20 @@ const AdCard = () => (
       <p className="text-green-700 text-lg leading-relaxed mb-8 max-w-sm">
         Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
       </p>
-      <Link href={'/contact-us'}>
-        <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 shadow-lg">
-          Get Started <FaArrowRight className="text-sm" />
-        </button>
+      <Link href="/contact-us" scroll={true} passHref>
+        <div className="group relative w-[150px] bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+          <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
+          </div>
+          <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+          </div>
+          <span className="transition-colors rounded-full duration-500 text-md z-50 group-hover:text-white flex gap-2 items-center">
+            Get Started
+            <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+          </span>
+        </div>
       </Link>
     </div>
   </div>
-
-
-
 )
 
 // ------------------ Magazine Page ------------------
@@ -168,21 +181,30 @@ const Magazine = () => {
                 <p className="text-black/90 text-base mb-4 max-w-xl mx-auto">
                   Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
                 </p>
-                <Link href="/contact-us">
-                  <button className="px-5 py-2.5 bg-green-600 text-white font-medium rounded-full hover:bg-green-700 transition duration-300 flex items-center gap-2 mx-auto shadow-md">
-                    Contact Us <FaArrowRight className="text-sm" />
-                  </button>
+                <Link href="/contact-us" scroll={true} passHref>
+                  <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                    <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
+                    </div>
+                    <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+                    </div>
+                    <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
+                      Contact Us
+                      <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
                 </Link>
               </div>
             </div>
 
             {visibleCount < magazines.length && (
-              <button
-                onClick={loadMore}
-                className="mt-6 px-6 py-3 bg-green-600 text-white rounded-3xl hover:bg-green-700 transition"
-              >
-                Load More
-              </button>
+              <div className="relative group overflow-hidden rounded-full cursor-pointer">
+                <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+                <div className="absolute w-[115px] h-[200px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-100%] group-hover:left-0 z-10"></div>
+                <div className="absolute w-[200px] h-[90px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+                <button onClick={loadMore} className="relative z-20 text-white py-3 font-bold px-6 text-sm rounded-full transition-colors duration-300">
+                  Load More
+                </button>
+              </div>
             )}
           </div>
         </div>

@@ -14,6 +14,7 @@ export default function ScrollProgressBar() {
       setScrollWidth(scrolled);
     };
 
+
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
