@@ -163,5 +163,5 @@ const Footer = () => {
     </footer>
   );
 };
-// © 2025 Earth By Humans (A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM) All Rights reserved.
+
 export default Footer;
