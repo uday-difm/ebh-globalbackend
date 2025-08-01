@@ -295,7 +295,7 @@ const AddBlog = () => {
                 <button
                   type="button"
                   onClick={(e) => handleSubmit(e, '0')}
-                  className={`rounded bg-black py-2 px-6 text-white hover:bg-opacity-90 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`rounded bg-black py-2 px-6 text-white hover:bg-green-700 hover:bg-opacity-90 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={loading}
                 >
                   {loading ? 'Posting...' : 'Save as Draft'}

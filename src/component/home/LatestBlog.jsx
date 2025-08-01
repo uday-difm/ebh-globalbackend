@@ -50,9 +50,9 @@ const LatestBlog = () => {
       </div>
 
       {/* View More Button */}
-      <div className="mx-auto w-48 ">
+      <div className="mx-auto w-40 ">
         <Link href="/blogs" scroll={true}>
-          <div className="group relative bg-green-600 text-white py-4 rounded-full flex items-center justify-center overflow-hidden">
+          <div className="group relative bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden">
             <div className="absolute w-[100px] h-[200px] bg-blue-700 rotate-[35deg] transition-all duration-500 top-[-135%] left-[-80%] group-hover:left-0"></div>
             <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] transition-all duration-500 top-[15%] left-[90%] group-hover:left-[20%]"></div>
             <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">

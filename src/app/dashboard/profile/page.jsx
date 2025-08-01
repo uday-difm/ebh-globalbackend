@@ -78,8 +78,8 @@ const Profile = () => {
             {/* About */}
             <div className="mx-auto max-w-3xl px-4">
               <h4 className="text-lg font-semibold text-white">About Me</h4>
-              <p className="mt-3 text-sm text-gray-200">
-                World Model Hunt is one of a kind, model promotion and talent agency. With its own publication, World Model Hunt magazine, a talk show on YouTube, and growing social media, we focus on providing models and fashion influencers a platform to grow and succeed in the industry of Fashion and Modeling.
+              <p className="mt-3 text-md text-gray-200">
+                Earth By Humans is a comprehensive solutions provider dedicated to empowering businesses across a spectrum of industries with tailored web development, SEO marketing, digital marketing, business consulting, IT services etc.
               </p>
             </div>
           </div>

@@ -35,12 +35,17 @@ export default function Cta() {
             <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
               Unlock exclusive benefits and stay updated with the latest in nature, science, and insights. Join us and embark on a journey of learning and exploration.
             </p>
-
-            <Link href="/contact-us">
-              <button className="group bg-green-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-500 text-lg flex items-center gap-3">
-                Contact Us
-                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </button>
+            <Link href="/contact-us" scroll={true} passHref>
+              <div className="group relative w-[180px] bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-100%] group-hover:left-[-20%] z-10">
+                </div>
+                <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+                </div>
+                <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+                  Contact Us
+                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
             </Link>
           </div>
 

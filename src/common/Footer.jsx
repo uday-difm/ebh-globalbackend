@@ -93,7 +93,7 @@ const Footer = () => {
                   <FaLinkedinIn className="text-white bg-green-600 p-3 rounded-full w-10 h-10 hover:bg-green-700 transition-all duration-300" />
                 </Link>
                 <Link href="https://www.instagram.com/earth_by_humans/" target="_blank" aria-label="Instagram">
-                  <FaInstagram className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-amber-500 transition-all duration-300" />
+                  <FaInstagram className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-sky-600 transition-all duration-300" />
                 </Link>
                 <Link href="https://www.facebook.com/earthbyhumans" target="_blank" aria-label="Facebook">
                   <FaFacebookF className="text-white bg-blue-600 p-3 rounded-full w-10 h-10 hover:bg-blue-700 transition-all duration-300" />
@@ -126,12 +126,21 @@ const Footer = () => {
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 mb-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
-              <button
-                type="submit"
-                className="group flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition-all duration-300 text-sm"
-              >
-                Subscribe <HiArrowRight className="group-hover:translate-x-1 transition" />
-              </button>
+              <div className="group relative bg-green-600 text-white rounded-full flex items-center justify-center overflow-hidden w-[130px] h-[40px]">
+                {/* Blue animated layers */}
+                <div className="absolute w-[100px] h-[200px] bg-blue-700 opacity-70 rotate-[30deg] transition-all duration-500 top-[-135%] left-[-100%] group-hover:left-[-10%] z-0"></div>
+                <div className="absolute w-[200px] h-[90px] bg-blue-700 opacity-70 rotate-[125deg] transition-all duration-500 top-[15%] left-[100%] group-hover:left-[15%] z-0"></div>
+
+                {/* Button content */}
+                <button
+                  type="submit"
+                  className="group flex items-center gap-1 text-white bg-transparent px-3 py-1.5 rounded-full text-sm z-10 relative"
+                >
+                  Subscribe <HiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
+              </div>
+
+
               {message && <p className="text-green-600 mt-2 text-sm">{message}</p>}
             </form>
           </div>
@@ -142,7 +151,7 @@ const Footer = () => {
         {/* Bottom Links */}
         <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 px-4">
           <p className="text-center md:text-left mb-4 md:mb-0">
-            © 2025 Created by <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">Do It For Me LLC</Link>. All Rights Reserved.
+           © 2025 Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM) </Link>. All Rights Reserved.
           </p>
           <div className="flex justify-center md:justify-end gap-4">
             <Link href="/terms-and-conditions" className="hover:text-green-600">Terms of Use</Link>
@@ -154,5 +163,5 @@ const Footer = () => {
     </footer>
   );
 };
-
+// © 2025 Earth By Humans (A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM) All Rights reserved.
 export default Footer;

@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
 import { Loader } from '../../../common/Loader';
-
+import Head from "next/head";
 import { CategorySlider, PaginatedBlogList } from '../page';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -87,7 +87,7 @@ const PostFooter = ({ blog }) => (
         </div>
       </div>
       <SocialShareButtons
-        url={typeof window !== 'undefined' ? window.location.href : ''}
+        url={blog.blog_url || ""}
         title={blog.blog_title}
         media={blog.blog_feature_image}
       />
@@ -111,6 +111,7 @@ const PostFooter = ({ blog }) => (
             href="https://www.facebook.com/earthbyhumans"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faFacebookF} />
           </a>
@@ -118,6 +119,7 @@ const PostFooter = ({ blog }) => (
             href="https://www.instagram.com/earth_by_humans/"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faInstagram} />
           </a>
@@ -125,6 +127,7 @@ const PostFooter = ({ blog }) => (
             href="https://x.com/earthbyhumans"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faTwitter} />
           </a>
@@ -132,11 +135,11 @@ const PostFooter = ({ blog }) => (
             href="https://www.linkedin.com/company/earth-by-humans/"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faLinkedin} />
           </a>
         </div>
-
       </div>
     </div>
   </footer>
@@ -150,38 +153,53 @@ const IndividualPostView = ({ blog }) => {
   const readingTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
   const cleanContent = blog.blog_content?.replace(/font-family:[^;]*;?/g, '') || '';
 
-  return (
-    <article className="max-w-4xl mx-auto px-4 py-2 mt-30 sm:py-3">
-      <header className="mb-8">
-        <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6">
-          <Image src={blog.blog_feature_image} alt={blog.blog_title} fill className="object-cover" priority />
-        </div>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 mb-4">
-          <Link href={`/blogs/category/${blog.category_slug}`} className="flex items-center gap-2 hover:text-green-600">
-            <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
-          </Link>
-          <span className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {blog.formatted_date}
-          </span>
-          <span className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faClock} className="text-green-600" /> {readingTime} min read
-          </span>
-        </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{blog.blog_title}</h1>
-      </header>
+  const [currentUrl, setCurrentUrl] = useState('');
 
-      <div
-        className="blog-content text-justify text-[16px] font-[Poppins] leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: cleanContent }}
-      />
-      <PostFooter blog={blog} />
-      <style jsx>{`
-        .blog-content a {
-          color: #047857;
-          text-decoration: none;
-        }
-      `}</style>
-    </article>
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
+
+  return (
+    <>
+      <title>{blog.blog_title}</title>
+      <meta name="description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <meta name="keywords" content="blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
+      <meta property="og:description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+      <article className="max-w-4xl mx-auto px-4 py-2 mt-30 sm:py-3">
+        <header className="mb-8">
+          <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6">
+            <Image src={blog.blog_feature_image} alt={blog.blog_title} fill className="object-cover" priority />
+          </div>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 mb-4">
+            <Link href={`/blogs/category/${blog.category_slug}`} className="flex items-center gap-2 hover:text-green-600">
+              <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
+            </Link>
+            <span className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {blog.formatted_date}
+            </span>
+            <span className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faClock} className="text-green-600" /> {readingTime} min read
+            </span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{blog.blog_title}</h1>
+        </header>
+
+        <div
+          className="blog-content text-justify text-[16px] font-[Poppins] leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: cleanContent }}
+        />
+        <PostFooter blog={{ ...blog, blog_url: currentUrl }} />
+        <style jsx>{`
+          .blog-content a {
+            color: #047857;
+            text-decoration: none;
+          }
+        `}</style>
+      </article>
+    </>
   );
 };
 
@@ -202,6 +220,7 @@ const CategoryPageView = ({ category, blogs, allCategories }) => (
   </div>
 );
 
+// --- Main Component ---
 export default function CombinedSlugPage() {
   const { slug } = useParams();
   const [content, setContent] = useState(null);
@@ -233,7 +252,11 @@ export default function CombinedSlugPage() {
   }, [slug]);
 
   if (loading || !slug) {
-    return <Loader />;
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {

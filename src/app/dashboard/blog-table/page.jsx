@@ -124,12 +124,20 @@ export default function BlogTable() {
               >
                 View All Blogs
               </button>
-              <button
+              <div className="relative group overflow-hidden rounded-full cursor-pointer">
+                <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+                <div className="absolute w-[115px] h-[200px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
+                <div className="absolute w-[200px] h-[90px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+                <button onClick={downloadBlogs} className="relative z-20 text-white py-4 font-bold px-6 text-sm rounded-full transition-colors duration-300">
+                  Download Blogs
+                </button>
+              </div>
+              {/* <button
                 onClick={downloadBlogs}
                 className="bg-green-500 text-white py-2 px-4 rounded-md ml-4"
               >
                 Download Blogs
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -179,7 +187,7 @@ export default function BlogTable() {
                           </td>
                           <td className="py-3">
                             <div className="flex space-x-3">
-                              <Link href={`/blog/${data.blog_slug}`}>
+                              <Link href={`/blogs/${data.blog_slug}`}>
                                 <Eye className="w-4 h-4 text-slate-500 hover:text-blue-600 cursor-pointer" />
                               </Link>
                               <button

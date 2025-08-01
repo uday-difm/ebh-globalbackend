@@ -52,7 +52,7 @@ const CookiesBanner = () => {
         We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies.&nbsp;
         <Link
           href="/privacy-policy"
-          className="underline text-purple-400 font-bold hover:text-purple-300 transition"
+          className="underline text-green-400 font-bold hover:text-green-300 transition"
           onClick={scrollToTop}
         >
           Privacy Policy
@@ -60,7 +60,7 @@ const CookiesBanner = () => {
         &nbsp;and&nbsp;
         <Link
           href="/terms-and-conditions"
-          className="underline text-purple-400 font-bold hover:text-purple-300 transition"
+          className="underline text-green-400 font-bold hover:text-green-300 transition"
           onClick={scrollToTop}
         >
           Terms & Conditions

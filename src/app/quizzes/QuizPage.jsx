@@ -69,7 +69,7 @@ const QuizPage = () => {
                   <h2 className="text-2xl font-extrabold mb-2 text-green-700 drop-shadow-sm">Login Required</h2>
                   <p className="mb-6 text-gray-600 text-base font-medium">You need to log in to view this content and track your quiz score.</p>
                   <a href="/login" className="w-full flex justify-center">
-                    <button className="w-full max-w-xs px-6 py-3  text-white bg-[#18a54c] rounded-3xl font-semibold text-lg shadow-lg hover:from-green-500 hover:to-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">Login</button>
+                    <button className="w-200px max-w-xs px-6 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-600 hover:text-white rounded-lg font-semibold text-lg shadow-lg hover:from-green-400 hover:to-green-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">Login</button>
                   </a>
                 </div>
               </div>

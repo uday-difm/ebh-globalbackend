@@ -244,7 +244,7 @@ const MagazinePostForm = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`rounded bg-black py-2 px-6 text-white hover:bg-opacity-90 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`rounded bg-black py-2 px-6 text-white hover:bg-green-700 hover:bg-opacity-90 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {isSubmitting ? 'Saving...' : 'Save'}
                 </button>

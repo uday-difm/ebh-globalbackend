@@ -114,7 +114,7 @@ export default function MagazinesDashboard() {
                       <td className="p-3 text-center space-x-3 text-gray-600">
                         <button
                           title="View"
-                          onClick={() => router.push(`/dashboard/view-magazine/${mag.magazine_slug}`)}
+                          onClick={() => router.push(`/magazine/${mag.magazine_slug}`)}
                           className="hover:text-blue-500"
                         >
                           <FaEye />
