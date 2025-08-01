@@ -104,11 +104,11 @@ const Sidebar = ({ categories = [], allBlogs = [] }) => {
         </div>
       </div>
 
-      <div className="fixed bottom-5 left-5 z-[101]">
+      {/* <div className="fixed bottom-5 left-5 z-[101]">
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300 focus:outline-none">
           {isSidebarOpen ? '✕' : '☰'}
         </button>
-      </div>
+      </div> */}
     </>
   );
 };

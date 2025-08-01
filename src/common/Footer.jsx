@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaTwitter } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
+import { HiArrowRight } from 'react-icons/hi';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -37,106 +40,111 @@ const Footer = () => {
   };
 
   return (
-    <footer className="w-full bg-white pb-[2%] pt-[2%] text-black" style={{fontSize:"20px", fontFamily:"poppins , sans-serif"}}>
+    <footer
+      className="w-full bg-white min-h-[550px] text-black px-5 pt-16 "
+      style={{ fontFamily: 'Poppins, sans-serif', fontSize: '16px' }}
+    >
+
       <div className="max-w-[1350px] mx-auto px-4">
-        <div className="pt-[60px] px-[50px] pb-[40px]">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 justify-between">
-            {/* Logo & Description */}
-            <div className="max-w-[400px]">
-              <Link href="/">
-                <img
-                  src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-                  alt="Earth by Humans Logo"
-                  className="h-20 object-contain cursor-pointer"
-                />
-              </Link>
-              <p className="mt-6 text-justify text-sm">
-                Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories, and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
-              </p>
-            </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 pb-8">
+          {/* Logo & Description */}
+          <div>
+            <Link href="/">
+              <img
+                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
+                alt="Earth by Humans Logo"
+                className="h-20 object-contain cursor-pointer"
+              />
+            </Link>
+            <p className="mt-6 text-sm text-gray-700 text-justify">
+              Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories,
+              and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
+            </p>
+          </div>
 
-            {/* ISSN Barcode */}
+          {/* ISSN */}
+          <div>
+            <Link href="https://portal.issn.org/resource/ISSN/3066-5027" target="_blank">
+              <img
+                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg"
+                alt="ISSN Barcode"
+                className="w-[80%] object-contain"
+              />
+            </Link>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="flex flex-col gap-6">
             <div>
-              <Link href="https://portal.issn.org/resource/ISSN/3066-5027" target="_blank">
-                <img
-                  src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg"
-                  alt="ISSN Barcode"
-                  className="w-[80%] object-contain"
-                />
-              </Link>
+              <h4 className="font-semibold mb-2">Company</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li><Link href="/blogs" className="hover:text-green-600">Blogs</Link></li>
+                <li><Link href="/about-us" className="hover:text-green-600">About Us</Link></li>
+                <li><Link href="/magazine" className="hover:text-green-600">Magazines</Link></li>
+                <li><Link href="/quizzes" className="hover:text-green-600">Quizzes</Link></li>
+                <li><Link href="/contact-us" className="hover:text-green-600">Contact Us</Link></li>
+              </ul>
             </div>
 
-            {/* Links */}
-            <div className="flex flex-wrap gap-10 justify-between">
-              <div>
-                <h4 className="font-medium mb-2">Company</h4>
-                <ul className="text-sm space-y-1">
-                  <li><Link href="/blogs" className="hover:text-green-600">Blogs</Link></li>
-                  <li><Link href="/about-us" className="hover:text-green-600">About Us</Link></li>
-                  <li><Link href="/magazine" className="hover:text-green-600">Magazines</Link></li>
-                  <li><Link href="/quizzes" className="hover:text-green-600">Quizzes</Link></li>
-                  <li><Link href="/contact-us" className="hover:text-green-600">Contact Us</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-2">Social Media</h4>
-                <ul className="text-sm space-y-1">
-                  <li><Link href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" className="hover:text-green-600">LinkedIn</Link></li>
-                  <li><Link href="https://www.instagram.com/earth_by_humans/" target="_blank" className="hover:text-green-600">Instagram</Link></li>
-                  <li><Link href="https://www.facebook.com/earthbyhumans" target="_blank" className="hover:text-green-600">Facebook</Link></li>
-                  <li><Link href="https://www.youtube.com/@EarthByHumans" target="_blank" className="hover:text-green-600">YouTube</Link></li>
-                  <li><Link href="https://twitter.com/earthbyhumans" target="_blank" className="hover:text-green-600">Twitter</Link></li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Contact & Subscription */}
             <div>
-              <h4 className="font-medium mb-2">Contact</h4>
-              <p className="text-sm">Send us an email at</p>
-              <Link href="mailto:info@earthbyhumans.com" className="text-green-600 hover:underline text-sm">
-                info@earthbyhumans.com
-              </Link>
-
-              <div className="mt-4">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="w-full px-3 py-2 mb-4 text-sm bg-gray-100 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                />
-
-                <div
-                  className="relative group max-w-[130px] overflow-hidden rounded-full cursor-pointer"
-                  onClick={handleSubscribe}
-                >
-                  {/* Base */}
-                  <div className="absolute inset-0 bg-green-500 rounded-full transition-opacity duration-500 group-hover:opacity-80 z-0"></div>
-
-                  {/* Blue animation */}
-                  <div className="absolute w-[100px] h-[200px] bg-blue-700 rotate-[35deg] top-[-245%] left-[-90%] group-hover:left-0 z-10 transition-all duration-600 ease-in-out"></div>
-                  <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] top-[-15%] left-[100%] group-hover:left-[20%] z-10 transition-all duration-600 ease-in-out"></div>
-
-                  {/* Button Text */}
-                  <button className="relative z-20 w-[130px] text-white py-2 px-6 text-sm rounded-full transition-colors">
-                    Subscribe
-                  </button>
-                </div>
+              <h4 className="font-semibold mb-2">Follow Us</h4>
+              <div className="flex gap-4">
+                <Link href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" aria-label="LinkedIn">
+                  <FaLinkedinIn className="text-white bg-green-600 p-3 rounded-full w-10 h-10 hover:bg-green-700 transition-all duration-300" />
+                </Link>
+                <Link href="https://www.instagram.com/earth_by_humans/" target="_blank" aria-label="Instagram">
+                  <FaInstagram className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-amber-500 transition-all duration-300" />
+                </Link>
+                <Link href="https://www.facebook.com/earthbyhumans" target="_blank" aria-label="Facebook">
+                  <FaFacebookF className="text-white bg-blue-600 p-3 rounded-full w-10 h-10 hover:bg-blue-700 transition-all duration-300" />
+                </Link>
+                <Link href="https://www.youtube.com/@EarthByHumans" target="_blank" aria-label="YouTube">
+                  <FaYoutube className="text-white bg-gray-500 p-3 rounded-full w-10 h-10 hover:bg-gray-600 transition-all duration-300" />
+                </Link>
+                <Link href="https://twitter.com/earthbyhumans" target="_blank" aria-label="Twitter">
+                  <FaTwitter className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-sky-600 transition-all duration-300" />
+                </Link>
               </div>
 
+
+            </div>
+          </div>
+
+          {/* Contact + Newsletter */}
+          <div>
+            <h4 className="font-semibold mb-2"> Connect</h4>
+            <p className="font-semibold mb-2">Send us an email at</p>
+            <p className="text-sm flex items-center gap-2 text-gray-700">
+              <MdEmail className="text-green-600" /> info@earthbyhumans.com
+            </p>
+
+            <form onSubmit={handleSubscribe} className="mt-4">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full px-4 py-2 mb-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+              <button
+                type="submit"
+                className="group flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition-all duration-300 text-sm"
+              >
+                Subscribe <HiArrowRight className="group-hover:translate-x-1 transition" />
+              </button>
               {message && <p className="text-green-600 mt-2 text-sm">{message}</p>}
-            </div>
+            </form>
           </div>
         </div>
 
-        <hr className="my-10 border-gray-200" />
+        <hr className="my-6 border-gray-200" />
 
-        <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 pb-15">
-          <p className="text-center md:text-left">
-            © 2025 Created by <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">Do It For Me LLC</Link> All Rights Reserved.
+        {/* Bottom Links */}
+        <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 px-4">
+          <p className="text-center md:text-left mb-4 md:mb-0">
+            © 2025 Created by <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">Do It For Me LLC</Link>. All Rights Reserved.
           </p>
-          <div className="flex justify-center md:justify-end space-x-4 mt-4 md:mt-0">
+          <div className="flex justify-center md:justify-end gap-4">
             <Link href="/terms-and-conditions" className="hover:text-green-600">Terms of Use</Link>
             <Link href="/information-policy" className="hover:text-green-600">Information Policy</Link>
             <Link href="/privacy-policy" className="hover:text-green-600">Privacy Policy</Link>

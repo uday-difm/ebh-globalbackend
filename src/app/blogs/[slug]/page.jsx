@@ -107,19 +107,36 @@ const PostFooter = ({ blog }) => (
           Earth by Humans is your online sanctuary for exploring the wonders of our planet and beyond.
         </p>
         <div className="flex justify-center sm:justify-start gap-4">
-          <a href="https://www.facebook.com/earthbyhumans" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
+          <a
+            href="https://www.facebook.com/earthbyhumans"
+            className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
+            target="_blank"
+          >
             <FontAwesomeIcon icon={faFacebookF} />
           </a>
-          <a href="https://www.instagram.com/earth_by_humans/" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
+          <a
+            href="https://www.instagram.com/earth_by_humans/"
+            className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
+            target="_blank"
+          >
             <FontAwesomeIcon icon={faInstagram} />
           </a>
-          <a href="https://x.com/earthbyhumans" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
+          <a
+            href="https://x.com/earthbyhumans"
+            className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
+            target="_blank"
+          >
             <FontAwesomeIcon icon={faTwitter} />
           </a>
-          <a href="https://www.linkedin.com/company/earth-by-humans/" className="text-white bg-green-500 hover:bg-pink-500 p-2 w-10 rounded-full" target="_blank">
+          <a
+            href="https://www.linkedin.com/company/earth-by-humans/"
+            className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
+            target="_blank"
+          >
             <FontAwesomeIcon icon={faLinkedin} />
           </a>
         </div>
+
       </div>
     </div>
   </footer>
