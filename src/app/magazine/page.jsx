@@ -50,7 +50,7 @@ const Card = ({ data }) => {
 const AdCard = () => (
   <div
     className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-white via-green-100 to-green-300 p-5 sm:p-6 md:p-8 lg:p-10 min-h-[220px] border border-green-500"
-  
+
   >
     <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-4 sm:p-6">
       <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-5">
