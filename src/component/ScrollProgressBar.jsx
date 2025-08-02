@@ -20,6 +20,10 @@ export default function ScrollProgressBar() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const handleClick = (e) => {
+    // Scrolls to the top of the window with a smooth animation
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const radius = 35;
   const stroke = 6;
@@ -69,6 +73,7 @@ export default function ScrollProgressBar() {
 
         {/* Arrow icon in center */}
         <svg
+          onClick={handleClick}
           width="20"
           height="20"
           viewBox="0 0 24 24"
@@ -76,7 +81,7 @@ export default function ScrollProgressBar() {
           xmlns="http://www.w3.org/2000/svg"
           className="z-10"
         >
-          <path d="M12 4L6 12H10V20H14V12H18L12 4Z" />
+          <path d="M12 4L6 12H10V20H14V12H18L12 4Z" />  
         </svg>
       </div>
     </div>

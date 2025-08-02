@@ -9,6 +9,7 @@ import '../pagination.css';
 import { Loader } from '../../common/Loader';
 import { FcAdvertising } from "react-icons/fc";
 import Image from 'next/image'
+import Button from '../../common/Button';
 
 const getAllData = async () => {
   const res = await fetch('/api/blogs');
@@ -274,16 +275,16 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
         <p className="text-green-700 text-lg leading-relaxed mb-8 max-w-sm">
           Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
         </p>
-        <Link href="/contact-us" scroll={true} passHref>
-          <div className="group relative w-[150px] bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-            <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10" />
-            <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10" />
-            <span className="transition-colors rounded-full duration-500 text-md z-50 group-hover:text-white flex gap-2 items-center">
-              Get Started
-              <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </span>
-          </div>
-        </Link>
+        {/* The new Button component is used here */}
+        <Button
+          href="/contact-us"
+          className="w-[170px]"
+          bgColor="bg-green-600"
+          animatedColor1="bg-blue-700"
+          animatedColor2="bg-blue-700"
+        >
+          Get Started <FaArrowRight />
+        </Button>
       </div>
     </div>
   );
@@ -324,28 +325,40 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
               <p className="text-black/90 text-base mb-4 max-w-xl mx-auto">
                 Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
               </p>
-              <Link href="/contact-us" scroll={true} passHref>
-                <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-                  <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10" />
-                  <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10" />
-                  <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
-                    Contact Us
-                    <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </div>
-              </Link>
+              <Button
+                href="/contact-us"
+                className="w-[170px] justify-center flex items-center mx-auto"
+                bgColor="bg-green-600"
+                animatedColor1="bg-blue-700"
+                animatedColor2="bg-blue-700"
+              >
+                Contact Us <FaArrowRight />
+              </Button>
             </div>
           </div>
 
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">
               <div className="relative group overflow-hidden rounded-full">
-                <button
+                {/* <button
                   onClick={handleLoadMore}
                   className="bg-green-600 text-white px-6 py-2 rounded-full text-sm font-semibold z-10 relative"
+                  bgColor="bg-green-600"
+                  animatedColor1="bg-blue-700"
+                  animatedColor2="bg-blue-700"
                 >
                   Load More
-                </button>
+                </button> */}
+
+                <div className="group relative  w-[160px] bg-green-600 text-white py-4 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                  <div className="absolute w-[120px] h-[220px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 top-[-100%] left-[-100%] group-hover:left-[-20%] z-10">
+                  </div>
+                  <div className="absolute w-[220px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 left-[200%] group-hover:left-[10%] z-10">
+                  </div>
+                  <span onClick={handleLoadMore} className="transition-colors rounded-full text-sm duration-800 text-lg z-50 group-hover:text-white flex gap-1 items-center">
+                    Load More
+                  </span>
+                </div>
                 <div className="absolute inset-0 bg-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               </div>
             </div>
@@ -367,12 +380,13 @@ export default function BlogHomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      setError(null);
       try {
-        const { blogs, categories } = await getAllData();
-        setAllBlogs(blogs);
-        setCategories(categories);
+        const [data, timer] = await Promise.all([
+          getAllData(),
+          new Promise(resolve => setTimeout(resolve, 3000)) // 3-second timer promise
+        ]);
+        setAllBlogs(data.blogs);
+        setCategories(data.categories);
       } catch (err) {
         console.error("Data fetching error:", err);
         setError(err.message);

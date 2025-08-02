@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faLinkedin, faInstagram, faYoutube, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faLink } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLink, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function ContactUsPage() {
   const [values, setValues] = useState({
@@ -69,11 +69,11 @@ export default function ContactUsPage() {
         <section className=" bg-gradient-to-br from-white to-gray-100 text-black" id="contact w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm bg-gradient-to-br from-white to-green-50">
           <div className="mx-auto max-w-[1350] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
             <div className="mb-4 ">
-              <div className="max-w-3xl text-center  sm:text-center  md:mx-auto md:mb-12">
-                <p className="text-base font-semibold mt-20 text-black  uppercase tracking-wide text-black font-bold">
+              <div className="max-w-3xl text-center  sm:text-center  md:mx-auto md:mb-12">
+                <p className="text-base font-semibold mt-20 text-black  uppercase tracking-wide text-black font-bold">
                   Contact
                 </p>
-                <h2 className="font-heading m-8 font-bold tracking-tight  text-green-600 text-md sm:text-5xl">
+                <h2 className="font-heading m-8 font-bold tracking-tight  text-green-600 text-md sm:text-5xl">
                   Get in Touch
                 </h2>
                 <p className="text-justify md:text-center px-2 md:px-0">
@@ -90,7 +90,7 @@ export default function ContactUsPage() {
                     <br />
                     Your feedback is invaluable to us as we continue to improve and enhance our services. Thank you for choosing Earth by Humans. We look forward to connecting with you!
                     <br /><br />
-                    <b className="text-black">Published By:</b> DO IT FOR ME LLC: 30 N Gould St #24999; Sheridan, WY 82801
+                    <b className="text-black">Published By:</b> DO IT FOR ME LLC: <a href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition duration-300 ease-in-out">30 N Gould St #24999; Sheridan, WY 82801</a>
                   </p>
                   <div className="flex gap-4 mt-4">
                     <p className="text-lg text-gray-900">
@@ -113,12 +113,14 @@ export default function ContactUsPage() {
                         {/* Added YouTube Icon */}
                         <a href="https://www.youtube.com/@earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faYoutube} /></a>
                         <a href="https://twitter.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faTwitter} /></a>
+                        {/* Added Map Link */}
+                        <a href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faMapMarkerAlt} /></a>
                         <a href="mailto:info@earthbyhumans.com" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faEnvelope} /></a>
                       </div>
                     </li>
                   </ul>
                 </div>
-                <div className="card h-fit max-w-6xl p-5 rounded-lg  bg-white">
+                <div className="card h-fit max-w-6xl p-5 rounded-lg  bg-white">
                   <h2 className="mb-1 text-2xl text-blue-800 font-bold ">Contact Form</h2>
                   <p className="mb-4 text-sm text-black">Your email address will not be published. Required fields are marked *</p>
                   <form id="contactForm" onSubmit={handleSubmit}>
