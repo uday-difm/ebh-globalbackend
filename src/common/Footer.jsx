@@ -127,7 +127,7 @@ const Footer = () => {
               />
               <Button
                 type="submit"
-                className="w-[150px] h-[50px]"
+                className="w-[145px] h-[45px] text-center item-center justify-center flex"
                 bgColor="bg-green-600"
                 animatedColor1="bg-blue-700"
                 animatedColor2="bg-blue-700"

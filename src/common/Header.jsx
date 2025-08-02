@@ -1,6 +1,6 @@
 'use client';
 
-import Link from "next/link";
+
 import Image from "next/image";
 import { RiMenuLine } from "react-icons/ri";
 import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
@@ -118,7 +118,7 @@ const Header = () => {
                 bgColor="bg-green-600"
                 animatedColor1="bg-blue-600"
                 animatedColor2="bg-blue-600"
-                className="w-[130px] item-center"
+                className="w-[130px] h-[50px] item-center justify-center flex text-center"
               >
                 Login
               </Button>

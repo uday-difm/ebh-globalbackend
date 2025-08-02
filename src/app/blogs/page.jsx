@@ -340,15 +340,25 @@ export const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
           {visibleCount < blogs.length && (
             <div className="flex justify-center my-8">
               <div className="relative group overflow-hidden rounded-full">
-                <button
+                {/* <button
                   onClick={handleLoadMore}
                   className="bg-green-600 text-white px-6 py-2 rounded-full text-sm font-semibold z-10 relative"
                   bgColor="bg-green-600"
-          animatedColor1="bg-blue-700"
-          animatedColor2="bg-blue-700"
+                  animatedColor1="bg-blue-700"
+                  animatedColor2="bg-blue-700"
                 >
                   Load More
-                </button>
+                </button> */}
+
+                <div className="group relative  w-[160px] bg-green-600 text-white py-4 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                  <div className="absolute w-[120px] h-[220px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 top-[-100%] left-[-100%] group-hover:left-[-20%] z-10">
+                  </div>
+                  <div className="absolute w-[220px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 left-[200%] group-hover:left-[10%] z-10">
+                  </div>
+                  <span onClick={handleLoadMore} className="transition-colors rounded-full text-sm duration-800 text-lg z-50 group-hover:text-white flex gap-1 items-center">
+                    Load More
+                  </span>
+                </div>
                 <div className="absolute inset-0 bg-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               </div>
             </div>
