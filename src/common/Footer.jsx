@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaTwitter } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { HiArrowRight } from 'react-icons/hi';
+import Button from './Button'; // ✅ Import the reusable Button component
+import ScrollToTopLink from './ScrollToTopLink'; // ✅ Import the ScrollToTopLink component
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -41,21 +43,20 @@ const Footer = () => {
 
   return (
     <footer
-      className="w-full bg-white min-h-[550px] text-black px-5 pt-16 "
+      className="w-full bg-white min-h-[550px] text-black px-5 pt-16"
       style={{ fontFamily: 'Poppins, sans-serif', fontSize: '16px' }}
     >
-
       <div className="max-w-[1350px] mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 pb-8">
           {/* Logo & Description */}
           <div>
-            <Link href="/">
+            <ScrollToTopLink href="/">
               <img
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
                 alt="Earth by Humans Logo"
                 className="h-20 object-contain cursor-pointer"
               />
-            </Link>
+            </ScrollToTopLink>
             <p className="mt-6 text-sm text-gray-700 text-justify">
               Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories,
               and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
@@ -78,11 +79,11 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold mb-2">Company</h4>
               <ul className="text-sm space-y-1 text-gray-600">
-                <li><Link href="/blogs" className="hover:text-green-600">Blogs</Link></li>
-                <li><Link href="/about-us" className="hover:text-green-600">About Us</Link></li>
-                <li><Link href="/magazine" className="hover:text-green-600">Magazines</Link></li>
-                <li><Link href="/quizzes" className="hover:text-green-600">Quizzes</Link></li>
-                <li><Link href="/contact-us" className="hover:text-green-600">Contact Us</Link></li>
+                <li><ScrollToTopLink href="/blogs" className="hover:text-green-600">Blogs</ScrollToTopLink></li>
+                <li><ScrollToTopLink href="/about-us" className="hover:text-green-600">About Us</ScrollToTopLink></li>
+                <li><ScrollToTopLink href="/magazine" className="hover:text-green-600">Magazines</ScrollToTopLink></li>
+                <li><ScrollToTopLink href="/quizzes" className="hover:text-green-600">Quizzes</ScrollToTopLink></li>
+                <li><ScrollToTopLink href="/contact-us" className="hover:text-green-600">Contact Us</ScrollToTopLink></li>
               </ul>
             </div>
 
@@ -105,8 +106,6 @@ const Footer = () => {
                   <FaTwitter className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-sky-600 transition-all duration-300" />
                 </Link>
               </div>
-
-
             </div>
           </div>
 
@@ -126,21 +125,15 @@ const Footer = () => {
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 mb-2 text-sm bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
-              <div className="group relative bg-green-600 text-white rounded-full flex items-center justify-center overflow-hidden w-[130px] h-[40px]">
-                {/* Blue animated layers */}
-                <div className="absolute w-[100px] h-[200px] bg-blue-700 opacity-70 rotate-[30deg] transition-all duration-500 top-[-135%] left-[-100%] group-hover:left-[-10%] z-0"></div>
-                <div className="absolute w-[200px] h-[90px] bg-blue-700 opacity-70 rotate-[125deg] transition-all duration-500 top-[15%] left-[100%] group-hover:left-[15%] z-0"></div>
-
-                {/* Button content */}
-                <button
-                  type="submit"
-                  className="group flex items-center gap-1 text-white bg-transparent px-3 py-1.5 rounded-full text-sm z-10 relative"
-                >
-                  Subscribe <HiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
-              </div>
-
-
+              <Button
+                type="submit"
+                className="w-[150px] h-[50px]"
+                bgColor="bg-green-600"
+                animatedColor1="bg-blue-700"
+                animatedColor2="bg-blue-700"
+              >
+                Subscribe
+              </Button>
               {message && <p className="text-green-600 mt-2 text-sm">{message}</p>}
             </form>
           </div>
@@ -151,12 +144,12 @@ const Footer = () => {
         {/* Bottom Links */}
         <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 px-4">
           <p className="text-center md:text-left mb-4 md:mb-0">
-           © 2025 Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM) </Link>. All Rights Reserved.
+            © 2025 Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM)</Link>. All Rights Reserved.
           </p>
           <div className="flex justify-center md:justify-end gap-4">
-            <Link href="/terms-and-conditions" className="hover:text-green-600">Terms of Use</Link>
-            <Link href="/information-policy" className="hover:text-green-600">Information Policy</Link>
-            <Link href="/privacy-policy" className="hover:text-green-600">Privacy Policy</Link>
+            <ScrollToTopLink href="/terms-and-conditions" className="hover:text-green-600">Terms of Use</ScrollToTopLink>
+            <ScrollToTopLink href="/information-policy" className="hover:text-green-600">Information Policy</ScrollToTopLink>
+            <ScrollToTopLink href="/privacy-policy" className="hover:text-green-600">Privacy Policy</ScrollToTopLink>
           </div>
         </div>
       </div>

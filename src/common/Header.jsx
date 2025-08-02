@@ -4,22 +4,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { RiMenuLine } from "react-icons/ri";
 import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
-import { useState, useRef ,useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import Button from "./Button"; // Import the Button component
+import ScrollToTopLink from "./ScrollToTopLink"; // Import the ScrollToTopLink component
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [hydrated, setHydrated] = useState(false); // ✅ hydration check
+  const [hydrated, setHydrated] = useState(false);
   const auth = useSelector((state) => state.auth);
   const userMenuRef = useRef(null);
 
-   useEffect(() => {
-    setHydrated(true); // ✅ enable rendering after hydration
-  }, []);
+  useEffect(() => {
+    setHydrated(true);
+    // Add event listener for clicks outside the user menu
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [userMenuRef]);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -42,12 +54,7 @@ const Header = () => {
       <div className="max-w-[1440px] mx-auto">
         <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
           {/* Logo */}
-          <Link
-            href="/"
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
+          <ScrollToTopLink href="/">
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
               alt="Earth by humans logo gif"
@@ -55,12 +62,12 @@ const Header = () => {
               height={100}
               priority
             />
-          </Link>
+          </ScrollToTopLink>
 
           {/* Desktop Menu */}
           <nav className="hidden xl:flex gap-8 items-center">
             {navLinks.map(({ href, label, badge }) => (
-              <Link
+              <ScrollToTopLink
                 key={href}
                 href={href}
                 className={`transition duration-300 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold relative`}
@@ -71,7 +78,7 @@ const Header = () => {
                     {badge}
                   </span>
                 )}
-              </Link>
+              </ScrollToTopLink>
             ))}
           </nav>
 
@@ -81,7 +88,7 @@ const Header = () => {
               <div className="relative" ref={userMenuRef}>
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
                   <Image
-                    key={auth.profile} // force re-render on profile change
+                    key={auth.profile}
                     src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"}
                     alt="User"
                     width={40}
@@ -93,12 +100,12 @@ const Header = () => {
                 </button>
                 {showUserMenu && (
                   <div className="absolute right-0 top-12 mt-1 w-48 border border-gray-200 bg-white rounded-md shadow-lg text-sm font-semibold z-50">
-                    <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
+                    <ScrollToTopLink href="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
                       Profile
-                    </Link>
-                    <Link href="/edit-profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
+                    </ScrollToTopLink>
+                    <ScrollToTopLink href="/edit-profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
                       Edit Profile
-                    </Link>
+                    </ScrollToTopLink>
                     <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">
                       Logout
                     </button>
@@ -106,17 +113,17 @@ const Header = () => {
                 )}
               </div>
             ) : hydrated && (
-              <Link href="/login">
-                <div className="group relative w-36 h-12 overflow-hidden rounded-full cursor-pointer flex items-center justify-center">
-                  <div className="absolute inset-0 bg-green-600 w-[200] z-0 rounded-full"></div>
-                  <div className="absolute w-[90px] h-[200px] bg-blue-600 transform rotate-[35deg] transition-all duration-700 ease-in-out top-[-150%] left-[-80%] group-hover:left-0 z-10"></div>
-                  <div className="absolute w-[200px] h-[90px] bg-blue-600 transform rotate-[125deg] transition-all duration-700 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                  <span className="relative z-20 text-white text-lg font-bold">Login</span>
-                </div>
-              </Link>
+              <Button
+                href="/login"
+                bgColor="bg-green-600"
+                animatedColor1="bg-blue-600"
+                animatedColor2="bg-blue-600"
+                className="w-[130px] item-center"
+              >
+                Login
+              </Button>
             )}
           </div>
-
 
           {/* Mobile Menu Icon */}
           <button onClick={() => setShowMenu(!showMenu)} className="xl:hidden z-50">
@@ -128,29 +135,29 @@ const Header = () => {
         <div className={`xl:hidden bg-white transition-all duration-500 ease-in-out overflow-y-auto absolute top-full left-0 w-full shadow-lg ${showMenu ? "max-h-screen py-4 px-6" : "max-h-0"}`}>
           <nav className="flex flex-col gap-4 text-center">
             {navLinks.map(({ href, label }) => (
-              <Link
+              <ScrollToTopLink
                 key={href}
                 href={href}
                 onClick={() => setShowMenu(false)}
                 className={`py-2 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold`}
               >
                 {label}
-              </Link>
+              </ScrollToTopLink>
             ))}
             <div className="border-t border-gray-200 mt-4 pt-4">
               {auth.isAuthenticated && auth.userId ? (
                 <div className="flex flex-col items-center gap-4">
-                  <Link href="/profile" onClick={() => setShowMenu(false)} className="font-bold">
+                  <ScrollToTopLink href="/profile" onClick={() => setShowMenu(false)} className="font-bold">
                     Profile
-                  </Link>
+                  </ScrollToTopLink>
                   <button onClick={handleLogout} className="font-bold text-red-500">
                     Logout
                   </button>
                 </div>
               ) : (
-                <Link href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">
+                <ScrollToTopLink href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">
                   Login
-                </Link>
+                </ScrollToTopLink>
               )}
             </div>
           </nav>
