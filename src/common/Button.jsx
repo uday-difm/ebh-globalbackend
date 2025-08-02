@@ -15,8 +15,8 @@ const Button = ({
   const buttonContent = (
     <div className={`relative group overflow-hidden rounded-full cursor-pointer ${className}`}>
       <div className={`absolute inset-0 ${bgColor} z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full`}></div>
-      <div className={`absolute w-[125px] h-[220px] ${animatedColor1} transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10`}></div>
-      <div className={`absolute w-[220px] h-[110px] ${animatedColor2} transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10`}></div>
+      <div className={`absolute w-[100px] h-[220px] ${animatedColor1} transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-200%] left-[-90%] group-hover:left-0 z-10`}></div>
+      <div className={`absolute w-[250px] h-[110px] ${animatedColor2} transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-120%] left-[100%] group-hover:left-[20%] z-10`}></div>
       <button
         type={type}
         className="relative z-20 text-white py-4 font-bold px-10 text-sm rounded-full transition-colors duration-300 flex items-center justify-center"

@@ -90,7 +90,10 @@ const Magazine = () => {
   useEffect(() => {
     const fetchMagazines = async () => {
       try {
-        const response = await axios.get("/api/magazine");
+        const [response] = await Promise.all([
+          axios.get("/api/magazine"),
+          new Promise((resolve) => setTimeout(resolve, 3000)), // 👈 The 3-second timer
+        ]);
         if (response.status === 200) {
           setMagazines(response.data);
         } else {

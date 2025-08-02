@@ -116,9 +116,9 @@ const Header = () => {
               <Button
                 href="/login"
                 bgColor="bg-green-600"
-                animatedColor1="bg-blue-600"
-                animatedColor2="bg-blue-600"
-                className="w-[130px] h-[50px] item-center justify-center flex text-center"
+                animatedColor1="bg-blue-800"
+                animatedColor2="bg-blue-800"
+                className="w-[125px] h-[47px] item-center justify-center flex text-center"
               >
                 Login
               </Button>

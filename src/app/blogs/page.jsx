@@ -380,12 +380,13 @@ export default function BlogHomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      setError(null);
       try {
-        const { blogs, categories } = await getAllData();
-        setAllBlogs(blogs);
-        setCategories(categories);
+        const [data, timer] = await Promise.all([
+          getAllData(),
+          new Promise(resolve => setTimeout(resolve, 3000)) // 3-second timer promise
+        ]);
+        setAllBlogs(data.blogs);
+        setCategories(data.categories);
       } catch (err) {
         console.error("Data fetching error:", err);
         setError(err.message);
