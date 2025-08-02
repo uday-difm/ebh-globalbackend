@@ -35,15 +35,15 @@ export default function Hero() {
     <div className="relative font-poppins">
       <BlobAnimation />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 2xl:px-16 max-w-[1350px]">
+      <div className="container mx-auto sm:px-6 lg:px-12 2xl:px-16 max-w-[1350px]">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 items-center pt-24 pb-16 lg:min-h-screen lg:py-24">
 
           {/* Left Column */}
-          <div className="flex flex-col justify-center text-center lg:text-left gap-8 px-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold leading-snug text-gray-800">
-              Unleashing the power of humanity to heal our Earth
+          <div className="flex flex-col justify-center text-center lg:text-left gap-8 ">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-extrabold leading-snug text-gray-800">
+              Unleashing the power of humanity to heal <br></br> our Earth
             </h1>
-            <p className="text-gray-600 text-base sm:text-lg lg:max-w-md mx-auto lg:mx-0">
+            <p className="text-black text-base sm:text-lg lg:max-w-md mx-auto lg:mx-0">
               Explore Earth Encounters! Journey through our vibrant collection of videos showcasing the beauty and diversity of nature.
             </p>
 

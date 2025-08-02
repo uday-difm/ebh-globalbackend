@@ -188,7 +188,7 @@ const IndividualPostView = ({ blog }) => {
         </header>
 
         <div
-          className="blog-content text-justify text-[16px] font-[Poppins] leading-relaxed"
+          className="blog-content text-justify text-[22px] sm:text-[24px] md:text-[26px] font-[Poppins] leading-relaxed"
           dangerouslySetInnerHTML={{ __html: cleanContent }}
         />
         <PostFooter blog={{ ...blog, blog_url: currentUrl }} />
