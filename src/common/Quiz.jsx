@@ -121,8 +121,8 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
   const question = questions[currentQuestion];
 
   return (
-    <div className='max-w-screen-xl mx-auto px-6 py-10 text-gray-900'>
-      
+    <div className='max-w-7xl mx-auto py-10 text-gray-900'>
+
       {isExploding && (
         <div className='fixed inset-0 flex justify-center items-center z-50'>
           <ConfettiExplosion
@@ -135,12 +135,13 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
           />
         </div>
       )}
-      <div className='text-center mb-10' data-aos="fade-up">
-        <h1 className='text-4xl font-bold'>Quiz</h1>
-        <p className='text-lg font-semibold text-gray-700'>
+      <div className="max-w-3xl mx-auto text-center mb-10" data-aos="fade-up">
+        <h1 className="text-4xl font-bold">Quiz</h1>
+        <p className="text-lg font-semibold text-black mt-2">
           Test your knowledge and gain valuable insights
         </p>
       </div>
+
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 '>
         <div className='bg-gray-100 rounded-lg p-8 flex flex-col justify-center shadow-md w-full' data-aos="zoom-in-up">
@@ -162,7 +163,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
             />
           ))}
           <button
-           className='self-end py-2 px-5 bg-blue-600 hover:bg-green-600 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
+            className='self-end py-2 px-5 bg-blue-600 hover:bg-green-600 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
             onClick={handleNextQuestion}
             data-aos="fade-up"
             data-aos-delay="100"

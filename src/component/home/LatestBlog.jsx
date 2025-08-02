@@ -48,12 +48,15 @@ const LatestBlog = () => {
           </div>
 
           {/* View More Button */}
-          <div className="mx-auto w-40">
+          <div className="mx-auto w-[180px] sm:w-[200px]">
             <Link href="/blogs" scroll={true}>
-              <div className="group relative bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden">
-                <div className="absolute w-[100px] h-[200px] bg-blue-700 rotate-[35deg] transition-all duration-500 top-[-135%] left-[-80%] group-hover:left-0"></div>
-                <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] transition-all duration-500 top-[15%] left-[90%] group-hover:left-[20%]"></div>
-                <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+              <div className="group relative bg-green-600 text-white py-4 px-6 rounded-full flex items-center justify-center overflow-hidden h-[55px] sm:h-[60px] transition-all duration-500 ease-in-out">
+                {/* Animated Overlay Layers */}
+                <div className="absolute w-[140px] h-[250px] bg-blue-700 rotate-[45deg] transition-all duration-700 ease-in-out top-[-250%] left-[-135%] group-hover:left-0 z-10 opacity-80"></div>
+                <div className="absolute w-[250px] h-[100px] bg-blue-700 rotate-[135deg] transition-all duration-700 ease-in-out top-0 left-[130%] group-hover:left-[20%] z-10 opacity-80"></div>
+
+                {/* Text */}
+                <span className="relative z-20 text-[1rem] font-semibold flex gap-2 items-center transition-colors duration-300 ease-in-out group-hover:text-white">
                   View More <FaArrowRight />
                 </span>
               </div>
