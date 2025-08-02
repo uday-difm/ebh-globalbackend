@@ -236,7 +236,8 @@ export default function CombinedSlugPage() {
         setLoading(true);
         const [contentData, categoriesData] = await Promise.all([
           getContentBySlug(slug),
-          getAllCategories()
+          getAllCategories(),
+          new Promise(resolve => setTimeout(resolve, 3000))
         ]);
         setContent(contentData);
         setAllCategories(categoriesData);

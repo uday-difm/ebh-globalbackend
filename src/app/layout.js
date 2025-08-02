@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from 'react';
 import Script from 'next/script';
 import Footer from '../common/Footer';
 import Header from '../common/Header';
@@ -16,10 +17,15 @@ import ScrollProgressBar from '../component/ScrollProgressBar';
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 
+  // This hook scrolls the window to the top whenever the page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
+
   return (
     <html lang="en">
       <head>
-        {/* This script is required for the 3D model */} 
+        {/* This script is required for the 3D model */}
         <Script
           src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
           type="module"
@@ -32,7 +38,7 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <ScrollProgressBar />
             {!pathname.startsWith('/dashboard') && <Header />}
-            <main className="flex-grow ">
+            <main className="flex-grow">
               {children}
             </main>
             <CookiesBanner />

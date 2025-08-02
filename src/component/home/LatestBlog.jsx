@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../../component/home/HomeBlogCard";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
+import Button from "../../common/Button"; // Import the Button component
 
 const LatestBlog = () => {
   const [blogData, setBlogData] = useState([]);
@@ -47,20 +48,18 @@ const LatestBlog = () => {
             )}
           </div>
 
-          {/* View More Button */}
-          <div className="mx-auto w-[180px] sm:w-[200px]">
-            <Link href="/blogs" scroll={true}>
-              <div className="group relative bg-green-600 text-white py-4 px-6 rounded-full flex items-center justify-center overflow-hidden h-[55px] sm:h-[60px] transition-all duration-500 ease-in-out">
-                {/* Animated Overlay Layers */}
-                <div className="absolute w-[140px] h-[250px] bg-blue-700 rotate-[45deg] transition-all duration-700 ease-in-out top-[-250%] left-[-135%] group-hover:left-0 z-10 opacity-80"></div>
-                <div className="absolute w-[250px] h-[100px] bg-blue-700 rotate-[135deg] transition-all duration-700 ease-in-out top-0 left-[130%] group-hover:left-[20%] z-10 opacity-80"></div>
-
-                {/* Text */}
-                <span className="relative z-20 text-[1rem] font-semibold flex gap-2 items-center transition-colors duration-300 ease-in-out group-hover:text-white">
-                  View More <FaArrowRight />
-                </span>
+          {/* View More Button (Replaced with Button component) */}
+          <div className="mx-auto">
+            <Button
+              href="/blogs"
+              bgColor="bg-green-600"
+              animatedColor1="bg-blue-700"
+              animatedColor2="bg-blue-700"
+            >
+              <div className="flex gap-1 items-center">
+                View More <FaArrowRight />
               </div>
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

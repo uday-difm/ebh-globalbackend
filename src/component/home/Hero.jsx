@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import React from 'react';
+import Button from '../../common/Button';
 
 const BlobAnimation = () => {
   return (
@@ -34,11 +35,11 @@ export default function Hero() {
     <div className="relative font-poppins">
       <BlobAnimation />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 2xl:px-16 max-w-[1650px]">
+      <div className="container mx-auto sm:px-6 lg:px-12 2xl:px-16 max-w-[1350px]">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 items-center pt-24 pb-16 lg:min-h-screen lg:py-24">
 
           {/* Left Column */}
-          <div className="flex flex-col justify-center text-center lg:text-left gap-8 px-2">
+          <div className="flex flex-col justify-center text-center lg:text-left gap-8 ">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-extrabold leading-snug text-gray-800">
               Unleashing the power of humanity to heal <br></br> our Earth
             </h1>
@@ -47,30 +48,18 @@ export default function Hero() {
             </p>
 
             {/* Buttons */}
-            <div className="w-full flex gap-5 md:gap-8 flex-wrap mt-4 lg:mt-[50px] justify-center lg:justify-start">
-              <Link href='/quizzes'>
-                <div className="relative group overflow-hidden rounded-full cursor-pointer min-w-[160px] h-[60px] sm:h-[65px] sm:min-w-[180px]">
-                  <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-                  <div className="absolute w-[150px] h-[250px] bg-blue-800 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
-                  <div className="absolute w-[250px] h-[100px] bg-blue-800 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                  <button className="relative z-20 text-white py-4 px-8 font-bold text-base sm:text-[1rem] rounded-full transition-colors duration-300 w-full h-full">
-                    Play Quiz
-                  </button>
-                </div>
-              </Link>
-
-              <Link href='/login'>
-                <div className="relative group overflow-hidden rounded-full cursor-pointer w-full sm:w-auto min-w-[160px] h-[60px] sm:h-[65px] sm:min-w-[180px]">
-                  <div className="absolute inset-0 bg-blue-800 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-                  <div className="absolute w-[150px] h-[250px] bg-green-500 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-90%] group-hover:left-0 z-10"></div>
-                  <div className="absolute w-[250px] h-[100px] bg-green-500 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                  <button className="relative z-20 text-white py-4 px-8 font-bold text-base sm:text-[1rem] rounded-full transition-colors duration-300 w-full h-full">
-                    Sign Up
-                  </button>
-                </div>
-              </Link>
+            <div className="w-full flex gap-5 md:gap-8 flex-wrap mt-2 lg:mt-[50px] justify-center lg:justify-start">
+              {/* Play Quiz Button */}
+              <Button href='/quizzes'>
+                Play Quiz
+              </Button>
+              {/* Sign Up Button with custom colors */}
+              <Button
+                href='/login'
+              >
+                Sign Up
+              </Button>
             </div>
-
           </div>
 
           {/* Right Column */}

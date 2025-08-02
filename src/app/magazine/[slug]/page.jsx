@@ -34,7 +34,14 @@ const MagazineDetails = () => {
 
     const fetchMagazine = async () => {
       try {
-        const res = await axios.get(`/api/magazine/${slug}`);
+        setLoading(true);
+
+        // Use Promise.all to wait for both the API call and a 3-second delay
+        const [res] = await Promise.all([
+          axios.get(`/api/magazine/${slug}`),
+          new Promise(resolve => setTimeout(resolve, 3000)) // 👈 Add the 3-second timer here
+        ]);
+
         const fetched = Array.isArray(res.data) ? res.data[0] : res.data;
 
         if (res.status === 200 && fetched && Object.keys(fetched).length > 0 && !fetched.error) {
@@ -49,7 +56,6 @@ const MagazineDetails = () => {
         setLoading(false);
       }
     };
-
     fetchMagazine();
   }, [slug]);
 
