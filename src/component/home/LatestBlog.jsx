@@ -27,7 +27,7 @@ const LatestBlog = () => {
 
   return (
     <div className="relative bg-white text-black max-w-[1350px] mx-auto">
-      <div className="container mx-auto pt-10 pb-10 mt-10">
+      <div className="container mx-auto pt-10 mt-10">
         <div className="flex flex-col gap-10">
           {/* Heading */}
           <div className="col-span-2 flex flex-col gap-5 text-center sm:text-left">

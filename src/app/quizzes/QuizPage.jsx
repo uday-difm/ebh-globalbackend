@@ -40,7 +40,7 @@ const QuizPage = () => {
       <main className="relative mt-4 py-8 min-h-screen overflow-hidden max-w-[1350px] mx-auto">
         {/* Decorative blurred circles */}
       
-        <section className="relative z-10 bg-white/80 mb-10">
+        <section className="relative z-10 bg-white/80 mb-10 mt-20">
           <section
             data-aos="fade-up"
             data-aos-delay="100"
