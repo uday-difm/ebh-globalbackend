@@ -13,7 +13,7 @@ module.exports = {
   theme: {
   extend: {
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
+      poppins: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
     },
    
   },

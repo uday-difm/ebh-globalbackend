@@ -13,6 +13,13 @@ import ReduxProviderWrapper from './ReduxProviderWrapper';
 import AuthProvider from './AuthProvider';
 import { usePathname } from 'next/navigation';
 import ScrollProgressBar from '../component/ScrollProgressBar';
+import { Poppins } from 'next/font/google'
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'], // Add as needed
+  variable: '--font-poppins',
+})
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -33,7 +40,7 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen font-poppins">
         <ReduxProviderWrapper>
           <AuthProvider>
             <ScrollProgressBar />

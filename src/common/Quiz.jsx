@@ -132,7 +132,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
   }
 
   return (
-    <div className='max-w-screen-xl mx-auto px-6 py-10 text-gray-900'>
+    <div className='mx-auto text-gray-900 max-w-[1350px]'>
       {isExploding && (
         <div className='fixed inset-0 flex justify-center items-center z-50'>
           <ConfettiExplosion

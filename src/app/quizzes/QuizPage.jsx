@@ -37,10 +37,10 @@ const QuizPage = () => {
         />
       </Head>
 
-      <main className="relative mt-4 px-4 md:px-8 lg:px-16 2xl:px-32 py-8 min-h-screen overflow-hidden">
+      <main className="relative mt-4 py-8 min-h-screen overflow-hidden max-w-[1350px] mx-auto">
         {/* Decorative blurred circles */}
       
-        <section className="relative z-10 bg-white/80   p-8 md:p-12 mb-10">
+        <section className="relative z-10 bg-white/80 mb-10">
           <section
             data-aos="fade-up"
             data-aos-delay="100"
@@ -48,7 +48,7 @@ const QuizPage = () => {
             <Quiz setAnalyticUpdate={setAnalyticUpdate} userId={userId} />
           </section>
         </section>
-        <section className="relative z-10 bg-white/80    p-8 md:p-12">
+        <section className="relative z-10 bg-white/80 md:p-12">
           {userId ? (
             <Dashboard analyticUpdate={analyticUpdate} />
           ) : (

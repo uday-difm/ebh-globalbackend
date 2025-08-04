@@ -51,8 +51,8 @@ const Header = () => {
 
   return (
     <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-[999] shadow-md">
-      <div className="max-w-[1440px] mx-auto">
-        <div className="py-4 px-4 sm:px-6 flex items-center justify-between relative">
+      <div className="max-w-[1350px] mx-auto">
+        <div className="py-4 flex items-center justify-between relative">
           {/* Logo */}
           <ScrollToTopLink href="/">
             <Image
