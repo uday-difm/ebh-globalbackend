@@ -23,7 +23,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
 
     const fetchQuizData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}/quizess/quiz`);
+        const response = await axios.get(`/api/quizess/quiz`);
         const shuffledQuestions = response.data.sort(() => Math.random() - 0.5);
         setQuestions(shuffledQuestions);
       } catch (error) {
