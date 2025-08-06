@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,8 +6,13 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
 import { Loader } from '../../../common/Loader';
-import Head from "next/head";
-import { CategorySlider, PaginatedBlogList } from '../page';
+// import Head from "next/head";
+
+// Corrected Import Paths
+// CategorySlider is now in src/components/CategorySlider.jsx
+import CategorySlider from '../../../component/CategorySlider';
+// PaginatedBlogList is now in src/components/PaginatedBlogList.jsx
+import PaginatedBlogList from '../../../component/PaginatedBlogList';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faCalendarDays, faClock } from "@fortawesome/free-solid-svg-icons";
@@ -188,7 +193,7 @@ const IndividualPostView = ({ blog }) => {
         </header>
 
         <div
-          className="blog-content text-justify text-gray-800 text-lg md:text-xl leading-relaxed mb-8" 
+          className="blog-content text-justify text-gray-800 text-lg md:text-xl leading-relaxed mb-8"
           dangerouslySetInnerHTML={{ __html: cleanContent }}
         />
         <PostFooter blog={{ ...blog, blog_url: currentUrl }} />
