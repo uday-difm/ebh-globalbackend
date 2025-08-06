@@ -50,7 +50,7 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
 
                     <div className="absolute bottom-0 w-full bg-white/95 backdrop-blur-md p-6 rounded-t-3xl">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="inline-block text-blacktext-gray-600  bg-gradient-to-r from-green-200 to-blue-200 text-xs font-medium px-2.5 py-1 rounded-full">
+                            <span className="inline-block text-blacktext-gray-600 bg-gradient-to-r from-green-200 to-blue-200 text-xs font-medium px-2.5 py-1 rounded-full">
                                 {blog.category_name}
                             </span>
                             <div className="flex items-center gap-1 text-gray-400">
