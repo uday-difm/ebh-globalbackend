@@ -45,7 +45,7 @@ export default function Cta() {
               animatedColor1="bg-blue-700"
               animatedColor2="bg-blue-700"
             >
-              <div className="flex gap-1 items-center">
+              <div className="flex text-center ms-2 mx-auto justify-center gap-1 items-center ">
                 Contact Us
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
               </div>

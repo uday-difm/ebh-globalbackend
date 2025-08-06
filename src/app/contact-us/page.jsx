@@ -66,17 +66,17 @@ export default function ContactUsPage() {
       <meta property="og:description" content=" Have questions or feedback? Contact Earth by Humans for support and inquiries. We're here to help you connect with our mission." />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
       <div>
-        <section className=" bg-gradient-to-br from-white to-gray-100 text-black" id="contact w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-sm bg-gradient-to-br from-white to-green-50">
+        <section>
           <div className="mx-auto max-w-[1350] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-            <div className="mb-4 ">
-              <div className="max-w-3xl text-center  sm:text-center  md:mx-auto md:mb-12">
-                <p className="text-base font-semibold mt-20 text-black  uppercase tracking-wide text-black font-bold">
+            <div className="mb-4 items-center justify-center text-center flex">
+              <div className="max-w-3xl text-center sm:text-center md:mb-12">
+                <p className="text-base font-semibold mt-20 text-black uppercase tracking-wide">
                   Contact
                 </p>
-                <h2 className="font-heading m-8 font-bold tracking-tight  text-green-600 text-md sm:text-5xl">
+                <h2 className="font-heading m-1 font-bold tracking-tight text-green-600 text-md sm:text-5xl">
                   Get in Touch
                 </h2>
-                <p className="text-justify md:text-center px-2 md:px-0">
+                <p className="text-md text-gray-700 max-w-2xl mx-auto">
                   We would love to hear from you! If you have any questions, comments, or suggestions, please don’t hesitate to get in touch with us. At Earth by Humans, we are committed to providing you with the best experience and serving you in the most efficient way possible.
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function ContactUsPage() {
                     <br /><br />
                     <b className="text-black">Published By:</b> DO IT FOR ME LLC: <a href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition duration-300 ease-in-out">30 N Gould St #24999; Sheridan, WY 82801</a>
                   </p>
-                  <div className="flex gap-4 mt-4">
+                  <div className="flex">
                     <p className="text-lg text-gray-900">
                       <strong>Phone:</strong>
                       <a href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out"> +1-786-371-2232</a>
@@ -120,8 +120,8 @@ export default function ContactUsPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="card h-fit max-w-6xl p-5 rounded-lg  bg-white">
-                  <h2 className="mb-1 text-2xl text-blue-800 font-bold ">Contact Form</h2>
+                <div className="card h-fit max-w-6xl p-3 rounded-lg  bg-white">
+                  <h2 className=" text-2xl text-blue-800 font-bold ">Contact Form</h2>
                   <p className="mb-4 text-sm text-black">Your email address will not be published. Required fields are marked *</p>
                   <form id="contactForm" onSubmit={handleSubmit}>
                     <div className="mb-6 space-y-4">

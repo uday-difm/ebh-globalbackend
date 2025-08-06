@@ -43,10 +43,10 @@ const Footer = () => {
 
   return (
     <footer
-      className="w-full bg-white min-h-[550px] text-black px-5 pt-16"
+      className="w-full bg-white min-h-[550px] text-black pt-16"
       style={{ fontFamily: 'Poppins, sans-serif', fontSize: '16px' }}
     >
-      <div className="max-w-[1350px] mx-auto px-4">
+      <div className="max-w-[1350px] mx-auto">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 pb-8">
           {/* Logo & Description */}
           <div>

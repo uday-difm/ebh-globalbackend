@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaArrowRight } from "react-icons/fa";
 import { FcAdvertising } from "react-icons/fc";
+import { Loader } from '../../common/Loader'; // 👈 Import the Loader component
 
 // ------------------ Magazine Card ------------------
 const Card = ({ data }) => {
@@ -28,12 +29,12 @@ const Card = ({ data }) => {
             {data.magazine_title}
           </p>
           <div className="flex justify-center mt-3">
-            <div className="group relative  w-[120px] bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-              <div className="absolute w-[100px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-250%] left-[-100%] group-hover:left-[-20%] z-10">
+            <div className="group relative w-[150px] bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+              <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-700 top-[-250%] left-[-100%] group-hover:left-[-20%] z-10">
               </div>
-              <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+              <div className="absolute w-[270px] h-[140px] bg-blue-700 transform rotate-[125deg] transition-all duration-700 left-[100%] group-hover:left-[10%] z-10">
               </div>
-              <span className="transition-colors rounded-full text-sm duration-500 text-lg z-50 group-hover:text-white flex gap-1 items-center">
+              <span className="transition-colors rounded-full duration-500 text-sm z-50 group-hover:text-white flex gap-1 items-center">
                 Read More
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
               </span>
@@ -67,8 +68,8 @@ const AdCard = () => (
 
       <Link href="/contact-us" scroll={true} passHref>
         <div className="group relative w-[150px] sm:w-[150px] bg-green-600 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-          <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10" />
-          <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10" />
+          <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-700 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10" />
+          <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-700 left-[100%] group-hover:left-[10%] z-10" />
           <span className="transition-colors rounded-full duration-500 text-sm sm:text-md z-50 group-hover:text-white flex gap-2 items-center">
             Get Started
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -119,7 +120,7 @@ const Magazine = () => {
   };
 
   if (loading) {
-    return <div className="text-center mt-10 text-black">Loading magazines...</div>;
+    return <div className="flex justify-center items-center h-screen"><Loader /></div>; // 👈 Replaced loading text with the Loader component
   }
 
   if (error) {
@@ -148,7 +149,7 @@ const Magazine = () => {
       />
 
       <div className="bg-white min-h-screen">
-        <div className="container mx-auto mt-10 px-4 pt-20 pb-10">
+        <div className="container mx-auto mt-10 pt-20 pb-10 max-w-[1350px]">
           <div className="flex flex-col items-center gap-10 lg:px-[10%]">
             <div className="w-full flex justify-center ">
               <h1
@@ -177,7 +178,7 @@ const Magazine = () => {
             <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
               <div className="max-w-7xl mx-auto px-6 text-center">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
                     <FcAdvertising size={25} className="text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
@@ -186,10 +187,10 @@ const Magazine = () => {
                   Reach our engaged audience of nature enthusiasts and environmental advocates. Your brand could be featured here!
                 </p>
                 <Link href="/contact-us" scroll={true} passHref>
-                  <div className="group relative w-[150px] mx-auto bg-green-600 text-white py-2 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
-                    <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-500 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
+                  <div className="group relative w-[150px] mx-auto bg-green-500 text-white py-3 rounded-full flex items-center justify-center overflow-hidden cursor-pointer">
+                    <div className="absolute w-[120px] h-[250px] bg-blue-700 transform rotate-[35deg] transition-all duration-700 top-[-200%] left-[-120%] group-hover:left-[-20%] z-10">
                     </div>
-                    <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-500 left-[100%] group-hover:left-[10%] z-10">
+                    <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-700 left-[100%] group-hover:left-[10%] z-10">
                     </div>
                     <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
                       Contact Us
@@ -201,11 +202,11 @@ const Magazine = () => {
             </div>
 
             {visibleCount < magazines.length && (
-              <div className="relative group overflow-hidden rounded-full cursor-pointer">
+              <div className="relative w-[150px] py-3 group overflow-hidden rounded-full cursor-pointer">
                 <div className="absolute inset-0 bg-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
-                <div className="absolute w-[115px] h-[200px] bg-blue-600 transform rotate-[35deg] transition-all duration-600 ease-in-out top-[-245%] left-[-100%] group-hover:left-0 z-10"></div>
-                <div className="absolute w-[200px] h-[90px] bg-blue-600 transform rotate-[125deg] transition-all duration-600 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
-                <button onClick={loadMore} className="relative z-20 text-white py-3 font-bold px-9 text-sm rounded-full transition-colors duration-300">
+                <div className="absolute w-[115px] h-[200px] bg-blue-600 transform rotate-[35deg] transition-all duration-700 ease-in-out top-[-235%] left-[-100%] group-hover:left-0 z-10"></div>
+                <div className="absolute w-[200px] h-[90px] bg-blue-600 transform rotate-[125deg] transition-all duration-700 ease-in-out top-[-15%] left-[100%] group-hover:left-[20%] z-10"></div>
+                <button onClick={loadMore} className="relative z-20 text-white font-bold px-9 text-sm rounded-full transition-colors duration-300">
                   Load More
                 </button>
               </div>

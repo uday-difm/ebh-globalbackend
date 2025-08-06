@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,8 +6,13 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
 import { Loader } from '../../../common/Loader';
-import Head from "next/head";
-import { CategorySlider, PaginatedBlogList } from '../page';
+// import Head from "next/head";
+
+// Corrected Import Paths
+// CategorySlider is now in src/components/CategorySlider.jsx
+import CategorySlider from '../../../component/CategorySlider';
+// PaginatedBlogList is now in src/components/PaginatedBlogList.jsx
+import PaginatedBlogList from '../../../component/PaginatedBlogList';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faCalendarDays, faClock } from "@fortawesome/free-solid-svg-icons";
@@ -173,11 +178,11 @@ const IndividualPostView = ({ blog }) => {
           <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6">
             <Image src={blog.blog_feature_image} alt={blog.blog_title} fill className="object-cover" priority />
           </div>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 mb-4">
-            <Link href={`/blogs/category/${blog.category_slug}`} className="flex items-center gap-2 hover:text-green-600">
-              <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
-            </Link>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-bold text-sm text-gray-600 mb-4">
             <span className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
+            </span>
+            <span className="flex items-center font-bold gap-2">
               <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {blog.formatted_date}
             </span>
             <span className="flex items-center gap-2">
@@ -188,7 +193,7 @@ const IndividualPostView = ({ blog }) => {
         </header>
 
         <div
-          className="blog-content text-justify text-[22px] sm:text-[24px] md:text-[26px] font-[Poppins] leading-relaxed"
+          className="blog-content text-justify text-gray-800 text-lg md:text-xl leading-relaxed mb-8"
           dangerouslySetInnerHTML={{ __html: cleanContent }}
         />
         <PostFooter blog={{ ...blog, blog_url: currentUrl }} />

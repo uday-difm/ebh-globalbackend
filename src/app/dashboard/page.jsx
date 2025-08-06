@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 const DashboardHome = () => {
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [hydrated, setHydrated] = useState(false); // <- new line
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -24,6 +25,10 @@ const DashboardHome = () => {
       router.push("/dashboard/login");
     }
   }, [isAuthenticated, router]);
+
+  useEffect(() => {
+    setHydrated(true); // <- ensures Redux is ready before rendering
+  }, []);
 
   const fetchCounts = async () => {
     try {
@@ -114,24 +119,32 @@ const DashboardHome = () => {
   //     }
   //   }
   // };
-const deleteBlog = async (blog_slug) => {
-  try {
-    const response = await fetch(`/api/dashboard/blog/delete-blog/${blog_slug}`, { method: 'DELETE' });
+  const deleteBlog = async (blog_slug) => {
+    try {
+      const response = await fetch(`/api/dashboard/blog/delete-blog/${blog_slug}`, { method: 'DELETE' });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      toast.error(errorData.message || 'Failed to delete the blog');
-      return;
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Failed to delete the blog');
+        return;
+      }
+
+      toast.success('Blog deleted successfully');
+      await fetchBlogs(currentPage); // 🟢 ensures updated list from server
+    } catch (error) {
+      console.error('Error deleting blog:', error);
+      toast.error('An error occurred while deleting the blog');
     }
-
-    toast.success('Blog deleted successfully');
-    await fetchBlogs(currentPage); // 🟢 ensures updated list from server
-  } catch (error) {
-    console.error('Error deleting blog:', error);
-    toast.error('An error occurred while deleting the blog');
+  };
+  if (!hydrated) {
+    return null; // wait until Redux is ready
   }
-};
- 
+
+  if (!isAuthenticated) {
+    router.push("/dashboard/login");
+    return null;
+  }
+
 
   return (
     <DashboardLayout>

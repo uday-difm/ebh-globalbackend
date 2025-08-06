@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import DashboardLayout from '../../../component/DashboardLayout';
-// import { baseUrl } from '../../../lib/config';
+import { baseUrl } from '../../../lib/config';
 
 // Define types for the form state
 interface FormData {

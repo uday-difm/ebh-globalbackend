@@ -89,7 +89,7 @@ const Dashboard = ({ analyticUpdate }) => {
   }, [userId, analyticUpdate]);
 
   return (
-    <div className='max-w-[1400px] mx-auto relative rounded-xl p-8 '>
+    <div className='max-w-[1350px] mx-auto relative rounded-xl p-8 '>
       <div>
         <h2 className='text-[30px] lg:text-[55px] text-center font-bold text-blue-900' style={{ fontFamily: "Poppins" }}>
           Track Your Score

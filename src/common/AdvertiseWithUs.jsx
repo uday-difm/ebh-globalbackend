@@ -111,7 +111,7 @@ export default function AdvertiseWithUs() {
                 key={i}
                 data-aos="fade-up"
                 data-aos-delay={i * 100}
-                className="relative bg-white p-8 rounded-3xl border-t-4 border-green-700 hover:border-[#3853a4] border border-gray-200 shadow-md hover:shadow-xl transform transition-transform duration-700 ease-in-out hover:scale-[1.05] flex flex-col items-center text-center group"
+                className="relative bg-white p-8 rounded-3xl border-t-4 border-green-700 hover:border-[#3853a4] border shadow-md hover:shadow-xl transform transition-transform duration-700 ease-in-out hover:scale-[1.05] flex flex-col items-center text-center group"
               >
                 <div className="p-5 rounded-full border border-green-200 mb-4 shadow group-hover:shadow-lg transition-all duration-500">
                   {feature.icon}

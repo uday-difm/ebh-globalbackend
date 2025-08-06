@@ -55,6 +55,8 @@
     "@tailwindcss/postcss": "^4",
     "@types/axios": "^0.9.36",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/ms": "^2.1.0",
+    "@types/node": "24.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4"
