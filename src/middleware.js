@@ -35,9 +35,7 @@
 //   matcher: ['/dashboard/:path*'], // Apply middleware to /dashboard and all subroutes
 // };
 
-
-
-
+                                                
 
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';

@@ -43,7 +43,7 @@ export default function Hero() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold leading-snug text-black">
               Unleashing the power of humanity to heal our Earth
             </h1>
-            <p className="text-gray-600 text-base sm:text-lg lg:max-w-md mx-auto lg:mx-0">
+            <p className="text-black text-base sm:text-lg lg:max-w-md mx-auto lg:mx-0">
               Explore Earth Encounters! Journey through our vibrant collection of videos showcasing the beauty and diversity of nature.
             </p>
 
