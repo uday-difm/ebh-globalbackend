@@ -7,6 +7,8 @@ import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../app/redux/actions/action";
 import Button from "./Button"; // Import the Button component
 import ScrollToTopLink from "./ScrollToTopLink"; // Import the ScrollToTopLink component
 
@@ -32,12 +34,18 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [userMenuRef]);
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    setShowUserMenu(false);
-    router.push('/login');
-    router.refresh();
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      dispatch(logout()); // Reset Redux auth state
+      setShowUserMenu(false);
+      router.push('/login');
+      router.refresh();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const navLinks = [
