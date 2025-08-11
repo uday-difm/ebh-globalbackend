@@ -138,15 +138,34 @@ export default function ContactUsPage() {
                       </div>
                     </div>
                     <div className="text-center">
-                      <button type="submit" className="w-full bg-green-600 hover:bg-blue-600 transition-all duration-500 text-white px-6 py-3 font-xl rounded-md">
-                        {status.type === 'loading' ? 'Sending...' : 'Send Message'}
-                      </button>
+                      <div className="relative group overflow-hidden rounded-full cursor-pointer w-full">
+                        {/* Background layer */}
+                        <div className="absolute inset-0 bg-green-600 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+
+                        {/* Animated color layers */}
+                        <div className="absolute w-[400px] h-[420px] bg-blue-500 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-400%] left-[-90%] group-hover:left-0 z-10"></div>
+                        <div className="absolute w-[650px] h-[310px] bg-blue-500 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-320%] left-[100%] group-hover:left-[20%] z-10"></div>
+
+                        {/* Button */}
+                        <button
+                          type="submit"
+                          className="relative z-20 text-white px-6 py-3 font-xl rounded-full transition-colors duration-300 flex items-center justify-center w-full"
+                        >
+                          {status.type === 'loading' ? 'Sending...' : 'Send Message'}
+                        </button>
+                      </div>
+
+                      {/* Status message */}
                       {status.message && (
-                        <p className={`mt-4 text-sm font-semibold ${status.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                        <p
+                          className={`mt-4 text-sm font-semibold ${status.type === 'success' ? 'text-green-600' : 'text-red-600'
+                            }`}
+                        >
                           {status.message}
                         </p>
                       )}
                     </div>
+
                   </form>
                 </div>
               </div>
