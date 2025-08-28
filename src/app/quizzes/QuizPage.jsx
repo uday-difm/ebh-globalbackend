@@ -39,7 +39,7 @@ const QuizPage = () => {
 
       <main className="relative mt-4 py-8 min-h-screen overflow-hidden max-w-[1350px] mx-auto">
         {/* Decorative blurred circles */}
-      
+
         <section className="relative z-10 bg-white/80 mb-10 mt-20">
           <section
             data-aos="fade-up"
@@ -69,7 +69,22 @@ const QuizPage = () => {
                   <h2 className="text-2xl font-extrabold mb-2 text-green-700 drop-shadow-sm">Login Required</h2>
                   <p className="mb-6 text-gray-600 text-base font-medium">You need to log in to view this content and track your quiz score.</p>
                   <a href="/login" className="w-full flex justify-center">
-                    <button className="w-200px max-w-xs px-6 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-600 hover:text-white rounded-lg font-semibold text-lg shadow-lg hover:from-green-400 hover:to-green-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">Login</button>
+                    <div className="relative group overflow-hidden rounded-full cursor-pointer w-[100px] max-w-xs">
+                      {/* Background base color */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+
+                      {/* Animated sweep layers */}
+                      <div className="absolute w-[60px] h-[220px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-200%] left-[-90%] group-hover:left-0 z-10"></div>
+                      <div className="absolute w-[250px] h-[110px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-120%] left-[100%] group-hover:left-[20%] z-10"></div>
+
+                      {/* Actual button */}
+                      <button
+                        type="button"
+                        className="relative z-20 text-white font-semibold text-lg rounded-full px-6 py-2 transition-colors duration-300 flex items-center justify-center"
+                      >
+                        Login
+                      </button>
+                    </div>
                   </a>
                 </div>
               </div>

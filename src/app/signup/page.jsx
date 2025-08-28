@@ -147,13 +147,24 @@ export default function SignUpPage() {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               {success && <p className="text-green-500 text-sm">{success}</p>}
 
-              <button
-                type="submit"
-                className="w-full bg-green-600 text-white font-bold py-2 rounded transition-colors hover:bg-green-700"
-                style={{ backgroundColor: "#54AE47" }}
-              >
-                Sign Up
-              </button>
+              <div className="relative group overflow-hidden rounded-full cursor-pointer inline-block w-full">
+                <div className="absolute inset-0 bg-green-600 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+
+                {/* Blue sweep from left */}
+                <div className="absolute w-[300px] h-[350px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-50%] left-[-90%] group-hover:left-0 z-10"></div>
+
+                {/* Blue sweep from right */}
+                <div className="absolute w-[250px] h-[200px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-50%] left-[100%] group-hover:left-[20%] z-10"></div>
+
+                <button
+                  type="submit"
+                  className="relative z-20 text-white font-bold py-2 px-5 text-md rounded-full transition-colors duration-300 flex items-center justify-center w-full"
+                  style={{ backgroundColor: "#54AE47" }}
+                >
+                  Sign Up
+                </button>
+              </div>
+
             </form>
 
             <div className="text-center mt-6 text-sm">

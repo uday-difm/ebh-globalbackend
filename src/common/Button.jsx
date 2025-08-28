@@ -8,8 +8,8 @@ const Button = ({
   href,
   type = 'button',
   bgColor = 'bg-green-500', // Default background color
-  animatedColor1 = 'bg-blue-800', // Default animated color 1
-  animatedColor2 = 'bg-blue-800', // Default animated color 2
+  animatedColor1 = 'bg-blue-700', // Default animated color 1
+  animatedColor2 = 'bg-blue-700', // Default animated color 2
   className = '',
 }) => {
   const buttonContent = (
