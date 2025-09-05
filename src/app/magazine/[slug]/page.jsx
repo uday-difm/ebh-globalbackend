@@ -39,7 +39,7 @@ const MagazineDetails = () => {
         // Use Promise.all to wait for both the API call and a 3-second delay
         const [res] = await Promise.all([
           axios.get(`/api/magazine/${slug}`),
-          new Promise(resolve => setTimeout(resolve, 3000)) // 👈 Add the 3-second timer here
+          new Promise(resolve => setTimeout(resolve, 300)) // 👈 Add the 3-second timer here
         ]);
 
         const fetched = Array.isArray(res.data) ? res.data[0] : res.data;

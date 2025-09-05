@@ -93,7 +93,7 @@ const Magazine = () => {
       try {
         const [response] = await Promise.all([
           axios.get("/api/magazine"),
-          new Promise((resolve) => setTimeout(resolve, 3000)), // 👈 The 3-second timer
+          new Promise((resolve) => setTimeout(resolve, 300)), // 👈 The 3-second timer
         ]);
         if (response.status === 200) {
           setMagazines(response.data);

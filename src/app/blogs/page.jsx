@@ -124,7 +124,7 @@ export default function BlogHomePage() {
       try {
         const [data, timer] = await Promise.all([
           getAllData(),
-          new Promise(resolve => setTimeout(resolve, 3000)) // 3-second timer promise
+          new Promise(resolve => setTimeout(resolve, 500)) // 3-second timer promise
         ]);
         setAllBlogs(data.blogs);
         setCategories(data.categories);

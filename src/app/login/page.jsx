@@ -91,7 +91,23 @@ export default function LoginPage() {
               <div className="flex justify-end">
                 <Link href="/forget-password" className="text-blue-700 text-sm font-medium hover:underline">Forgot Password?</Link>
               </div>
-              <button type="submit" className="w-full bg-green-600 text-white font-bold py-2 rounded transition-colors hover:bg-blue-700" >Log In</button>
+              <div className="relative group overflow-hidden rounded-full cursor-pointer w-full">
+                {/* Background color layer */}
+                <div className="absolute inset-0 bg-green-600 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
+
+                {/* Blue animated sweeps */}
+                <div className="absolute w-[180px] h-[220px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-200%] left-[-90%] group-hover:left-0 z-10"></div>
+                <div className="absolute w-[400px] h-[260px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-120%] left-[100%] group-hover:left-[20%] z-10"></div>
+
+                {/* Button */}
+                <button
+                  type="submit"
+                  className="relative z-20 text-white font-bold py-2 px-5 text-sm rounded-full transition-colors duration-300 flex items-center justify-center w-full"
+                >
+                  Log In
+                </button>
+              </div>
+
             </form>
             <div className="text-center mt-8 text-sm">
               Don’t have an account? <Link href="/signup" className="text-blue-700 font-semibold hover:underline">Sign Up</Link>

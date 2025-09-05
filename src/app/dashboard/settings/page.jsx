@@ -21,7 +21,10 @@ const SettingsPage = () => {
       setAdminLoading(true);
       setAdminError('');
       try {
-        const response = await fetch('/api/dashboard/admin/user');
+        const statusRes = await fetch('/api/dashboard/admin/status-admin', {
+          method: 'GET',
+          credentials: 'include',   // 👈 add this line
+        });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'Failed to fetch admin user');
 

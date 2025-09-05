@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
 import { Loader } from '../../../common/Loader';
+import Rightsidebar from '../../../common/Rightsidebar'
 // import Head from "next/head";
 
 // Corrected Import Paths
@@ -49,6 +50,7 @@ const SocialShareButtons = ({ url, title, media }) => {
 
   return (
     <div className="flex items-center gap-3 flex-shrink-0">
+
       <FacebookShareButton url={url} quote={title}>
         <div className={buttonClass}>
           <FontAwesomeIcon icon={faFacebookF} />
@@ -81,6 +83,7 @@ const PostFooter = ({ blog }) => (
   <footer className="pt-3 border-t border-gray-200">
     <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-gray-50 p-6 rounded-xl shadow-sm">
       <div className="flex-1 w-full md:w-auto">
+        <div className='font-bold mb-3.5'>Tags: <br></br></div>
         <div className="flex flex-wrap gap-2">
           {blog.blog_tag
             ? blog.blog_tag.split(',').map((tag, index) => (
@@ -91,11 +94,11 @@ const PostFooter = ({ blog }) => (
             : <span className="text-sm text-white">No tags</span>}
         </div>
       </div>
-      <SocialShareButtons
+      {/* <SocialShareButtons
         url={blog.blog_url || ""}
         title={blog.blog_title}
         media={blog.blog_feature_image}
-      />
+      /> */}
     </div>
 
     <div className="mt-14 p-6 sm:p-8 bg-white shadow-md rounded-3xl flex flex-col sm:flex-row items-center text-center sm:text-left gap-6 border border-gray-100">
@@ -173,37 +176,48 @@ const IndividualPostView = ({ blog }) => {
       <meta name="keywords" content="blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
       <meta property="og:description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
-      <article className="max-w-4xl mx-auto px-4 py-2 mt-30 sm:py-3">
-        <header className="mb-8">
-          <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6">
-            <Image src={blog.blog_feature_image} alt={blog.blog_title} fill className="object-cover" priority />
-          </div>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-bold text-sm text-gray-600 mb-4">
-            <span className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
-            </span>
-            <span className="flex items-center font-bold gap-2">
-              <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {blog.formatted_date}
-            </span>
-            <span className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faClock} className="text-green-600" /> {readingTime} min read
-            </span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{blog.blog_title}</h1>
-        </header>
 
-        <div
-          className="blog-content text-justify text-gray-800 text-lg md:text-xl leading-relaxed mb-8"
-          dangerouslySetInnerHTML={{ __html: cleanContent }}
-        />
-        <PostFooter blog={{ ...blog, blog_url: currentUrl }} />
-        <style jsx>{`
+      <div className='container mx-auto px-6 lg:px-20'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-16'>
+          <div className='lg:col-span-2'>
+            <article className="mx-auto px-4 py-2 mt-30 sm:py-3">
+              <header className="mb-8">
+                <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-6">
+                  <Image src={blog.blog_feature_image} alt={blog.blog_title} fill className="object-cover" priority />
+                </div>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-bold text-sm text-gray-600 mb-4">
+                  <span className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
+                  </span>
+                  <span className="flex items-center font-bold gap-2">
+                    <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {blog.formatted_date}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faClock} className="text-green-600" /> {readingTime} min read
+                  </span>
+                </div>
+                <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{blog.blog_title}</h1>
+              </header>
+
+
+              <div
+                className="blog-content text-justify text-gray-800 text-lg md:text-xl leading-relaxed mb-8"
+                dangerouslySetInnerHTML={{ __html: cleanContent }}
+              />
+              <PostFooter blog={{ ...blog, blog_url: currentUrl }} />
+              <style jsx>{`
           .blog-content a {
             color: #047857;
             text-decoration: none;
           }
         `}</style>
-      </article>
+            </article>
+          </div>
+
+          <Rightsidebar />
+
+        </div>
+      </div>
     </>
   );
 };
@@ -242,7 +256,7 @@ export default function CombinedSlugPage() {
         const [contentData, categoriesData] = await Promise.all([
           getContentBySlug(slug),
           getAllCategories(),
-          new Promise(resolve => setTimeout(resolve, 3000))
+          new Promise(resolve => setTimeout(resolve, 500))
         ]);
         setContent(contentData);
         setAllCategories(categoriesData);

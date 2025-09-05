@@ -34,7 +34,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
     const checkPlayStatus = async () => {
       if (userId) {
         try {
-          const response = await axios.get(`${serverUrl}/quizess/quiz-play?userId=${userId}`);
+          const response = await axios.get(`/api/quizess/quiz-play?userId=${userId}`);
           if (response?.data?.played) {
             setPlayed(true);
           }
@@ -81,7 +81,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
         alert('Error saving quiz: ' + error.message);
       }
     }
-    
+
     // This line was previously being skipped, causing the issue.
     // We now ensure the selectedOption state is always updated.
     setSelectedOption(index);
@@ -172,14 +172,21 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
               showCorrect={selectedOption !== null}
             />
           ))}
-          <button
-            className='self-end py-2 px-5 bg-blue-600 hover:bg-green-600 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out'
-            onClick={handleNextQuestion}
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
-          </button>
+          <div className="relative group overflow-hidden rounded-full cursor-pointer w-[90px] items-end justify-center flex">
+            <div className="absolute inset-0 w-[90px] bg-green-600 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-lg"></div>
+            <div className="absolute w-[80px] h-[150px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-200%] left-[-90%] group-hover:left-0 z-10"></div>
+            <div className="absolute w-[250px] h-[200px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-70%] left-[100%] group-hover:left-[20%] z-10"></div>
+
+            <button
+              onClick={handleNextQuestion}
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="relative z-20 text-white font-bold py-2 px-5 text-md rounded-full transition-colors duration-300 justify-end flex items-center"
+            > 
+              {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
+            </button>
+          </div>
+
         </div>
       </div>
     </div>

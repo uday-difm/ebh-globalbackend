@@ -36,9 +36,9 @@ const LatestMagazine = () => {
             <p className="text-3xl md:text-4xl lg:text-5xl font-bold">Latest Magazine</p>
 
             <Link href="/magazine" scroll={true}>
-              <div className="group relative px-6 py-3 border border-gray-300 rounded-3xl hover:border-blue-800 transition-all duration-500 bg-transparent flex items-center justify-center overflow-hidden">
-                <div className="absolute w-[140px] h-[200px] bg-blue-800 rotate-[35deg] transition-all duration-500 ease-in-out top-[-135%] left-[-80%] group-hover:left-0"></div>
-                <div className="absolute w-[200px] h-[90px] bg-blue-800 rotate-[125deg] transition-all duration-500 ease-in-out top-[15%] left-[90%] group-hover:left-[35%]"></div>
+              <div className="group relative px-6 py-3 border border-gray-300 rounded-3xl hover:border-blue-700 transition-all duration-500 bg-transparent flex items-center justify-center overflow-hidden">
+                <div className="absolute w-[140px] h-[200px] bg-blue-700 rotate-[35deg] transition-all duration-500 ease-in-out top-[-135%] left-[-80%] group-hover:left-0"></div>
+                <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] transition-all duration-500 ease-in-out top-[15%] left-[90%] group-hover:left-[35%]"></div>
                 <span className="transition-colors duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
                   View All Magazines <FaArrowRight />
                 </span>

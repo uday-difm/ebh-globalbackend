@@ -75,7 +75,7 @@ async function getBlogsInCategoryFromDB(categorySlug) {
 
 
 export async function GET(request, context) {
-  const { params } = context;
+  const params = await context.params;
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
   if (!slug) {
