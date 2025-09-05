@@ -23,6 +23,7 @@ const DashboardHome = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/dashboard/login");
+      return null; // Prevent flicker
     }
   }, [isAuthenticated, router]);
 
