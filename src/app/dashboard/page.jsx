@@ -26,6 +26,8 @@ const DashboardHome = () => {
     }
   }, [isAuthenticated, router]);
 
+  
+
   useEffect(() => {
     setHydrated(true); // <- ensures Redux is ready before rendering
   }, []);
