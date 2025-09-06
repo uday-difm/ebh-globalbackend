@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 const DashboardHome = () => {
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const [hydrated, setHydrated] = useState(false); // <- new line
+  const [hydrated, setHydrated] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -20,17 +20,15 @@ const DashboardHome = () => {
   const [totalMagazines, setTotalMagazines] = useState(0);
   const [blogsPerPage] = useState(10);
 
+  // This useEffect correctly handles the navigation as a side effect
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/dashboard/login");
-      return null; // Prevent flicker
     }
   }, [isAuthenticated, router]);
 
-  
-
   useEffect(() => {
-    setHydrated(true); // <- ensures Redux is ready before rendering
+    setHydrated(true);
   }, []);
 
   const fetchCounts = async () => {
@@ -96,32 +94,6 @@ const DashboardHome = () => {
     }
   };
 
-  // const deleteBlog = async (blogSlug) => {
-  //   const result = await Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "This blog will be permanently deleted!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "#3085d6",
-  //     confirmButtonText: "Yes, delete it!",
-  //   });
-  //   if (result.isConfirmed) {
-  //     try {
-  //       const response = await fetch(`/api/dashboard/blog/delete-blog/${blogSlug}`, { method: 'DELETE' });
-
-  //       if (response.ok) {
-  //         Swal.fire("Deleted!", "The blog has been deleted.", "success");
-  //         setLoading(true);
-  //         await fetchBlogs(currentPage);
-  //       } else {
-  //         Swal.fire("Error", "Failed to delete the blog.", "error");
-  //       }
-  //     } catch {
-  //       Swal.fire("Error", "Something went wrong.", "error");
-  //     }
-  //   }
-  // };
   const deleteBlog = async (blog_slug) => {
     try {
       const response = await fetch(`/api/dashboard/blog/delete-blog/${blog_slug}`, { method: 'DELETE' });
@@ -133,21 +105,16 @@ const DashboardHome = () => {
       }
 
       toast.success('Blog deleted successfully');
-      await fetchBlogs(currentPage); // 🟢 ensures updated list from server
+      await fetchBlogs(currentPage);
     } catch (error) {
       console.error('Error deleting blog:', error);
       toast.error('An error occurred while deleting the blog');
     }
   };
+  
   if (!hydrated) {
-    return null; // wait until Redux is ready
-  }
-
-  if (!isAuthenticated) {
-    router.push("/dashboard/login");
     return null;
   }
-
 
   return (
     <DashboardLayout>

@@ -12,7 +12,6 @@ const AuthProvider = ({ children }) => {
       try {
         const res = await fetch('/api/auth/status');
         const data = await res.json();
-        console.log('AuthProvider fetchAuthStatus data:', data);
         if (data.isAuthenticated) {
           dispatch(setAuth(
             data.isAuthenticated,

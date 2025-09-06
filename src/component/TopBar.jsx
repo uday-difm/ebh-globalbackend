@@ -42,7 +42,7 @@ const TopBar = () => {
           alt="Earth by humans logo gif"
           width={130}
           height={190}
-          priority
+          unoptimized
         />
         <input
           type="text"
@@ -57,7 +57,7 @@ const TopBar = () => {
           <span className="text-lg font-semibold text-gray-800" style={{ fontFamily: "poppins" }}>
             Earth BY Human
           </span>
-          <span className="text-md font-medium text-gray-900 font-bold">Super Admin</span>
+          <span className="text-md  text-gray-900 font-bold">Super Admin</span>
         </div>
         <div className="relative">
           <button
@@ -71,6 +71,7 @@ const TopBar = () => {
                 width={48}
                 height={48}
                 className="object-cover"
+                unoptimized
               />
             </div>
             <svg width="24" height="24"

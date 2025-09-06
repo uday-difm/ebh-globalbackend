@@ -68,7 +68,7 @@ const Header = () => {
               alt="Earth by humans logo gif"
               width={180}
               height={100}
-              priority
+              unoptimized
             />
           </ScrollToTopLink>
 
@@ -101,6 +101,7 @@ const Header = () => {
                     alt="User"
                     width={40}
                     height={40}
+                    unoptimized
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <span className="font-bold">{auth.name?.split(" ")[0]}</span>
