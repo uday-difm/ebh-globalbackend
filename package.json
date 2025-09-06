@@ -57,6 +57,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/ms": "^2.1.0",
     "@types/node": "24.2.0",
+    "@types/react": "19.1.12",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4"
