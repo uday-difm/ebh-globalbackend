@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import db from '../../../../lib/db'; // Ensure this path is correct for your database connection
 
-// Function to fetch a single blog by slug from the database
+// ---------------- Fetch a Single Blog by Slug ----------------
 async function getBlogBySlugFromDB(slug) {
   try {
     const sql = `
@@ -14,9 +14,8 @@ async function getBlogBySlugFromDB(slug) {
         b.blog_feature_image,
         b.blog_content,
         b.blog_tag,
-        DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
-        DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
-        -- b.blog_views_count AS views, -- Removed as per your instruction
+        b.blog_date_time       AS publish_date,   -- ✅ Always use blog_date_time for publish date
+        b.blog_timestamp       AS updated_at,     -- ✅ Keep timestamp as updated date
         bc.category_name,
         bc.category_slug
       FROM blogs b
@@ -24,26 +23,30 @@ async function getBlogBySlugFromDB(slug) {
       WHERE b.blog_slug = ?;
     `;
     const [rows] = await db.query(sql, [slug]);
-    return rows[0] || null; // Return the first matching blog or null if not found
+    return rows[0] || null;
   } catch (error) {
-    console.error("Error fetching single blog from DB in /api/blogs/[slug]/route.js:", error);
+    console.error("Error fetching single blog:", error);
     return null;
   }
 }
 
-// Function to fetch a single category by slug from the database
+// ---------------- Fetch a Category by Slug ----------------
 async function getCategoryBySlugFromDB(slug) {
   try {
-    const sql = `SELECT category_id, category_name, category_slug FROM blog_category WHERE category_slug = ?;`;
+    const sql = `
+      SELECT category_id, category_name, category_slug
+      FROM blog_category
+      WHERE category_slug = ?;
+    `;
     const [rows] = await db.query(sql, [slug]);
-    return rows[0] || null; // Return the first matching category or null
+    return rows[0] || null;
   } catch (error) {
-    console.error("Error fetching single category from DB in /api/blogs/[slug]/route.js:", error);
+    console.error("Error fetching single category:", error);
     return null;
   }
 }
 
-// Function to get blogs within a specific category from the database
+// ---------------- Fetch Blogs in Category ----------------
 async function getBlogsInCategoryFromDB(categorySlug) {
   try {
     const sql = `
@@ -55,25 +58,24 @@ async function getBlogsInCategoryFromDB(categorySlug) {
         b.blog_feature_image,
         b.blog_content,
         b.blog_tag,
-        DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
-        DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
-        -- b.blog_views_count AS views, -- Removed as per your instruction
+        b.blog_date_time       AS publish_date,   -- ✅ Consistent publish date
+        b.blog_timestamp       AS updated_at,     -- ✅ Updated at for consistency
         bc.category_name,
         bc.category_slug
       FROM blogs b
       JOIN blog_category bc ON b.blog_category_id = bc.category_id
       WHERE bc.category_slug = ?
-      ORDER BY b.blog_timestamp DESC;
+      ORDER BY b.blog_date_time DESC;
     `;
     const [rows] = await db.query(sql, [categorySlug]);
     return rows;
   } catch (error) {
-    console.error("Error fetching blogs in category from DB in /api/blogs/[slug]/route.js:", error);
+    console.error("Error fetching blogs in category:", error);
     return [];
   }
 }
 
-
+// ---------------- API Route ----------------
 export async function GET(request, context) {
   const params = await context.params;
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
@@ -83,13 +85,13 @@ export async function GET(request, context) {
   }
 
   try {
-    // Attempt to fetch as a blog post first
+    // 1️⃣ Try fetching as a blog
     const matchedBlog = await getBlogBySlugFromDB(slug);
     if (matchedBlog) {
       return NextResponse.json({ type: 'post', data: matchedBlog });
     }
 
-    // If not a blog post, attempt to fetch as a category
+    // 2️⃣ If not blog, try category
     const category = await getCategoryBySlugFromDB(slug);
     if (category) {
       const blogsInCategory = await getBlogsInCategoryFromDB(slug);
@@ -99,10 +101,10 @@ export async function GET(request, context) {
       });
     }
 
-    // If neither a blog nor a category matches the slug
+    // 3️⃣ Nothing found
     return NextResponse.json({ error: 'Not Found' }, { status: 404 });
   } catch (err) {
-    console.error('[slug] API Error:', err);
+    console.error("[slug] API Error:", err);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
