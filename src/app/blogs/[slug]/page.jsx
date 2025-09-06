@@ -190,12 +190,12 @@ const IndividualPostView = ({ blog }) => {
                     <FontAwesomeIcon icon={faFile} className="text-green-600" /> {blog.category_name}
                   </span>
                   <span className="flex items-center font-bold gap-2">
-                    {/* -  <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {blog.blog_date_time} */}
-                      <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {new Date(blog.publish_date).toLocaleDateString('en-US', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
+                    <FontAwesomeIcon icon={faCalendarDays} className="text-green-600" /> {new Date(blog.publish_date).toLocaleDateString('en-US', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                      timeZone: 'UTC' // <-- This is the key fix
+                    })}
                   </span>
 
                   <span className="flex items-center gap-2">
