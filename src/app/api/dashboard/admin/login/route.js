@@ -24,12 +24,11 @@ export async function POST(request) {
     const token = await signToken({ id: admin.id, email: admin.email });
 
     // Set cookie using Next.js cookies API
-    cookies().set('auth_token', token, {
+    const cookieStore = await cookies();
+    cookieStore.set('auth_token', token, {
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 3, // 3 hours
-      // secure: process.env.NODE_ENV === 'production', // Uncomment for prod
     });
 
     return new Response(JSON.stringify({ message: 'Login successful' }), {
