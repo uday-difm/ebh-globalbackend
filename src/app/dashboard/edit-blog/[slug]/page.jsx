@@ -139,57 +139,65 @@ export default function EditBlogPage() {
     setExistingImageUrl(URL.createObjectURL(image));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMessage('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setErrorMessage('');
 
-    const { blogTitle, tags, category, description, date, time, content } = form;
+  const { blogTitle, tags, category, description, date, time, content } = form;
 
-    if (!blogTitle || !tags || !category || !description || !date || !time || !content) {
-      setErrorMessage('Please fill in all required fields.');
-      setIsSubmitting(false);
-      return;
-    }
+  if (!blogTitle || !tags || !category || !description || !date || !time || !content) {
+    setErrorMessage('Please fill in all required fields.');
+    setIsSubmitting(false);
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append('blogId', slug);
-    formData.append('blogTitle', blogTitle);
-    formData.append('blogTag', tags);
-    formData.append('blogCategory', category);
-    formData.append('blogDescription', description);
-    formData.append('blogContent', content);
-    formData.append('blogDate', date);
-    formData.append('blogTime', time);
+  const formData = new FormData();
+  formData.append('blogId', slug);
+  formData.append('blogTitle', blogTitle);
+  formData.append('blogTag', tags);
+  formData.append('blogCategory', category);
+  formData.append('blogDescription', description);
+  formData.append('blogContent', content);
+  formData.append('blogDate', date);
+  formData.append('blogTime', time);
 
-    const finalSlug = form.blogSlug.trim() === ''
-      ? blogTitle.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')
-      : form.blogSlug;
+  const finalSlug = form.blogSlug.trim() === ''
+    ? blogTitle.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')
+    : form.blogSlug;
 
-    formData.append('blog_slug', finalSlug);
+  formData.append('blog_slug', finalSlug);
 
-    if (form.image) {
-      formData.append('blog_feature_image', form.image);
-    } else if (existingImageUrl) {
-      formData.append('existing_image_url', existingImageUrl);
-    }
+  if (form.image) {
+    formData.append('blog_feature_image', form.image);
+  } else if (existingImageUrl) {
+    formData.append('existing_image_url', existingImageUrl);
+  }
 
+  try {
     const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
       method: 'PUT',
       body: formData,
     });
 
-    const result = await res.json();
-
-    if (res.ok) {
-      toast.success('Blog updated successfully');
-      router.push('/dashboard/blog-table');
-    } else {
+    if (!res.ok) {
+      const result = await res.json();
       toast.error(result.message || 'Update failed');
+      return;
     }
 
-    setIsSubmitting(false);
-  };
+    toast.success('Blog updated successfully');
+    window.location.reload();
+
+  } catch (error) {
+    console.error('Update error:', error);
+    toast.error('An unexpected error occurred during update.');
+  } finally {
+    setIsSubmitting(false); // This always runs no matter what
+  }
+};
+
+
 
   return (
     <DashboardLayout>

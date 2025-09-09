@@ -81,12 +81,18 @@ const DashboardHome = () => {
     }
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchBlogs(currentPage);
-      fetchCounts();
-    }
-  }, [currentPage, isAuthenticated]);
+ useEffect(() => {
+  if (!isAuthenticated) return;
+
+  const timer = setTimeout(() => {
+    fetchBlogs(currentPage);
+    fetchCounts();
+  }, 5000); 
+
+  // Clean up the timeout if the component unmounts or dependencies change early
+  return () => clearTimeout(timer);
+}, [currentPage, isAuthenticated]);
+
 
   const handlePageChange = (page) => {
     if (page > 0 && page <= Math.ceil(totalBlogs / blogsPerPage)) {

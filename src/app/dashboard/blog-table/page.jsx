@@ -36,8 +36,13 @@ export default function BlogTable() {
 
   // Fetch blogs on mount
   useEffect(() => {
+  const timer = setTimeout(() => {
     fetchBlogs();
-  }, []);
+  }, 5000); // 5000ms = 5 seconds
+
+  // Cleanup the timer if component unmounts before timeout
+  return () => clearTimeout(timer);
+}, []);
 
   // Pagination logic for frontend
   const paginatedBlogs = blogs.slice(currentPage * blogsPerPage, (currentPage + 1) * blogsPerPage);
