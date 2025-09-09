@@ -22,7 +22,7 @@ export default function BlogTable() {
   const fetchBlogs = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/dashboard/blog');
+      const res = await fetch('/api/dashboard/blog?page=1&limit=10'); // example query params
       const data = await res.json();
       setBlogs(Array.isArray(data) ? data : []);
       setTotalBlogs(data && data.length ? data.length : 0);
@@ -38,7 +38,7 @@ export default function BlogTable() {
   useEffect(() => {
   const timer = setTimeout(() => {
     fetchBlogs();
-  }, 5000); // 5000ms = 5 seconds
+  }, 3000); // 3000ms = 3 seconds
 
   // Cleanup the timer if component unmounts before timeout
   return () => clearTimeout(timer);
