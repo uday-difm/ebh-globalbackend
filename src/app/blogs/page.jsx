@@ -3,33 +3,34 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
-import Slider from "react-slick";
+import dynamic from 'next/dynamic';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import '../pagination.css';
 import { Loader } from '../../common/Loader';
-import { FcAdvertising } from "react-icons/fc";
-import Button from '../../common/Button';
+
 
 // ----------------- IMPORT THE NEWLY MOVED COMPONENTS -----------------
-import CategorySlider from '../../component/CategorySlider';
+// import CategorySlider from '../../component/CategorySlider';
 import PaginatedBlogList from '../../component/PaginatedBlogList';
 
-const getAllData = async () => {
-  const res = await fetch('/api/blogs');
-  if (!res.ok) throw new Error('Failed to fetch blogs and categories');
+// const Sidebar = dynamic(() => import('../../component/Sidebar'), { ssr: false });
+const CategorySlider = dynamic(() => import('../../component/CategorySlider'), { ssr: false });
+
+// Fetch first 9 blogs only for initial load
+const fetchInitialBlogs = async () => {
+  const res = await fetch('/api/blogs?page=1&limit=9', { cache: 'no-store' }); 
+  if (!res.ok) throw new Error('Failed to fetch blogs');
   return res.json();
 };
 
-// 🧠 Strip HTML Tags
-const stripHtml = (html) => html?.replace(/<[^>]*>/g, '') || '';
+// Fetch categories separately
+const fetchCategories = async () => {
+  const res = await fetch('/api/categoriesHome', { cache: 'no-store' });
+  if (!res.ok) throw new Error('Failed to fetch categories');
+  return res.json();
+}
 
-// 📖 Calculate Reading Time
-const calculateReadingTime = (text) => {
-  const plainText = stripHtml(text);
-  const words = plainText.trim().split(/\s+/).length || 0;
-  const minutes = Math.ceil(words / 200);
-  return `${minutes} min read`;
-};
+
 // ---------------- Sidebar ----------------
 const Sidebar = ({ categories = [], allBlogs = [] }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -122,19 +123,20 @@ export default function BlogHomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [data, timer] = await Promise.all([
-          getAllData(),
-          new Promise(resolve => setTimeout(resolve, 300)) // 3-second timer promise
+        const [blogData, categoryData] = await Promise.all([
+          fetchInitialBlogs(),
+          fetchCategories()
         ]);
-        setAllBlogs(data.blogs);
-        setCategories(data.categories);
+        setAllBlogs(blogData.blogs || []);
+        setCategories(categoryData.categories || []);
       } catch (err) {
-        console.error("Data fetching error:", err);
-        setError(err.message);
+        console.error('Data fetching error:', err);
+        setError(err.message || 'Unknown error');
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -144,22 +146,25 @@ export default function BlogHomePage() {
   return (
     <>
       <title>Recent Blogs Latest Insights On Nature | Earth by Humans</title>
-      <meta name="description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <meta name="description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more." />
       <meta name="keywords" content="blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
-      <meta property="og:description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <meta property="og:description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more." />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+
       <div className="relative">
         <Sidebar categories={categories} allBlogs={allBlogs} />
-        <main>
-          <div className="pt-20 sm:pt-10 text-black">
-            <div className="container mx-auto px-4 max-w-[1350px]">
-              <div className="my-8"><CategorySlider categories={categories} /></div>
-              <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
-                <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
-                <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
-              </div>
-              <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
+        <main className="pt-20 sm:pt-10 text-black">
+          <div className="container mx-auto px-4 max-w-[1350px]">
+            <div className="my-8">
+              <CategorySlider categories={categories} />
             </div>
+
+            <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
+              <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
+              <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
+            </div>
+
+            <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
           </div>
         </main>
       </div>

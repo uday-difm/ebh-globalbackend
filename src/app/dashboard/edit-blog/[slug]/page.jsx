@@ -183,17 +183,26 @@ const handleSubmit = async (e) => {
     if (!res.ok) {
       const result = await res.json();
       toast.error(result.message || 'Update failed');
+      setIsSubmitting(false);
       return;
     }
 
     toast.success('Blog updated successfully');
-    window.location.reload();
+
+    // Instead of window.location.reload(), do one of these:
+    
+    // Option 1: Redirect user to updated blog list or detail page
+    router.push('/dashboard/blog-table'); // Or wherever you want to redirect
+
+    // Option 2: Update local state to reflect changes without reload
+    // This depends on your component structure and state management.
 
   } catch (error) {
     console.error('Update error:', error);
     toast.error('An unexpected error occurred during update.');
+    setIsSubmitting(false);
   } finally {
-    setIsSubmitting(false); // This always runs no matter what
+    setIsSubmitting(false);
   }
 };
 
