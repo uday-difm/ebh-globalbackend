@@ -158,8 +158,8 @@ export default function BlogTable() {
                     <tr className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200">
                       <th className="px-4 py-3 text-left">S.no</th>
                       <th className="px-4 py-3 text-left">Blog Title</th>
-                      <th className="px-4 py-3 text-left">Date</th>
-                      <th className="px-4 py-3 text-center">Actions</th>
+                      <th className="px-4 py-3 text-center">Date</th>
+                      <th className="px-4 py-3 text-left">Actions</th>
                     </tr>
                   </thead>
                   <tbody>

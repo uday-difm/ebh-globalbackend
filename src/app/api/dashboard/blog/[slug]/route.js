@@ -1,87 +1,77 @@
+// File: /api/dashboard/blog/[slug]/route.js
+
 import { NextResponse } from 'next/server';
 import db from '../../../../../lib/db';
 import { uploadToS3 } from '../../../../../../utils/s3Utility';
 
+
 // ==========================
-// GET Blog by Slug
+// Get Blog by Slug
 // ==========================
 async function getBlogBySlug(slug) {
-  try {
-    const [rows] = await db.query(
-      'SELECT * FROM blogs WHERE blog_slug = ? AND status = 1 LIMIT 1',
-      [slug]
-    );
-    return rows.length ? rows[0] : null;
-  } catch (err) {
-    console.error('Database error:', err);
-    throw err;
-  }
+  const [rows] = await db.query(
+    'SELECT * FROM blogs WHERE blog_slug = ? AND status = 1 LIMIT 1',
+    [slug]
+  );
+  return rows.length ? rows[0] : null;
 }
 
 // ==========================
-// PUT: Update Blog by Slug
+// Update Blog by Slug
 // ==========================
 async function updateBlogBySlug(slug, data) {
-  try {
-    const sql = `
-      UPDATE blogs SET
-        blog_title = ?,
-        blog_tag = ?,
-        blog_category_id = ?,
-        blog_description = ?,
-        blog_content = ?,
-        blog_date_time = ?,
-        blog_slug = ?,
-        blog_feature_image = ?
-      WHERE blog_slug = ?
-    `;
+  const sql = `
+    UPDATE blogs SET
+      blog_title = ?,
+      blog_tag = ?,
+      blog_category_id = ?,
+      blog_description = ?,
+      blog_content = ?,
+      blog_date_time = ?,
+      blog_slug = ?,
+      blog_feature_image = ?
+    WHERE blog_slug = ?
+  `;
 
-    let blogDateTime = null;
-    if (data.blogDate && data.blogTime) {
-      blogDateTime = new Date(`${data.blogDate}T${data.blogTime}`);
-    } else if (data.blogDate) {
-      blogDateTime = new Date(data.blogDate);
-    }
-
-    const params = [
-      data.blogTitle,
-      data.blogTag,
-      data.blogCategory,
-      data.blogDescription,
-      data.blogContent,
-      blogDateTime,
-      data.blogSlug,
-      data.image,
-      slug,
-    ];
-
-    const [result] = await db.query(sql, params);
-    return result.affectedRows > 0;
-  } catch (error) {
-    console.error('Update failed:', error);
-    return null;
+  let blogDateTime = null;
+  if (data.blogDate && data.blogTime) {
+    blogDateTime = new Date(`${data.blogDate}T${data.blogTime}`);
+  } else if (data.blogDate) {
+    blogDateTime = new Date(data.blogDate);
   }
+
+  const params = [
+    data.blogTitle,
+    data.blogTag,
+    data.blogCategory,
+    data.blogDescription,
+    data.blogContent,
+    blogDateTime,
+    data.blogSlug,
+    data.image,
+    slug,
+  ];
+
+  const [result] = await db.query(sql, params);
+  return result.affectedRows > 0;
 }
 
 // ==========================
-// DELETE: Soft Delete Blog
+// Soft Delete Blog
 // ==========================
 async function deleteBlogBySlug(slug) {
-  try {
-    const sql = 'UPDATE blogs SET status = 0 WHERE blog_slug = ?';
-    const [result] = await db.query(sql, [slug]);
-    return result.affectedRows > 0;
-  } catch (error) {
-    console.error('Soft delete failed:', error);
-    return null;
-  }
+  const sql = 'UPDATE blogs SET status = 0 WHERE blog_slug = ?';
+  const [result] = await db.query(sql, [slug]);
+  return result.affectedRows > 0;
 }
 
 // ==========================
 // GET Handler
 // ==========================
-export async function GET(request, { params }) {
-  const { slug } = params;
+
+export const dynamic = "force-dynamic";
+export async function GET(_, { params }) {
+  const slug = await params?.slug;
 
   if (!slug) {
     return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
@@ -94,21 +84,18 @@ export async function GET(request, { params }) {
       return NextResponse.json({ message: 'Blog not found' }, { status: 404 });
     }
 
-    return NextResponse.json(blog, { status: 200 });
+    return NextResponse.json(blog);
   } catch (error) {
-    return NextResponse.json(
-      { message: 'Error fetching blog', error: error.message },
-      { status: 500 }
-    );
+    console.error('Error fetching blog:', error);
+    return NextResponse.json({ message: 'Error fetching blog', error: error.message }, { status: 500 });
   }
 }
 
 // ==========================
 // PUT Handler
 // ==========================
-export async function PUT(request) {
-  const { searchParams } = new URL(request.url);
-  const slug = searchParams.get('slug');
+export async function PUT(request, { params }) {
+  const slug = params?.slug;
 
   if (!slug) {
     return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
@@ -169,17 +156,15 @@ export async function PUT(request) {
 
     return NextResponse.json({ message: 'Blog updated successfully' });
   } catch (error) {
-    return NextResponse.json(
-      { message: 'Error updating blog', error: error.message },
-      { status: 500 }
-    );
+    console.error('Update error:', error);
+    return NextResponse.json({ message: 'Error updating blog', error: error.message }, { status: 500 });
   }
 }
 
 // ==========================
 // DELETE Handler
 // ==========================
-export async function DELETE(request, { params }) {
+export async function DELETE(_, { params }) {
   const slug = params?.slug;
 
   if (!slug) {
@@ -188,14 +173,14 @@ export async function DELETE(request, { params }) {
 
   try {
     const deleted = await deleteBlogBySlug(slug);
+
     if (!deleted) {
       return NextResponse.json({ message: 'Failed to delete blog' }, { status: 500 });
     }
+
     return NextResponse.json({ message: 'Blog soft-deleted (status set to 0)' });
   } catch (error) {
-    return NextResponse.json(
-      { message: 'Error deleting blog', error: error.message },
-      { status: 500 }
-    );
+    console.error('Delete error:', error);
+    return NextResponse.json({ message: 'Error deleting blog', error: error.message }, { status: 500 });
   }
 }
