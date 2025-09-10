@@ -55,7 +55,7 @@ export default function EditBlogPage() {
 
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`/api/dashboard/blog/getBlogBySlug/${slug}`);
+        const res = await fetch(`/api/dashboard/blog/${slug}`);
         if (!res.ok) {
           const errorData = await res.json();
           toast.error(errorData.message || 'Failed to fetch blog data');
@@ -175,7 +175,7 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
+    const res = await fetch(`/api/dashboard/blog/${slug}?slug=${slug}`, {
       method: 'PUT',
       body: formData,
     });

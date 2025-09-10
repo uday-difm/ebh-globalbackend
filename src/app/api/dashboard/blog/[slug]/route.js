@@ -1,8 +1,26 @@
 import { NextResponse } from 'next/server';
-import db from '../../../../../../lib/db';
-import { uploadToS3 } from '../../../../../../../utils/s3Utility';
+import db from '../../../../../lib/db';
+import { uploadToS3 } from '../../../../../../utils/s3Utility';
 
-// Utility function to update blog by slug using raw SQL query
+// ==========================
+// GET Blog by Slug
+// ==========================
+async function getBlogBySlug(slug) {
+  try {
+    const [rows] = await db.query(
+      'SELECT * FROM blogs WHERE blog_slug = ? AND status = 1 LIMIT 1',
+      [slug]
+    );
+    return rows.length ? rows[0] : null;
+  } catch (err) {
+    console.error('Database error:', err);
+    throw err;
+  }
+}
+
+// ==========================
+// PUT: Update Blog by Slug
+// ==========================
 async function updateBlogBySlug(slug, data) {
   try {
     const sql = `
@@ -17,10 +35,10 @@ async function updateBlogBySlug(slug, data) {
         blog_feature_image = ?
       WHERE blog_slug = ?
     `;
-    // Combine blogDate and blogTime into a single datetime string if both exist
+
     let blogDateTime = null;
     if (data.blogDate && data.blogTime) {
-      blogDateTime = new Date(data.blogDate + 'T' + data.blogTime);
+      blogDateTime = new Date(`${data.blogDate}T${data.blogTime}`);
     } else if (data.blogDate) {
       blogDateTime = new Date(data.blogDate);
     }
@@ -28,7 +46,7 @@ async function updateBlogBySlug(slug, data) {
     const params = [
       data.blogTitle,
       data.blogTag,
-      data.blogCategory, // Assuming this is the correct value for blog_category_id (json)
+      data.blogCategory,
       data.blogDescription,
       data.blogContent,
       blogDateTime,
@@ -36,6 +54,7 @@ async function updateBlogBySlug(slug, data) {
       data.image,
       slug,
     ];
+
     const [result] = await db.query(sql, params);
     return result.affectedRows > 0;
   } catch (error) {
@@ -44,6 +63,49 @@ async function updateBlogBySlug(slug, data) {
   }
 }
 
+// ==========================
+// DELETE: Soft Delete Blog
+// ==========================
+async function deleteBlogBySlug(slug) {
+  try {
+    const sql = 'UPDATE blogs SET status = 0 WHERE blog_slug = ?';
+    const [result] = await db.query(sql, [slug]);
+    return result.affectedRows > 0;
+  } catch (error) {
+    console.error('Soft delete failed:', error);
+    return null;
+  }
+}
+
+// ==========================
+// GET Handler
+// ==========================
+export async function GET(request, { params }) {
+  const { slug } = params;
+
+  if (!slug) {
+    return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
+  }
+
+  try {
+    const blog = await getBlogBySlug(slug);
+
+    if (!blog) {
+      return NextResponse.json({ message: 'Blog not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(blog, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Error fetching blog', error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// ==========================
+// PUT Handler
+// ==========================
 export async function PUT(request) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get('slug');
@@ -63,27 +125,29 @@ export async function PUT(request) {
     const blogDate = formData.get('blogDate');
     const blogTime = formData.get('blogTime');
     const blogSlug = formData.get('blog_slug');
-    const image = formData.get('blog_feature_image'); // Might be File or string
+    const image = formData.get('blog_feature_image');
     const existingImageUrl = formData.get('existing_image_url');
 
     let imageUrl = existingImageUrl;
 
-    // If a new image is uploaded (File type), upload it and get a URL
     if (image instanceof File) {
       const buffer = await image.arrayBuffer();
       const ext = image.name.split('.').pop().toLowerCase();
       const allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
       if (!allowedTypes.includes(ext)) {
-        return NextResponse.json({ 
-          error: 'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp' 
-        }, { status: 400 });
+        return NextResponse.json(
+          { error: 'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp' },
+          { status: 400 }
+        );
       }
-      // Upload to S3
+
       const uploadedImageUrl = await uploadToS3('blogs', {
         originalname: image.name,
         buffer: Buffer.from(buffer),
         mimetype: image.type
       });
+
       imageUrl = uploadedImageUrl;
     }
 
@@ -107,6 +171,30 @@ export async function PUT(request) {
   } catch (error) {
     return NextResponse.json(
       { message: 'Error updating blog', error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// ==========================
+// DELETE Handler
+// ==========================
+export async function DELETE(request, { params }) {
+  const slug = params?.slug;
+
+  if (!slug) {
+    return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
+  }
+
+  try {
+    const deleted = await deleteBlogBySlug(slug);
+    if (!deleted) {
+      return NextResponse.json({ message: 'Failed to delete blog' }, { status: 500 });
+    }
+    return NextResponse.json({ message: 'Blog soft-deleted (status set to 0)' });
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Error deleting blog', error: error.message },
       { status: 500 }
     );
   }
