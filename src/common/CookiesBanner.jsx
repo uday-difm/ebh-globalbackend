@@ -2,14 +2,39 @@
 
 import { useState } from 'react';
 import CookieConsent from 'react-cookie-consent';
-import Cookies from 'js-cookie';
+
 import Link from 'next/link';
 
 const CookiesBanner = () => {
   const [lang] = useState('en');
 
-  const handleAccept = () => {
-    Cookies.set('cookieAccepted', 'true', { expires: 365 });
+  const handleAccept = async () => {
+
+
+    // Prepare cookie data to send to the API
+    const cookieData = {
+      name: 'cookies',
+      value: 'accepted',
+      path: '/',
+      domain: window.location.hostname, // optionally add domain if needed
+      expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // expires 1 year from now
+      httpOnly: false,
+      secure: window.location.protocol === 'https:',
+    };
+
+    try {
+      const res = await fetch('/api/cookies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cookieData),
+      });
+
+      if (!res.ok) {
+        console.error('Failed to save cookie in DB', await res.text());
+      }
+    } catch (error) {
+      console.error('Error saving cookie in DB:', error);
+    }
   };
 
   const scrollToTop = () => {
@@ -24,7 +49,7 @@ const CookiesBanner = () => {
       enableDeclineButton
       buttonText="Accept"
       declineButtonText="Close"
-      cookieName="cookieAccepted"
+      // cookieName="cookieAccepted"
       style={{ background: '#000' }}
       buttonStyle={{
         background: 'green',
@@ -38,10 +63,9 @@ const CookiesBanner = () => {
         background: 'gray',
         color: 'white',
         fontWeight: 'bold',
-        fontSize: '16px',
+        fontSize: '16px', 
         borderRadius: '6px',
         padding: '10px 24px',
-
       }}
       setDeclineCookie={false}
       onAccept={({ acceptedByScrolling }) => {
