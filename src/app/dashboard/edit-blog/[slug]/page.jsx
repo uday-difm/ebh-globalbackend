@@ -55,7 +55,7 @@ export default function EditBlogPage() {
 
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`/api/dashboard/blog/getBlogBySlug/${slug}`);
+        const res = await fetch(`/api/dashboard/blog/${slug}`);
         if (!res.ok) {
           const errorData = await res.json();
           toast.error(errorData.message || 'Failed to fetch blog data');
@@ -139,72 +139,72 @@ export default function EditBlogPage() {
     setExistingImageUrl(URL.createObjectURL(image));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  setErrorMessage('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage('');
 
-  const { blogTitle, tags, category, description, date, time, content } = form;
+    const { blogTitle, tags, category, description, date, time, content } = form;
 
-  if (!blogTitle || !tags || !category || !description || !date || !time || !content) {
-    setErrorMessage('Please fill in all required fields.');
-    setIsSubmitting(false);
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('blogId', slug);
-  formData.append('blogTitle', blogTitle);
-  formData.append('blogTag', tags);
-  formData.append('blogCategory', category);
-  formData.append('blogDescription', description);
-  formData.append('blogContent', content);
-  formData.append('blogDate', date);
-  formData.append('blogTime', time);
-
-  const finalSlug = form.blogSlug.trim() === ''
-    ? blogTitle.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')
-    : form.blogSlug;
-
-  formData.append('blog_slug', finalSlug);
-
-  if (form.image) {
-    formData.append('blog_feature_image', form.image);
-  } else if (existingImageUrl) {
-    formData.append('existing_image_url', existingImageUrl);
-  }
-
-  try {
-    const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
-      method: 'PUT',
-      body: formData,
-    });
-
-    if (!res.ok) {
-      const result = await res.json();
-      toast.error(result.message || 'Update failed');
+    if (!blogTitle || !tags || !category || !description || !date || !time || !content) {
+      setErrorMessage('Please fill in all required fields.');
       setIsSubmitting(false);
       return;
     }
 
-    toast.success('Blog updated successfully');
+    const formData = new FormData();
+    formData.append('blogId', slug);
+    formData.append('blogTitle', blogTitle);
+    formData.append('blogTag', tags);
+    formData.append('blogCategory', category);
+    formData.append('blogDescription', description);
+    formData.append('blogContent', content);
+    formData.append('blogDate', date);
+    formData.append('blogTime', time);
 
-    // Instead of window.location.reload(), do one of these:
-    
-    // Option 1: Redirect user to updated blog list or detail page
-    router.push('/dashboard/blog-table'); // Or wherever you want to redirect
+    const finalSlug = form.blogSlug.trim() === ''
+      ? blogTitle.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')
+      : form.blogSlug;
 
-    // Option 2: Update local state to reflect changes without reload
-    // This depends on your component structure and state management.
+    formData.append('blog_slug', finalSlug);
 
-  } catch (error) {
-    console.error('Update error:', error);
-    toast.error('An unexpected error occurred during update.');
-    setIsSubmitting(false);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    if (form.image) {
+      formData.append('blog_feature_image', form.image);
+    } else if (existingImageUrl) {
+      formData.append('existing_image_url', existingImageUrl);
+    }
+
+    try {
+      const res = await fetch(`/api/dashboard/blog/${slug}?slug=${slug}`, {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const result = await res.json();
+        toast.error(result.message || 'Update failed');
+        setIsSubmitting(false);
+        return;
+      }
+
+      toast.success('Blog updated successfully');
+
+      // Instead of window.location.reload(), do one of these:
+
+      // Option 1: Redirect user to updated blog list or detail page
+      router.push('/dashboard/blog-table'); // Or wherever you want to redirect
+
+      // Option 2: Update local state to reflect changes without reload
+      // This depends on your component structure and state management.
+
+    } catch (error) {
+      console.error('Update error:', error);
+      toast.error('An unexpected error occurred during update.');
+      setIsSubmitting(false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
 
 
@@ -301,9 +301,12 @@ const handleSubmit = async (e) => {
                     className="w-full rounded border border-stroke py-3 px-4 dark:border-form-strokedark dark:bg-form-input"
                   >
                     <option value="">Choose Category</option>
-                    {categories.map((cat) => (
-                      <option key={cat.category_id} value={cat.category_id}>
-                        {cat.category_name}
+                    {categories.map((cat, index) => (
+                      <option
+                        key={cat?.category_id ?? `category-${index}`}
+                        value={cat?.category_id}
+                      >
+                        {cat?.category_name}
                       </option>
                     ))}
                   </select>
