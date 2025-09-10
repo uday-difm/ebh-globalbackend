@@ -123,7 +123,7 @@ const AddBlog = () => {
         formData.append('image', values.image);
       }
 
-      const response = await fetch('/api/dashboard/blog', {
+      const response = await fetch('/api/dashboard/blog/add-blog', {
         method: 'POST',
         body: formData,
       });

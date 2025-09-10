@@ -73,7 +73,7 @@ export default function BlogTable() {
 
   const deleteBlog = async (blog_slug) => {
     try {
-      const response = await fetch(`/api/dashboard/blog/${blog_slug}`, { method: 'DELETE' });
+      const response = await fetch(`/api/dashboard/blog/delete-blog/${blog_slug}`, { method: 'DELETE' });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -158,8 +158,8 @@ export default function BlogTable() {
                     <tr className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200">
                       <th className="px-4 py-3 text-left">S.no</th>
                       <th className="px-4 py-3 text-left">Blog Title</th>
-                      <th className="px-4 py-3 text-center">Date</th>
-                      <th className="px-4 py-3 text-left">Actions</th>
+                      <th className="px-4 py-3 text-left">Date</th>
+                      <th className="px-4 py-3 text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -182,7 +182,7 @@ export default function BlogTable() {
                             {data.blog_title}
                           </td>
                           <td className="px-4 py-3">
-                            <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-xs font-medium">
+                            <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                               {data.blog_date_time ? new Date(data.blog_date_time).toLocaleDateString('en-GB', {
                                 day: '2-digit',
                                 month: 'long',
@@ -222,7 +222,7 @@ export default function BlogTable() {
                   forcePage={currentPage}
                   containerClassName="flex flex-wrap gap-2"
                   pageClassName="px-3 py-2 border border-gray-300 rounded text-sm text-gray-700 hover:bg-primary dark:hover:bg-gray-600 dark:text-white cursor-pointer"
-                  activeClassName="bg-gray-600 text-white"
+                  activeClassName="bg-primary text-white"
                   previousLabel="Prev"
                   nextLabel="Next"
                   breakLabel="..."
