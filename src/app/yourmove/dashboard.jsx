@@ -6,7 +6,6 @@ import DoughnutChart from '../../common/DoughnutChart';
 import LineChart from '../../common/LineChart';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { serverUrl } from '../../common/serverUrl';
 
 const Dashboard = ({ analyticUpdate }) => {
   const router = useRouter();
@@ -36,11 +35,11 @@ const Dashboard = ({ analyticUpdate }) => {
           monthResponse,
           yearResponse
         ] = await Promise.all([
-          axios.get(`${serverUrl}/quizess/current-quiz-analysis?userId=${userId}`),
-          axios.get(`${serverUrl}/quizess/get-week?userId=${userId}`),
-          axios.get(`${serverUrl}/quizess/current-day-stats?userId=${userId}`),
-          axios.get(`${serverUrl}/quizess/current-month-stats?userId=${userId}`),
-          axios.get(`${serverUrl}/quizess/current-year-stats?userId=${userId}`),
+          axios.get(`/api/quizess/current-quiz-analysis?userId=${userId}`),
+          axios.get(`/api/quizess/get-week?userId=${userId}`),
+          axios.get(`/api/quizess/current-day-stats?userId=${userId}`),
+          axios.get(`/api/quizess/current-month-stats?userId=${userId}`),
+          axios.get(`/api/quizess/current-year-stats?userId=${userId}`),
         ]);
 
         const currentMonthData = analysisResponse.data.currentMonth || [];

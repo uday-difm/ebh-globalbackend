@@ -14,7 +14,7 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get('userId');
-    console.log('Received userId:', userId);
+    // console.log('Received userId:', userId);
     let sql, params;
 
     if (userId) {
@@ -27,7 +27,7 @@ export async function GET(req) {
     }
 
     const [result] = await db.query(sql, params);
-    console.log('Query result:', result);
+    // console.log('Query result:', result);
 
     if (!result || result.length === 0) {
       return NextResponse.json({ played: false }, { status: 200 });

@@ -25,7 +25,7 @@ async function getBlogBySlugFromDB(slug) {
     const [rows] = await db.query(sql, [slug]);
     return rows[0] || null;
   } catch (error) {
-    console.error("Error fetching single blog:", error);
+    // console.error("Error fetching single blog:", error);
     return null;
   }
 }
@@ -41,7 +41,7 @@ async function getCategoryBySlugFromDB(slug) {
     const [rows] = await db.query(sql, [slug]);
     return rows[0] || null;
   } catch (error) {
-    console.error("Error fetching single category:", error);
+    // console.error("Error fetching single category:", error);
     return null;
   }
 }
@@ -70,7 +70,7 @@ async function getBlogsInCategoryFromDB(categorySlug) {
     const [rows] = await db.query(sql, [categorySlug]);
     return rows;
   } catch (error) {
-    console.error("Error fetching blogs in category:", error);
+    // console.error("Error fetching blogs in category:", error);
     return [];
   }
 }
@@ -104,7 +104,7 @@ export async function GET(request, context) {
     // 3️⃣ Nothing found
     return NextResponse.json({ error: 'Not Found' }, { status: 404 });
   } catch (err) {
-    console.error("[slug] API Error:", err);
+    // console.error("[slug] API Error:", err);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

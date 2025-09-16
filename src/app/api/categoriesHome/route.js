@@ -24,7 +24,7 @@ async function getAllCategoriesFromDB() {
 
     return categoriesWithAll;
   } catch (error) {
-    console.error("Error fetching all categories from DB in /api/categoriesHome/route.js:", error);
+    // console.error("Error fetching all categories from DB in /api/categoriesHome/route.js:", error);
     return []; // Return empty array on error
   }
 }
@@ -35,7 +35,7 @@ export async function GET() {
     // Return an object with a 'categories' key
     return NextResponse.json({ categories });
   } catch (error) {
-    console.error("API Error (GET /api/categoriesHome):", error);
+    // console.error("API Error (GET /api/categoriesHome):", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

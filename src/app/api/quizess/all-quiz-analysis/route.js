@@ -45,14 +45,14 @@ export async function GET() {
       try {
         return JSON.parse(str);
       } catch (e) {
-        console.error('Failed to parse options JSON:', str, e);
+        // console.error('Failed to parse options JSON:', str, e);
         return [];
       }
     };
 
     // Use promise-based db.query
     const [results] = await db.query(sql, [userId]);
-    console.log('DB query results count:', results.length);
+    // console.log('DB query results count:', results.length);
 
     // Parse options safely
     const parsedResults = results.map(row => ({
@@ -62,7 +62,7 @@ export async function GET() {
 
     return NextResponse.json(parsedResults);
   } catch (error) {
-    console.error('Authentication or database error:', error);
+    // console.error('Authentication or database error:', error);
     return NextResponse.json({ error: 'Unauthorized or internal error' }, { status: 401 });
   }
 }

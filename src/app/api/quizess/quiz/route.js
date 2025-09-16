@@ -19,7 +19,7 @@ export async function GET() {
 
     return NextResponse.json(quizzes, { status: 200 });
   } catch (error) {
-    console.error('Error fetching quizzes:', error);
+    // console.error('Error fetching quizzes:', error);
     return NextResponse.json({ error: 'Error in fetching quizzes' }, { status: 400 });
   }
 }
