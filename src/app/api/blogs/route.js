@@ -20,7 +20,7 @@ export async function GET() {
       categories,
     });
   } catch (error) {
-    console.error("API Error (GET /api/blogs):", error);
+    // console.error("API Error (GET /api/blogs):", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

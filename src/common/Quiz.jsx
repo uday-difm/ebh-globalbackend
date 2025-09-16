@@ -5,7 +5,6 @@ import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import axios from 'axios';
 import ConfettiExplosion from 'react-confetti-explosion';
-import { serverUrl } from '../common/serverUrl';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 

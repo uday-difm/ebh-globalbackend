@@ -14,7 +14,7 @@ export default function YourMovePage() {
   const analyticUpdate = () => {
     // This function will be passed as a prop to the YourMove component
     // and can contain logic to trigger a re-fetch of analytics.
-    console.log('Analytic update triggered');
+    // console.log('Analytic update triggered');
   };
 
   return (
