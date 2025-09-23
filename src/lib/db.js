@@ -20,4 +20,20 @@ const getPool = () => {
 
 const db = getPool();
 
+/**
+ * Executes a SQL query using the connection pool.
+ * @param {string} sql - The SQL query string.
+ * @param {Array} [values] - An array of values to be escaped and inserted into the query.
+ * @returns {Promise<any>} The query result.
+ */
+export async function query(sql, values) {
+  try {
+    const [rows] = await db.execute(sql, values);
+    return rows;
+  } catch (err) {
+    console.error('SQL Query Error:', err);
+    throw err;
+  }
+}
+
 export default db;
