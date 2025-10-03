@@ -9,15 +9,10 @@ export async function GET() {
              bc.category_name, bc.category_slug
       FROM blogs b
       INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
-      WHERE b.status = 1 ORDER BY b.blog_date_time DESC`
-      ;
+      WHERE b.status = 1 ORDER BY b.blog_date_time DESC`;
     const [blogs] = await db.query(blogsSql);
 
-    const categoriesSql = `
-      SELECT category_id, category_name, category_slug
-      FROM blog_category
-      ORDER BY category_name ASC
-    `;
+    const categoriesSql = 'SELECT * FROM `blog_category`';
     const [categories] = await db.query(categoriesSql);
 
     return NextResponse.json({
@@ -25,7 +20,7 @@ export async function GET() {
       categories,
     });
   } catch (error) {
-    console.error("API Error (GET /api/blogs):", error);
+    // console.error("API Error (GET /api/blogs):", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

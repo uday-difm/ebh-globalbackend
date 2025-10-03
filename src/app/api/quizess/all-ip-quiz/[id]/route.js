@@ -37,7 +37,7 @@ export async function GET(req, { params }) {
     const results = await queryDb(sql, [id]);
     return NextResponse.json(results, { status: 200 });
   } catch (error) {
-    console.error('Database error:', error);
+    // console.error('Database error:', error);
     return NextResponse.json({ error: 'Failed to fetch quiz analytics' }, { status: 500 });
   }
 }

@@ -25,7 +25,7 @@ const fetchInitialBlogs = async () => {
 
 // Fetch categories separately
 const fetchCategories = async () => {
-  const res = await fetch('/api/blogs', { cache: 'no-store' });
+  const res = await fetch('/api/categoriesHome', { cache: 'no-store' });
   if (!res.ok) throw new Error('Failed to fetch categories');
   return res.json();
 }

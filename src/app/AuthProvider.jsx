@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
             data.user?.email,
             data.user?.bio           
           ));
-          console.log('AuthProvider dispatched setAuth with profile:', data.user?.profile);
+          // console.log('AuthProvider dispatched setAuth with profile:', data.user?.profile);
         }
       } catch (error) {
         console.error('Failed to fetch auth status:', error);

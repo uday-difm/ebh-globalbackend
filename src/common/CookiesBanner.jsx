@@ -8,8 +8,30 @@ import Link from 'next/link';
 const CookiesBanner = () => {
   const [lang] = useState('en');
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
+    // Set the browser cookie
     Cookies.set('cookieAccepted', 'true', { expires: 365 });
+
+    // Collect and validate additional data
+    const userAgent = (typeof navigator !== 'undefined' && navigator.userAgent) || null;
+    const referrer = (typeof document !== 'undefined' && document.referrer) || null;
+
+    // Make an API call to record the consent and additional data
+    try {
+      await fetch('/api/cookie-consent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          consent: 'accepted',
+          userAgent,
+          referrer,
+        }),
+      });
+    } catch (error) {
+      console.error('Failed to record cookie consent:', error);
+    }
   };
 
   const scrollToTop = () => {

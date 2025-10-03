@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import DashboardLayout from '../../../component/DashboardLayout';
@@ -8,23 +8,6 @@ import DashboardLayout from '../../../component/DashboardLayout';
 // Dynamically import Jodit Editor
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
-const editorConfig = {
-  readonly: false,
-  toolbar: true,
-  spellcheck: true,
-  language: 'en',
-  toolbarButtonSize: 'middle',
-  showCharsCounter: true,
-  showWordsCounter: true,
-  showXPathInStatusbar: false,
-  askBeforePasteHTML: true,
-  askBeforePasteFromWord: true,
-  uploader: {
-    insertImageAsBase64URI: true,
-  },
-  width: '100%',
-  minHeight: 500,
-};
 
 // Generate slug from title
 const generateSlug = (str) => {
@@ -40,6 +23,25 @@ const AddBlog = () => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState('1');
   const [categories, setCategories] = useState([]);
+
+  const editorConfig = useMemo(() => ({
+    readonly: false,
+    toolbar: true,
+    spellcheck: true,
+    language: 'en',
+    toolbarButtonSize: 'middle',
+    showCharsCounter: true,
+    showWordsCounter: true,
+    showXPathInStatusbar: false,
+    askBeforePasteHTML: true,
+    askBeforePasteFromWord: true,
+    uploader: {
+      insertImageAsBase64URI: true,
+    },
+    width: '100%',
+    minHeight: 500,
+  }), []); // Empty dependency array ensures it's only created once
+
 
   const [values, setValues] = useState({
     title: '',
@@ -123,7 +125,7 @@ const AddBlog = () => {
         formData.append('image', values.image);
       }
 
-      const response = await fetch('/api/dashboard/blog', {
+      const response = await fetch('/api/dashboard/blog/add-blog', {
         method: 'POST',
         body: formData,
       });

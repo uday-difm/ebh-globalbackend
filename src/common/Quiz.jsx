@@ -5,7 +5,6 @@ import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import axios from 'axios';
 import ConfettiExplosion from 'react-confetti-explosion';
-import { serverUrl } from '../common/serverUrl';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -74,7 +73,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
       };
 
       try {
-        await axios.post(`${serverUrl}/quizess/quiz-analytic-save`, sendData);
+        await axios.post(`/api/quizess/quiz-analytic-save`, sendData);
         setAnalyticUpdate(prev => prev + 1);
       } catch (error) {
         console.error('Error saving quiz analytic: ', error);
@@ -97,7 +96,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
       if (userId) {
         // Post the final analytic for logged-in users
         try {
-          await axios.post(`${serverUrl}/quizess/save-ip-quiz-play`);
+          await axios.post(`/api/quizess/save-ip-quiz-play`);
         } catch (error) {
           console.error('Error saving IP play:', error);
         }
