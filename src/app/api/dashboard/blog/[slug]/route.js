@@ -3,8 +3,10 @@
 import { NextResponse } from 'next/server';
 import db from '../../../../../lib/db';
 import { uploadToS3 } from '../../../../../../utils/s3Utility';
+import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 
-
+export const dynamic = "force-dynamic";
 // ==========================
 // Get Blog by Slug
 // ==========================
@@ -20,6 +22,14 @@ async function getBlogBySlug(slug) {
 // Update Blog by Slug
 // ==========================
 async function updateBlogBySlug(slug, data) {
+  // Check if new slug already exists and is different from current
+  if (data.blogSlug !== slug) {
+    const [existing] = await db.query('SELECT blog_id FROM blogs WHERE blog_slug = ? AND status = 1', [data.blogSlug]);
+    if (existing.length > 0) {
+      throw new Error('Blog with this slug already exists');
+    }
+  }
+
   const sql = `
     UPDATE blogs SET
       blog_title = ?,
@@ -69,7 +79,7 @@ async function deleteBlogBySlug(slug) {
 // GET Handler
 // ==========================
 
-export const dynamic = "force-dynamic";
+
 export async function GET(_, { params }) {
   const slug = await params?.slug;
 
@@ -95,10 +105,30 @@ export async function GET(_, { params }) {
 // PUT Handler
 // ==========================
 export async function PUT(request, { params }) {
-  const slug = params?.slug;
+  const slug = await params?.slug;
 
   if (!slug) {
     return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
+  }
+
+  // Auth check
+  const cookieStore = await cookies();
+  const token = cookieStore.get('auth_token');
+
+  if (!token) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!process.env.JWT_SECRET_KEY) {
+    console.error('JWT_SECRET_KEY is not set in environment variables');
+    return NextResponse.json({ message: 'Server error' }, { status: 500 });
+  }
+
+  try {
+    jwt.verify(token.value, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    console.error('JWT verification error:', error);
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
   try {
@@ -165,7 +195,7 @@ export async function PUT(request, { params }) {
 // DELETE Handler
 // ==========================
 export async function DELETE(_, { params }) {
-  const slug = params?.slug;
+  const slug = await params?.slug;
 
   if (!slug) {
     return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });

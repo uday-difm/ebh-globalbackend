@@ -175,7 +175,7 @@ export default function EditBlogPage() {
     }
 
     try {
-      const res = await fetch(`/api/dashboard/blog/${slug}?slug=${slug}`, {
+      const res = await fetch(`/api/dashboard/blog/${slug}`, {
         method: 'PUT',
         body: formData,
       });

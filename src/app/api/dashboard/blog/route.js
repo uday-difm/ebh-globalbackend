@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import db from '../../../../lib/db';
 import { uploadToS3 } from '../../../../../utils/s3Utility';
 
+
 // GET: Fetch all active blogs
 export async function GET(request) {
   try {
