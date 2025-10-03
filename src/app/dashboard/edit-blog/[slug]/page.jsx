@@ -181,6 +181,7 @@ export default function EditBlogPage() {
             const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
                 method: 'PUT',
                 body: formData,
+                credentials: 'include',
             });
 
             if (!res.ok) {

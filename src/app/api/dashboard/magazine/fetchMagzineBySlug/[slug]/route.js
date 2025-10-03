@@ -4,7 +4,7 @@ import db from '../../../../../../lib/db';
 //-------------------------GET Magazine by Slug-------------------------------
 
 export async function GET(request, { params }) {
-    const { slug } = params;
+    const {  slug } =await params;
   
     if (!slug) {
       return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });

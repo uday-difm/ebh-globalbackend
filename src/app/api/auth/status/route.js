@@ -5,7 +5,7 @@ import db from '../../../../lib/db';
 
 export async function GET() {
   const cookieStore = await cookies();
-  const token = cookieStore.get('auth_token');
+  const token = cookieStore.get('auth_token'); 
 
   if (!token) {
     return NextResponse.json({ isAuthenticated: false, user: null });

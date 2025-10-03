@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import CookieConsent from 'react-cookie-consent';
-import Cookies from 'js-cookie';
+
 import Link from 'next/link';
 
 const CookiesBanner = () => {
@@ -46,7 +46,7 @@ const CookiesBanner = () => {
       enableDeclineButton
       buttonText="Accept"
       declineButtonText="Close"
-      cookieName="cookieAccepted"
+      // cookieName="cookieAccepted"
       style={{ background: '#000' }}
       buttonStyle={{
         background: 'green',
@@ -60,10 +60,9 @@ const CookiesBanner = () => {
         background: 'gray',
         color: 'white',
         fontWeight: 'bold',
-        fontSize: '16px',
+        fontSize: '16px', 
         borderRadius: '6px',
         padding: '10px 24px',
-
       }}
       setDeclineCookie={false}
       onAccept={({ acceptedByScrolling }) => {

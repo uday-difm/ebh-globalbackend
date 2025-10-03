@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import db from '../../../../lib/db'; // Make sure this path is correct
 
 export async function GET(request, context) {
-  const { slug } = context.params;
+  const { slug } =await context.params;
 
   if (!slug) {
     return NextResponse.json({ message: 'Slug parameter is missing' }, { status: 400 });
