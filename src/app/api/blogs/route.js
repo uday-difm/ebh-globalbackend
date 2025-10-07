@@ -4,15 +4,30 @@ import db from '../../../lib/db';
 
 export async function GET() {
   try {
+    // ✅ Fetch only blogs where status = 1 (no quotes around 1)
     const blogsSql = `
-      SELECT b.*, DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date,
-             bc.category_name, bc.category_slug
+      SELECT 
+        b.*, 
+        DATE_FORMAT(b.blog_date_time, '%e %M %Y') AS formatted_date,
+        bc.category_name, 
+        bc.category_slug
       FROM blogs b
       INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
-      WHERE b.status = 1 ORDER BY b.blog_date_time DESC`;
+      WHERE b.status = 1
+      ORDER BY b.blog_date_time DESC;
+    `;
     const [blogs] = await db.query(blogsSql);
 
-    const categoriesSql = 'SELECT * FROM `blog_category`';
+    // ✅ Fetch only active categories (status = 1)
+    const categoriesSql = `
+      SELECT 
+        category_id,
+        category_name,
+        category_slug
+      FROM blog_category
+      WHERE status = 1
+      ORDER BY category_name ASC;
+    `;
     const [categories] = await db.query(categoriesSql);
 
     return NextResponse.json({
