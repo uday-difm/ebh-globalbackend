@@ -15,7 +15,7 @@ const formatDate = (dateString) => {
   const date = new Date(dateString);
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
-
+    
 const MagazineDetails = () => {
   const params = useParams();
   const router = useRouter();

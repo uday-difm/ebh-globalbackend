@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import db from '../../../../lib/db';
 
 export async function GET() {
   const cookieStore = await cookies();
-  let token = cookieStore.get('token');
+  let token = cookieStore.get('auth_token');
 
   // Fallback: check Authorization header for Bearer token
   if (!token) {
-    const authHeader = headers().get('authorization') || headers().get('Authorization');
+    const headerStore = await headers();
+    const authHeader = headerStore.get('authorization') || headerStore.get('Authorization');
     if (authHeader && authHeader.startsWith('Bearer ')) {
       token = { value: authHeader.substring(7) };
     }
@@ -45,14 +46,14 @@ export async function GET() {
       try {
         return JSON.parse(str);
       } catch (e) {
-        console.error('Failed to parse options JSON:', str, e);
+        // console.error('Failed to parse options JSON:', str, e);
         return [];
       }
     };
 
     // Use promise-based db.query
     const [results] = await db.query(sql, [userId]);
-    console.log('DB query results count:', results.length);
+    // console.log('DB query results count:', results.length);
 
     // Parse options safely
     const parsedResults = results.map(row => ({
@@ -62,7 +63,7 @@ export async function GET() {
 
     return NextResponse.json(parsedResults);
   } catch (error) {
-    console.error('Authentication or database error:', error);
+    // console.error('Authentication or database error:', error);
     return NextResponse.json({ error: 'Unauthorized or internal error' }, { status: 401 });
   }
 }

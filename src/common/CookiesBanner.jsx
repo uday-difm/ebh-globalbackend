@@ -9,31 +9,28 @@ const CookiesBanner = () => {
   const [lang] = useState('en');
 
   const handleAccept = async () => {
+    // Set the browser cookie
+    Cookies.set('cookieAccepted', 'true', { expires: 365 });
 
+    // Collect and validate additional data
+    const userAgent = (typeof navigator !== 'undefined' && navigator.userAgent) || null;
+    const referrer = (typeof document !== 'undefined' && document.referrer) || null;
 
-    // Prepare cookie data to send to the API
-    const cookieData = {
-      name: 'cookies',
-      value: 'accepted',
-      path: '/',
-      domain: window.location.hostname, // optionally add domain if needed
-      expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // expires 1 year from now
-      httpOnly: false,
-      secure: window.location.protocol === 'https:',
-    };
-
+    // Make an API call to record the consent and additional data
     try {
-      const res = await fetch('/api/cookies', {
+      await fetch('/api/cookie-consent', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cookieData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          consent: 'accepted',
+          userAgent,
+          referrer,
+        }),
       });
-
-      if (!res.ok) {
-        console.error('Failed to save cookie in DB', await res.text());
-      }
     } catch (error) {
-      console.error('Error saving cookie in DB:', error);
+      console.error('Failed to record cookie consent:', error);
     }
   };
 

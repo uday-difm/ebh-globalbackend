@@ -58,6 +58,12 @@ export async function middleware(request) {
     return NextResponse.redirect(loginUrl);
   }
 
+  if (!process.env.JWT_SECRET_KEY) {
+    console.error('JWT_SECRET_KEY is not set in environment variables');
+    const loginUrl = new URL('/dashboard/login', request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
   try {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
     await jwtVerify(authToken, secret);
