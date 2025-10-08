@@ -17,7 +17,7 @@ const calculateReadingTime = (text) => {
     return `${minutes} min read`;
 };
 
-const PaginatedBlogList = ({ blogs, isAnimationEnabled }) => {
+const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
     const [visibleCount, setVisibleCount] = useState(9);
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const currentBlogs = blogs.slice(0, visibleCount);

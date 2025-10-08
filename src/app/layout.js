@@ -39,6 +39,15 @@ export default function RootLayout({ children }) {
           strategy="beforeInteractive"
           crossOrigin="anonymous"
         />
+
+        {/* Google AdSense — add this once in the head */}
+        <Script
+          id="adsense-init"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9048723765319602"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="flex flex-col min-h-screen font-poppins">
         <ReduxProviderWrapper>

@@ -44,11 +44,7 @@ const TopBar = () => {
           height={190}
           unoptimized
         />
-        <input
-          type="text"
-          className="flex-1 pl-4 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition-all duration-300 ease-in-out hover:shadow-md"
-          placeholder="Search blogs, posts..."
-        />
+        
       </div>
 
       {/* User Profile */}

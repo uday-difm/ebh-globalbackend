@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import db from '../../../../lib/db';
 
 export async function GET() {
   const cookieStore = await cookies();
-  let token = cookieStore.get('token');
+  let token = cookieStore.get('auth_token');
 
   // Fallback: check Authorization header for Bearer token
   if (!token) {
-    const authHeader = headers().get('authorization') || headers().get('Authorization');
+    const headerStore = await headers();
+    const authHeader = headerStore.get('authorization') || headerStore.get('Authorization');
     if (authHeader && authHeader.startsWith('Bearer ')) {
       token = { value: authHeader.substring(7) };
     }
