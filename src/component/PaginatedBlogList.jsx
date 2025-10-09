@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
 import { FcAdvertising } from "react-icons/fc";
 import Button from '../common/Button';
+import Image from 'next/image';
 
 // 🧠 Strip HTML Tags
 const stripHtml = (html) => html?.replace(/<[^>]*>/g, '') || '';
@@ -35,10 +36,11 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                     onMouseLeave={() => setHoveredIndex(null)}
                 >
                     <div className="relative h-3/5 w-full overflow-hidden">
-                        <img
+                        <Image
                             src={blog.blog_feature_image}
                             alt={blog.blog_title}
                             className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${isHovered ? 'scale-110' : 'scale-100'}`}
+                            priority
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                         <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -72,9 +74,10 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                             {/* Author Section */}
                             <div className="flex items-center gap-3">
-                                <img
+                                <Image
                                     src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
                                     className="w-10 h-10 rounded-full object-cover "
+                                    priority
                                 />
                                 <span className="text-sm text-gray-600 font-medium">Earth By Humans</span>
                             </div>

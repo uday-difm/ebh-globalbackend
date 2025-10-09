@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaTwitter } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { HiArrowRight } from 'react-icons/hi';
 import Button from './Button'; // ✅ Import the reusable Button component
 import ScrollToTopLink from './ScrollToTopLink'; // ✅ Import the ScrollToTopLink component
+import Image from 'next/image';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -51,10 +51,13 @@ const Footer = () => {
           {/* Logo & Description */}
           <div>
             <ScrollToTopLink href="/">
-              <img
+              <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
                 alt="Earth by Humans Logo"
+                width={500}
+                height={600}
                 className="h-20 object-contain cursor-pointer"
+                priority
               />
             </ScrollToTopLink>
             <p className="mt-6 text-sm text-gray-700 text-justify">
@@ -66,10 +69,13 @@ const Footer = () => {
           {/* ISSN */}
           <div>
             <Link href="https://portal.issn.org/resource/ISSN/3066-5027" target="_blank">
-              <img
+              <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg"
                 alt="ISSN Barcode"
+                width={500}
+                height={600}
                 className="w-[80%] object-contain"
+                priority
               />
             </Link>
           </div>

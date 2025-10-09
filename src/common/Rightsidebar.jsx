@@ -41,11 +41,11 @@ const Rightsidebar = () => {
           <p className="text-sm mb-4">
             Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
           </p>
-          <a href="/contact-us">
+          <Link href="/contact-us">
             <button className="bg-white text-green-600 text-sm font-semibold px-4 py-2 rounded-full shadow-md hover:bg-gray-200 transition-all">
               Contact Us for Advertising
             </button>
-          </a>
+          </Link>
         </div>
 
         {/* Social Share */}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 
 const Setting = () => {
   const [avatar, setAvatar] = useState(null);
@@ -55,10 +56,6 @@ const Setting = () => {
     }
   };
 
-  const handleImageDelete = () => {
-    setAvatar(null);
-    setAvatarPreview(null);
-  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -87,22 +84,31 @@ const Setting = () => {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
                 {avatarPreview ? ( // Render the image preview if available
-                  <img
+                  <Image
                     className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
                     src={avatarPreview}
+                    width={500}
+                    height={600}
                     alt="Avatar Preview"
+                    priority
                   />
                 ) : fullData.profile ? ( // If no preview, but user has profile picture, use it
-                  <img
+                  <Image
                     className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
                     src={fullData.profile}
+                    width={500}
+                    height={600}
                     alt="User Profile"
+                    priority
                   />
                 ) : ( // If no preview and no user profile, show default avatar
-                  <img
+                  <Image
                     className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
                     src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"
                     alt="Default Avatar"
+                    width={500}
+                    height={600}
+                    priority
                   />
                 )}
 

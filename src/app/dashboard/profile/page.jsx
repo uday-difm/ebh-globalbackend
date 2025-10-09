@@ -37,7 +37,7 @@ const Profile = () => {
       <div className="overflow-hidden rounded-lg border border-stroke bg-gradient-to-b from-gray-800 via-gray-700 to-gray-600 shadow-xl">
         {/* Reduced Height Cover Image */}
         <div className="relative z-20 h-40 md:h-82">
-          <img
+          <Image
             src="https://wmhindia.s3-eu-central-2.ionoscloud.com/dashboard/profile.png"
             alt="profile cover"
             className="h-full w-full rounded-t-lg object-cover object-center"

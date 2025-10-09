@@ -7,6 +7,7 @@ import Dashboard from "../yourmove/dashboard";
 import { useSelector } from "react-redux";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Link } from "lucide-react";
 
 const QuizPage = () => {
   const [analyticUpdate, setAnalyticUpdate] = useState(0);
@@ -68,7 +69,7 @@ const QuizPage = () => {
                   </div>
                   <h2 className="text-2xl font-extrabold mb-2 text-green-700 drop-shadow-sm">Login Required</h2>
                   <p className="mb-6 text-gray-600 text-base font-medium">You need to log in to view this content and track your quiz score.</p>
-                  <a href="/login" className="w-full flex justify-center">
+                  <Link href="/login" className="w-full flex justify-center">
                     <div className="relative group overflow-hidden rounded-full cursor-pointer w-[100px] max-w-xs">
                       {/* Background base color */}
                       <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
@@ -85,7 +86,7 @@ const QuizPage = () => {
                         Login
                       </button>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

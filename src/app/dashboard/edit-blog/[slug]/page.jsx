@@ -259,7 +259,9 @@ export default function EditBlogPage() {
                                         className="w-full rounded border border-stroke py-3 px-4 dark:border-form-strokedark dark:bg-form-input"
                                     />
                                     {existingImageUrl && (
-                                        <img src={existingImageUrl} alt="Preview" className="mt-4 w-40 h-auto rounded" />
+                                        <Image src={existingImageUrl} alt="Preview" 
+                                        width={500}
+                                        className="mt-4 w-40 h-auto rounded" />
                                     )}
                                     {errorMessage && <p className="text-sm text-red-500 mt-2">{errorMessage}</p>}
                                 </div>

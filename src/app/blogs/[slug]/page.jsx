@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
@@ -103,7 +103,7 @@ const PostFooter = ({ blog }) => (
 
     <div className="mt-14 p-6 sm:p-8 bg-white shadow-md rounded-3xl flex flex-col sm:flex-row items-center text-center sm:text-left gap-6 border border-gray-100">
       <Image
-        src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
+        src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-.png"
         alt="Author"
         width={90}
         height={90}
@@ -115,45 +115,45 @@ const PostFooter = ({ blog }) => (
           Earth by Humans is your online sanctuary for exploring the wonders of our planet and beyond.
         </p>
         <div className="flex justify-center sm:justify-start gap-4">
-          <a
+          <Link
             href="https://www.facebook.com/earthbyhumans"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faFacebookF} />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://www.instagram.com/earth_by_humans/"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faInstagram} />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://x.com/earthbyhumans"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faTwitter} />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://www.linkedin.com/company/earth-by-humans/"
             className="flex items-center justify-center text-white bg-green-500 hover:bg-pink-500 w-10 h-10 rounded-full transition-colors duration-300"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faLinkedin} />
-          </a>
+          </Link>
         </div>
       </div>
     </div>
   </footer>
 );
 
-// --- Individual Post View ---
+// --- IndividuLinkl Post View ---
 const IndividualPostView = ({ blog }) => {
   const wordsPerMinute = 200;
   const plainText = blog.blog_content?.replace(/<[^>]*>/g, '') || '';

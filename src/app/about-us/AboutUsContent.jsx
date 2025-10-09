@@ -5,9 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { FaArrowRight, FaUsers, FaPuzzlePiece, FaLightbulb, FaHandHoldingHeart } from "react-icons/fa";
-import { BsGraphUpArrow } from "react-icons/bs";
-import { MdOutlineMaximize } from "react-icons/md";
+import { FaArrowRight, FaHandHoldingHeart } from "react-icons/fa";
 import Cta from "../../common/Cta";
 
 const logos = [
@@ -23,10 +21,13 @@ const logos = [
 const features = [
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertise-with-us.png"
         alt="Boost Your Brand Icon"
         className="w-10 h-10 "
+        width={500}
+        height={600}
+        priority
       />
     ),
     title: "Boost Your Brand",
@@ -35,10 +36,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertisewithus.png"
         alt="Reach Audience Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Reach a Highly Engaged Audience",
@@ -47,10 +51,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertise-with-us.png"
         alt="Multi-Channel Impact Icon"
         className="w-10 h-10"
+        width={500}
+        height={600}
+        priority
       />
     ),
     title: "Maximize Your Impact with a Multi-Channel Approach",
@@ -59,10 +66,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertisewithus.png"
         alt="Interactive Content Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Engage Through Interactive Content",
@@ -71,10 +81,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertise-with-us.png"
         alt="Blog Leadership Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Leverage Our Blog for Thought Leadership",
@@ -83,10 +96,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertisewithus.png"
         alt="Mission-Driven Platform Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Join a Mission-Driven Platform",
@@ -179,7 +195,7 @@ export default function AboutUsContent() {
           <div className="py-12 px-4">
             <div className="flex flex-wrap justify-center gap-8">
               {visibleLogos.map((logo) => (
-                <a key={logo.name} href={logo.url} target="_blank" rel="noopener noreferrer"
+                <Link key={logo.name} href={logo.url} target="_blank" rel="noopener noreferrer"
                   className="group p-6 bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200 shadow-md hover:shadow-2xl hover:border-[#3853a4] transition-all duration-500 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#3853a4] flex flex-col items-center w-[200px] min-h-[120px]">
                   <div className="flex flex-col items-center">
                     <div className="w-[180px] h-[60px] flex items-center justify-center mb-3">
@@ -189,7 +205,7 @@ export default function AboutUsContent() {
                       {logo.name}
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

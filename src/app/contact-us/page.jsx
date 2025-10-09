@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faLinkedin, faInstagram, faYoutube, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faLink, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "lucide-react";
 
 export default function ContactUsPage() {
   const [values, setValues] = useState({
@@ -90,12 +91,12 @@ export default function ContactUsPage() {
                     <br />
                     Your feedback is invaluable to us as we continue to improve and enhance our services. Thank you for choosing Earth by Humans. We look forward to connecting with you!
                     <br /><br />
-                    <b className="text-black">Published By:</b> DO IT FOR ME LLC: <a href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition duration-300 ease-in-out">30 N Gould St #24999; Sheridan, WY 82801</a>
+                    <b className="text-black">Published By:</b> DO IT FOR ME LLC: <Link href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition duration-300 ease-in-out">30 N Gould St #24999; Sheridan, WY 82801</Link>
                   </p>
                   <div className="flex">
                     <p className="text-lg text-gray-900">
                       <strong>Phone:</strong>
-                      <a href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out"> +1-786-371-2232</a>
+                      <Link href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out"> +1-786-371-2232</Link>
                     </p>
                   </div>
                   <ul className="mb-6 md:mb-0">
@@ -107,15 +108,15 @@ export default function ContactUsPage() {
                           <FontAwesomeIcon icon={faLink} />
                         </div>
                         {/* Social Icons */}
-                        <a href="https://www.facebook.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faFacebookF} /></a>
-                        <a href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faLinkedin} /></a>
-                        <a href="https://www.instagram.com/earth_by_humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faInstagram} /></a>
-                        {/* Added YouTube Icon */}
-                        <a href="https://www.youtube.com/@earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faYoutube} /></a>
-                        <a href="https://twitter.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faTwitter} /></a>
+                        <Link href="https://www.facebook.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faFacebookF} /></Link>
+                        <Link href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faLinkedin} /></Link>
+                        <Link href="https://www.instagram.com/earth_by_humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faInstagram} /></Link>
+                        {/* Linkdded YouTube Icon */}
+                        <Link href="https://www.youtube.com/@earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faYoutube} /></Link>
+                        <Link href="https://twitter.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faTwitter} /></Link>
                         {/* Added Map Link */}
-                        <a href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faMapMarkerAlt} /></a>
-                        <a href="mailto:info@earthbyhumans.com" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faEnvelope} /></a>
+                        <Link href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faMapMarkerAlt} /></Link>
+                        <Link href="mailto:info@earthbyhumans.com" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faEnvelope} /></Link>
                       </div>
                     </li>
                   </ul>

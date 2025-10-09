@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/actions/action';
+import { Link } from 'lucide-react';
 
 const SignIn = () => {
   const [errors, setErrors] = useState('');
@@ -84,31 +85,31 @@ const SignIn = () => {
               Explore Stories of Nature’s Wonders and Human Impact.
             </p>
             <div className="flex space-x-8">
-              <a
+              <Link
                 href="https://earthbyhumans.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-64 py-6 bg-transparent border-4 border-white text-center text-white text-2xl font-semibold hover:bg-white hover:text-black transition duration-300"
               >
                 Visit Website
-              </a>
-              <a
+              </Link>
+              <Link
                 href="https://earthbyhumans.com/blogs"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-64 py-6 bg-transparent border-4 text-center border-white text-white text-2xl font-semibold hover:bg-white hover:text-black transition duration-300"
               >
                 Visit Blogs
-              </a>
+              </Link>
             </div>
-            <a
+            <Link
               href="https://earthbyhumans.com/contact-us"
               target="_blank"
               rel="noopener noreferrer"
               className="px-16 py-4 bg-white hover:bg-[#45B05F] hover:text-white text-black text-lg font-semibold transition duration-300"
             >
               Contact us now
-            </a>
+            </Link>
           </div>
 
           {/* Sign In Form */}
@@ -155,9 +156,9 @@ const SignIn = () => {
                   <input type="checkbox" className="form-checkbox text-[#45B05F]" />
                   <span className="ml-2 text-sm text-gray-700">Remember Me</span>
                 </label>
-                <a href="/password_reset" className="text-sm text-[#45B05F] hover:underline">
+                <Link href="/password_reset" className="text-sm text-[#45B05F] hover:underline">
                   Forgot Password?
-                </a>
+                </Link>
               </div>
 
               <button

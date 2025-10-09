@@ -182,7 +182,7 @@ export default function EditMagazinePage() {
                   <label className="mb-2 block text-black dark:text-white">Feature Image</label>
                   {existingImageUrl && (
                     <div className="mt-2">
-                      <img src={existingImageUrl} alt="Current Cover" className="max-w-xs rounded" />
+                      <Image src={existingImageUrl} alt="Current Cover" className="max-w-xs rounded" />
                       <input
                         type="text"
                         value={existingImageUrl}

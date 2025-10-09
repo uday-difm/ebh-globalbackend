@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const LatestMagazine = () => {
   const [magazines, setMagazines] = useState([]);
@@ -47,10 +48,13 @@ const LatestMagazine = () => {
           </div>
 
           <div className="w-[100%] flex justify-center items-end pl-0">
-            <img
+            <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/mag-2.png"
               alt="earthbyhumans magazines"
+              width={500}
+              height={600}
               className="w-full h-[25vh]"
+              priority
             />
           </div>
         </div>
@@ -79,10 +83,13 @@ const LatestMagazine = () => {
           </div>
 
           <div className="w-[90%] flex justify-center items-end">
-            <img
+            <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/mag-1.png"
               alt="earth by humans magazine"
+              width={500}
+              height={600}
               className="w-full"
+              priority
             />
           </div>
         </div>
