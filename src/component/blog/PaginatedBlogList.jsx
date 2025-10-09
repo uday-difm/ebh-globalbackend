@@ -25,11 +25,12 @@ function BlogCard({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabl
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                 >
-                    <img
+                    <Image
                         src={blog.blog_feature_image}
                         alt={blog.blog_title}
                         className={`absolute inset-0 w-full h-full rounded-2xl object-cover shadow-lg transition-all duration-1000 ${isHovered ? "!-rotate-[9deg] -translate-y-18" : ""}`}
                         style={{ transformOrigin: "bottom left" }}
+                        priority
                     />
                     <div
                         className={`absolute bottom-0 w-full rounded-2xl transition-all bg-blue-200 opacity-60 hover:bg-white transform duration-700 ${isHovered ? 'bg-[rgba(255,255,255,0.9)] opacity-75 backdrop-blur-sm rotate-6' : 'bg-[rgba(0,0,0,0.4)]' ? 'h-full' : 'h-min'}`}
@@ -66,9 +67,12 @@ function BlogCard({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabl
                     <Image
                         src={blog.blog_feature_image}
                         alt={blog.blog_title}
+                        width={500}
+                        height={600}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 33vw"
+                        priority
                     />
                 </div>
                 <div className="p-4 flex flex-col flex-grow">
@@ -79,7 +83,7 @@ function BlogCard({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabl
                         {blog.blog_title}
                     </h3>
                     <div className="flex items-center text-sm text-gray-500 mt-2 pt-2 border-t border-gray-100">
-                        <Image src={'https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png'} alt="author" width={24} height={24} className="rounded-full mr-2" />
+                        <Image src={'https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png'} alt="author" width={24} height={24} className="rounded-full mr-2" priority />
                         <span>Earth By Humans</span>
                         <span className="mx-2">•</span>
                         <span>{blog.formatted_date}</span>

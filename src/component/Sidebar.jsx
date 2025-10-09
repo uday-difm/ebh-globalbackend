@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Sidebar = () => {
   const [openMenus, setOpenMenus] = useState({
@@ -29,10 +30,11 @@ const Sidebar = () => {
     <aside className="w-67 bg-gradient-to-b from-slate-900 to-slate-800 text-black p-6 flex flex-col shadow-2xl backdrop-blur-md h-screen fixed overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-900">
       {/* Logo and Title */}
       <div className="flex flex-col items-center gap-3 mb-10 scale-100 hover:scale-100 transition-transform duration-300 ease-in-out">
-        <img
+        <Image
           src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
           alt="Logo"
           className="h-20 w-35 shadow-md"
+          priority
         />
         <span className="text-2xl font-extrabold tracking-wider uppercase text-white mt-3">
           Dashboard

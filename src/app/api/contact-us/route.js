@@ -41,7 +41,7 @@ export async function POST(request) {
       <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; font-size: 16px; padding: 10px;">
         <p>Dear <strong>${name}</strong>,</p>
         <p>Thank you for reaching out to <strong>Earth by Humans</strong>. We’ve received your message and will get back to you shortly.</p>
-        <p>Meanwhile, check out our <a href="https://earthbyhumans.com/blogs" style="color: #16a34a;">blogs</a> or follow us on social media!</p>
+        <p>Meanwhile, check out our <Link href="https://earthbyhumans.com/blogs" style="color: #16a34a;">blogs</Link> or follow us on social media!</p>
         <p>Warm regards,<br/>The Earth by Humans Team</p>
         <p style="font-size: 12px; color: #999;">This is an automated message. Please do not reply.</p>
       </div>

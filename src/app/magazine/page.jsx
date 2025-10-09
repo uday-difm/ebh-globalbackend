@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaArrowRight } from "react-icons/fa";
@@ -19,11 +20,14 @@ const Card = ({ data }) => {
     >
       <div className="flex flex-col gap-4 mb-5 transition-transform border border-gray-300 transform hover:-translate-y-2 hover:scale-105 duration-500 ease-in-out shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] rounded-xl bg-gradient-to-br from-white to-gray-50 p-4">
         <Link href={`magazine/${data.magazine_slug}`}>
-          <img
+          <Image
             src={data.magazine_cover_image}
             alt={data.magazine_title}
+            width={500}
+            height={600}
             className="object-cover rounded-xl cursor-pointer transition duration-300 hover:opacity-90 mt-2"
             style={{ width: "500px", height: "auto" }}
+            Priority
           />
           <p className="text-xl font-bold text-blue-700 text-center mt-3">
             {data.magazine_title}

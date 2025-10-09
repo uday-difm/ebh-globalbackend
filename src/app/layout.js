@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
       </head>
-      <body className="flex flex-col min-h-screen font-poppins">
+      <body className="flex flex-col min-h-screen font-poppins" cz-shortcut-listen="true">
         <ReduxProviderWrapper>
           <AuthProvider>
             <ScrollProgressBar />

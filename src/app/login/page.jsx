@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../redux/actions/action';
 import { Loader } from '../../common/Loader';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -74,7 +75,7 @@ export default function LoginPage() {
         )}
         <div className="flex w-full max-w-6xl min-h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden">
           <div className="w-1/2 hidden md:block">
-            <img src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Login visual" className="object-cover w-full h-full" />
+            <Image src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Login visual" width={500} height={300} className="object-cover w-full h-full" priority/>
           </div>
           <div className="w-full md:w-1/2 flex flex-col justify-center px-8 py-12 lg:px-16 text-black">
             <h2 className="text-3xl font-bold mb-8">Sign in to your account</h2>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({ firstName: '', lastName: '', username: '', email: '', password: '', confirmPassword: '' });
@@ -54,10 +55,13 @@ export default function SignUpPage() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="flex w-full max-w-6xl min-h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden">
           <div className="w-1/2 hidden md:block">
-            <img
+            <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg"
               alt="Signup visual"
+              width={500}
+              height={600}
               className="object-cover w-full h-full"
+              priority
             />
           </div>
           <div className="w-full md:w-1/2 flex flex-col justify-center px-8 py-12 lg:px-16 text-black">

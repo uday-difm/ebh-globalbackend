@@ -28,7 +28,7 @@
           </tr>
           <xsl:for-each select="s:sitemapindex/s:sitemap">
             <tr>
-              <td><a href="{s:loc}"><xsl:value-of select="s:loc"/></a></td>
+              <td><Link href="{s:loc}"><xsl:value-of select="s:loc"/></Link></td>
               <td><xsl:value-of select="s:lastmod"/></td>
             </tr>
           </xsl:for-each>

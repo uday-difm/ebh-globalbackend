@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Head from "next/head";
 import { useParams, useRouter } from "next/navigation";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 import { Loader } from '../../../common/Loader';
+import Image  from "next/image";
+import { Link } from "lucide-react";
 
 const formatDate = (dateString) => {
   const months = [
@@ -103,20 +104,22 @@ const MagazineDetails = () => {
 
         <div className="grid grid-cols-12 gap-6 text-justify">
           <div className="col-span-12 lg:col-span-3 flex flex-col items-center gap-4">
-            <img
+            <Image
               src={magazine.magazine_cover_image || "/no-image.png"}
               alt={magazine.magazine_title}
+              width={500}
+              height={600}
               className="h-[400px] w-[300px] object-cover shadow-xl"
             />
             {magazine.MagCloudLink && (
-              <a
+              <Link
                 href={magazine.MagCloudLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-lg text-sky-600 hover:underline"
               >
                 Want to buy? Click here ↑
-              </a>
+              </Link>
             )}
           </div>
 

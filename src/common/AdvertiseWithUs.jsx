@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {FaHandHoldingHeart } from "react-icons/fa";
+import Image from "next/image";
 
 const features = [
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertise-with-us.png"
         alt="Boost Your Brand Icon"
+        width={500}
+        height={600}
         className="w-10 h-10 "
+        priority
       />
     ),
     title: "Boost Your Brand",
@@ -21,10 +24,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertisewithus.png"
         alt="Reach Audience Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Reach a Highly Engaged Audience",
@@ -33,10 +39,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertise-with-us.png"
         alt="Multi-Channel Impact Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Maximize Your Impact with a Multi-Channel Approach",
@@ -45,10 +54,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertisewithus.png"
         alt="Interactive Content Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Engage Through Interactive Content",
@@ -57,10 +69,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertise-with-us.png"
         alt="Blog Leadership Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Leverage Our Blog for Thought Leadership",
@@ -69,10 +84,13 @@ const features = [
   },
   {
     icon: (
-      <img
+      <Image
         src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Vector-advertisewithus.png"
         alt="Mission-Driven Platform Icon"
+        width={500}
+        height={600}
         className="w-10 h-10"
+        priority
       />
     ),
     title: "Join a Mission-Driven Platform",

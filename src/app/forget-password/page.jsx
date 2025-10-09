@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ForgetPasswordPage() {
     const [step, setStep] = useState(1); // 1: Enter Email, 2: Enter OTP & New Password
@@ -58,7 +58,7 @@ export default function ForgetPasswordPage() {
         <div className="min-h-screen bg-white flex items-center justify-center pt-8">
             <div className="flex w-full max-w-6xl min-h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden">
                 <div className="w-1/2 hidden md:block">
-                    <img src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Visual" className="object-cover w-full h-full" />
+                    <Image src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Visual" className="object-cover w-full h-full" priority/>
                 </div>
                 <div className="w-full md:w-1/2 flex flex-col justify-center px-8 py-12 lg:px-16 text-black">
                     <h2 className="text-3xl font-bold mb-8">Reset Your Password</h2>

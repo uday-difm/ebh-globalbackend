@@ -246,10 +246,11 @@ const EditProfile = () => {
             <input type="file" accept="image/*" onChange={handleImageChange} className="mt-2" />
             {formData.profileImage && (
               // show preview only; not sending this preview URL to server
-              <img
+              <Image
                 src={formData.profileImage}
                 alt="Profile Preview"
                 className="mt-2 w-24 h-24 object-cover rounded-full"
+                priority
               />
             )}
           </div>
