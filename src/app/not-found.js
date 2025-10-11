@@ -9,7 +9,7 @@ export default function NotFound() {
     document.title = "404 - Page Not Found";
     window.history.replaceState({}, "404 - Page Not Found", window.location.href);
   }, []);
-
+   
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-blue-50 p-6">
