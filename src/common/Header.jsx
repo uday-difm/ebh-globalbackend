@@ -58,8 +58,8 @@ const Header = () => {
   ];
 
   return (
-    <header className="w-full border-b border-gray-200 fixed top-0 bg-white text-gray-900 font-bold z-[999] shadow-md">
-      <div className="max-w-[1350px] mx-auto">
+    <header className="bg-white shadow-md relative">
+      <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
         <div className="py-4 flex items-center justify-between relative">
           {/* Logo */}
           <ScrollToTopLink href="/">
@@ -73,7 +73,7 @@ const Header = () => {
           </ScrollToTopLink>
 
           {/* Desktop Menu */}
-          <nav className="hidden xl:flex gap-8 items-center">
+          <nav className="hidden md:flex gap-6 lg:gap-8 items-center">
             {navLinks.map(({ href, label, badge }) => (
               <ScrollToTopLink
                 key={href}
@@ -91,7 +91,7 @@ const Header = () => {
           </nav>
 
           {/* Desktop Auth/Profile */}
-          <div className="hidden xl:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
             {hydrated && auth.isAuthenticated && auth.userId ? (
               <div className="relative" ref={userMenuRef}>
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
@@ -135,42 +135,46 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Icon */}
-          <button onClick={() => setShowMenu(!showMenu)} className="xl:hidden z-50">
+          <button onClick={() => setShowMenu(!showMenu)} className="md:hidden z-50">
             {showMenu ? <IoMdClose size="30px" /> : <RiMenuLine size="30px" />}
           </button>
         </div>
 
         {/* Mobile Nav Menu */}
-        <div className={`xl:hidden bg-white transition-all duration-500 ease-in-out overflow-y-auto absolute top-full left-0 w-full shadow-lg ${showMenu ? "max-h-screen py-4 px-6" : "max-h-0"}`}>
-          <nav className="flex flex-col gap-4 text-center">
-            {navLinks.map(({ href, label }) => (
-              <ScrollToTopLink
-                key={href}
-                href={href}
-                onClick={() => setShowMenu(false)}
-                className={`py-2 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold`}
-              >
-                {label}
-              </ScrollToTopLink>
-            ))}
-            <div className="border-t border-gray-200 mt-4 pt-4">
-              {auth.isAuthenticated && auth.userId ? (
-                <div className="flex flex-col items-center gap-4">
-                  <ScrollToTopLink href="/profile" onClick={() => setShowMenu(false)} className="font-bold">
-                    Profile
+        {showMenu && (
+          <nav className="md:hidden absolute top-full left-0 right-0 z-50 bg-white shadow-lg">
+            <div className={`bg-white transition-all duration-300 ease-in-out overflow-hidden w-full shadow-lg ${showMenu ? "max-h-screen py-4 px-6" : "max-h-0 py-0 px-0"}`}>
+              <nav className="flex flex-col gap-4 text-center">
+                {navLinks.map(({ href, label }) => (
+                  <ScrollToTopLink
+                    key={href}
+                    href={href}
+                    onClick={() => setShowMenu(false)}
+                    className={`py-2 ${pathname === href ? "text-[#3853a4]" : "text-black"} hover:text-green-600 font-bold`}
+                  >
+                    {label}
                   </ScrollToTopLink>
-                  <button onClick={handleLogout} className="font-bold text-red-500">
-                    Logout
-                  </button>
+                ))}
+                <div className="border-t border-gray-200 mt-4 pt-4">
+                  {auth.isAuthenticated && auth.userId ? (
+                    <div className="flex flex-col items-center gap-4">
+                      <ScrollToTopLink href="/profile" onClick={() => setShowMenu(false)} className="font-bold">
+                        Profile
+                      </ScrollToTopLink>
+                      <button onClick={handleLogout} className="font-bold text-red-500">
+                        Logout
+                      </button>
+                    </div>
+                  ) : (
+                    <ScrollToTopLink href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">
+                      Login
+                    </ScrollToTopLink>
+                  )}
                 </div>
-              ) : (
-                <ScrollToTopLink href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">
-                  Login
-                </ScrollToTopLink>
-              )}
+              </nav>
             </div>
           </nav>
-        </div>
+        )}
       </div>
     </header>
   );

@@ -6,6 +6,7 @@ export async function GET() {
     status: 301,
     headers: {
       Location: '/sitemap_index.xml',
+      'Content-Type': 'application/xml', // Added header for proper sitemap XML
     },
   });
 }

@@ -14,8 +14,8 @@ export default function TermsOfUsePage() {
       <meta name="keywords" content="  terms of use, legal, policies, privacy, user agreement, website terms, intellectual property, guidelines, Earth by Humans, legal notice" />
       <meta property="og:description" content=" Understand the terms of use for Earth by Humans. Learn about intellectual property, user conduct, and our commitment to you." />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
-      <div className="max-w-4xl mx-auto px-5 py-2 text-justify">
-        <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium">
+      <div className="page-shell text-justify">
+        <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium mt-4 sm:mt-2">
           Terms of Use
         </h2>
         <h3 className="text-2xl font-semibold mb-2">Acceptance of Terms</h3>

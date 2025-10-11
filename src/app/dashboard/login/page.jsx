@@ -80,7 +80,7 @@ const SignIn = () => {
           <div className="absolute inset-0 top-28 bg-black/30 rounded-lg h-[700px] -z-10"></div>
 
           <div className="flex flex-col mr-80 pt-80 justify-center items-center space-y-6">
-            <h1 className="text-6xl font-bold text-center text-white">Visit Earth By Humans</h1>
+            <h2 className="text-6xl font-bold text-center text-white">Visit Earth By Humans</h2>
             <p className="text-2xl text-center text-white">
               Explore Stories of Nature’s Wonders and Human Impact.
             </p>

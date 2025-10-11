@@ -13,8 +13,8 @@ export default function InformationPolicyPage() {
       <meta name="keywords" content="information policy, data integrity, fact-checking, transparency, content accuracy, reliable sources, editorial guidelines, data use, Earth by Humans, credibility" />
       <meta property="og:description" content=" Learn about Earth by Humans' commitment to accurate, transparent, and credible information. Our policy ensures reliable content." />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
-      <div className="max-w-4xl mx-auto px-5 py-2 text-justify">
-        <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium">
+      <div className="page-shell text-justify">
+        <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium mt-4 sm:mt-2">
           Information Policy
         </h2>
         <h3 className="text-2xl font-semibold mb-2">

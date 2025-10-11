@@ -58,11 +58,11 @@ export default function ForgetPasswordPage() {
         <div className="min-h-screen bg-white flex items-center justify-center pt-8">
             <div className="flex w-full max-w-6xl min-h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden">
                 <div className="w-1/2 hidden md:block">
-                    <Image src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Visual" className="object-cover w-full h-full" priority/>
+                    <Image src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Login-earthbyhumans.jpeg" alt="Visual" className="object-cover w-full h-full" priority />
                 </div>
                 <div className="w-full md:w-1/2 flex flex-col justify-center px-8 py-12 lg:px-16 text-black">
                     <h2 className="text-3xl font-bold mb-8">Reset Your Password</h2>
-                    
+
                     {/* Step 1: Email Form */}
                     {step === 1 && (
                         <form onSubmit={handleRequestOtp} className="space-y-6">
@@ -83,7 +83,7 @@ export default function ForgetPasswordPage() {
                                 <label className="block font-semibold mb-1">OTP Code</label>
                                 <input type="text" value={otp} onChange={(e) => setOtp(e.target.value)} required placeholder="Enter the 6-digit code" maxLength="6" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
                             </div>
-                             <div>
+                            <div>
                                 <label className="block font-semibold mb-1">New Password</label>
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Enter your new password" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
                             </div>

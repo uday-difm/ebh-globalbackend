@@ -15,7 +15,7 @@ const features = [
         width={500}
         height={600}
         className="w-10 h-10 "
-        priority
+        loading="lazy"
       />
     ),
     title: "Boost Your Brand",
@@ -30,7 +30,7 @@ const features = [
         width={500}
         height={600}
         className="w-10 h-10"
-        priority
+        loading="lazy"
       />
     ),
     title: "Reach a Highly Engaged Audience",
@@ -45,7 +45,7 @@ const features = [
         width={500}
         height={600}
         className="w-10 h-10"
-        priority
+        loading="lazy"
       />
     ),
     title: "Maximize Your Impact with a Multi-Channel Approach",
@@ -60,7 +60,7 @@ const features = [
         width={500}
         height={600}
         className="w-10 h-10"
-        priority
+        loading="lazy"
       />
     ),
     title: "Engage Through Interactive Content",
@@ -75,7 +75,7 @@ const features = [
         width={500}
         height={600}
         className="w-10 h-10"
-        priority
+        loading="lazy"
       />
     ),
     title: "Leverage Our Blog for Thought Leadership",
@@ -90,7 +90,7 @@ const features = [
         width={500}
         height={600}
         className="w-10 h-10"
-        priority
+        loading="lazy"
       />
     ),
     title: "Join a Mission-Driven Platform",

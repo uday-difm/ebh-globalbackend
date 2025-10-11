@@ -22,7 +22,7 @@ export default function NotFound() {
         >
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 ... (you can use a ghost, emoji, or exclamation icon here)" />
         </svg>
-        <h1 className="text-6xl font-extrabold text-gray-800 tracking-tight">404</h1>
+  <h2 className="text-6xl font-extrabold text-gray-800 tracking-tight">404</h2>
         <p className="mt-4 text-2xl font-medium text-gray-700">
           Oops! Page not found
         </p>

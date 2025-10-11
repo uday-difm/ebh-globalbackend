@@ -16,7 +16,7 @@ export default async function HomePage() {
       <meta name="keywords" content=" Nature, conservation, sustainability, environment, ecology, wildlife, climate change, earth, science, quizzes" />
       <meta property="og:description" content="Explore Earth by Humans for videos, magazines, blogs, and quizzes on nature, conservation, and sustainability. Join our mission!" />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
-      <div >
+      <div className="flex flex-col gap-24">
         <Hero />
         <LatestMagazine />
         <LatestBlog />

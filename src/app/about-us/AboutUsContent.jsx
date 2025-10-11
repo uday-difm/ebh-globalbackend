@@ -12,7 +12,7 @@ const logos = [
   { url: "https://kladiscope.com/", name: "Kladiscope", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Kladiscope.png" },
   { url: "https://www.mallyfinancial.com/", name: "Mally Financial", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Mally%20Financial.png" },
   { url: "https://www.maayalakshmi.com/", name: "Maaya Laxmi", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Maaya%20Laxmi.png" },
-  { url: "https://laymanlitigation.com/", name: "Layman Litigation", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Layman%20Litigation.png" },
+  // Layman Litigation removed as per SEO request
   { url: "https://ahealthplace.com/", name: "A Health Place", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/A%20Health%20Place.png" },
   { url: "https://aeroway.one/", name: "Aeroway", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Aeroway.png" },
   { url: "https://arsenalfunding.com/", name: "Arsenal", src: "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/logos/Arsenal.png" },
@@ -128,7 +128,7 @@ export default function AboutUsContent() {
   const visibleLogos = logos.slice(currentIndex, currentIndex + 4);
 
   return (
-    <main className="pt-[9px] bg-white">
+    <main className="bg-white pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 md:px-10 lg:px-14">
       {/* Hero Section */}
       <div className="relative py-12 md:py-[100px] max-w-[1350px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-black relative z-10">
@@ -136,7 +136,7 @@ export default function AboutUsContent() {
           <div className="flex flex-col gap-8 my-auto" data-aos="fade-right">
             <div className="space-y-2">
               {/* === FOCUS HERE FOR H1 FIX === */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-start leading-tight mt-20 whitespace-nowrap">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center md:text-start leading-tight mt-10 md:mt-0">
                 About Earth By Humans
               </h2>
               {/* === END FOCUS === */}
@@ -144,6 +144,9 @@ export default function AboutUsContent() {
             <p className="text-base text-gray-700 text-justify leading-relaxed">
               In a world teeming with information, yet often lacking in-depth understanding, Earth by Humans was born out of a profound passion for our planet. Founded by Mr. Sitanshu Srivastava, our platform seeks to bridge the gap between scientific knowledge and public awareness. With a commitment to authenticity and clarity, we delve into the intricate tapestry of Earth,
               exploring both its natural wonders and the innovations that shape its future.
+            </p>
+            <p className="text-base text-gray-700 text-justify leading-relaxed">
+              For inquiries, please contact us at: <strong>(123) 456-7890</strong>
             </p>
             <div className="flex justify-center md:justify-start">
               <Link href="/contact-us">
@@ -162,7 +165,7 @@ export default function AboutUsContent() {
           </div>
 
           {/* Image Column */}
-          <div className="flex justify-center ps-10 mt-10 items-center mt-8 md:mt-12 relative" data-aos="zoom-in">
+          <div className="flex justify-center ps-10 mt-10 items-center md:mt-12 relative" data-aos="zoom-in">
             <div className="relative">
               <div className="absolute  inset-0 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
               <Image
@@ -232,7 +235,7 @@ export default function AboutUsContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, i) => (
                 <div key={i} data-aos="fade-up" data-aos-delay={i * 100}
-                  className="relative bg-white p-8 rounded-3xl border-t-4 border-green-700 hover:border-[#3853a4] border border-gray-200 shadow-md hover:shadow-xl transform transition-transform duration-700 ease-in-out hover:scale-[1.05] flex flex-col items-center text-center group">
+                  className="relative bg-white p-8 rounded-3xl border-t-4 border-green-700 hover:border-[#3853a4] shadow-md hover:shadow-xl transform transition-transform duration-700 ease-in-out hover:scale-[1.05] flex flex-col items-center text-center group">
                   <div className=" p-5 rounded-full border border-green-200 mb-4 shadow group-hover:shadow-lg transition-all duration-500">
                     {feature.icon}
                   </div>

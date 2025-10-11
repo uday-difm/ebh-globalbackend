@@ -5,18 +5,24 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html.dark {
+  --background: #f5f5f5;
+  --foreground: #000000;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: 'Poppins', sans-serif; /* CHANGE THIS LINE */
+  min-height: 100vh;
+}
 
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 /* Force override of inline link styles inside blog content */
@@ -54,4 +60,48 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: #15bd52 transparent;
+}
+
+/* Responsive container and typography utilities */
+.container {
+  max-width: 1350px; /* Limits container width on large screens */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.page-shell {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 6.5rem 1.25rem 4rem;
+}
+
+@media (min-width: 640px) {
+  .page-shell {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    padding-top: 7rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-shell {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 7.5rem;
+  }
+}
+
+/* Utility class for responsive text size */
+.text-responsive {
+  font-size: 1.125rem;
+}
+
+@media (max-width: 640px) {
+  .text-responsive {
+    font-size: 1rem;
+  }
+  /* Adjust other spacing for mobile devices */
+  .container {
+    padding: 0 0.5rem;
+  }
 }

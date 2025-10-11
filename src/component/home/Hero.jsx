@@ -1,8 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Button from '../../common/Button';
+
+let modelViewerLoader;
 
 const BlobAnimation = () => {
   return (
@@ -10,7 +12,7 @@ const BlobAnimation = () => {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid slice"
       viewBox="10 10 80 80"
-      className="h-screen w-full absolute top-0 left-0 z-[-1]"
+      className="pointer-events-none absolute inset-0 w-full h-full min-h-[520px] sm:min-h-[560px] md:min-h-[620px] lg:min-h-[680px]"
     >
       <defs>
         <style>
@@ -31,24 +33,70 @@ const BlobAnimation = () => {
 };
 
 export default function Hero() {
+  const [showModel, setShowModel] = useState(false);
+  const [viewerReady, setViewerReady] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (window.customElements?.get('model-viewer')) {
+      setViewerReady(true);
+      return;
+    }
+
+    if (!modelViewerLoader) {
+      modelViewerLoader = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+        script.async = true;
+        script.onload = () => resolve(true);
+        script.onerror = (error) => reject(error);
+        document.head.appendChild(script);
+      });
+    }
+
+    modelViewerLoader
+      .then(() => {
+        if (window.customElements?.get('model-viewer')) {
+          setViewerReady(true);
+        }
+      })
+      .catch(() => {
+        setViewerReady(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!viewerReady || typeof window === 'undefined') return;
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(() => setShowModel(true));
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(() => setShowModel(true), 600);
+    return () => window.clearTimeout(timeoutId);
+  }, [viewerReady]);
+
   return (
-    <div className="relative font-poppins">
+    <section className="relative font-poppins overflow-hidden h-screen">
       <BlobAnimation />
 
-      <div className="container mx-auto max-w-[1350px]">
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 items-center pt-24 pb-16 lg:min-h-screen lg:py-24">
+      <div className="relative container mx-auto max-w-[1350px] px-4 sm:px-6">
+        <div className="flex flex-col-reverse gap-12 items-center pt-20 pb-16 md:pt-16 md:pb-20 md:grid md:grid-cols-2 lg:min-h-[580px] xl:min-h-[720px]">
 
           {/* Left Column */}
-          <div className="flex flex-col justify-center text-center lg:text-left gap-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold leading-snug text-black">
+          <div className="flex flex-col justify-center text-center md:text-left gap-6 md:gap-8">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold leading-tight text-black">
               Unleashing the power of humanity to heal our Earth
             </h1>
-            <p className="text-black text-base sm:text-lg lg:max-w-md mx-auto lg:mx-0">
+            <p className="text-black text-base sm:text-lg md:text-xl lg:max-w-md mx-auto md:mx-0">
               Explore Earth Encounters! Journey through our vibrant collection of videos showcasing the beauty and diversity of nature.
             </p>
 
             {/* Buttons */}
-            <div className="w-full flex gap-5 md:gap-8 flex-wrap mt-2 lg:mt-[50px] justify-center lg:justify-start">
+            <div className="w-full flex gap-4 sm:gap-6 flex-wrap mt-4 md:mt-6 lg:mt-10 justify-center md:justify-start">
               {/* Play Quiz Button */}
               <Button href='/quizzes'>
                 Play Quiz
@@ -63,21 +111,32 @@ export default function Hero() {
           </div>
 
           {/* Right Column */}
-          <div className="flex justify-center items-center w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px]">
-            <model-viewer
-              src="./Day.glb"
-              auto-rotate
-              disable-tap
-              ar-modes="webxr scene-viewer quick-look"
-              tone-mapping="neutral"
-              camera-orbit="45deg 80deg"
-              shadow-intensity="0.5"
-              disable-zoom
-              style={{ width: '100%', height: '100%' }}
-            />
+          <div className="flex justify-center items-center w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[520px] xl:h-[580px] 2xl:h-[640px]">
+            {showModel ? (
+              <model-viewer
+                src="/Day.glb"
+                auto-rotate
+                disable-tap
+                ar-modes="webxr scene-viewer quick-look"
+                tone-mapping="neutral"
+                camera-orbit="45deg 80deg"
+                shadow-intensity="0.5"
+                disable-zoom
+                style={{ width: '100%', height: '100%' }}
+              />
+            ) : (
+                <Image
+                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/hero-fallback.png"
+                alt="Illustration of Earth By Humans hero"
+                width={640}
+                height={640}
+                  priority
+                  className="w-full h-full object-contain"
+              />
+            )}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -26,7 +26,7 @@ export default function YourMovePage() {
       <div className="pt-20 sm:pt-24 min-h-screen">
         <div className="container mx-auto px-4 max-w-[1350px]">
           <div className="text-center my-12 md:my-16">
-            <h1 className="text-4xl md:text-5xl font-bold">Your Quiz Analytics</h1>
+            <h2 className="text-4xl md:text-5xl font-bold">Your Quiz Analytics</h2>
             <p className="text-lg text-gray-600 mt-2">Track your progress and understanding of the quizzes.</p>
           </div>
           {/* YourMove component is now correctly used with the analyticUpdate prop */}

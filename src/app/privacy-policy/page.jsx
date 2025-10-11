@@ -13,8 +13,8 @@ export default function PrivacyPolicyPage() {
       <meta name="keywords" content=" privacy policy, data privacy, personal information, data protection, cookies, privacy, user data, online security, Earth by Humans, legal" />
       <meta property="og:description" content="Learn how Earth by Humans protects your privacy. Our policy outlines data collection, use, and safeguarding measures for your peace of mind." />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
-      <div className="max-w-4xl mx-auto px-5 py-2 text-justify">
-        <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium">
+      <div className="page-shell text-justify">
+        <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium mt-4 sm:mt-2">
           Privacy Policy
         </h2>
         <h3 className="text-2xl font-semibold mb-2">Introduction</h3>

@@ -58,13 +58,12 @@ const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
           <div className="col-span-2 flex items-center gap-2 text-gray-700">
             <span className="font-medium">Accuracy:</span>{" "}
             <span
-              className={`font-bold ${
-                correctPercentage > 80
+              className={`font-bold ${correctPercentage > 80
                   ? "text-green-600"
                   : correctPercentage > 50
-                  ? "text-yellow-600"
-                  : "text-red-500"
-              }`}
+                    ? "text-yellow-600"
+                    : "text-red-500"
+                }`}
             >
               {correctPercentage?.toFixed(2) ?? "0.00"}%
             </span>
