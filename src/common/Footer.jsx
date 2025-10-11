@@ -74,7 +74,7 @@ const Footer = () => {
                 width={500}
                 height={600}
                 className="w-[80%] object-contain"
-                priority
+                loading="lazy"
               />
             </Link>
           </div>

@@ -125,13 +125,15 @@ export default function Hero() {
                 style={{ width: '100%', height: '100%' }}
               />
             ) : (
-                <Image
+              <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/hero-fallback.png"
                 alt="Illustration of Earth By Humans hero"
                 width={640}
                 height={640}
-                  priority
-                  className="w-full h-full object-contain"
+                priority
+                quality={70}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
+                className="w-full h-full object-contain"
               />
             )}
           </div>
