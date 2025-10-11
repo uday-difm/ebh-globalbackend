@@ -198,7 +198,7 @@ const Magazine = () => {
         type="image/png"
       />
 
-      <div className="bg-white min-h-screen">
+      <div className="bg-white min-h-screen mt-20">
         <div className="container mx-auto mt-10 pt-20 pb-10 max-w-[1350px]">
           <div className="flex flex-col items-center gap-10 lg:px-[10%]">
             <div className="w-full flex justify-center ">
