@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { FaArrowRight } from "react-icons/fa";
-import { FcAdvertising } from "react-icons/fc";
-import { Loader } from '../../common/Loader'; // 👈 Import the Loader component
+import { ArrowRight, Megaphone } from "lucide-react";
+import { Loader } from "../../common/Loader"; // 👈 Import the Loader component
 
 // ------------------ Magazine Card ------------------
 const Card = ({ data }) => {
@@ -27,7 +25,8 @@ const Card = ({ data }) => {
             height={600}
             className="object-cover rounded-xl cursor-pointer transition duration-300 hover:opacity-90 mt-2"
             style={{ width: "500px", height: "auto" }}
-            Priority
+            priority={false}
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
           <p className="text-xl font-bold text-blue-700 text-center mt-3">
             {data.magazine_title}
@@ -40,7 +39,7 @@ const Card = ({ data }) => {
               </div>
               <span className="transition-colors rounded-full duration-500 text-sm z-50 group-hover:text-white flex gap-1 items-center">
                 Read More
-                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </span>
             </div>
           </div>
@@ -59,7 +58,7 @@ const AdCard = () => (
   >
     <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-4 sm:p-6">
       <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-5">
-        <FcAdvertising size={40} className="text-green-500" />
+        <Megaphone className="h-9 w-9 text-green-600" />
       </div>
 
       <h3 className="text-xl sm:text-2xl font-bold text-green-800 mb-4">
@@ -76,7 +75,7 @@ const AdCard = () => (
           <div className="absolute w-[270px] h-[120px] bg-blue-700 transform rotate-[125deg] transition-all duration-700 left-[100%] group-hover:left-[10%] z-10" />
           <span className="transition-colors rounded-full duration-500 text-sm sm:text-md z-50 group-hover:text-white flex gap-2 items-center">
             Get Started
-            <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </span>
         </div>
       </Link>
@@ -93,26 +92,73 @@ const Magazine = () => {
   const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchMagazines = async () => {
-      try {
-        const [response] = await Promise.all([
-          axios.get("/api/magazine"),
-          new Promise((resolve) => setTimeout(resolve, 300)), // 👈 The 3-second timer
-        ]);
-        if (response.status === 200) {
-          setMagazines(response.data);
-        } else {
-          setError("Failed to fetch magazines");
+      let isSuccess = false;
+      let lastErrorMessage = "";
+      const candidates = [];
+
+      if (typeof window !== "undefined" && window.location?.origin) {
+        candidates.push(window.location.origin);
+      }
+
+      if (process.env.NEXT_PUBLIC_SITE_URL) {
+        candidates.push(process.env.NEXT_PUBLIC_SITE_URL);
+      }
+
+      candidates.push("http://localhost:3000");
+
+      const uniqueOrigins = [...new Set(candidates.filter(Boolean).map((origin) => origin.replace(/\/$/, "")))];
+
+      for (const origin of uniqueOrigins) {
+        const url = `${origin}/api/magazine`;
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) {
+            console.error("Magazines fetch failed", response.status, url);
+            lastErrorMessage = `Request failed with status ${response.status}`;
+            continue;
+          }
+
+          const payload = await response.json();
+          await new Promise((resolve) => setTimeout(resolve, 300));
+
+          if (Array.isArray(payload)) {
+            if (isMounted) {
+              setMagazines(payload);
+            }
+          } else {
+            console.error("Magazines payload was not an array", payload);
+            if (isMounted) {
+              setMagazines([]);
+            }
+          }
+
+          if (isMounted) {
+            setError(null);
+          }
+          isSuccess = true;
+          break;
+        } catch (err) {
+          console.error("Error fetching magazines:", url, err);
+          lastErrorMessage = err instanceof Error ? err.message : "Unexpected error";
         }
-      } catch (err) {
-        console.error("Error fetching magazines:", err);
-        setError("Error fetching magazines");
-      } finally {
+      }
+
+      if (!isSuccess && isMounted) {
+        setError(lastErrorMessage || "Error fetching magazines");
+      }
+
+      if (isMounted) {
         setLoading(false);
       }
     };
 
     fetchMagazines();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -182,8 +228,8 @@ const Magazine = () => {
             <div className="w-full bg-gradient-to-br from-green-300 via-green-100 to-green-300 mt-6 py-4 rounded-2xl shadow-lg">
               <div className="max-w-7xl mx-auto px-6 text-center">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <div className="w-10 h-10  backdrop-blur-sm rounded-full flex items-center justify-center">
-                    <FcAdvertising size={25} className="text-white" />
+                  <div className="w-10 h-10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <Megaphone className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
                 </div>
@@ -198,7 +244,7 @@ const Magazine = () => {
                     </div>
                     <span className="transition-colors rounded-full duration-500 text-md z-50 justify-center group-hover:text-white flex gap-2 items-center">
                       Contact Us
-                      <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </span>
                   </div>
                 </Link>

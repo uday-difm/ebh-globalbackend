@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
-import { ImCross } from "react-icons/im"
-import { TiTick } from "react-icons/ti"
+import { XCircle, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 
 const AllPlayedQuiz = () => {
@@ -60,8 +59,8 @@ const AllPlayedQuiz = () => {
           <input type="radio" name="option" checked={selected} readOnly />
           <p className="font-semibold text-[.9rem] text-blue-700">{option}</p>
         </div>
-        {selected && !correct && <ImCross />}
-        {correct && <TiTick fontSize={26} />}
+  {selected && !correct && <XCircle className="h-5 w-5 text-red-500" />}
+  {correct && <CheckCircle2 className="h-5 w-5 text-green-600" />}
       </div>
     )
   }

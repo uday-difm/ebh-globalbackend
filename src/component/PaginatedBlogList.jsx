@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FaArrowRight } from 'react-icons/fa';
-import { FcAdvertising } from "react-icons/fc";
+import { ArrowRight, Megaphone } from 'lucide-react';
 import Button from '../common/Button';
 import Image from 'next/image';
 
@@ -40,14 +39,15 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                             src={blog.blog_feature_image}
                             alt={blog.blog_title}
                             className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${isHovered ? 'scale-110' : 'scale-100'}`}
-                            priority
                             width={400}
                             height={250}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                         <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
-                                <FaArrowRight size={14} className="text-green-600" />
+                                <ArrowRight className="h-4 w-4 text-green-600" />
                             </div>
                         </div>
                     </div>
@@ -79,10 +79,10 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                                 <Image
                                     src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
                                     alt="Earth by Humans profile"
-                                    className="w-10 h-10 rounded-full object-cover "
-                                    priority
-                                    width={400}
-                                    height={250}
+                                    className="w-10 h-10 rounded-full object-cover"
+                                    width={40}
+                                    height={40}
+                                    sizes="40px"
                                 />
                                 <span className="text-sm text-gray-600 font-medium">Earth By Humans</span>
                             </div>
@@ -102,7 +102,7 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
         >
             <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-8">
                 <div className="w-16 h-16 bg-green-50/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 ">
-                    <FcAdvertising size={50} className="text-green-500" />
+                    <Megaphone className="h-10 w-10 text-green-600" />
                 </div>
                 <h3 className="text-2xl font-bold text-green-800 mb-4">
                     Advertise With Us
@@ -117,7 +117,7 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                     animatedColor1="bg-blue-700"
                     animatedColor2="bg-blue-700"
                 >
-                    Get Started <FaArrowRight />
+                    Get Started <ArrowRight className="h-4 w-4" />
                 </Button>
             </div>
         </div>
@@ -152,7 +152,7 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                         <div className="max-w-7xl mx-auto px-6 text-center">
                             <div className="flex items-center justify-center gap-2 mb-3">
                                 <div className="w-10 h-10 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                    <FcAdvertising size={25} className="text-white" />
+                                    <Megaphone className="h-5 w-5 text-white" />
                                 </div>
                                 <h3 className="text-xl font-bold text-black">Advertisement Space</h3>
                             </div>
@@ -166,7 +166,7 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                                 animatedColor1="bg-blue-700"
                                 animatedColor2="bg-blue-700"
                             >
-                                Contact Us <FaArrowRight />
+                                Contact Us <ArrowRight className="h-4 w-4" />
                             </Button>
                         </div>
                     </div>

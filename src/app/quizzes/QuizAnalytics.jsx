@@ -1,7 +1,6 @@
 // components/QuizAnalytics.jsx
 import React, { useState, useEffect } from "react";
-import { RxCross2 } from "react-icons/rx";
-import { IoMdCheckmark } from "react-icons/io";
+import { X, Check } from "lucide-react";
 import axios from "axios";
 
 const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
@@ -42,12 +41,12 @@ const QuizAnalytics = ({ analyticUpdate, userId = null }) => {
 
         <div className="grid grid-cols-2 gap-y-4 gap-x-6 text-sm">
           <div className="flex items-center gap-2 text-green-600 font-medium">
-            <IoMdCheckmark size={18} /> Correct:{" "}
+            <Check className="h-4 w-4" /> Correct:{" "}
             <span className="text-gray-800 font-normal">{data.correct_count}</span>
           </div>
 
           <div className="flex items-center gap-2 text-red-500 font-medium justify-end">
-            <RxCross2 size={18} /> Incorrect:{" "}
+            <X className="h-4 w-4" /> Incorrect:{" "}
             <span className="text-gray-800 font-normal">{data.wrong_count}</span>
           </div>
 

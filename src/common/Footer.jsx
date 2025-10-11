@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaTwitter } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import Button from './Button'; // ✅ Import the reusable Button component
-import ScrollToTopLink from './ScrollToTopLink'; // ✅ Import the ScrollToTopLink component
+import { Facebook, Instagram, Linkedin, Youtube, Twitter, Mail } from 'lucide-react';
+import Button from './Button';
+import ScrollToTopLink from './ScrollToTopLink';
 import Image from 'next/image';
 
 const Footer = () => {
@@ -50,19 +49,19 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 pb-8">
           {/* Logo & Description */}
           <div>
-            <ScrollToTopLink href="/">
+            <Link href="/">
               <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
                 alt="Earth by Humans Logo"
-                width={500}
-                height={600}
-                className="h-20 object-contain cursor-pointer"
-                priority
+                width={200}
+                height={60}
+                className="w-48 h-auto mb-4"
+                loading='lazy'
               />
-            </ScrollToTopLink>
-            <p className="mt-6 text-sm text-gray-700 text-justify">
-              Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories,
-              and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
+            </Link>
+
+            <p className="text-sm text-gray-700 mb-4 text-justify hyphens-auto">
+              Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories, and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
             </p>
           </div>
 
@@ -97,19 +96,29 @@ const Footer = () => {
               <h4 className="font-semibold mb-2">Follow Us</h4>
               <div className="flex gap-4">
                 <Link href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" aria-label="LinkedIn">
-                  <FaLinkedinIn className="text-white bg-green-600 p-3 rounded-full w-10 h-10 hover:bg-green-700 transition-all duration-300" />
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-white transition-all duration-300 hover:bg-green-700">
+                    <Linkedin className="h-4 w-4" />
+                  </span>
                 </Link>
                 <Link href="https://www.instagram.com/earth_by_humans/" target="_blank" aria-label="Instagram">
-                  <FaInstagram className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-sky-600 transition-all duration-300" />
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white transition-all duration-300 hover:bg-sky-600">
+                    <Instagram className="h-4 w-4" />
+                  </span>
                 </Link>
                 <Link href="https://www.facebook.com/earthbyhumans" target="_blank" aria-label="Facebook">
-                  <FaFacebookF className="text-white bg-blue-600 p-3 rounded-full w-10 h-10 hover:bg-blue-700 transition-all duration-300" />
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700">
+                    <Facebook className="h-4 w-4" />
+                  </span>
                 </Link>
                 <Link href="https://www.youtube.com/@EarthByHumans" target="_blank" aria-label="YouTube">
-                  <FaYoutube className="text-white bg-gray-500 p-3 rounded-full w-10 h-10 hover:bg-gray-600 transition-all duration-300" />
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-500 text-white transition-all duration-300 hover:bg-gray-600">
+                    <Youtube className="h-4 w-4" />
+                  </span>
                 </Link>
                 <Link href="https://twitter.com/earthbyhumans" target="_blank" aria-label="Twitter">
-                  <FaTwitter className="text-white bg-sky-500 p-3 rounded-full w-10 h-10 hover:bg-sky-600 transition-all duration-300" />
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white transition-all duration-300 hover:bg-sky-600">
+                    <Twitter className="h-4 w-4" />
+                  </span>
                 </Link>
               </div>
             </div>
@@ -120,7 +129,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-2"> Connect</h4>
             <p className="font-semibold mb-2">Send us an email at</p>
             <p className="text-sm flex items-center gap-2 text-gray-700">
-              <MdEmail className="text-green-600" /> info@earthbyhumans.com
+              <Mail className="h-4 w-4 text-green-600" /> info@earthbyhumans.com
             </p>
 
             <form onSubmit={handleSubscribe} className="mt-4">
