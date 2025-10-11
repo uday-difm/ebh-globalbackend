@@ -59,19 +59,18 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
-        <div className="py-2 flex items-center justify-between relative">
+      <div className="max-w-[1350px] mx-auto sm:px-6">
+        <div className="flex items-center justify-between relative">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
               alt="Earth by Humans Logo"
-              width={10}
-              height={10}
-              className="h-auto w-auto"
-              sizes="13px"
-              loading="lazy"
+              width={40} // optional for layout
+              height={40} // optional for layout
+              className="h-23 w-43 object-contain"
             />
+
           </Link>
           {/* Desktop Menu */}
           <nav className="hidden md:flex gap-6 lg:gap-8 items-center">
@@ -100,10 +99,10 @@ const Header = () => {
                     key={auth.profile}
                     src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"}
                     alt="User"
-                    width={40}
-                    height={40}
+                    width={10}
+                    height={10}
                     className="w-10 h-10 rounded-full object-cover"
-                    sizes="40px"
+                    sizes="13px"
                   />
                   <span className="font-bold">{auth.name?.split(" ")[0]}</span>
                   <ChevronDown size={20} />
