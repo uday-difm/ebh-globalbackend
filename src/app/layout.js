@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Script from 'next/script';
 import Footer from '../common/Footer';
 import Header from '../common/Header';
 import './globals.css';
@@ -60,8 +61,14 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
         {/* Updated Analytics Code */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NEWID"></script>
-        <script
+        <Script
+          id="gtag-loader"
+          src="https://www.googletagmanager.com/gtag/js?id=G-NEWID"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -73,8 +80,10 @@ export default function RootLayout({ children }) {
         />
 
         {/* Organisation Schema */}
-        <script
+        <Script
+          id="org-schema"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `{
               "@context": "https://schema.org",
@@ -110,10 +119,11 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        {/* AdSense (without data-nscript) */}
-        <script
-          async
+        {/* AdSense (deferred to avoid blocking main thread) */}
+        <Script
+          id="adsense-loader"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
         />
 

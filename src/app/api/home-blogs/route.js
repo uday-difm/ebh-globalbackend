@@ -12,7 +12,6 @@ async function getLatestBlogsFromDB({ categorySlug = null, limit = 4, sortBy = '
         b.blog_slug,
         b.blog_description,
         b.blog_feature_image,
-        b.blog_content,
         DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
         DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
         bc.category_name,

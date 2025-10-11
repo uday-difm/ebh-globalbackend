@@ -109,6 +109,7 @@ const Magazine = () => {
 
       candidates.push("http://localhost:3000");
 
+      // Try multiple potential origins so the page works in local, preview, and production without redeploying
       const uniqueOrigins = [...new Set(candidates.filter(Boolean).map((origin) => origin.replace(/\/$/, "")))];
 
       for (const origin of uniqueOrigins) {
