@@ -27,7 +27,7 @@ export default function HomeBlogCard({ blog, category_name }) {
                 width={24}
                 height={24}
                 className="rounded-full mr-2"
-                unoptimized
+                sizes="24px"
               />
               <span>Earth By Humans</span>
               <span className="mx-2">•</span>

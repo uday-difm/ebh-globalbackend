@@ -3,8 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { ChevronDown } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../app/redux/actions/action';
+import Logo from '../common/Logo';
+import globeMark from '../../public/globe.svg';
 
 const TopBar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -37,14 +40,7 @@ const TopBar = () => {
     <header className="w-full bg-white shadow-lg py-4 px-8 flex justify-between items-center">
       {/* Search Bar */}
       <div className="w-full max-w-xs flex items-center gap-4 text-black">
-        <Image
-          src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-          alt="Earth by humans logo gif"
-          width={130}
-          height={190}
-          unoptimized
-        />
-        
+        <Logo textClassName="text-lg font-semibold" />
       </div>
 
       {/* User Profile */}
@@ -60,30 +56,16 @@ const TopBar = () => {
             className="flex items-center space-x-2 text-gray-800 hover:text-blue-600 transition-all duration-300 ease-in-out"
             onClick={handleProfileClick}
           >
-            <div className="w-14 h-14 bg-black rounded-full flex items-center justify-center overflow-hidden shadow-lg">
+            <div className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden shadow-lg bg-gradient-to-br from-green-500 to-blue-500">
               <Image
-                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-                alt="Profile Image"
-                width={48}
-                height={48}
-                className="object-cover"
-                unoptimized
+                src={globeMark}
+                alt="Profile"
+                width={40}
+                height={40}
+                priority={false}
               />
             </div>
-            <svg width="24" height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-gray-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            <ChevronDown className="h-5 w-5 text-gray-500" />
           </button>
 
           <div ref={dropdownRef} className="relative">

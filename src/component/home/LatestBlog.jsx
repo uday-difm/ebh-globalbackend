@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import BlogCard from "../../component/home/HomeBlogCard";
-import { FaArrowRight } from "react-icons/fa";
-import Link from "next/link";
-import Button from "../../common/Button"; // Import the Button component
+import { ArrowRight } from "lucide-react";
+import Button from "../../common/Button";
 
 const LatestBlog = () => {
   const [blogData, setBlogData] = useState([]);
@@ -57,7 +56,7 @@ const LatestBlog = () => {
               animatedColor2="bg-blue-700"
             >
               <div className="flex gap-1 items-center">
-                View More <FaArrowRight />
+                View More <ArrowRight className="h-4 w-4" />
               </div>
             </Button>
           </div>

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { ImCross } from "react-icons/im";
-import { TiTick } from "react-icons/ti";
+import { XCircle, CheckCircle2 } from 'lucide-react';
 import axios from 'axios';
 import ConfettiExplosion from 'react-confetti-explosion';
 import AOS from 'aos';
@@ -208,8 +207,8 @@ const QuizOption = ({ label, text, correct, handleClickOption, selected, selecte
       </div>
     </div>
     <div className='flex items-center'>
-      {selected && !correct && <ImCross className='text-red-500' fontSize={22} />}
-      {showCorrect && correct && <TiTick className='text-green-600' fontSize={26} />}
+  {selected && !correct && <XCircle className='h-6 w-6 text-red-500' />}
+  {showCorrect && correct && <CheckCircle2 className='h-6 w-6 text-green-600' />}
     </div>
   </div>
 );

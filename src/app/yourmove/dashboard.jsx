@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { RxCross2 } from "react-icons/rx";
-import { IoMdCheckmark } from "react-icons/io";
+import { X, Check } from "lucide-react";
 import DoughnutChart from '../../common/DoughnutChart';
 import LineChart from '../../common/LineChart';
 import axios from 'axios';
@@ -151,8 +150,8 @@ const StatsCard = ({ title, stats = {} }) => {
         </div>
       </div>
       <div className='grid grid-cols-2 gap-2 text-[12px] mt-3'>
-        <span className='flex items-center gap-2 text-gray-800'><IoMdCheckmark color='#15803d' /> Correct: {correct}</span>
-        <span className='flex items-center gap-2 text-gray-800'><RxCross2 color='#e63946' /> Incorrect: {wrong}</span>
+  <span className='flex items-center gap-2 text-gray-800'><Check className='h-4 w-4 text-green-600' /> Correct: {correct}</span>
+  <span className='flex items-center gap-2 text-gray-800'><X className='h-4 w-4 text-red-500' /> Incorrect: {wrong}</span>
         <span className='flex items-center gap-2 text-gray-800'>Total: {total}</span>
         <span className='flex items-center gap-2 text-gray-800'>Percentage: {formattedPercent}%</span>
       </div>

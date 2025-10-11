@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import DashboardLayout from '../../../component/DashboardLayout';
+import globeMark from '../../../../public/globe.svg';
 
 const Profile = () => {
   const [counts, setCounts] = useState({
@@ -48,11 +49,11 @@ const Profile = () => {
           {/* Smaller Profile Picture */}
           <div className="relative z-30 mx-auto -mt-20 h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-white shadow-xl border-4 border-gradient-to-tl from-blue-400 to-purple-600 p-1 sm:p-2 flex items-center justify-center">
             <Image
-              src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-              alt="Earth by humans logo gif"
-              width={150}
-              height={100}
-              priority
+              src={globeMark}
+              alt="Earth by Humans mark"
+              width={120}
+              height={120}
+              priority={false}
             />
           </div>
 

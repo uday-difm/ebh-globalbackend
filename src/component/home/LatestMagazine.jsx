@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -41,7 +41,7 @@ const LatestMagazine = () => {
                 <div className="absolute w-[140px] h-[200px] bg-blue-700 rotate-[35deg] transition-all duration-500 ease-in-out top-[-135%] left-[-80%] group-hover:left-0"></div>
                 <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] transition-all duration-500 ease-in-out top-[15%] left-[90%] group-hover:left-[35%]"></div>
                 <span className="transition-colors duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
-                  View All Magazines <FaArrowRight />
+                  View All Magazines <ArrowRight className="h-4 w-4" />
                 </span>
               </div>
             </Link>
@@ -81,7 +81,7 @@ const LatestMagazine = () => {
                 <div className="absolute w-[100px] h-[200px] bg-green-600 rotate-[35deg] transition-all duration-500 ease-in-out top-[-135%] left-[-80%] group-hover:left-0"></div>
                 <div className="absolute w-[200px] h-[90px] bg-green-600 rotate-[125deg] transition-all duration-500 ease-in-out top-[15%] left-[90%] group-hover:left-[20%]"></div>
                 <span className="transition-colors duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
-                  View Latest <FaArrowRight />
+                  View Latest <ArrowRight className="h-4 w-4" />
                 </span>
               </div>
             </Link>

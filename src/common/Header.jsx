@@ -2,8 +2,7 @@
 
 
 import Image from "next/image";
-import { RiMenuLine } from "react-icons/ri";
-import { IoMdClose, IoMdArrowDropdown } from "react-icons/io";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../app/redux/actions/action";
 import Button from "./Button"; // Import the Button component
 import ScrollToTopLink from "./ScrollToTopLink"; // Import the ScrollToTopLink component
+import Link from "next/link";
 
 const Header = () => {
   const pathname = usePathname();
@@ -62,16 +62,17 @@ const Header = () => {
       <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
         <div className="py-4 flex items-center justify-between relative">
           {/* Logo */}
-          <ScrollToTopLink href="/">
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
-              alt="Earth by humans logo gif"
-              width={180}
-              height={100}
-              unoptimized
+              alt="Earth by Humans Logo"
+              width={20}
+              height={20}
+              className="h-auto w-auto"
+              sizes="20px"
+              loading="lazy"
             />
-          </ScrollToTopLink>
-
+          </Link>
           {/* Desktop Menu */}
           <nav className="hidden md:flex gap-6 lg:gap-8 items-center">
             {navLinks.map(({ href, label, badge }) => (
@@ -101,11 +102,11 @@ const Header = () => {
                     alt="User"
                     width={40}
                     height={40}
-                    unoptimized
                     className="w-10 h-10 rounded-full object-cover"
+                    sizes="40px"
                   />
                   <span className="font-bold">{auth.name?.split(" ")[0]}</span>
-                  <IoMdArrowDropdown size="20px" />
+                  <ChevronDown size={20} />
                 </button>
                 {showUserMenu && (
                   <div className="absolute right-0 top-12 mt-1 w-48 border border-gray-200 bg-white rounded-md shadow-lg text-sm font-semibold z-50">
@@ -136,7 +137,7 @@ const Header = () => {
 
           {/* Mobile Menu Icon */}
           <button onClick={() => setShowMenu(!showMenu)} className="md:hidden z-50">
-            {showMenu ? <IoMdClose size="30px" /> : <RiMenuLine size="30px" />}
+            {showMenu ? <X size={30} /> : <Menu size={30} />}
           </button>
         </div>
 

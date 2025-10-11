@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { FaArrowRight, FaHandHoldingHeart } from "react-icons/fa";
+import { ArrowRight, HandHeart } from "lucide-react";
 import Cta from "../../common/Cta";
 
 const logos = [
@@ -157,7 +157,7 @@ export default function AboutUsContent() {
                   </div>
                   <span className="transition-colors rounded-full duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
                     Contact Us
-                    <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
               </Link>
@@ -221,7 +221,7 @@ export default function AboutUsContent() {
           <div className="text-center" data-aos="fade-up">
             <div className="flex flex-col items-center mb-2">
               <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-[#3853a4] text-white shadow-lg mb-3">
-                <FaHandHoldingHeart size={28} />
+                <HandHeart className="h-7 w-7" />
               </span>
               <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-2 relative inline-block">
                 Advertise <span className="text-[#3853a4]">With Us!</span>

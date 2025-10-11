@@ -1,35 +1,54 @@
 import nodemailer from 'nodemailer';
 
-// MODIFIED: Credentials are now defined directly in the code.
-const EMAIL_USER = "magazines@itservcs.com";
-const EMAIL_PASSWORD = "AB^$%r8wmh1$Kwes"; // This MUST be the App Password
-const EMAIL_FROM = "magazines@itservcs.com";
+const emailHost = process.env.EMAIL_SMTP_HOST ?? 'smtp.ionos.com';
+const emailPort = Number.parseInt(process.env.EMAIL_SMTP_PORT ?? '587', 10);
+const emailSecure = String(process.env.EMAIL_SMTP_SECURE ?? '').toLowerCase() === 'true';
+const emailRequireTLS = String(process.env.EMAIL_SMTP_REQUIRE_TLS ?? 'true').toLowerCase() !== 'false';
+const emailUser = process.env.EMAIL_USER;
+const emailPassword = process.env.EMAIL_PASSWORD;
+const emailFrom = process.env.EMAIL_FROM || emailUser || 'no-reply@example.com';
 
-// This is the "transporter" that sends the email
-const transporter = nodemailer.createTransport({
-  host: 'smtp.ionos.com',
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: "magazines@itservcs.com",
-    pass: "AB^$%r8wmh1$Kwes",
-  },
-});
+let cachedTransporter;
 
-// This is the function you will call to send the email
+const createTransporter = () => {
+  if (!emailUser || !emailPassword) {
+    throw new Error('Email credentials are not configured');
+  }
+
+  return nodemailer.createTransport({
+    host: emailHost,
+    port: Number.isNaN(emailPort) ? 587 : emailPort,
+    secure: emailSecure,
+    requireTLS: emailRequireTLS,
+    auth: {
+      user: emailUser,
+      pass: emailPassword,
+    },
+  });
+};
+
+const getTransporter = () => {
+  if (!cachedTransporter) {
+    cachedTransporter = createTransporter();
+  }
+  return cachedTransporter;
+};
+
 export async function sendMail({ to, subject, body }) {
+  if (!to || !subject) {
+    throw new Error('Email `to` and `subject` fields are required');
+  }
+
   try {
-    await transporter.sendMail({
-      from: `Earth by Humans <${EMAIL_FROM}>`,
+    await getTransporter().sendMail({
+      from: `Earth by Humans <${emailFrom}>`,
       to,
       subject,
       html: body,
     });
-    console.log("Email sent successfully");
+    console.log('Email sent successfully');
   } catch (error) {
-    console.error("Nodemailer Error:", error);
-    // Re-throw the error so the API route can catch it
-    throw new Error("Failed to send email. Please check credentials in mail.js");
+    console.error('Nodemailer Error:', error);
+    throw new Error('Failed to send email. Please check the SMTP environment variables.');
   }
 }

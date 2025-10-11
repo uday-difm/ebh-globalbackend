@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
-import { FaArrowRight, FaStar } from "react-icons/fa";
+import { ArrowRight, Star } from "lucide-react";
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -22,7 +21,7 @@ export default function Cta() {
           {/* Text Section */}
           <div className="text-center lg:text-left text-black" data-aos="fade-up">
             <div className="inline-flex items-center rounded-full gap-2 bg-white border border-gray-300 text-gray-700 font-medium px-4 py-2 mb-6">
-              <FaStar className="text-yellow-400 animate-bounce" />
+              <Star className="h-5 w-5 text-yellow-400" />
               Hop on the Fun Wagon!
             </div>
             
@@ -47,7 +46,7 @@ export default function Cta() {
             >
               <div className="flex text-center ms-2 mx-auto justify-center gap-1 items-center ">
                 Contact Us
-                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </Button>
           </div>

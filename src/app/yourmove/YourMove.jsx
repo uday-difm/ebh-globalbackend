@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
+import { Check, X } from "lucide-react";
 import LineChart from '../../common/LineChart';
 import DoughnutChart from '../../common/DoughnutChart';
 
@@ -89,10 +88,10 @@ const renderAnalytics = (data, title) => {
       </div>
       <div className='grid grid-cols-2 gap-2 w-full text-[12px] mt-3'>
         <span className='flex items-center gap-2 text-gray-800'>
-          <IoMdCheckmark color='#15803d' /> Correct: {data.correct_count}
+          <Check className='h-4 w-4 text-green-600' /> Correct: {data.correct_count}
         </span>
         <span className='flex items-center gap-2 ml-auto text-gray-800'>
-          <RxCross2 color='#e63946' /> Incorrect: {data.wrong_count}
+          <X className='h-4 w-4 text-red-500' /> Incorrect: {data.wrong_count}
         </span>
         <span className='flex items-center gap-2 text-gray-800'>
           Total: {data.total_count}

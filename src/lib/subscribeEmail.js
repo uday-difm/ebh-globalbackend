@@ -1,24 +1,7 @@
-import nodemailer from 'nodemailer';
+import { sendMail } from './mail';
 
 export const sendEmail = async (email) => {
-
-  //console.log(email);
-  const transporter = nodemailer.createTransport({
-    service: "ionos",
-     host: "smtp.ionos.com",  
-     port: 587,             
-     secure: false,          
-    requireTLS: true,
-    auth: {
-      user: "magazines@itservcs.com",  
-      pass: "AB^$%r8wmh1$Kwes"  
-    },
-  });
-  const mailOptions = {
-    from: 'magazines@itservcs.com',  
-    to: email,
-    subject: 'Thank you for subscribing!',
-    html: `
+  const mailBody = `
       <html>
         <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
           <div style="background-color: #ffffff; padding: 20px; max-width: 600px; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
@@ -47,13 +30,15 @@ export const sendEmail = async (email) => {
           </div>
         </body>
       </html>
-    `,
-  };
+    `;
 
   try {
     console.log('Attempting to send email to:', email);
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', info.response);
+    await sendMail({
+      to: email,
+      subject: 'Thank you for subscribing!',
+      body: mailBody,
+    });
     return true;
   } catch (error) {
     console.error('Error sending email:', error);

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState, useRef } from 'react';
 import Slider from "react-slick";
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const CategorySlider = ({ categories }) => {
   const pathname = usePathname();
@@ -61,7 +61,7 @@ export const CategorySlider = ({ categories }) => {
           onClick={() => sliderRef.current?.slickPrev()}
           isDisabled={!showPrevArrow}
         >
-          <FaArrowLeft size={12} className="text-white" />
+          <ChevronLeft className="h-4 w-4 text-white" />
         </ArrowButton>
       </div>
 
@@ -105,7 +105,7 @@ export const CategorySlider = ({ categories }) => {
           onClick={() => sliderRef.current?.slickNext()}
           isDisabled={!showNextArrow}
         >
-          <FaArrowRight size={12} className="text-white" />
+          <ChevronRight className="h-4 w-4 text-white" />
         </ArrowButton>
       </div>
     </div>

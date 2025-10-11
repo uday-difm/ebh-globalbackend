@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slider from "react-slick";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // This component styles the circular arrow buttons
 function ArrowButton({ onClick, children, isDisabled }) {
@@ -91,7 +91,7 @@ export const CategorySlider = ({ categories, onCategoryClick, activeCategorySlug
       {/* Previous Arrow with correct styling and logic */}
       <div className={`transition-opacity border-1 border-green-300 rounded-full duration-300 ${showPrevArrow ? ' group-hover:opacity-100' : 'opacity-0'}`}>
         <ArrowButton onClick={() => sliderRef.current?.slickPrev()} isDisabled={!showPrevArrow}>
-          <FaArrowLeft size={12} className="text-green-500" />
+          <ChevronLeft className="h-4 w-4 text-green-500" />
         </ArrowButton>
       </div>
 
@@ -121,7 +121,7 @@ export const CategorySlider = ({ categories, onCategoryClick, activeCategorySlug
       {/* Next Arrow with correct styling and logic */}
       <div className={`transition-opacity border-1 border-green-300 rounded-full duration-300 ${showNextArrow ? 'group-hover:opacity-100' : 'opacity-0'}`}>
         <ArrowButton onClick={() => sliderRef.current?.slickNext()} isDisabled={!showNextArrow}>
-          <FaArrowRight size={12} className="text-green-500" />
+          <ChevronRight className="h-4 w-4 text-green-500" />
         </ArrowButton>
       </div>
     </div>

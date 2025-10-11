@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../../component/DashboardLayout";
 import Image from "next/image";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
@@ -199,21 +199,21 @@ const DashboardHome = () => {
                     </td>
                     <td className="p-3 text-center space-x-3 text-gray-600">
                       <button title="View" className="hover:text-blue-500">
-                        <FaEye />
+                        <Eye className="h-4 w-4" />
                       </button>
                       <button
                         title="Edit"
                         onClick={() => router.push(`/dashboard/edit-blog/${blog.blog_slug}`)}
                         className="hover:text-yellow-500"
                       >
-                        <FaEdit />
+                        <Pencil className="h-4 w-4" />
                       </button>
                       <button
                         title="Delete"
                         onClick={() => deleteBlog(blog.blog_slug)}
                         className="hover:text-red-500"
                       >
-                        <FaTrash />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     </td>
                   </tr>
