@@ -13,7 +13,7 @@ const Quiz = () => {
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
       <div>
         <QuizPage />
-          <Cta />
+        <Cta />
       </div>
     </>
   );

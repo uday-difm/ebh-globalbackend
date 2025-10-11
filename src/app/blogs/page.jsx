@@ -1,97 +1,77 @@
-'use client';
+import { headers } from 'next/headers';
+import BlogHomeContent from './BlogHomeContent';
 
-import React, { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import '../pagination.css';
-import { Loader } from '../../common/Loader';
+const safeFetchJson = async (endpoint, options, origin) => {
+  try {
+    const absoluteUrl = endpoint.startsWith('http')
+      ? endpoint
+      : new URL(endpoint, origin).toString();
 
-// ----------------- IMPORT THE NEWLY MOVED COMPONENTS -----------------
-import PaginatedBlogList from '../../component/PaginatedBlogList';
-const CategorySlider = dynamic(() => import('../../component/CategorySlider'), { ssr: false });
-
-// Fetch initial blogs with cache that revalidates every 60 seconds
-const fetchInitialBlogs = async () => {
-  const res = await fetch('/api/blogs?page=1&limit=9', {
-    next: { revalidate: 60 }, // ✅ cache and revalidate in the background every 60s
-  });
-  if (!res.ok) throw new Error('Failed to fetch blogs');
-  return res.json();
+    const response = await fetch(absoluteUrl, options);
+    if (!response.ok) {
+      console.error('Blog page fetch failed', response.status, absoluteUrl);
+      return null;
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Blog page fetch threw', endpoint, error);
+    return null;
+  }
 };
 
-// Fetch blog categories with longer caching (less frequently updated)
-const fetchCategories = async () => {
-  const res = await fetch('/api/categoriesHome', {
-    next: { revalidate: 300 }, // ✅ cache for 5 minutes before refreshing
-  });
-  if (!res.ok) throw new Error('Failed to fetch categories');
-  return res.json();
-};
+export default async function BlogHomePage() {
+  const headerList = await headers();
 
+  const proto = headerList.get('x-forwarded-proto') ?? 'http';
+  const forwardedHost = headerList.get('x-forwarded-host');
+  const host = headerList.get('host');
+  const envBase = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '');
+  const vercelBase = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null;
 
-// ---------------- BlogHomePage ----------------
-export default function BlogHomePage() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  // allBlogs will only hold published blogs (status === '1')
-  const [allBlogs, setAllBlogs] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const origin = (forwardedHost ? `${proto}://${forwardedHost}` : null)
+    || (host ? `${proto}://${host}` : null)
+    || envBase
+    || vercelBase
+    || 'http://localhost:3000';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [blogData, categoryData] = await Promise.all([
-          fetchInitialBlogs(),
-          fetchCategories()
-        ]);
+  const [blogsPayload, categoriesPayload] = await Promise.all([
+    safeFetchJson('/api/blogs?page=1&limit=50', {
+      next: { revalidate: 60 },
+    }, origin),
+    safeFetchJson('/api/categoriesHome', {
+      next: { revalidate: 300 },
+    }, origin),
+  ]);
 
-        // Defensive extraction: blogData might be { blogs: [...] } or just an array
-        const fetched = blogData?.blogs || blogData || [];
-        // Keep only published blogs (status === '1')
-        const publishedBlogs = Array.isArray(fetched)
-          ? fetched.filter(b => String(b?.status) === '1')
-          : [];
-
-        setAllBlogs(publishedBlogs);
-        setCategories(categoryData?.categories || []);
-      } catch (err) {
-        console.error('Data fetching error:', err);
-        setError(err?.message || 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) return <div className="flex justify-center items-center h-screen"><Loader /></div>;
-  if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
+  const blogs = Array.isArray(blogsPayload?.blogs) ? blogsPayload.blogs : [];
+  const categories = Array.isArray(categoriesPayload?.categories)
+    ? categoriesPayload.categories
+    : Array.isArray(blogsPayload?.categories)
+    ? blogsPayload.categories
+    : [];
 
   return (
     <>
       <title>Recent Blogs Latest Insights On Nature | Earth by Humans</title>
-      <meta name="description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more." />
-      <meta name="keywords" content="blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
-      <meta property="og:description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more." />
-      <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+      <meta
+        name="description"
+        content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more."
+      />
+      <meta
+        name="keywords"
+        content="blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads"
+      />
+      <meta
+        property="og:description"
+        content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more."
+      />
+      <link
+        rel="icon"
+        href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
+        type="image/png"
+      />
 
-      <div className="relative">
-       
-        <main className="pt-20 sm:pt-10 text-black">
-          <div className="container mx-auto px-4 max-w-[1350px]">
-            <div className="my-8">
-              <CategorySlider categories={categories} />
-            </div>
-
-            <div className="text-center col-span-2 flex flex-col gap-2 mb-6">
-              <h1 className="text-4xl font-bold">Most Recent Blogs</h1>
-              <p className="text-xl mb-16">Uncover the most popular reads across various life categories</p>
-            </div>
-
-            <PaginatedBlogList blogs={allBlogs} isAnimationEnabled={true} />
-          </div>
-        </main>
-      </div>
+      <BlogHomeContent blogs={blogs} categories={categories} />
     </>
   );
 }

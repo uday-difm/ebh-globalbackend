@@ -54,7 +54,7 @@ const Card = ({ data }) => {
 
 const AdCard = () => (
   <div
-    className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-white via-green-100 to-green-300 p-5 sm:p-6 md:p-8 lg:p-10 min-h-[220px] border border-green-500"
+    className="flex flex-col justify-center items-center text-white gap-4 mb-5 transition-transform duration-500 transform hover:-translate-y-2 hover:scale-105 ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-xl bg-gradient-to-br from-white via-green-100 to-green-300 p-5 sm:p-6 md:p-8 lg:p-10 border border-green-500"
 
   >
     <div className="relative z-10 h-full flex flex-col justify-center items-center text-center p-4 sm:p-6">
@@ -156,7 +156,7 @@ const Magazine = () => {
         <div className="container mx-auto mt-10 pt-20 pb-10 max-w-[1350px]">
           <div className="flex flex-col items-center gap-10 lg:px-[10%]">
             <div className="w-full flex justify-center ">
-              <h1
+              <h2
                 className="font-extrabold text-center mt-10 text-2xl md:text-4xl leading-snug tracking-tight text-[#54AE47]"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
@@ -165,7 +165,7 @@ const Magazine = () => {
                 <span className="text-gray-700">
                   Discover & Dive into the Newest Magazine
                 </span>
-              </h1>
+              </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">

@@ -7,7 +7,7 @@ import Dashboard from "../yourmove/dashboard";
 import { useSelector } from "react-redux";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 const QuizPage = () => {
   const [analyticUpdate, setAnalyticUpdate] = useState(0);
@@ -69,7 +69,7 @@ const QuizPage = () => {
                   </div>
                   <h2 className="text-2xl font-extrabold mb-2 text-green-700 drop-shadow-sm">Login Required</h2>
                   <p className="mb-6 text-gray-600 text-base font-medium">You need to log in to view this content and track your quiz score.</p>
-                  <Link href="/login" className="w-full flex justify-center">
+                  <a href="/login" className="w-full flex justify-center relative z-20 text-white font-semibold text-lg rounded-full px-6 py-2 transition-colors duration-300 items-center">
                     <div className="relative group overflow-hidden rounded-full cursor-pointer w-[100px] max-w-xs">
                       {/* Background base color */}
                       <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
@@ -77,16 +77,11 @@ const QuizPage = () => {
                       {/* Animated sweep layers */}
                       <div className="absolute w-[60px] h-[220px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-200%] left-[-90%] group-hover:left-0 z-10"></div>
                       <div className="absolute w-[250px] h-[110px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-120%] left-[100%] group-hover:left-[20%] z-10"></div>
-
-                      {/* Actual button */}
-                      <button
-                        type="button"
-                        className="relative z-20 text-white font-semibold text-lg rounded-full px-6 py-2 transition-colors duration-300 flex items-center justify-center"
-                      >
+                      <span className="relative z-20 flex justify-center w-full py-2">
                         Login
-                      </button>
+                      </span>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

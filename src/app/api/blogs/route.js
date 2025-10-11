@@ -2,9 +2,19 @@
 import { NextResponse } from 'next/server';
 import db from '../../../lib/db';
 
-export async function GET() {
+const parseInteger = (value, fallback) => {
+  const parsed = Number.parseInt(value ?? '', 10);
+  return Number.isNaN(parsed) || parsed <= 0 ? fallback : parsed;
+};
+
+export async function GET(request) {
   try {
-    // ✅ Fetch only blogs where status = 1 (no quotes around 1)
+    const { searchParams } = new URL(request.url);
+    const page = parseInteger(searchParams.get('page'), 1);
+    const limitParam = parseInteger(searchParams.get('limit'), 9);
+    const limit = Math.min(Math.max(limitParam, 1), 50); // clamp to reasonable size
+    const offset = (page - 1) * limit;
+
     const blogsSql = `
       SELECT 
         b.*, 
@@ -14,11 +24,16 @@ export async function GET() {
       FROM blogs b
       INNER JOIN blog_category bc ON b.blog_category_id = bc.category_id
       WHERE b.status = 1
-      ORDER BY b.blog_date_time DESC;
+      ORDER BY b.blog_date_time DESC
+      LIMIT ? OFFSET ?;
     `;
-    const [blogs] = await db.query(blogsSql);
 
-    // ✅ Fetch only active categories (status = 1)
+    const countSql = `
+      SELECT COUNT(*) AS total
+      FROM blogs
+      WHERE status = 1;
+    `;
+
     const categoriesSql = `
       SELECT 
         category_id,
@@ -28,14 +43,25 @@ export async function GET() {
       WHERE status = 1
       ORDER BY category_name ASC;
     `;
-    const [categories] = await db.query(categoriesSql);
+
+  const [countRows] = await db.query(countSql);
+  const total = countRows?.[0]?.total ?? 0;
+
+  const [blogs] = await db.query(blogsSql, [limit, offset]);
+  const [categories] = await db.query(categoriesSql);
 
     return NextResponse.json({
       blogs,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: total > 0 ? Math.ceil(total / limit) : 1,
+      },
       categories,
     });
   } catch (error) {
-    // console.error("API Error (GET /api/blogs):", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error('API Error (GET /api/blogs):', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

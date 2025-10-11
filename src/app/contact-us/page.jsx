@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faLinkedin, faInstagram, faYoutube, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faLink, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "lucide-react";
+import { faEnvelope, faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function ContactUsPage() {
   const [values, setValues] = useState({
@@ -68,7 +68,7 @@ export default function ContactUsPage() {
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
       <div>
         <section>
-          <div className="mx-auto max-w-[1350] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="mx-auto max-w-[1350px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
             <div className="mb-4 items-center justify-center text-center flex">
               <div className="max-w-3xl text-center sm:text-center md:mb-12">
                 <p className="text-base font-semibold mt-20 text-black uppercase tracking-wide">
@@ -91,32 +91,45 @@ export default function ContactUsPage() {
                     <br />
                     Your feedback is invaluable to us as we continue to improve and enhance our services. Thank you for choosing Earth by Humans. We look forward to connecting with you!
                     <br /><br />
-                    <b className="text-black">Published By:</b> DO IT FOR ME LLC: <Link href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition duration-300 ease-in-out">30 N Gould St #24999; Sheridan, WY 82801</Link>
+                    <b className="text-black">Published By:</b> DO IT FOR ME LLC: <Link href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition duration-300 ease-in-out">30 N Gould St #24999, Sheridan, WY 82801</Link>
                   </p>
                   <div className="flex">
                     <p className="text-lg text-gray-900">
-                      <strong>Phone:</strong>
-                      <Link href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out"> +1-786-371-2232</Link>
+                      <strong>Phone: </strong>
+                      <a href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out inline-flex items-center gap-2">
+                        <FontAwesomeIcon  className="text-green-600 ml-4" />
+                        +1-786-371-2232
+                      </a>
                     </p>
                   </div>
                   <ul className="mb-6 md:mb-0">
                     <li className="flex items-center mt-8">
                       {/* MODIFIED: The entire icon section is updated */}
-                      <div className="flex items-center gap-4 text-xl text-gray-700">
-                        {/* Green Link Box */}
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-600 text-white">
-                          <FontAwesomeIcon icon={faLink} />
-                        </div>
+                      <div className="flex items-center gap-4 text-xl text-gray-700 flex-wrap">
                         {/* Social Icons */}
-                        <Link href="https://www.facebook.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faFacebookF} /></Link>
-                        <Link href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faLinkedin} /></Link>
-                        <Link href="https://www.instagram.com/earth_by_humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faInstagram} /></Link>
-                        {/* Linkdded YouTube Icon */}
-                        <Link href="https://www.youtube.com/@earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faYoutube} /></Link>
-                        <Link href="https://twitter.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faTwitter} /></Link>
+                        <a href="https://www.facebook.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faFacebookF} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
+                        <a href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faLinkedin} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
+                        <a href="https://www.instagram.com/earth_by_humans/" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faInstagram} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
+                        {/* Linked YouTube Icon */}
+                        <a href="https://www.youtube.com/@earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faYoutube} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
+                        <a href="https://twitter.com/earthbyhumans" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faTwitter} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
                         {/* Added Map Link */}
-                        <Link href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faMapMarkerAlt} /></Link>
-                        <Link href="mailto:info@earthbyhumans.com" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><FontAwesomeIcon icon={faEnvelope} /></Link>
+                        <a href="https://www.google.com/maps/search/?api=1&query=30+N+Gould+St+%2324999,+Sheridan,+WY+82801" target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faMapMarkerAlt} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
+                        <a href="mailto:info@earthbyhumans.com" className="hover:text-green-600 transition-colors">
+                          <FontAwesomeIcon icon={faEnvelope} className="text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 rounded-full p-1 shadow" />
+                        </a>
                       </div>
                     </li>
                   </ul>
@@ -144,8 +157,8 @@ export default function ContactUsPage() {
                         <div className="absolute inset-0 bg-green-600 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
 
                         {/* Animated color layers */}
-                        <div className="absolute w-[400px] h-[420px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-400%] left-[-90%] group-hover:left-0 z-10"></div>
-                        <div className="absolute w-[650px] h-[310px] bg-blue-700 transform rotate-[125deg] transition-all duration-800 ease-in-out top-[-320%] left-[100%] group-hover:left-[20%] z-10"></div>
+                        <div className="absolute w-[200px] md:w-[400px] h-[400px] md:h-[420px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-400%] left-[-90%] group-hover:left-0 z-10"></div>
+                        <div className="absolute w-[200px] md:w-[650px] h-[500px] md:h-[310px] bg-blue-700 transform rotate-[35deg] md:rotate-[125deg] transition-all duration-800 ease-in-out top-[-150%] md:top-[-320%] left-[100%] group-hover:left-[20%] z-10"></div>
 
                         {/* Button */}
                         <button

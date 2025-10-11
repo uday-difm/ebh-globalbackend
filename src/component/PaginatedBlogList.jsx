@@ -41,6 +41,8 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                             alt={blog.blog_title}
                             className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${isHovered ? 'scale-110' : 'scale-100'}`}
                             priority
+                            width={400}
+                            height={250}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                         <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -76,8 +78,11 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                             <div className="flex items-center gap-3">
                                 <Image
                                     src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
+                                    alt="Earth by Humans profile"
                                     className="w-10 h-10 rounded-full object-cover "
                                     priority
+                                    width={400}
+                                    height={250}
                                 />
                                 <span className="text-sm text-gray-600 font-medium">Earth By Humans</span>
                             </div>
