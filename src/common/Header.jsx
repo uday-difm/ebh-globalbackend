@@ -58,18 +58,18 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-md relative">
+    <header className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
       <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
-        <div className="py-4 flex items-center justify-between relative">
+        <div className="py-2 flex items-center justify-between relative">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
               alt="Earth by Humans Logo"
-              width={20}
-              height={20}
+              width={10}
+              height={10}
               className="h-auto w-auto"
-              sizes="20px"
+              sizes="13px"
               loading="lazy"
             />
           </Link>
