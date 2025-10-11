@@ -47,8 +47,8 @@ export default async function BlogHomePage() {
   const categories = Array.isArray(categoriesPayload?.categories)
     ? categoriesPayload.categories
     : Array.isArray(blogsPayload?.categories)
-    ? blogsPayload.categories
-    : [];
+      ? blogsPayload.categories
+      : [];
 
   return (
     <>

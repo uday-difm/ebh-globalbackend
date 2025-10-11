@@ -72,8 +72,8 @@ export default function BlogHomeContent({ blogs = [], categories = [] }) {
 		<div className="relative dark:bg-white!">
 			<main className="pt-20 sm:pt-10 text-black">
 				<div className="container mx-auto px-4 max-w-[1350px]">
-								<div className="my-8">
-									<CategorySlider categories={activeCategories} />
+					<div className="my-8">
+						<CategorySlider categories={activeCategories} />
 					</div>
 
 					<div className="text-center col-span-2 flex flex-col gap-2 mb-6">
