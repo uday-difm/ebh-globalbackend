@@ -92,8 +92,8 @@ export default function RootLayout({ children }) {
               "name": "Earth by Humans",
               "alternateName": "Earth By Humans",
               "url": "https://www.earthbyhumans.com",
-              "logo": "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/favicon.ico",
-              "image": "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/favicon.ico",
+              "logo": "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/earthbyhumans-mind.png",
+              "image": "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/earthbyhumamn-text-mind.png",
               "description": "Earth by Humans — curated stories, videos and products celebrating sustainable living, ethical design and mindful consumption.",
               "email": "mailto:info@earthbyhumans.com",
               "contactPoint": {
