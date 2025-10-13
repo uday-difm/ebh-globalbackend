@@ -32,4 +32,11 @@ jobs:
            -e REGION="${{ secrets.REGION }}" \
            -e SECRETKEY="${{ secrets.SECRETKEY }}" \
            -e HOST="${{ secrets.HOST }}" \
+           -e EMAIL_SMTP_HOST="${{ secrets.EMAIL_SMTP_HOST }}" \
+           -e EMAIL_SMTP_PORT="${{ secrets.EMAIL_SMTP_PORT }}" \
+           -e EMAIL_SMTP_SECURE="${{ secrets.EMAIL_SMTP_SECURE }}" \
+           -e EMAIL_SMTP_REQUIRE_TLS="${{ secrets.EMAIL_SMTP_REQUIRE_TLS }}" \
+           -e EMAIL_FROM="${{ secrets.EMAIL_FROM }}" \
+           -e EMAIL_USER="${{ secrets.EMAIL_USER }}" \
+           -e EMAIL_PASSWORD="${{ secrets.EMAIL_PASSWORD }}" \
         doitformellc/ebh-website:latest
