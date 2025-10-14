@@ -16,4 +16,4 @@ export const metadata = {
 export default function AboutUsPage() {
   // It renders the client component which contains all the visual content.
   return <AboutUsContent />;
-}
+} 

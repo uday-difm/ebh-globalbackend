@@ -13,9 +13,16 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
+// Create a storage engine that only uses localStorage on the client side
+const storageEngine = typeof window !== 'undefined' ? storage : {
+  getItem: () => Promise.resolve(null),
+  setItem: () => Promise.resolve(),
+  removeItem: () => Promise.resolve(),
+}
+
 const persistConfig = {
   key: 'auth',
-  storage,
+  storage: storageEngine,
   whitelist: ['auth'], // only persist auth reducer
 }
 
