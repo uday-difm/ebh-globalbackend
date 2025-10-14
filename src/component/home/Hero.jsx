@@ -80,7 +80,7 @@ export default function Hero() {
   }, [viewerReady]);
 
   return (
-    <section className="relative font-poppins overflow-hidden h-screen">
+    <section className="relative font-poppins overflow-hidden h-screen justify-center items-center flex">
       <BlobAnimation />
 
       <div className="relative container mx-auto max-w-[1350px] px-4 sm:px-6">

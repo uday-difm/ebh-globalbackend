@@ -97,9 +97,9 @@ export default function ContactUsPage() {
                     <p className="text-lg text-gray-900">
                       <strong>Phone: </strong>
                       <a href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out inline-flex items-center gap-2">
-                        <FontAwesomeIcon  className="text-green-600 ml-4" />
+                        <FontAwesomeIcon icon={faPhone} className="text-green-600 ml-4" />
                         +1-786-371-2232
-                      </a>
+                      </a>  
                     </p>
                   </div>
                   <ul className="mb-6 md:mb-0">
@@ -157,8 +157,8 @@ export default function ContactUsPage() {
                         <div className="absolute inset-0 bg-green-600 z-0 transition-opacity duration-500 group-hover:opacity-80 rounded-full"></div>
 
                         {/* Animated color layers */}
-                        <div className="absolute w-[200px] md:w-[400px] h-[400px] md:h-[420px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-400%] left-[-90%] group-hover:left-0 z-10"></div>
-                        <div className="absolute w-[200px] md:w-[650px] h-[500px] md:h-[310px] bg-blue-700 transform rotate-[35deg] md:rotate-[125deg] transition-all duration-800 ease-in-out top-[-150%] md:top-[-320%] left-[100%] group-hover:left-[20%] z-10"></div>
+                        <div className="absolute w-[200px] lg:w-[400px] h-[400px] lg:h-[420px] bg-blue-700 transform rotate-[35deg] transition-all duration-800 ease-in-out top-[-400%] left-[-95%] group-hover:left-0 z-10"></div>
+                        <div className="absolute w-[600px] lg:w-[650px] h-[500px] lg:h-[310px] bg-blue-700 transform rotate-[25deg] lg:rotate-[125deg] transition-all duration-800 ease-in-out top-[-150%] md:top-[-320%] left-[100%] group-hover:left-[20%] z-10"></div>
 
                         {/* Button */}
                         <button
