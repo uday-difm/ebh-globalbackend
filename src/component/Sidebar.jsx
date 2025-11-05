@@ -7,24 +7,50 @@ import {
   Settings,
   ChevronDown,
   ChevronRight,
+  Users,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import Link from 'next/link';
 import Logo from '../common/Logo';
+
 
 const Sidebar = () => {
   const [openMenus, setOpenMenus] = useState({
     dashboard: false,
     posts: false,
     subscribers: false,
+    manageUser: false, // For managing users
   });
-
+  const [userRole, setUserRole] = useState(null); 
+    const [loading, setLoading] = useState(true);
   const toggleMenu = (menu) => {
     setOpenMenus((prev) => ({
       ...prev,
       [menu]: !prev[menu],
     }));
   };
+  // Fetch user role via API
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+         console.log('Fetching user role...');
+        const response = await fetch('/api/dashboard/admin/status-admin'); 
+        if (!response.ok) {
+          throw new Error('Failed to fetch user role');
+        }
+        const data = await response.json();
+          console.log('API response data:', data);
+             console.log('User Role:', data.role);
+         setUserRole(data.role); // Set the user role from the response
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserRole();
+  }, []);
 
   return (
     <aside className="w-67 bg-gradient-to-b from-slate-900 to-slate-800 text-black p-6 flex flex-col shadow-2xl backdrop-blur-md h-screen fixed overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-900">
@@ -105,6 +131,38 @@ const Sidebar = () => {
             </ul>
           )}
         </div>
+
+       {/* Manage Users (Visible only for Super Admin and Administrator) */}
+        {(userRole === 'Super Admin' || userRole === 'Administrator') && (
+          <div className="rounded-xl bg-slate-800/60 p-4 group">
+            <div
+              onClick={() => toggleMenu('manageUser')}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center gap-3 group-hover:text-green-600 text-white">
+                <Users className="w-7 h-7" />
+                <span className="tracking-wide text-lg font-extrabold">
+                  Manage Users
+                </span>
+              </div>
+              {openMenus.manageUser ? <ChevronDown /> : <ChevronRight />}
+            </div>
+            {openMenus.manageUser && (
+              <ul className="pl-6 mt-3 space-y-4 text-sm">
+                <li>
+                  <Link href="/dashboard/admin-create" className="hover:text-white font-normal p-2">
+                    Add User
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/view-user" className="hover:text-white font-normal p-2">
+                    All Users
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+        )}
 
         {/* Profile Link */}
         <div className="flex items-center gap-2 px-3 py-2 hover:bg-slate-700/70 hover:text-green-600 transition">
