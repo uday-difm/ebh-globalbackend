@@ -35,6 +35,35 @@ const TopBar = () => {
     setDropdownOpen(false);
     router.push(path);
   };
+  
+
+
+
+  useEffect(() => {
+  const fetchUserRole = async () => {
+    try {
+      console.log('Fetching user role...');
+      const response = await fetch('/api/dashboard/admin/status-admin');
+      if (!response.ok) {
+        throw new Error('Failed to fetch user role');
+      }
+      const data = await response.json();
+      console.log('API response data:', data);  // Log the full response
+
+      if (data && data.role) {
+        setUserRole(data.role); // Assuming 'data.role' is the field that contains the user role
+      } else {
+        console.error('Role is not available in the response:', data);
+      }
+    } catch (error) {
+      console.error('Error fetching user role:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchUserRole();
+}, []);
 
   return (
     <header className="w-full bg-white shadow-lg py-4 px-8 flex justify-between items-center">
