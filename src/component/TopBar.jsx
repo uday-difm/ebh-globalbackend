@@ -11,6 +11,8 @@ import globeMark from '../../public/globe.svg';
 
 const TopBar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState(null); // ✅ single state for full user data
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
@@ -19,15 +21,16 @@ const TopBar = () => {
     setDropdownOpen((prevState) => !prevState);
   };
 
+  // ✅ Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -35,39 +38,45 @@ const TopBar = () => {
     setDropdownOpen(false);
     router.push(path);
   };
-  
 
-
-
+  // ✅ Fetch user data via API
   useEffect(() => {
-  const fetchUserRole = async () => {
-    try {
-      console.log('Fetching user role...');
-      const response = await fetch('/api/dashboard/admin/status-admin');
-      if (!response.ok) {
-        throw new Error('Failed to fetch user role');
-      }
-      const data = await response.json();
-      console.log('API response data:', data);  // Log the full response
+    const fetchUserStatus = async () => {
+      try {
+        const res = await fetch('/api/dashboard/admin/status-admin', {
+          method: 'GET',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        });
 
-      if (data && data.role) {
-        setUserRole(data.role); // Assuming 'data.role' is the field that contains the user role
-      } else {
-        console.error('Role is not available in the response:', data);
-      }
-    } catch (error) {
-      console.error('Error fetching user role:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+        if (!res.ok) {
+          throw new Error(`HTTP error: ${res.status}`);
+        }
 
-  fetchUserRole();
-}, []);
+        const data = await res.json();
+        console.log('Fetched user:', data);
+
+        // ✅ Your API returns { isAuthenticated, user: { name, role, ... } }
+        if (data.isAuthenticated && data.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Error fetching user status:', error);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserStatus();
+  }, []);
+
 
   return (
     <header className="w-full bg-white shadow-lg py-4 px-8 flex justify-between items-center">
-      {/* Search Bar */}
+      {/* Logo */}
       <div className="w-full max-w-xs flex items-center gap-4 text-black">
         <Logo textClassName="text-lg font-semibold" />
       </div>
@@ -75,10 +84,15 @@ const TopBar = () => {
       {/* User Profile */}
       <div className="flex items-center space-x-2">
         <div className="flex flex-col items-end">
-          <span className="text-lg font-semibold text-gray-800" style={{ fontFamily: "poppins" }}>
-            Earth BY Human
+          <span
+            className="text-lg font-semibold text-gray-800"
+            style={{ fontFamily: 'Poppins' }}
+          >
+            {user?.name || 'Earth BY Human'}
           </span>
-          <span className="text-md  text-gray-900 font-bold">Super Admin</span>
+          <span className="text-md text-gray-900 font-bold">
+            {user?.role || 'User'}
+          </span>
         </div>
         <div className="relative">
           <button
@@ -86,13 +100,7 @@ const TopBar = () => {
             onClick={handleProfileClick}
           >
             <div className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden shadow-lg bg-gradient-to-br from-green-500 to-blue-500">
-              <Image
-                src={globeMark}
-                alt="Profile"
-                width={40}
-                height={40}
-                priority={false}
-              />
+              <Image src={globeMark} alt="Profile" width={40} height={40} />
             </div>
             <ChevronDown className="h-5 w-5 text-gray-500" />
           </button>
