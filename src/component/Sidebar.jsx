@@ -7,8 +7,9 @@ import {
   Settings,
   ChevronDown,
   ChevronRight,
+  Users,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Logo from '../common/Logo';
 
@@ -17,7 +18,10 @@ const Sidebar = () => {
     dashboard: false,
     posts: false,
     subscribers: false,
+    manageUser: false,
   });
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const toggleMenu = (menu) => {
     setOpenMenus((prev) => ({
@@ -25,6 +29,43 @@ const Sidebar = () => {
       [menu]: !prev[menu],
     }));
   };
+
+  // ✅ Fetch user role when Sidebar mounts
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const res = await fetch('/api/dashboard/admin/status-admin', {
+          method: 'GET',
+          credentials: 'include', // send cookies/session
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log('✅ Logged-in user data:', data);
+
+        // ✅ Make sure we read from the correct structure
+        if (data.isAuthenticated && data.user) {
+          setUserRole(data.user.role);
+        } else {
+          setUserRole(null);
+        }
+      } catch (error) {
+        console.error('❌ Error fetching user role:', error);
+        setUserRole(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserRole();
+  }, []);
+
 
   return (
     <aside className="w-67 bg-gradient-to-b from-slate-900 to-slate-800 text-black p-6 flex flex-col shadow-2xl backdrop-blur-md h-screen fixed overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-900">
@@ -49,9 +90,7 @@ const Sidebar = () => {
           >
             <div className="flex items-center gap-3 group-hover:text-green-600 text-white">
               <LayoutDashboard className="w-7 h-7" />
-              <span className="tracking-wide text-lg font-extrabold">
-                Dashboard
-              </span>
+              <span className="tracking-wide text-lg font-extrabold">Dashboard</span>
             </div>
             {openMenus.dashboard ? <ChevronDown /> : <ChevronRight />}
           </div>
@@ -84,9 +123,7 @@ const Sidebar = () => {
           >
             <div className="flex items-center gap-3 group-hover:text-green-600 text-white">
               <List className="w-7 h-7" />
-              <span className="tracking-wide text-lg font-extrabold">
-                View Posts
-              </span>
+              <span className="tracking-wide text-lg font-extrabold">View Posts</span>
             </div>
             {openMenus.posts ? <ChevronDown /> : <ChevronRight />}
           </div>
@@ -105,6 +142,36 @@ const Sidebar = () => {
             </ul>
           )}
         </div>
+
+        {/* Manage Users (Visible only for Super Admin and Administrator) */}
+        {(userRole === 'Super Admin' || userRole === 'Administrator') && (
+          <div className="rounded-xl bg-slate-800/60 p-4 group">
+            <div
+              onClick={() => toggleMenu('manageUser')}
+              className="flex items-center justify-between cursor-pointer"
+            >
+              <div className="flex items-center gap-3 group-hover:text-green-600 text-white">
+                <Users className="w-7 h-7" />
+                <span className="tracking-wide text-lg font-extrabold">Manage Users</span>
+              </div>
+              {openMenus.manageUser ? <ChevronDown /> : <ChevronRight />}
+            </div>
+            {openMenus.manageUser && (
+              <ul className="pl-6 mt-3 space-y-4 text-sm">
+                <li>
+                  <Link href="/dashboard/admin-create" className="hover:text-white font-normal p-2">
+                    Add User
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard/view-user" className="hover:text-white font-normal p-2">
+                    All Users
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+        )}
 
         {/* Profile Link */}
         <div className="flex items-center gap-2 px-3 py-2 hover:bg-slate-700/70 hover:text-green-600 transition">
