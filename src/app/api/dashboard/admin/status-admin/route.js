@@ -22,7 +22,7 @@ export async function GET() {
     // ✅ Fix DB query shape
     const [rows] = await db.query('SELECT * FROM `admin` WHERE `id` = ?', [decoded.id]);
     const userFromDb = rows[0];
-    console.log('User fetched from DB:', userFromDb);
+    // console.log('User fetched from DB:', userFromDb);
 
     if (!userFromDb) {
       return NextResponse.json({ isAuthenticated: false, user: null });

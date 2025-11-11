@@ -46,7 +46,7 @@ export async function sendMail({ to, subject, body }) {
       subject,
       html: body,
     });
-    console.log('Email sent successfully');
+    // console.log('Email sent successfully');
   } catch (error) {
     console.error('Nodemailer Error:', error);
     throw new Error('Failed to send email. Please check the SMTP environment variables.');

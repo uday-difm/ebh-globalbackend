@@ -99,10 +99,10 @@ const Header = () => {
                     key={auth.profile}
                     src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"}
                     alt="User"
-                    width={10}
-                    height={10}
+                    width={40}  // Changed from 10 to 40
+                    height={40} // Changed from 10 to 40
                     className="w-10 h-10 rounded-full object-cover"
-                    sizes="13px"
+                    unoptimized // ← ADD THIS
                   />
                   <span className="font-bold">{auth.name?.split(" ")[0]}</span>
                   <ChevronDown size={20} />
