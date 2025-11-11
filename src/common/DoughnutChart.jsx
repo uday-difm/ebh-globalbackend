@@ -77,7 +77,7 @@ const DoughnutChart = ({ data = [0, 0], total = 0 }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
-  const labels = ['Correct Question', 'Wrong Question'];
+  const labels = ['Correct Answer', 'Wrong Answer'];
 
   useEffect(() => {
     if (chartRef && chartRef.current) {

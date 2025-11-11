@@ -35,7 +35,7 @@ export default function LoginPage() {
         const statusData = await statusRes.json();
 
         if (statusData.isAuthenticated) {
-          console.log('Dispatching setAuth with:', statusData);
+          // console.log('Dispatching setAuth with:', statusData);
           dispatch(setAuth(
             statusData.isAuthenticated,
             statusData.user?.id,

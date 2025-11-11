@@ -24,7 +24,7 @@ export async function POST(request) {
 
     // Send thank you email asynchronously, handle errors gracefully
     sendEmail(email).then(() => {
-      console.log(`Subscription email sent to ${email}`);
+      // console.log(`Subscription email sent to ${email}`);
     }).catch((err) => {
       console.error(`Failed to send subscription email to ${email}:`, err);
     });

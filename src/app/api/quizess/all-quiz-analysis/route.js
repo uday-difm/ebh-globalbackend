@@ -24,7 +24,7 @@ export async function GET() {
     const decoded = jwt.verify(token.value, process.env.JWT_SECRET_KEY);
     const userId = decoded.userId;
 
-    console.log('Decoded userId:', userId);
+    // console.log('Decoded userId:', userId);
 
     const sql = `
       SELECT 

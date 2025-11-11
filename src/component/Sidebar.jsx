@@ -47,7 +47,7 @@ const Sidebar = () => {
         }
 
         const data = await res.json();
-        console.log('✅ Logged-in user data:', data);
+        // console.log('✅ Logged-in user data:', data);
 
         // ✅ Make sure we read from the correct structure
         if (data.isAuthenticated && data.user) {

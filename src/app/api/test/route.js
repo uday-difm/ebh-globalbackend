@@ -10,7 +10,7 @@ export async function GET() {
   try {
     // Attempt a simple query to verify the database connection
     const [rows] = await db.query('SELECT 1');
-    console.log('✅ Database connected from API route:', rows); // This will show in your terminal
+    // console.log('✅ Database connected from API route:', rows); // This will show in your terminal
 
     // Return a simple greeting message along with a confirmation of database connection
     return NextResponse.json({

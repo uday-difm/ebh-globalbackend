@@ -1,13 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setAuth } from "../redux/actions/action";
-import Image from "next/image";
 
 const Profile = () => {
   const fullData = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  // local state to hold a safe string URL for profile image preview
+  const [profileUrl, setProfileUrl] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -54,6 +56,32 @@ const Profile = () => {
   const defaultProfileImage =
     "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png";
 
+  // Keep track if we created an object URL so we can revoke it on cleanup
+  useEffect(() => {
+    let objectUrl;
+    // If profile is a File/Blob (e.g. selected on edit page and stored in redux),
+    // create an object URL. If it's a string, use it directly. Otherwise use default.
+    if (profile && typeof profile === "object" && ("size" in profile || profile instanceof Blob)) {
+      try {
+        objectUrl = URL.createObjectURL(profile);
+        setProfileUrl(objectUrl);
+      } catch (e) {
+        console.error("Could not create object URL for profile file:", e);
+        setProfileUrl(defaultProfileImage);
+      }
+    } else if (profile && typeof profile === "string") {
+      setProfileUrl(profile);
+    } else {
+      setProfileUrl(defaultProfileImage);
+    }
+
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [profile]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-10">
@@ -68,16 +96,17 @@ const Profile = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-10">
           <div className="flex flex-col items-center gap-4">
-            <Image
-              src={profile || defaultProfileImage}
+            {/* Use native <img> to avoid next/image loader issues for blob URLs */}
+            <img
+              src={profileUrl || defaultProfileImage}
               alt="Profile"
-              width={500}
-              height={600}
+              width={128}
+              height={128}
               className="w-32 h-32 rounded-full object-cover border-4 border-green-500 shadow"
-              priority
             />
             <p className="text-xl font-semibold text-gray-800">{name}</p>
           </div>
+
           <div className="md:col-span-2 grid grid-cols-1 gap-6">
             <div>
               <p className="text-sm text-gray-500 font-medium">Username</p>

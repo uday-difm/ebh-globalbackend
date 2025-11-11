@@ -19,9 +19,9 @@ const YourMove = ({ analyticUpdate }) => {
       if (!auth?.userId) return;
       try {
         setLoading(true);
-        console.log('Fetching analytics for userId:', auth.userId, 'with analyticUpdate:', analyticUpdate);
+        // console.log('Fetching analytics for userId:', auth.userId, 'with analyticUpdate:', analyticUpdate);
         const response = await axios.get(`/api/quizess/current-quiz-analysis/${auth.userId}`);
-        console.log('Analytics response:', response.data);
+        // console.log('Analytics response:', response.data);
         setAnalytics(response.data);
         setLoading(false);
       } catch (err) {

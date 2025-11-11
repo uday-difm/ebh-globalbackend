@@ -13,9 +13,9 @@ export async function PUT(request) {
     const checkSql = `
       SELECT idauth FROM auth WHERE (email = ? OR username = ?) AND idauth != ?
     `;
-    console.log('Checking duplicates for user id:', id, 'email:', email, 'username:', username);
+    // console.log('Checking duplicates for user id:', id, 'email:', email, 'username:', username);
     const [existingUsers] = await db.query(checkSql, [email, username, id]);
-    console.log('Duplicate check result:', existingUsers);
+    // console.log('Duplicate check result:', existingUsers);
     if (existingUsers.length > 0) {
       return new Response(JSON.stringify({ error: 'Email or username already in use by another user' }), { status: 409 });
     }

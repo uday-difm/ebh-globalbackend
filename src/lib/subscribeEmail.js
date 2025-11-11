@@ -33,7 +33,7 @@ export const sendEmail = async (email) => {
     `;
 
   try {
-    console.log('Attempting to send email to:', email);
+    // console.log('Attempting to send email to:', email);
     await sendMail({
       to: email,
       subject: 'Thank you for subscribing!',

@@ -64,11 +64,11 @@ const SettingsPage = () => {
   };
 
   const handleCancel = () => {
-    console.log("Cancel clicked");
+    // console.log("Cancel clicked");
   };
 
   const handleSave = () => {
-    console.log("Save clicked", formData);
+    // console.log("Save clicked", formData);
   };
 
   return (

@@ -54,7 +54,7 @@ const TopBar = () => {
         }
 
         const data = await res.json();
-        console.log('Fetched user:', data);
+        // console.log('Fetched user:', data);
 
         // ✅ Your API returns { isAuthenticated, user: { name, role, ... } }
         if (data.isAuthenticated && data.user) {
