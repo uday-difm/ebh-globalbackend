@@ -117,9 +117,12 @@ const PostFooter = ({ blog }) => {
       </div>
 
       <div className="mt-14 p-6 sm:p-8 bg-white shadow-md rounded-3xl flex flex-col sm:flex-row items-center text-center sm:text-left gap-6 border border-gray-100">
-        <img
+
+        <Image
           src={authorImageSrc}
           alt={blog.author_name || "Earth By Humans"}
+          width={90}
+          height={90}
           className="w-[90px] h-[90px] rounded-full border-2 border-green-500 object-cover"
           onError={handleImageError}
         />
@@ -229,9 +232,11 @@ const IndividualPostView = ({ blog }) => {
                   </span>
                 </div>
                 <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
-                  <img
+                  <Image
                     src={authorImageSrc}
                     alt={blog.author_name || "Earth By Humans"}
+                    width={56}   
+                    height={56}  
                     className="w-14 h-14 rounded-full object-cover border-2 border-green-600 dark:border-green-400 shadow-md"
                     onError={handleAuthorImageError}
                   />

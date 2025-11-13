@@ -40,10 +40,12 @@ const LatestMagazine = () => {
               <div className="group relative px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-3xl hover:border-blue-700 transition-all duration-500 bg-transparent flex items-center justify-center overflow-hidden">
                 <div className="absolute w-[140px] h-[200px] bg-blue-700 rotate-[35deg] transition-all duration-500 ease-in-out top-[-135%] left-[-80%] group-hover:left-0"></div>
                 <div className="absolute w-[200px] h-[90px] bg-blue-700 rotate-[125deg] transition-all duration-500 ease-in-out top-[15%] left-[90%] group-hover:left-[35%]"></div>
-                <span className="transition-colors duration-500 text-lg z-50 group-hover:text-white flex gap-2 items-center">
+
+                <span className="relative z-10 transition-colors duration-500 text-lg text-gray-900 dark:text-gray-100 group-hover:text-white flex gap-2 items-center">
                   View All Magazines <ArrowRight className="h-4 w-4" />
                 </span>
               </div>
+
             </Link>
           </div>
 

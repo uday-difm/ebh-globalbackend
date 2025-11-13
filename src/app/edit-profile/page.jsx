@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAuth } from "../redux/actions/action";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 // import Image from "next/image"; // ← ADD THIS LINE
 
 const EditProfile = () => {
@@ -247,11 +248,14 @@ const EditProfile = () => {
             <input type="file" accept="image/*" onChange={handleImageChange} className="mt-2" />
             {formData.profileImage && (
               // show preview only; not sending this preview URL to server
-              <img
-  src={formData.profileImage}
-  alt="Profile Preview"
-  className="mt-2 w-24 h-24 object-cover rounded-full"
-/>
+              <Image
+                src={formData.profileImage}
+                alt="Profile Preview"
+                className="mt-2 w-24 h-24 object-cover rounded-full"
+                unoptimized
+                width={96}
+                height={96}
+              />
             )}
           </div>
 

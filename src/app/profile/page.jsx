@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setAuth } from "../redux/actions/action";
+import Image from "next/image";
 
 const Profile = () => {
   const fullData = useSelector((state) => state.auth);
@@ -97,12 +98,13 @@ const Profile = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mb-10">
           <div className="flex flex-col items-center gap-4">
             {/* Use native <img> to avoid next/image loader issues for blob URLs */}
-            <img
+            <Image
               src={profileUrl || defaultProfileImage}
               alt="Profile"
-              width={128}
+              width={128}   // w-32 = 128px
               height={128}
               className="w-32 h-32 rounded-full object-cover border-4 border-green-500 shadow"
+              unoptimized  
             />
             <p className="text-xl font-semibold text-gray-800">{name}</p>
           </div>

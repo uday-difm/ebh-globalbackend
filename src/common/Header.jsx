@@ -68,7 +68,7 @@ const Header = () => {
               alt="Earth by Humans Logo"
               width={40} // optional for layout
               height={40} // optional for layout
-              className="h-23 w-43 object-contain"
+              className="h-20 w-40 object-contain"
             />
 
           </Link>
