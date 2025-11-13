@@ -53,9 +53,9 @@ const Footer = () => {
               <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
                 alt="Earth by Humans Logo"
-                width={200}
-                height={60}
-                className="w-48 h-auto mb-4"
+                width={172}     // EXACT size
+                height={74}
+                className="w-[172px] h-[74px] object-contain"
                 loading='lazy'
               />
             </Link>
@@ -162,7 +162,7 @@ const Footer = () => {
             © 2025 Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM)</Link>. All Rights Reserved.
           </p>
           <div className="flex justify-center md:justify-end gap-4">
-            <ScrollToTopLink href="/terms-and-conditions" className="hover:text-green-600">Terms of Use</ScrollToTopLink>
+            <ScrollToTopLink href="/terms-and-conditions" className="hover:text-green-600">Terms of Conditions</ScrollToTopLink>
             <ScrollToTopLink href="/information-policy" className="hover:text-green-600">Information Policy</ScrollToTopLink>
             <ScrollToTopLink href="/privacy-policy" className="hover:text-green-600">Privacy Policy</ScrollToTopLink>
           </div>

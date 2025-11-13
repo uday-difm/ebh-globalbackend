@@ -8,7 +8,7 @@ export default function CookieBanner() {
   useEffect(() => {
     try {
       const consent = Cookies.get("cookie_table");
-      if (consent !== "accepted") setIsVisible(true);
+      if (consent !== "accepted" && consent !== "declined") setIsVisible(true);
     } catch (e) {
       console.warn("Cookies unavailable:", e);
       setIsVisible(true);
@@ -24,7 +24,7 @@ export default function CookieBanner() {
     }
     if (!sessionId) {
       sessionId = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : "s_" + Date.now();
-      try { Cookies.set("session_id", sessionId, { expires: 365 }); } catch (e) { console.warn("Set session_id failed:", e); }
+      try { Cookies.set("session_id", sessionId, { expires: 30 }); } catch (e) { console.warn("Set session_id failed:", e); }
     }
     return sessionId;
   };
@@ -81,7 +81,7 @@ export default function CookieBanner() {
 
   const handleDecline = async () => {
     const sessionId = ensureSessionId();
-    try { Cookies.set("cookie_table", "declined", { expires: 365 }); } catch (e) { console.warn(e); }
+    try { Cookies.set("cookie_table", "declined", { expires: 1 }); } catch (e) { console.warn(e); }
     setIsVisible(false);
 
     try {
@@ -101,14 +101,14 @@ export default function CookieBanner() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-black text-white p-4 flex flex-col md:flex-row items-center justify-between z-50 shadow-lg">
       <p className="text-sm text-center md:text-left mb-2 md:mb-0">
-        We use cookies to enhance your experience. By continuing to use our site, you agree to our{" "}
-        <a href="/privacy-policy" className="underline font-semibold hover:text-yellow-400 transition">Privacy Policy</a> and{" "}
-        <a href="/terms-of-service" className="underline font-semibold hover:text-yellow-400 transition">Terms and Conditions</a>.
+        We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies. Read our{" "} 
+        <a href="/privacy-policy" className="underline font-semibold text-green-400 hover:text-green-700 transition">Privacy Policy</a> and{" "}
+        <a href="/terms-and-conditions" className="underline font-semibold text-green-400 hover:text-green-700 transition">Terms and Conditions</a>.
       </p>
 
       <div className="flex space-x-2 mt-2 md:mt-0">
         <button onClick={handleAccept} className="bg-green-600 text-black px-4 py-2 rounded-md font-semibold hover:bg-green-500 transition shadow">Accept Cookies</button>
-        <button onClick={handleDecline} className="bg-gray-700 text-white px-4 py-2 rounded-md font-semibold hover:bg-gray-600 transition shadow">Decline</button>
+        <button onClick={handleDecline} className="bg-gray-700 text-white px-4 py-2 rounded-md font-semibold hover:bg-gray-600 transition shadow">Close</button>
       </div>
     </div>
   );
