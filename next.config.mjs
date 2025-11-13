@@ -10,6 +10,7 @@ const nextConfig = {
             },
         ],
     },
+    serverExternalPackages: ['js-cookie'],
 };
 
 export default nextConfig;
