@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
         "@id": "https://www.earthbyhumans.com/#org",
         "name": "Earth By Humans",
         "url": "https://www.earthbyhumans.com/",
-        "logo": "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/earthbyhumans-mind.png",
+        "logo": "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif",
         "description": "Earth By Humans publishes human-interest stories, environmental features, magazines and curated blog content about people, places and culture.",
         "sameAs": [
           "https://www.instagram.com/earth_by_humans/",
