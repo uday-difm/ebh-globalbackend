@@ -89,7 +89,7 @@ export default function Hero() {
           {/* Left Column */}
           <div className="flex flex-col justify-center text-center md:text-left gap-6 md:gap-8">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold leading-tight text-black">
-              Unleashing the power of humanity to heal our Earth
+              Unleashing The Power Of Humanity To Heal Our Earth
             </h1>
             <p className="text-black text-base sm:text-lg md:text-xl lg:max-w-md mx-auto md:mx-0">
               Explore Earth Encounters! Journey through our vibrant collection of videos showcasing the beauty and diversity of nature.
