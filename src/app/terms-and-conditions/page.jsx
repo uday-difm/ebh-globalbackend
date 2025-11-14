@@ -16,7 +16,7 @@ export default function TermsOfUsePage() {
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
       <div className="page-shell text-justify">
         <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium mt-4 sm:mt-2">
-          Terms of Use
+          Terms of Conditions
         </h2>
         <h3 className="text-2xl font-semibold mb-2">Acceptance of Terms</h3>
         <p className="mb-4 text-p text-justify">
