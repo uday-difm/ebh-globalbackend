@@ -5,7 +5,7 @@ export async function GET() {
     // Query all users (you can adjust the table name and fields)
     const [rows] = await db.execute(
       `SELECT id, name, email, role, image, created_at 
-       FROM admin 
+       FROM admin WHERE status = "0"
        ORDER BY created_at DESC`
     );
 
