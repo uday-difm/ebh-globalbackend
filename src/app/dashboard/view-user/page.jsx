@@ -20,7 +20,7 @@ export default function AdminTable() {
 
   const fetchAdmins = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/dashboard/admin/view-user`);
+      const res = await fetch(`/api/dashboard/admin/view-user`);
       const data = await res.json();
       setAdmins(data.data || []);
     } catch (err) {
