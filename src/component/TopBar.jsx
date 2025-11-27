@@ -73,6 +73,9 @@ const TopBar = () => {
     fetchUserStatus();
   }, []);
 
+    const handleEditProfile = () => {
+    router.push(`/dashboard/update-user/${user?.id}`);
+  };
 
   return (
     <header className="w-full bg-white shadow-lg py-4 px-8 flex justify-between items-center">
@@ -127,6 +130,14 @@ const TopBar = () => {
                   Account Setting
                 </button>
                 <div className="border-t border-gray-100 my-1"></div>
+
+                     <button
+              onClick={handleEditProfile}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Edit Profile
+            </button>
+
                 <button
                   className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left text-red-600"
                   onClick={async () => {

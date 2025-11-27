@@ -38,13 +38,29 @@ export default function AdminTable() {
     setCurrentPage(selected);
   };
 
-  const deleteAdmin = (adminId) => {
-    const confirmDelete = confirm('Are you sure you want to delete this admin?');
-    if (!confirmDelete) return;
+ const deleteUser = async (id) => {
+  const confirmDelete = confirm('Are you sure you want to delete this user?');
+  if (!confirmDelete) return;
 
-    setAdmins((prev) => prev.filter((admin) => admin.id !== adminId));
-    // Optionally, call DELETE /api/admin/[id] here
-  };
+  try {
+    const res = await fetch(`/api/dashboard/admin/delete-user/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || 'Failed to delete user');
+    }
+
+    // Remove from local state
+    setAdmins((prevAdmins) => prevAdmins.filter((admin) => admin.id !== id));
+
+    alert('User deleted successfully.');
+  } catch (err) {
+    alert('Error deleting user: ' + err.message);
+  }
+};
 
   const paginatedAdmins = admins.slice(
     currentPage * adminsPerPage,
@@ -113,13 +129,13 @@ export default function AdminTable() {
                       </td>
                       <td className="py-3">
                         <div className="flex space-x-3 justify-center">
-                          <Link href={`/admin/${data.slug || data.id}`}>
+                          {/* <Link href={`/admin/${data.slug || data.id}`}>
                             <Eye className="w-4 h-4 text-slate-500 hover:text-blue-600 cursor-pointer" />
-                          </Link>
-                          <button onClick={() => router.push(`/dashboard/update-admin/${data.id}`)}>
+                          </Link> */}
+                          <button onClick={() => router.push(`/dashboard/update-user/${data.id}`)}>
                             <Pencil className="w-4 h-4 text-slate-500 hover:text-yellow-500 cursor-pointer" />
                           </button>
-                          <button onClick={() => deleteAdmin(data.id)}>
+                          <button onClick={() => deleteUser(data.id)}>
                             <Trash2 className="w-4 h-4 text-slate-500 hover:text-red-600 cursor-pointer" />
                           </button>
                         </div>
