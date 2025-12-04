@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 import DashboardLayout from '../../../../component/DashboardLayout';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from 'next/image';
+
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
