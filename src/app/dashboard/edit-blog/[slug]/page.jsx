@@ -179,29 +179,44 @@ export default function EditBlogPage() {
             formData.append('existing_image_url', existingImageUrl);
         }
 
-        try {
-            const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
-                method: 'PUT',
-                body: formData,
-                credentials: 'include',
-            });
+       try {
+  const res = await fetch(`/api/dashboard/blog/updateBlogBySlug/${slug}?slug=${slug}`, {
+    method: 'PUT',
+    body: formData,
+    credentials: 'include',
+  });
 
-            if (!res.ok) {
-                const result = await res.json();
-                toast.error(result.message || 'Update failed');
-                setIsSubmitting(false);
-                return;
-            }
+  // helpful debug
+  console.log('Update response status:', res.status, res.statusText);
+  const contentType = res.headers.get('content-type') || '';
+  console.log('Update response content-type:', contentType);
 
-            toast.success('Blog updated successfully');
-            router.push('/dashboard/blog-table');
-        } catch (error) {
-            console.error('Update error:', error);
-            toast.error('An unexpected error occurred during update.');
-            setIsSubmitting(false);
-        } finally {
-            setIsSubmitting(false);
-        }
+  // Try parse JSON only when content-type looks like JSON
+  let body = null;
+  if (contentType.includes('application/json')) {
+    body = await res.json();
+  } else {
+    // fallback: read as text (shows HTML error page or login page)
+    body = await res.text();
+  }
+
+  if (!res.ok) {
+    // If body is an object (parsed JSON) try to show message, otherwise show text
+    const message = (body && typeof body === 'object' && body.message) ? body.message : String(body);
+    console.error('Update failed:', res.status, message);
+    toast.error(message || 'Update failed');
+    setIsSubmitting(false);
+    return;
+  }
+
+  toast.success('Blog updated successfully');
+  router.push('/dashboard/blog-table');
+} catch (error) {
+  console.error('Update error (network/parse):', error);
+  toast.error('An unexpected error occurred during update.');
+  setIsSubmitting(false);
+}
+
     };
 
     return (
