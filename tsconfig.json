@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -27,8 +27,14 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/lib/config.js", "src/app/sitemap_index.xml/route.jsx", "src/app/post-sitemap.xml/route.jsx", "src/app/pages-sitemap.xml/route.jsx", "src/app/magazine-sitemap.xml/route.jsx"  ],
+    "**/*.tsx",
+    "src/lib/config.js",
+    "src/app/sitemap_index.xml/route.jsx",
+    "src/app/post-sitemap.xml/route.jsx",
+    "src/app/pages-sitemap.xml/route.jsx",
+    "src/app/magazine-sitemap.xml/route.jsx",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

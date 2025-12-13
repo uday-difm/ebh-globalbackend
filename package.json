@@ -29,7 +29,7 @@
     "lucide-react": "^0.525.0",
     "multer": "^2.0.1",
     "mysql2": "^3.14.1",
-    "next": "^15.5.7",
+    "next": "^16.0.7",
     "next-connect": "^1.0.0",
     "nodemailer": "^7.0.9",
     "nookies": "^2.5.2",
@@ -59,7 +59,7 @@
     "@types/node": "24.2.0",
     "@types/react": "19.1.12",
     "eslint": "^9",
-    "eslint-config-next": "^15.5.7",
+    "eslint-config-next": "^16.0.7",
     "tailwindcss": "^4"
   }
 }
