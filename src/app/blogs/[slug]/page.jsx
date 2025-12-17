@@ -28,7 +28,7 @@ import {
 
 // --- Data fetching helpers ---
 const getContentBySlug = async (slug) => {
-  const res = await fetch(`/api/blogs/${slug}`);
+  const res = await fetch(`https://www.earthbyhumans.com/api/blogs/${slug}`);
   if (!res.ok) {
     const errorData = await res.json();
     throw new Error(errorData.message || 'Failed to fetch content');
@@ -37,7 +37,7 @@ const getContentBySlug = async (slug) => {
 };
 
 const getAllCategories = async () => {
-  const res = await fetch('/api/blogs');
+  const res = await fetch('https://www.earthbyhumans.com/api/blogs');
   if (!res.ok) throw new Error('Failed to fetch categories');
   const data = await res.json();
   return data.categories;
