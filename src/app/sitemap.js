@@ -1,5 +1,5 @@
 export default async function sitemap() {
-  const baseUrl = "https://www.earthbyhumans.com/";
+  const baseUrl = "https://www.earthbyhumans.com";
 
   // Fetch Blogs
   let blogs = [];
@@ -43,7 +43,7 @@ export default async function sitemap() {
     console.error("Magazine sitemap error:", err);
   }
 
-  // Fetch Quizzes
+
   let quizzes = [];
   try {
     const res = await fetch(`${baseUrl}/api/quizzes?limit=5000`);
