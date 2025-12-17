@@ -34,7 +34,7 @@
     "src/app/pages-sitemap.xml/route.jsx",
     "src/app/magazine-sitemap.xml/route.jsx",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/app/sitemap_index.xml/route.js", "src/app/sitemap.xml/route.js"  ],
   "exclude": [
     "node_modules"
   ]
