@@ -43,7 +43,7 @@
     "react-redux": "^9.2.0",
     "react-share": "^5.2.2",
     "react-slick": "^0.30.3",
-    "react-snowfall": "^2.3.0",
+    "react-snowfall": "^2.4.0",
     "react-toastify": "^11.0.5",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
