@@ -149,10 +149,15 @@ export default function RootLayout({ children }) {
       <body className="flex flex-col min-h-screen font-poppins"   cz-shortcut-listen="true">
         <ReduxProviderWrapper>
           <AuthProvider>
-            <Holidayspopup />
-            <Snowfall
-     snowflakeCount={160}
-      color="#00C950"   
+     
+            <ScrollProgressBar />
+            {!pathname.startsWith('/dashboard') && (
+              <>
+              <Header />
+              <Holidayspopup />
+    <Snowfall
+      snowflakeCount={160}
+      color="#00C950"
       speed={[0.5, 1.5]}
       wind={[-0.3, 0.3]}
       radius={[1, 3]}
@@ -162,12 +167,12 @@ export default function RootLayout({ children }) {
         left: 0,
         width: "100vw",
         height: "100vh",
-        zIndex: 9999999,     // 🔥 higher than header
+        zIndex: 9999999,
         pointerEvents: "none",
-           }}
+      }}
     />
-            <ScrollProgressBar />
-            {!pathname.startsWith('/dashboard') && <Header />}
+  </>
+)}
             <main className="flex-grow">{children}</main>
             <CookiesBanner />
             {!pathname.startsWith('/dashboard') && <Footer />}

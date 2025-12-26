@@ -6,10 +6,6 @@ export default function Popup() {
    const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-
-s
-
   const handleSubscribe = async () => {
     if (!email) {
       setMessage("Please enter your email");
