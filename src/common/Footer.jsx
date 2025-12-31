@@ -159,7 +159,7 @@ const Footer = () => {
         {/* Bottom Links */}
         <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 px-4">
           <p className="text-center md:text-left mb-4 md:mb-0">
-            © 2025 Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM)</Link>. All Rights Reserved.
+            © {new Date().getFullYear()}  Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM)</Link>. All Rights Reserved.
           </p>
           <div className="flex justify-center md:justify-end gap-4">
             <ScrollToTopLink href="/terms-and-conditions" className="hover:text-green-600">Terms of Conditions</ScrollToTopLink>
