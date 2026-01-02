@@ -28,12 +28,17 @@ import {
 
 // --- Data fetching helpers ---
 const getContentBySlug = async (slug) => {
+  console.log('Client: Fetching content for slug:', slug);
   const res = await fetch(`https://www.earthbyhumans.com/api/blogs/${slug}`);
+  console.log('Client: Response status:', res.status);
   if (!res.ok) {
     const errorData = await res.json();
+    console.log('Client: Error data:', errorData);
     throw new Error(errorData.message || 'Failed to fetch content');
   }
-  return res.json();
+  const data = await res.json();
+  console.log('Client: Fetched data type:', data.type);
+  return data;
 };
 
 const getAllCategories = async () => {
@@ -288,7 +293,11 @@ const CategoryPageView = ({ category, blogs, allCategories }) => (
 
 // --- Main Component ---
 export default function CombinedSlugPage() {
-  const { slug } = useParams();
+  console.log('Client: Component rendered, checking params...');
+  const params = useParams();
+  console.log('Client: useParams() result:', params);
+  const { slug } = params;
+  console.log('Client: Extracted slug:', slug);
   const [content, setContent] = useState(null);
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
