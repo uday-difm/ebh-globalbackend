@@ -78,8 +78,10 @@ export async function middleware(request) {
     const response = NextResponse.redirect(loginUrl);
 
     response.cookies.set('auth_token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      // httpOnly: true,
+      httpOnly: false,
+      // secure: process.env.NODE_ENV === 'production',
+      secure: false,
       sameSite: 'lax',
       path: '/',
       expires: new Date(0),
