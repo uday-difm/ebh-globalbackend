@@ -5,7 +5,8 @@ import db from '../../../../../lib/db';
 
 export async function GET() {
   try {
-    const cookieStore = cookies(); // ✅ no await
+    // ✅ MUST await cookies()
+    const cookieStore = await cookies();
     const token = cookieStore.get('auth_token');
 
     if (!token) {
@@ -17,12 +18,17 @@ export async function GET() {
       return NextResponse.json({ isAuthenticated: false, user: null });
     }
 
-    const decoded = jwt.verify(token.value, process.env.JWT_SECRET_KEY);
+    const decoded = jwt.verify(
+      token.value,
+      process.env.JWT_SECRET_KEY
+    );
 
-    // ✅ Fix DB query shape
-    const [rows] = await db.query('SELECT * FROM `admin` WHERE `id` = ?', [decoded.id]);
+    const [rows] = await db.query(
+      'SELECT * FROM `admin` WHERE `id` = ?',
+      [decoded.id]
+    );
+
     const userFromDb = rows[0];
-    // console.log('User fetched from DB:', userFromDb);
 
     if (!userFromDb) {
       return NextResponse.json({ isAuthenticated: false, user: null });
@@ -36,6 +42,7 @@ export async function GET() {
     };
 
     return NextResponse.json({ isAuthenticated: true, user });
+
   } catch (error) {
     console.error('Error in status-admin route:', error);
     return NextResponse.json({ isAuthenticated: false, user: null });
