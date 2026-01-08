@@ -154,7 +154,7 @@ export default function RootLayout({ children }) {
             {!pathname.startsWith('/dashboard') && (
               <>
               <Header />
-              <Holidayspopup />
+             {/*  <Holidayspopup />
     <Snowfall
       snowflakeCount={160}
       color="#00C950"
@@ -170,7 +170,7 @@ export default function RootLayout({ children }) {
         zIndex: 9999999,
         pointerEvents: "none",
       }}
-    />
+    />*/}
   </>
 )}
             <main className="flex-grow">{children}</main>
