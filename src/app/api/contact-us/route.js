@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from 'next/server';
 import db from '../../../lib/db';
 import { sendMail } from '../../../lib/mail';
@@ -19,9 +22,18 @@ export async function POST(request) {
     }
 
     try {
-      const response = await axios.post(
-        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`
-      );
+    const response = await axios.post(
+  "https://www.google.com/recaptcha/api/siteverify",
+  new URLSearchParams({
+    secret: process.env.RECAPTCHA_SECRET_KEY,
+    response: recaptchaToken,
+  }).toString(),
+  {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  }
+);
 
       if (!response.data.success) {
         return NextResponse.json({ message: "reCAPTCHA verification failed." }, { status: 400 });
