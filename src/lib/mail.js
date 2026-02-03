@@ -1,38 +1,15 @@
-import nodemailer from 'nodemailer';
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
 
-const emailHost = process.env.EMAIL_SMTP_HOST ?? 'smtp.ionos.com';
-const emailPort = Number.parseInt(process.env.EMAIL_SMTP_PORT ?? '587', 10);
-const emailSecure = String(process.env.EMAIL_SMTP_SECURE ?? '').toLowerCase() === 'true';
-const emailRequireTLS = String(process.env.EMAIL_SMTP_REQUIRE_TLS ?? 'true').toLowerCase() !== 'false';
-const emailUser = process.env.EMAIL_USER;
-const emailPassword = process.env.EMAIL_PASSWORD;
-const emailFrom = process.env.EMAIL_FROM || emailUser || 'no-reply@example.com';
+const API_KEY = process.env.MAILGUN_API_KEY;
+const DOMAIN = process.env.MAILGUN_DOMAIN;
+const FROM_EMAIL = process.env.MAIL_FROM_EMAIL || 'no-reply@earthbyhumans.com';
 
-let cachedTransporter;
-
-const createTransporter = () => {
-  if (!emailUser || !emailPassword) {
-    throw new Error('Email credentials are not configured');
-  }
-
-  return nodemailer.createTransport({
-    host: emailHost,
-    port: Number.isNaN(emailPort) ? 587 : emailPort,
-    secure: emailSecure,
-    requireTLS: emailRequireTLS,
-    auth: {
-      user: emailUser,
-      pass: emailPassword,
-    },
-  });
-};
-
-const getTransporter = () => {
-  if (!cachedTransporter) {
-    cachedTransporter = createTransporter();
-  }
-  return cachedTransporter;
-};
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: 'api',
+  key: API_KEY,
+});
 
 export async function sendMail({ to, subject, body }) {
   if (!to || !subject) {
@@ -40,15 +17,18 @@ export async function sendMail({ to, subject, body }) {
   }
 
   try {
-    await getTransporter().sendMail({
-      from: `Earth by Humans <${emailFrom}>`,
+    const messageData = {
+      from: FROM_EMAIL,
       to,
       subject,
       html: body,
-    });
-    // console.log('Email sent successfully');
+    };
+
+    const res = await mg.messages.create(DOMAIN, messageData);
+    // console.log('Email sent successfully:', res);
+    return res;
   } catch (error) {
-    console.error('Nodemailer Error:', error);
-    throw new Error('Failed to send email. Please check the SMTP environment variables.');
+    console.error('Mailgun Error:', error);
+    throw new Error('Failed to send email via Mailgun.');
   }
 }

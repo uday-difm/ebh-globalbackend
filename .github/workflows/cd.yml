@@ -39,4 +39,9 @@ jobs:
            -e EMAIL_FROM="${{ secrets.EMAIL_FROM }}" \
            -e EMAIL_USER="${{ secrets.EMAIL_USER }}" \
            -e EMAIL_PASSWORD="${{ secrets.EMAIL_PASSWORD }}" \
+           -e MAILGUN_API_KEY="${{ secrets.MAILGUN_API_KEY }}" \
+           -e MAILGUN_DOMAIN="${{ secrets.MAILGUN_DOMAIN }}" \
+           -e MAIL_FROM_EMAIL="${{ secrets.MAIL_FROM_EMAIL }}" \
+           -e NEXT_PUBLIC_RECAPTCHA_SITE_KEY="${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" \
+           -e RECAPTCHA_SECRET_KEY="${{ secrets.RECAPTCHA_SECRET_KEY }}" \
         doitformellc/ebh-website:latest

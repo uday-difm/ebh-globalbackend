@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
     }
   }, [darkMode]);
 
- 
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -144,17 +144,18 @@ export default function RootLayout({ children }) {
           strategy="lazyOnload"
           crossOrigin="anonymous"
         />
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
       </head>
 
-      <body className="flex flex-col min-h-screen font-poppins"   cz-shortcut-listen="true">
+      <body className="flex flex-col min-h-screen font-poppins" cz-shortcut-listen="true">
         <ReduxProviderWrapper>
           <AuthProvider>
-     
+
             <ScrollProgressBar />
             {!pathname.startsWith('/dashboard') && (
               <>
-              <Header />
-             {/*  <Holidayspopup />
+                <Header />
+                {/*  <Holidayspopup />
     <Snowfall
       snowflakeCount={160}
       color="#00C950"
@@ -171,8 +172,8 @@ export default function RootLayout({ children }) {
         pointerEvents: "none",
       }}
     />*/}
-  </>
-)}
+              </>
+            )}
             <main className="flex-grow">{children}</main>
             <CookiesBanner />
             {!pathname.startsWith('/dashboard') && <Footer />}

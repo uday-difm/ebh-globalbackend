@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faLinkedin, faInstagram, faYoutube, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactUsPage() {
   const [values, setValues] = useState({
@@ -15,6 +16,8 @@ export default function ContactUsPage() {
     textArea: "",
   });
   const [status, setStatus] = useState({ message: '', type: '' });
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const recaptchaRef = useRef(null);
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
@@ -22,6 +25,10 @@ export default function ContactUsPage() {
     if (/^\d*$/.test(value) && value.length <= 10) {
       setValues({ ...values, phone: value });
     }
+  };
+
+  const onRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
   };
 
   const handleSubmit = async (e) => {
@@ -32,13 +39,18 @@ export default function ContactUsPage() {
       return;
     }
 
+    if (!recaptchaToken) {
+      setStatus({ message: "Please complete the reCAPTCHA.", type: 'error' });
+      return;
+    }
+
     setStatus({ message: "Sending...", type: 'loading' });
 
     try {
       const response = await fetch(`/api/contact-us`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, recaptchaToken }),
       });
 
       const result = await response.json();
@@ -46,6 +58,8 @@ export default function ContactUsPage() {
       if (response.ok) {
         setStatus({ message: "Message sent successfully!", type: 'success' });
         setValues({ name: "", email: "", phone: "", subject: "", textArea: "" });
+        setRecaptchaToken(null);
+        recaptchaRef.current.reset();
 
         setTimeout(() => {
           setStatus({ message: '', type: '' });
@@ -99,7 +113,7 @@ export default function ContactUsPage() {
                       <a href="tel:+17863712232" className="hover:text-green-600 transition duration-300 ease-in-out inline-flex items-center gap-2">
                         <FontAwesomeIcon icon={faPhone} className="text-green-600 ml-4" />
                         +1-786-371-2232
-                      </a>  
+                      </a>
                     </p>
                   </div>
                   <ul className="mb-6 md:mb-0">
@@ -149,6 +163,13 @@ export default function ContactUsPage() {
                       </div>
                       <div>
                         <textarea name="textarea" cols="30" rows="5" value={values.textArea} required onChange={(e) => setValues({ ...values, textArea: e.target.value })} id="textarea" placeholder="Write your message..." className="w-full rounded-md focus:border-green-500 focus:ring-1 focus:ring-green-500 border border-gray-300 py-2 px-3"></textarea>
+                      </div>
+                      <div >
+                        <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                          onChange={onRecaptchaChange}
+                        />
                       </div>
                     </div>
                     <div className="text-center">
