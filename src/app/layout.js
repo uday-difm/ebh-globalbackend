@@ -144,7 +144,6 @@ export default function RootLayout({ children }) {
           strategy="lazyOnload"
           crossOrigin="anonymous"
         />
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
       </head>
 
       <body className="flex flex-col min-h-screen font-poppins" cz-shortcut-listen="true">
