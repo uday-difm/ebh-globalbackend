@@ -165,11 +165,17 @@ export default function ContactUsPage() {
                         <textarea name="textarea" cols="30" rows="5" value={values.textArea} required onChange={(e) => setValues({ ...values, textArea: e.target.value })} id="textarea" placeholder="Write your message..." className="w-full rounded-md focus:border-green-500 focus:ring-1 focus:ring-green-500 border border-gray-300 py-2 px-3"></textarea>
                       </div>
                       <div >
-                        <ReCAPTCHA
-                          ref={recaptchaRef}
-                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                          onChange={onRecaptchaChange}
-                        />
+                        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                          <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                            onChange={onRecaptchaChange}
+                          />
+                        ) : (
+                          <div className="p-2 border border-red-300 bg-red-50 text-red-600 text-sm rounded">
+                            ReCAPTCHA Site Key is missing. Please check your environment variables.
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="text-center">
