@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import db from '../../../../../lib/db';
-import nodemailer from 'nodemailer';
+import { sendMail } from '../../../../../lib/mail';
 
 // Allowed roles to prevent injection of arbitrary values
 const ALLOWED_ROLES = [
@@ -58,18 +58,6 @@ export async function POST(req) {
     );
 
     try {
-      // === SET UP TRANSPORTER ===
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.ionos.com', // Use your SMTP host (e.g., IONOS, Gmail, etc.)
-        port: 587,
-        secure: false,  // true for 465, false for other ports
-        requireTLS: true,
-        auth: {
-          user: 'magazines@itservcs.com',        // Replace with your SMTP user
-          pass: 'AB^$%r8wmh1$Kwes',  // Replace with your SMTP app password
-        },
-      });
-
       // === EMAIL TEMPLATE ===
       const emailTemplate = `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; border-radius: 8px;">
@@ -105,11 +93,10 @@ export async function POST(req) {
       `;
 
       // === SEND THE EMAIL ===
-      await transporter.sendMail({
-        from: 'magazines@itservcs.com', // sender address
+      await sendMail({
         to: email, // recipient address (user's email)
         subject: 'Welcome to the Admin Panel!', // subject line
-        html: emailTemplate, // HTML content of the email
+        body: emailTemplate, // HTML content of the email
       });
 
       return Response.json(
