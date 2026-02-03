@@ -25,7 +25,7 @@ export async function POST(request) {
     const response = await axios.post(
   "https://www.google.com/recaptcha/api/siteverify",
   new URLSearchParams({
-    secret: process.env.RECAPTCHA_SECRET_KEY,
+    secret: "6LdMBF8sAAAAAJGsvNvPRLBS3a0IZ65JTF1dH7Z_",
     response: recaptchaToken,
   }).toString(),
   {

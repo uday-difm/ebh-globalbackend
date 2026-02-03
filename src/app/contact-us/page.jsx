@@ -72,7 +72,7 @@ export default function ContactUsPage() {
       setStatus({ message: "An internal server error occurred.", type: 'error' });
     }
   }
-
+const NEXT_PUBLIC_RECAPTCHA_SITE_KEY = "6LdMBF8sAAAAAJ9zJ8U1XpVL5UIq60muXvxGOvBo"
   return (
     <>
       <title>Contact Us | Earth by Humans Get in Touch With Us</title>
@@ -165,10 +165,10 @@ export default function ContactUsPage() {
                         <textarea name="textarea" cols="30" rows="5" value={values.textArea} required onChange={(e) => setValues({ ...values, textArea: e.target.value })} id="textarea" placeholder="Write your message..." className="w-full rounded-md focus:border-green-500 focus:ring-1 focus:ring-green-500 border border-gray-300 py-2 px-3"></textarea>
                       </div>
                       <div >
-                        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                        {NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
                           <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                            sitekey="6LdMBF8sAAAAAJGsvNvPRLBS3a0IZ65JTF1dH7Z_"
                             onChange={onRecaptchaChange}
                           />
                         ) : (
