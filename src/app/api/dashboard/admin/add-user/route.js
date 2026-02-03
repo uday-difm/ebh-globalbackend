@@ -59,9 +59,13 @@ export async function POST(req) {
 
     try {
       // === EMAIL TEMPLATE ===
+      const LOGO_URL = "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif";
       const emailTemplate = `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; border-radius: 8px;">
           <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img src="${LOGO_URL}" alt="Earth by Humans" style="max-width: 150px;">
+            </div>
             <!-- Welcome Message -->
             <h2 style="color: #333; font-size: 24px; text-align: center; margin-bottom: 10px;">Welcome, ${name}!</h2>
             <p style="color: #555; font-size: 16px; line-height: 1.5; text-align: center;">

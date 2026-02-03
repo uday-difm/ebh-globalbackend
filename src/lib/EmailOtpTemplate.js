@@ -17,7 +17,9 @@ export const EmailOtpTemplate = (otp) => {
     </head>
     <body>
         <div class="container">
-            <h1>Earth by Humans</h1>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif" alt="Earth by Humans" style="max-width: 150px;">
+            </div>
             <p>Your One-Time Password (OTP) to reset your password is:</p>
             <div class="otp-code">${otp}</div>
             <p class="validity">This OTP is valid for 10 minutes. Please do not share it with anyone.</p>

@@ -43,9 +43,9 @@ export async function POST(request) {
     const adminBody = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 40px 20px;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee;">
-          <div style="background-color: #16a34a; padding: 30px; text-align: center;">
-            <img src="${LOGO_URL}" alt="Earth by Humans" style="max-width: 180px; filter: brightness(0) invert(1);">
-            <h2 style="color: #ffffff; margin: 20px 0 0 0; font-weight: 600; font-size: 24px;">New Inquiry Received</h2>
+          <div style="padding: 40px 40px 20px 40px; text-align: center; border-bottom: 1px solid #f0f0f0;">
+            <img src="${LOGO_URL}" alt="Earth by Humans" style="max-width: 180px; margin-bottom: 20px;">
+            <h2 style="color: #16a34a; margin: 0; font-weight: 700; font-size: 24px;">New Inquiry Received</h2>
           </div>
           <div style="padding: 40px;">
             <p style="color: #666; font-size: 16px; margin-bottom: 30px;">You have received a new message through the Contact Us form on <strong>Earth by Humans</strong>.</p>
@@ -82,7 +82,7 @@ export async function POST(request) {
     `;
 
     await sendMail({
-      to: process.env.ADMIN_EMAIL || "anisha.yadav@difm.tech",
+      to: process.env.ADMIN_EMAIL || "earthbyhumans@gmail.com",
       subject: adminSubject,
       body: adminBody,
     });
@@ -120,7 +120,7 @@ export async function POST(request) {
               <div style="display: flex; justify-content: center; gap: 15px;">
                 <a href="https://instagram.com/earth_by_humans" style="text-decoration: none; color: #16a34a; font-weight: 600;">Instagram</a> • 
                 <a href="https://facebook.com/earthbyhumans" style="text-decoration: none; color: #16a34a; font-weight: 600;">Facebook</a> • 
-                <a href="https://linkedin.com/company/earth-by-humans" style="text-decoration: none; color: #16a34a; font-weight: 600;">LinkedIn</a>
+      
               </div>
             </div>
           </div>
