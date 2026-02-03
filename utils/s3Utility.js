@@ -6,7 +6,7 @@ import {
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("Uploading to bucket:", process.env.BUCKET);
+
 
 
 const endpoint = "https://s3-eu-central-2.ionoscloud.com";
@@ -18,13 +18,13 @@ const s3Client = new S3Client({
   },
   region: process.env.REGION,
 });
-console.log("Uploading to bucket:", process.env.BUCKET);
+
 
 
 async function uploadToS3(keyPrefix, file) {
   console.log("Uploading to bucket:", process.env.BUCKET);
 
- 
+
   try {
     const s3Object = {
       Bucket: process.env.BUCKET,

@@ -1,11 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { uploadToS3 } from '../../../../utils/s3Utility';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export async function POST(request) {
   try {
