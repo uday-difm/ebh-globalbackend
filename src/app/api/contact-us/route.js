@@ -22,18 +22,18 @@ export async function POST(request) {
     }
 
     try {
-    const response = await axios.post(
-  "https://www.google.com/recaptcha/api/siteverify",
-  new URLSearchParams({
-    secret: "6LdMBF8sAAAAAJGsvNvPRLBS3a0IZ65JTF1dH7Z_",
-    response: recaptchaToken,
-  }).toString(),
-  {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  }
-);
+      const response = await axios.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        new URLSearchParams({
+          secret: process.env.RECAPTCHA_SECRET_KEY || "6LdMBF8sAAAAAJGsvNvPRLBS3a0IZ65JTF1dH7Z_",
+          response: recaptchaToken,
+        }).toString(),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
 
       if (!response.data.success) {
         return NextResponse.json({ message: "reCAPTCHA verification failed." }, { status: 400 });

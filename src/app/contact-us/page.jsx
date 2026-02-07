@@ -72,7 +72,7 @@ export default function ContactUsPage() {
       setStatus({ message: "An internal server error occurred.", type: 'error' });
     }
   }
-const NEXT_PUBLIC_RECAPTCHA_SITE_KEY = "6LdMBF8sAAAAAJ9zJ8U1XpVL5UIq60muXvxGOvBo"
+  const NEXT_PUBLIC_RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LdMBF8sAAAAAJ9zJ8U1XpVL5UIq60muXvxGOvBo";
   return (
     <>
       <title>Contact Us | Earth by Humans Get in Touch With Us</title>
@@ -168,7 +168,7 @@ const NEXT_PUBLIC_RECAPTCHA_SITE_KEY = "6LdMBF8sAAAAAJ9zJ8U1XpVL5UIq60muXvxGOvBo
                         {NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
                           <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey="6LdMBF8sAAAAAJGsvNvPRLBS3a0IZ65JTF1dH7Z_"
+                            sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                             onChange={onRecaptchaChange}
                           />
                         ) : (
