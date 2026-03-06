@@ -34,7 +34,7 @@ const MagazineDetails = () => {
     const fetchMagazine = async () => {
       try {
         setLoading(true);
-        
+
         // Fetch the magazine details
         const { data, status } = await axios.get(`/api/magazine/${slug}`);
 
@@ -51,7 +51,7 @@ const MagazineDetails = () => {
         setLoading(false);
       }
     };
-    
+
     fetchMagazine();
   }, [slug, router]);
 
@@ -62,7 +62,7 @@ const MagazineDetails = () => {
 
   // If magazine is not found, return null (don't render any content)
   if (!magazine) {
-    return null; 
+    return null;
   }
 
   return (
@@ -72,8 +72,10 @@ const MagazineDetails = () => {
       <meta name="description" content="Explore all past and current editions of Earth by Humans Magazine. Dive into captivating content on nature, science, and sustainability." />
       <meta name="keywords" content="magazine, editions, nature, science, sustainability, conservation, environment, digital magazine, archives, publications" />
       <meta property="og:description" content="Explore all past and current editions of Earth by Humans Magazine. Dive into captivating content on nature, science, and sustainability." />
+      <meta property="og:image" content={magazine.magazine_cover_image} />
+      <meta property="og:image:alt" content={magazine.magazine_title} />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
-      
+
       {/* Magazine Details Section */}
       <div className="max-w-[1400px] mx-auto px-5 mt-20 py-16 text-black">
         <h2 className="text-4xl font-bold text-[#54AE47] mb-4">{magazine.magazine_title}</h2>
@@ -137,13 +139,13 @@ const MagazineDetails = () => {
           <p className="text-green-700 text-2xl font-semibold">Tags:</p>
           {magazine.magazine_tags
             ? magazine.magazine_tags.split(", ").map((tag, index) => (
-                <span
-                  key={index}
-                  className="border border-gray-300 text-gray-700 px-2 py-1 rounded-md"
-                >
-                  {tag}
-                </span>
-              ))
+              <span
+                key={index}
+                className="border border-gray-300 text-gray-700 px-2 py-1 rounded-md"
+              >
+                {tag}
+              </span>
+            ))
             : <span className="text-gray-400">No tags</span>}
         </div>
       </div>

@@ -17,14 +17,14 @@ export default function Cta() {
     <section className="relative z-10 px-2 sm:px-6 mt-10 lg:px-12 2xl:px-24 overflow-hidden bg-purple-50 py-12 lg:py-20">
       <div className="container mx-auto px-6 w-full p-10 relative z-10">
         <div className="bg-purple-50 backdrop-blur-md p-10 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center transition-all">
-          
+
           {/* Text Section */}
           <div className="text-center lg:text-left text-black" data-aos="fade-up">
             <div className="inline-flex items-center rounded-full gap-2 bg-white border border-gray-300 text-gray-700 font-medium px-4 py-2 mb-6">
               <Star className="h-5 w-5 text-yellow-400" />
               Hop on the Fun Wagon!
             </div>
-            
+
             <div className="flex items-center gap-3 mb-2 justify-center lg:justify-start">
               <div className="w-10 h-1"></div>
             </div>
@@ -39,7 +39,7 @@ export default function Cta() {
             {/* ✅ Button Component Used Here */}
             <Button
               href="/contact-us"
-              className="w-[196px]" // Apply width using the component's className prop
+              className="w-[196px] mx-auto lg:mx-0" // Centered on mobile, left-aligned on desktop
               bgColor="bg-green-600"
               animatedColor1="bg-blue-700"
               animatedColor2="bg-blue-700"

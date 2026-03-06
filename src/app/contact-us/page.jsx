@@ -15,15 +15,35 @@ export default function ContactUsPage() {
     subject: "",
     textArea: "",
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    phone: "",
+  });
   const [status, setStatus] = useState({ message: '', type: '' });
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef(null);
 
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    // Allow only alphabets and spaces
+    if (/^[a-zA-Z\s]*$/.test(value)) {
+      setValues({ ...values, name: value });
+      setErrors({ ...errors, name: "" });
+    } else {
+      setErrors({ ...errors, name: "Name should only contain alphabets." });
+    }
+  };
+
   const handlePhoneChange = (e) => {
     const value = e.target.value;
     // This allows only numbers and limits the input to 10 digits
-    if (/^\d*$/.test(value) && value.length <= 10) {
-      setValues({ ...values, phone: value });
+    if (/^\d*$/.test(value)) {
+      if (value.length <= 10) {
+        setValues({ ...values, phone: value });
+        setErrors({ ...errors, phone: "" });
+      }
+    } else {
+      setErrors({ ...errors, phone: "Phone number should only contain numbers." });
     }
   };
 
@@ -58,6 +78,7 @@ export default function ContactUsPage() {
       if (response.ok) {
         setStatus({ message: "Message sent successfully!", type: 'success' });
         setValues({ name: "", email: "", phone: "", subject: "", textArea: "" });
+        setErrors({ name: "", phone: "" });
         setRecaptchaToken(null);
         recaptchaRef.current.reset();
 
@@ -88,18 +109,18 @@ export default function ContactUsPage() {
                 <p className="text-base font-semibold mt-20 text-black uppercase tracking-wide">
                   Contact
                 </p>
-                <h2 className="font-heading m-1 font-bold tracking-tight text-green-600 text-md sm:text-5xl">
+                <h2 className="font-heading m-1 font-bold tracking-tight text-green-600 text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
                   Get in Touch
                 </h2>
-                <p className="text-md text-gray-700 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
                   We would love to hear from you! If you have any questions, comments, or suggestions, please don’t hesitate to get in touch with us. At Earth by Humans, we are committed to providing you with the best experience and serving you in the most efficient way possible.
                 </p>
               </div>
             </div>
             <div className="flex items-stretch justify-center">
-              <div className="grid md:grid-cols-2 gap-8 w-full">
-                <div className="h-full pr-6">
-                  <p className="mt-3 mb-10 text-md text-justify px-2 md:px-0">
+              <div className="flex flex-col-reverse lg:flex-row gap-8 w-full">
+                <div className="w-full lg:w-1/2 h-full pr-6">
+                  <p className="mt-3 mb-10 text-lg md:text-xl text-justify px-2 md:px-0">
                     You can reach out to us using the contact form below or through the contact information provided. Our dedicated support team is always ready to assist you and will strive to respond to your inquiries as quickly as possible.
                     <br />
                     <br />
@@ -148,17 +169,23 @@ export default function ContactUsPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="card h-fit max-w-6xl p-3 rounded-lg  bg-white">
+                <div className="card w-full lg:w-1/2 h-fit p-3 rounded-lg  bg-white">
                   <h2 className=" text-2xl text-blue-800 font-bold ">Contact Form</h2>
                   <p className="mb-4 text-sm text-black">Your email address will not be published. Required fields are marked *</p>
                   <form id="contactForm" onSubmit={handleSubmit}>
                     <div className="mb-6 space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
-                        <input type="text" id="name" name="name" value={values.name} required onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder="Your name*" className="w-full rounded-md border border-gray-300 py-2 px-3 focus:border-green-500 focus:ring-1 focus:ring-green-500" />
+                        <div className="flex flex-col">
+                          <input type="text" id="name" name="name" value={values.name} required onChange={handleNameChange} placeholder="Your name*" className={`w-full rounded-md border ${errors.name ? 'border-red-500' : 'border-gray-300'} py-2 px-3 focus:border-green-500 focus:ring-1 focus:ring-green-500`} />
+                          {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name}</span>}
+                        </div>
                         <input type="email" id="email" name="email" value={values.email} required onChange={(e) => setValues({ ...values, email: e.target.value })} placeholder="Your email*" className="w-full rounded-md border border-gray-300 py-2 px-3 focus:border-green-500 focus:ring-1 focus:ring-green-500" />
                       </div>
                       <div className="grid md:grid-cols-2 gap-4">
-                        <input id="phone" name="phone" value={values.phone} required onChange={handlePhoneChange} type="text" placeholder="Your phone number*" className="w-full rounded-md border border-gray-300 py-2 px-3 focus:border-green-500 focus:ring-1 focus:ring-green-500" />
+                        <div className="flex flex-col">
+                          <input id="phone" name="phone" value={values.phone} required onChange={handlePhoneChange} type="text" placeholder="Your phone number*" className={`w-full rounded-md border ${errors.phone ? 'border-red-500' : 'border-gray-300'} py-2 px-3 focus:border-green-500 focus:ring-1 focus:ring-green-500`} />
+                          {errors.phone && <span className="text-red-500 text-xs mt-1">{errors.phone}</span>}
+                        </div>
                         <input type="text" id="subject" name="subject" value={values.subject} required onChange={(e) => setValues({ ...values, subject: e.target.value })} placeholder="Your subject*" className="w-full rounded-md border border-gray-300 py-2 px-3 focus:border-green-500 focus:ring-1 focus:ring-green-500" />
                       </div>
                       <div>

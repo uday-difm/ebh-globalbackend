@@ -209,6 +209,8 @@ const IndividualPostView = ({ blog }) => {
       <meta name="description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
       <meta name="keywords" content="blogs, nature, environment, sustainability, science, ecology, climate, wildlife, conservation, latest reads" />
       <meta property="og:description" content="Explore Earth by Humans' latest blogs on ecology, sustainability, space, and more. Dive into diverse topics and expand your knowledge!" />
+      <meta property="og:image" content={blog.blog_feature_image} />
+      <meta property="og:image:alt" content={blog.blog_title} />
       <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
 
       <div className='container mx-auto px-4 sm:px-6 lg:px-20 dark:bg-white!'>
@@ -240,8 +242,8 @@ const IndividualPostView = ({ blog }) => {
                   <Image
                     src={authorImageSrc}
                     alt={blog.author_name || "Earth By Humans"}
-                    width={56}   
-                    height={56}  
+                    width={56}
+                    height={56}
                     className="w-14 h-14 rounded-full object-cover border-2 border-green-600 dark:border-green-400 shadow-md"
                     onError={handleAuthorImageError}
                   />

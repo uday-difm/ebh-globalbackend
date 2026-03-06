@@ -80,18 +80,18 @@ export default function Hero() {
   }, [viewerReady]);
 
   return (
-    <section className="relative font-poppins overflow-hidden h-screen justify-center items-center flex">
+    <section className="relative font-poppins overflow-hidden min-h-screen justify-center items-center flex pt-28 lg:pt-0">
       <BlobAnimation />
 
       <div className="relative container mx-auto max-w-[1350px] px-4 sm:px-6">
-        <div className="flex flex-col-reverse gap-12 items-center pt-20 pb-16 md:pt-16 md:pb-20 md:grid md:grid-cols-2 lg:min-h-[580px] xl:min-h-[720px]">
+        <div className="flex flex-col-reverse gap-8 items-center pt-8 pb-16 lg:pt-24 lg:pb-20 lg:grid lg:grid-cols-2 lg:min-h-[600px] xl:min-h-[720px]">
 
           {/* Left Column */}
           <div className="flex flex-col justify-center text-center md:text-left gap-6 md:gap-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold leading-tight text-black">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-extrabold leading-[1.15] text-black">
               Unleashing The Power Of Humanity To Heal Our Earth
             </h1>
-            <p className="text-black text-base sm:text-lg md:text-xl lg:max-w-md mx-auto md:mx-0">
+            <p className="text-black text-base sm:text-lg md:text-xl lg:max-w-md mx-auto md:mx-0 leading-relaxed opacity-90">
               Explore Earth Encounters! Journey through our vibrant collection of videos showcasing the beauty and diversity of nature.
             </p>
 
@@ -111,7 +111,7 @@ export default function Hero() {
           </div>
 
           {/* Right Column */}
-          <div className="flex justify-center items-center w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[520px] xl:h-[580px] 2xl:h-[640px]">
+          <div className="flex justify-center items-center w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[520px] xl:h-[580px] 2xl:h-[640px]">
             {showModel ? (
               <model-viewer
                 src="/Day.glb"

@@ -100,6 +100,8 @@ export default function RootLayout({ children }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:image" content="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif" />
+        <meta property="og:image:alt" content="Earth By Humans Logo" />
 
         <link
           rel="canonical"
@@ -131,10 +133,9 @@ export default function RootLayout({ children }) {
         />
 
         {/* SCHEMA variable here */}
-        <Script
+        <script
           id="site-schema"
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
 

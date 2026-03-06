@@ -144,7 +144,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
         </div>
       )}
       <div className="max-w-3xl mx-auto text-center mb-10" data-aos="fade-up">
-        <h1 className="text-4xl font-bold">Quiz</h1>
+        <h2 className="text-4xl font-bold">Quiz</h2>
         <p className="text-lg font-semibold text-black mt-2">
           Test your knowledge and gain valuable insights
         </p>
@@ -180,7 +180,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
               data-aos="fade-up"
               data-aos-delay="100"
               className="relative z-20 text-white font-bold py-2 px-5 text-md rounded-full transition-colors duration-300 justify-end flex items-center"
-            > 
+            >
               {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
             </button>
           </div>
@@ -207,8 +207,8 @@ const QuizOption = ({ label, text, correct, handleClickOption, selected, selecte
       </div>
     </div>
     <div className='flex items-center'>
-  {selected && !correct && <XCircle className='h-6 w-6 text-red-500' />}
-  {showCorrect && correct && <CheckCircle2 className='h-6 w-6 text-green-600' />}
+      {selected && !correct && <XCircle className='h-6 w-6 text-red-500' />}
+      {showCorrect && correct && <CheckCircle2 className='h-6 w-6 text-green-600' />}
     </div>
   </div>
 );

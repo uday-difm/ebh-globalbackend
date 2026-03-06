@@ -31,9 +31,9 @@ const LatestBlog = () => {
           {/* Heading */}
           <div className="col-span-2 flex flex-col gap-5 text-center sm:text-left">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Latest Blogs</h2>
-            <h4 className="text-xl text-gray-700">
+            <h3 className="text-xl text-gray-700">
               Discover the most recent blog from Earth By Humans.
-            </h4>
+            </h3>
           </div>
 
           {/* Blog Cards */}

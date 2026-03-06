@@ -1,6 +1,6 @@
 export const dynamic = "force-static";
 
-export  function GET() {
+export function GET() {
   const baseUrl = "https://www.earthbyhumans.com";
 
   const staticUrls = [

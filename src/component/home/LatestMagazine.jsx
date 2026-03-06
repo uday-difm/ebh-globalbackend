@@ -34,7 +34,7 @@ const LatestMagazine = () => {
         {/* Left Column */}
         <div className="col-span-1 md:col-span-5 flex flex-col items-center gap-10 md:gap-12 pt-6 md:pt-8">
           <div className="w-full flex flex-col items-start gap-8">
-            <p className="text-3xl md:text-4xl lg:text-5xl font-bold">Latest Magazine</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Latest Magazine</h2>
 
             <Link href="/magazine" scroll>
               <div className="group relative px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-3xl hover:border-blue-700 transition-all duration-500 bg-transparent flex items-center justify-center overflow-hidden">

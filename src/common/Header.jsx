@@ -73,7 +73,7 @@ const Header = () => {
 
           </Link>
           {/* Desktop Menu */}
-          <nav className="hidden md:flex gap-6 lg:gap-8 items-center">
+          <nav className="hidden xl:flex gap-6 lg:gap-8 items-center">
             {navLinks.map(({ href, label, badge }) => (
               <ScrollToTopLink
                 key={href}
@@ -91,7 +91,7 @@ const Header = () => {
           </nav>
 
           {/* Desktop Auth/Profile */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             {hydrated && auth.isAuthenticated && auth.userId ? (
               <div className="relative" ref={userMenuRef}>
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
@@ -135,14 +135,14 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Icon */}
-          <button onClick={() => setShowMenu(!showMenu)} className="md:hidden z-50">
+          <button onClick={() => setShowMenu(!showMenu)} className="xl:hidden z-50">
             {showMenu ? <X size={30} /> : <Menu size={30} />}
           </button>
         </div>
 
         {/* Mobile Nav Menu */}
         {showMenu && (
-          <nav className="md:hidden absolute top-full left-0 right-0 z-50 bg-white shadow-lg">
+          <nav className="xl:hidden absolute top-full left-0 right-0 z-50 bg-white shadow-lg">
             <div className={`bg-white transition-all duration-300 ease-in-out overflow-hidden w-full shadow-lg ${showMenu ? "max-h-screen py-4 px-6" : "max-h-0 py-0 px-0"}`}>
               <nav className="flex flex-col gap-4 text-center">
                 {navLinks.map(({ href, label }) => (
