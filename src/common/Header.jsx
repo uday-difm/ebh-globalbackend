@@ -82,7 +82,7 @@ const Header = () => {
               >
                 {label}
                 {badge && (
-                  <span className="absolute -top-3 -right-4 py-1 px-2 rounded-2xl text-[10px] border italic bg-white animate-pulse text-green-600 font-bold">
+                  <span className="absolute -top-5 -right-6 py-1 px-2 rounded-2xl text-[10px] border italic bg-white animate-pulse text-green-600 font-bold whitespace-nowrap">
                     {badge}
                   </span>
                 )}
