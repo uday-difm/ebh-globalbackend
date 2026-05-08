@@ -2,6 +2,21 @@ import { NextResponse } from 'next/server';
 import db from '../../../../../lib/db';
 import { uploadToS3 } from '../../../../../../utils/s3Utility';
 
+const generateSlug = (value) => {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+const buildMysqlDateTime = (date, time) => {
+  if (!date) return null;
+  const cleanDate = String(date).slice(0, 10);
+  const cleanTime = time ? String(time).slice(0, 5) : '00:00';
+  return `${cleanDate} ${cleanTime}:00`;
+};
+
 export async function POST(request) {
   try {
     // Parse form data
@@ -9,10 +24,11 @@ export async function POST(request) {
     const title = formData.get('title');
     const tag = formData.get('tag');
     const date = formData.get('date');
+    const time = formData.get('time');
     const category = formData.get('category');
     const description = formData.get('description');
     const content = formData.get('content');
-    const slug = formData.get('slug');
+    const slug = formData.get('slug') || generateSlug(title);
     const image = formData.get('image');
 
     // Validate required fields
@@ -58,7 +74,7 @@ export async function POST(request) {
 
     // Insert into database
     const sql = `INSERT INTO blogs (blog_title, blog_tag, blog_feature_image, blog_date_time, blog_category_id, blog_description, blog_content, blog_slug, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)`;
-    const values = [title, tag, imageUrl, date, category, description, content, slug];
+    const values = [title, tag, imageUrl, buildMysqlDateTime(date, time), category, description, content, slug];
     const [result] = await db.query(sql, values);
 
     return NextResponse.json({ 

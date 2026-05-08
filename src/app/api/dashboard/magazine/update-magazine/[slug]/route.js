@@ -2,15 +2,20 @@ import { NextResponse } from 'next/server';
 import db from '../../../../../../lib/db';
 import {uploadToS3} from '../../../../../../../utils/s3Utility';
 
+const generateSlug = (value) => {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
 
 //-------------------------UPDATE Magazine-------------------------------
-export async function PUT(request) {
+export async function PUT(request, context) {
     const { searchParams } = new URL(request.url);
-    const slug = searchParams.get('slug');
-  
-    if (!slug) {
-      return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
-    }
+    const routeParams = await context?.params;
+    const routeSlug = Array.isArray(routeParams?.slug) ? routeParams.slug[0] : routeParams?.slug;
+    const querySlug = searchParams.get('slug');
   
     try {
       const formData = await request.formData();
@@ -24,7 +29,16 @@ export async function PUT(request) {
       const magazine_link = formData.get('magazine_link');
       const magazine_date = formData.get('magazine_date');
       const MagCloudLink = formData.get('MagCloudLink');
-      const magazine_slug = formData.get('magazine_slug');
+      const magazine_slug = formData.get('magazine_slug') || generateSlug(magazine_title);
+      const slug = routeSlug || querySlug || magazine_id;
+
+      if (!slug) {
+        return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
+      }
+
+      if (!magazine_slug) {
+        return NextResponse.json({ message: 'Magazine title is required to generate a slug' }, { status: 400 });
+      }
       // idMagazines and magazine_timestamp are not updated directly
   
       // Handle image upload

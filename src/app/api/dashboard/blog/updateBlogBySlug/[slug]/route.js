@@ -4,8 +4,24 @@ import { uploadToS3 } from '../../../../../../../utils/s3Utility';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-export async function PUT(request, { params }) {
-  const slug =await params.slug;
+const generateSlug = (value) => {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+const buildMysqlDateTime = (date, time) => {
+  if (!date) return null;
+  const cleanDate = String(date).slice(0, 10);
+  const cleanTime = time ? String(time).slice(0, 5) : '00:00';
+  return `${cleanDate} ${cleanTime}:00`;
+};
+
+export async function PUT(request, context) {
+  const routeParams = await context?.params;
+  const slug = Array.isArray(routeParams?.slug) ? routeParams.slug[0] : routeParams?.slug;
 
   if (!slug) {
     return NextResponse.json({ message: 'Missing slug parameter' }, { status: 400 });
@@ -41,7 +57,7 @@ export async function PUT(request, { params }) {
     const blogContent = formData.get('blogContent');
     const blogDate = formData.get('blogDate');
     const blogTime = formData.get('blogTime');
-    const blogSlug = formData.get('blog_slug');
+    const blogSlug = formData.get('blog_slug') || generateSlug(blogTitle);
     const image = formData.get('blog_feature_image');
     const existingImageUrl = formData.get('existing_image_url');
 
@@ -89,12 +105,7 @@ export async function PUT(request, { params }) {
       WHERE blog_slug = ?
     `;
 
-    let blogDateTime = null;
-    if (blogDate && blogTime) {
-      blogDateTime = new Date(`${blogDate}T${blogTime}`);
-    } else if (blogDate) {
-      blogDateTime = new Date(blogDate);
-    }
+    const blogDateTime = buildMysqlDateTime(blogDate, blogTime);
 
     const params = [
       blogTitle,

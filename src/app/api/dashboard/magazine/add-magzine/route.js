@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import db from '../../../../../lib/db';
 import {uploadToS3} from '../../../../../../utils/s3Utility';
 
+const generateSlug = (value) => {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
 export async function POST(request) {
   try {
     const formData = await request.formData();
@@ -14,7 +22,7 @@ export async function POST(request) {
     const magazine_date = formData.get('magazine_date');
     const magazine_category = formData.get('magazine_category');
     const MagCloudLink = formData.get('MagCloudLink');
-    const magazine_slug = formData.get('magazine_slug');
+    const magazine_slug = formData.get('magazine_slug') || generateSlug(magazine_title);
 
     // Basic validation
     if (!magazine_id || !magazine_title || !magazine_description || !magazine_tags || !magazine_cover_image || !magazine_link || !magazine_date || !magazine_category || !MagCloudLink || !magazine_slug) {

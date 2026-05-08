@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import DashboardLayout from "../../../../component/DashboardLayout";
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
@@ -23,6 +24,29 @@ const editorConfig = {
   },
   width: '100%',
   minHeight: 300,
+};
+
+const generateSlug = (value) => {
+  return value
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
+
+const formatDateForInput = (value) => {
+  if (!value) return '';
+  if (typeof value === 'string') {
+    const match = value.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (match) return match[1];
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export default function EditMagazinePage() {
@@ -60,7 +84,7 @@ export default function EditMagazinePage() {
             magazineSlug: data.magazine_slug || '',
             tags: data.magazine_tags || '',
             image: null,
-            date: data.magazine_date?.split('T')[0] || '',
+            date: formatDateForInput(data.magazine_date),
             category: data.magazine_category || '',
             MagCloudLink: data.MagCloudLink || '',
             PdfLink: data.magazine_link || '',
@@ -86,7 +110,7 @@ export default function EditMagazinePage() {
     const formData = new FormData();
     formData.append('magazine_id', slug);
     formData.append('magazine_title', form.magazineTitle);
-    formData.append('magazine_slug', form.magazineSlug);
+    formData.append('magazine_slug', form.magazineSlug.trim() || generateSlug(form.magazineTitle));
     formData.append('magazine_tags', form.tags);
     formData.append('magazine_date', form.date);
     formData.append('magazine_category', form.category);
@@ -182,7 +206,7 @@ export default function EditMagazinePage() {
                   <label className="mb-2 block text-black dark:text-white">Feature Image</label>
                   {existingImageUrl && (
                     <div className="mt-2">
-                      <Image src={existingImageUrl} alt="Current Cover" className="max-w-xs rounded" />
+                      <Image src={existingImageUrl} alt="Current Cover" width={320} height={200} className="max-w-xs rounded" />
                       <input
                         type="text"
                         value={existingImageUrl}

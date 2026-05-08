@@ -117,6 +117,7 @@ const AddBlog = () => {
       formData.append('title', values.title);
       formData.append('tag', values.tag);
       formData.append('date', values.date);
+      formData.append('time', values.time);
       formData.append('category', values.category);
       formData.append('description', values.description);
       formData.append('content', values.content);
