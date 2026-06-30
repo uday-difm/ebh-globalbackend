@@ -53,7 +53,7 @@ const Footer = () => {
               <Image
                 src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
                 alt="Earth by Humans Logo"
-                width={172}     // EXACT size
+                width={172}     
                 height={74}
                 className="w-[172px] h-[74px] object-contain"
                 loading='lazy'
