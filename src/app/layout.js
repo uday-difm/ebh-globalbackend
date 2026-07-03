@@ -10,7 +10,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "./pagination.css";
 import CookiesBanner from '../common/CookiesBanner';
 import ReduxProviderWrapper from './ReduxProviderWrapper';
-import AuthProvider from './AuthProvider';
 import { usePathname } from 'next/navigation';
 import ScrollProgressBar from '../component/ScrollProgressBar';
 import { Poppins } from 'next/font/google'
@@ -149,35 +148,32 @@ export default function RootLayout({ children }) {
 
       <body className="flex flex-col min-h-screen font-poppins" cz-shortcut-listen="true">
         <ReduxProviderWrapper>
-          <AuthProvider>
-
-            <ScrollProgressBar />
-            {!pathname.startsWith('/dashboard') && (
-              <>
-                <Header />
-                {/*  <Holidayspopup />
-    <Snowfall
-      snowflakeCount={160}
-      color="#00C950"
-      speed={[0.5, 1.5]}
-      wind={[-0.3, 0.3]}
-      radius={[1, 3]}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: 9999999,
-        pointerEvents: "none",
-      }}
-    />*/}
-              </>
-            )}
-            <main className="flex-grow">{children}</main>
-            <CookiesBanner />
-            {!pathname.startsWith('/dashboard') && <Footer />}
-          </AuthProvider>
+          <ScrollProgressBar />
+          {!pathname.startsWith('/dashboard') && (
+            <>
+              <Header />
+              {/*  <Holidayspopup />
+  <Snowfall
+    snowflakeCount={160}
+    color="#00C950"
+    speed={[0.5, 1.5]}
+    wind={[-0.3, 0.3]}
+    radius={[1, 3]}
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      zIndex: 9999999,
+      pointerEvents: "none",
+    }}
+  />*/}
+            </>
+          )}
+          <main className="flex-grow">{children}</main>
+          <CookiesBanner />
+          {!pathname.startsWith('/dashboard') && <Footer />}
         </ReduxProviderWrapper>
       </body>
     </html>

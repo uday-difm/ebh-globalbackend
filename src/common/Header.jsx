@@ -53,7 +53,6 @@ const Header = () => {
     { href: '/about-us', label: 'About Us' },
     { href: '/blogs', label: 'Blogs' },
     { href: '/magazine', label: 'Magazines' },
-    { href: '/quizzes', label: 'Fun-Zone', badge: 'Most Popular' },
     { href: '/contact-us', label: 'Contact Us' },
   ];
 
@@ -90,49 +89,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Desktop Auth/Profile */}
-          <div className="hidden xl:flex items-center gap-4">
-            {hydrated && auth.isAuthenticated && auth.userId ? (
-              <div className="relative" ref={userMenuRef}>
-                <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2">
-                  <Image
-                    key={auth.profile}
-                    src={auth.profile || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-Profile.png"}
-                    alt="User"
-                    width={40}  // Changed from 10 to 40
-                    height={40} // Changed from 10 to 40
-                    className="w-10 h-10 rounded-full object-cover"
-                    unoptimized // ← ADD THIS
-                  />
-                  <span className="font-bold">{auth.name?.split(" ")[0]}</span>
-                  <ChevronDown size={20} />
-                </button>
-                {showUserMenu && (
-                  <div className="absolute right-0 top-12 mt-1 w-48 border border-gray-200 bg-white rounded-md shadow-lg text-sm font-semibold z-50">
-                    <ScrollToTopLink href="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
-                      Profile
-                    </ScrollToTopLink>
-                    <ScrollToTopLink href="/edit-profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setShowUserMenu(false)}>
-                      Edit Profile
-                    </ScrollToTopLink>
-                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500">
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : hydrated && (
-              <Button
-                href="/login"
-                bgColor="bg-green-600"
-                animatedColor1="bg-blue-700"
-                animatedColor2="bg-blue-700"
-                className="w-[125px] h-[47px] item-center justify-center flex text-center"
-              >
-                Login
-              </Button>
-            )}
-          </div>
+          {/* Desktop Auth/Profile removed */}
 
           {/* Mobile Menu Icon */}
           <button onClick={() => setShowMenu(!showMenu)} className="xl:hidden z-50">
@@ -155,22 +112,7 @@ const Header = () => {
                     {label}
                   </ScrollToTopLink>
                 ))}
-                <div className="border-t border-gray-200 mt-4 pt-4">
-                  {auth.isAuthenticated && auth.userId ? (
-                    <div className="flex flex-col items-center gap-4">
-                      <ScrollToTopLink href="/profile" onClick={() => setShowMenu(false)} className="font-bold">
-                        Profile
-                      </ScrollToTopLink>
-                      <button onClick={handleLogout} className="font-bold text-red-500">
-                        Logout
-                      </button>
-                    </div>
-                  ) : (
-                    <ScrollToTopLink href="/login" onClick={() => setShowMenu(false)} className="font-bold text-blue-600">
-                      Login
-                    </ScrollToTopLink>
-                  )}
-                </div>
+                {/* Mobile Auth/Profile removed */}
               </nav>
             </div>
           </nav>

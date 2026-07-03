@@ -1,7 +1,6 @@
 import Hero from "../component/home/Hero";
 import LatestBlog from "../component/home/LatestBlog";
-import LatestMagazine from '../component/home/LatestMagazine'
-import QuizPage from "./quizzes/QuizPage";
+import LatestMagazine from '../component/home/LatestMagazine';
 import AdvertiseWithUs from "../common/AdvertiseWithUs";
 import Cta from '../common/Cta'
 
@@ -21,7 +20,6 @@ export default async function HomePage() {
         <Hero />
         <LatestMagazine />
         <LatestBlog />
-        <QuizPage />
         <AdvertiseWithUs />
         <Cta />
       </div>
