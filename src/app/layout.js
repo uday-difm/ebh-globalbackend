@@ -1,21 +1,23 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { headers } from "next/headers";
 import Script from 'next/script';
-import Footer from '../common/Footer';
-import Header from '../common/Header';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./pagination.css";
-import CookiesBanner from '../common/CookiesBanner';
-import ReduxProviderWrapper from './ReduxProviderWrapper';
-import AuthProvider from './AuthProvider';
-import { usePathname } from 'next/navigation';
-import ScrollProgressBar from '../component/ScrollProgressBar';
-import { Poppins } from 'next/font/google'
-import Holidayspopup from '../component/Holidayspopup';
-import Snowfall from "react-snowfall";
+
+// ── Backend shell imports ─────────────────────────────────────────────────
+import AuthProvider from "@/components/providers/SessionProvider";
+import ThemeProvider from "@/components/providers/ThemeProvider";
+import SessionTimeoutHandler from "@/components/utils/SessionTimeoutHandler";
+import { Toaster } from "sonner";
+import "@/core/listeners";
+import ReduxProviderWrapper from "@/app/ReduxProviderWrapper";
+
+// ── EBH Public wrapper import ─────────────────────────────────────────────
+import EbhPublicWrapper from "@/components/EbhPublicWrapper";
+
+export const dynamic = "force-dynamic";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,31 +25,65 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-export default function RootLayout({ children }) {
-  const pathname = usePathname();
-  const [darkMode, setDarkMode] = useState(false);
+export const metadata = {
+  title: "Earth By Humans",
+  description: "Earth By Humans publishes human-interest stories, environmental features, magazines and curated blog content about people, places and culture.",
+};
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pathname]);
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
-  useEffect(() => {
-    const stored = localStorage.getItem('ebh-dark-mode');
-    if (stored === 'true') setDarkMode(true);
-  }, []);
+function isAdminPath(pathname) {
+  return (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/crm") ||
+    pathname.startsWith("/forgot-password") ||
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/maintenance") ||
+    pathname.startsWith("/preview")
+  );
+}
 
-  useEffect(() => {
-    const html = document.documentElement;
-    if (darkMode) {
-      html.classList.add('dark');
-      localStorage.setItem('ebh-dark-mode', 'true');
-    } else {
-      html.classList.remove('dark');
-      localStorage.setItem('ebh-dark-mode', 'false');
-    }
-  }, [darkMode]);
+function isPublicAuthPath(pathname) {
+  return (
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup") ||
+    pathname.startsWith("/forget-password")
+  );
+}
 
+export default async function RootLayout({ children }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
 
+  // ── Admin / CRM / Auth shell ────────────────────────────────────────────
+  if (isAdminPath(pathname)) {
+    const isPublicAuth = isPublicAuthPath(pathname);
+    const content = isPublicAuth ? (
+      <ReduxProviderWrapper>{children}</ReduxProviderWrapper>
+    ) : (
+      children
+    );
+
+    return (
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <AuthProvider>
+              <SessionTimeoutHandler timeoutMinutes={30} />
+              {content}
+              <Toaster richColors position="top-right" closeButton />
+            </AuthProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    );
+  }
+
+  // ── Public site layout ─────────────────────────────────────────────────
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -95,7 +131,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={poppins.variable}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -148,37 +184,9 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className="flex flex-col min-h-screen font-poppins" cz-shortcut-listen="true">
-        <ReduxProviderWrapper>
-          <AuthProvider>
-
-            <ScrollProgressBar />
-            {!pathname.startsWith('/dashboard') && (
-              <>
-                <Header />
-                {/*  <Holidayspopup />
-    <Snowfall
-      snowflakeCount={160}
-      color="#00C950"
-      speed={[0.5, 1.5]}
-      wind={[-0.3, 0.3]}
-      radius={[1, 3]}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: 9999999,
-        pointerEvents: "none",
-      }}
-    />*/}
-              </>
-            )}
-            <main className="flex-grow">{children}</main>
-            <CookiesBanner />
-            {!pathname.startsWith('/dashboard') && <Footer />}
-          </AuthProvider>
-        </ReduxProviderWrapper>
+        <EbhPublicWrapper>
+          {children}
+        </EbhPublicWrapper>
       </body>
     </html>
   );

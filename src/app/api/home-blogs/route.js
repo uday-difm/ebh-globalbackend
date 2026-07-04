@@ -1,57 +1,58 @@
-// --- MODIFIED Code for: src/app/api/home-blogs/route.js ---
-
-import { NextResponse } from 'next/server';
-import db from "../../../lib/db"; // Ensure this path is correct for your database connection
-
-async function getLatestBlogsFromDB({ categorySlug = null, limit = 4, sortBy = 'blog_timestamp', order = 'DESC' }) {
-  try {
-    let sql = `
-      SELECT
-        b.blog_id,
-        b.blog_title,
-        b.blog_slug,
-        b.blog_description,
-        b.blog_feature_image,
-        DATE_FORMAT(b.blog_timestamp, "%Y-%m-%d") AS date,
-        DATE_FORMAT(b.blog_timestamp, "%d %M %Y") AS formatted_date,
-        bc.category_name,
-        bc.category_slug
-      FROM blogs b
-      JOIN blog_category bc ON b.blog_category_id = bc.category_id
-      WHERE b.status = 1
-    `;
-
-    const queryParams = [];
-
-    // If category filter is applied (and not "All"), add to WHERE clause
-    if (categorySlug && categorySlug !== "All") {
-      sql += ` AND bc.category_slug = ?`;
-      queryParams.push(categorySlug);
-    }
-
-    // Add ORDER BY and LIMIT
-    sql += ` ORDER BY b.${sortBy} ${order} LIMIT ?`;
-    queryParams.push(limit);
-
-    const [rows] = await db.query(sql, queryParams);
-    return rows;
-  } catch (error) {
-    console.error("Error fetching latest blogs from DB in /api/home-blogs/route.js:", error);
-    return [];
-  }
-}
-
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const categorySlug = searchParams.get('category'); // Get category slug from URL
-    const limit = parseInt(searchParams.get('limit') || '4', 10); // Get limit, default to 4
-    const sortBy = searchParams.get('sortBy') || 'blog_timestamp';
-    const order = searchParams.get('order') || 'DESC';
+    const categorySlug = searchParams.get("category");
+    const limit = parseInt(searchParams.get("limit") || "4", 10);
 
-    const latestBlogs = await getLatestBlogsFromDB({ categorySlug, limit, sortBy, order });
-    return NextResponse.json({ blogs: latestBlogs }); // Wrap in 'blogs' key for consistency
+    // Build query conditions
+    const where = {
+      status: "PUBLISHED",
+      deletedAt: null,
+      publishedAt: { lte: new Date() },
+    };
+
+    if (categorySlug && categorySlug !== "All") {
+      where.categories = {
+        some: { slug: categorySlug },
+      };
+    }
+
+    const dbPosts = await prisma.post.findMany({
+      where,
+      orderBy: { publishedAt: "desc" },
+      take: limit,
+      include: {
+        categories: true,
+        featuredImage: true,
+      },
+    });
+
+    // Map Prisma Posts to EBH format
+    const blogs = dbPosts.map((post) => {
+      const pubDate = post.publishedAt || post.createdAt;
+      const formattedDate = new Date(pubDate).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+
+      return {
+        blog_id: post.id,
+        blog_title: post.title,
+        blog_slug: post.slug,
+        blog_description: post.excerpt || "",
+        blog_feature_image: post.featuredImage?.secureUrl || post.featuredImage?.url || "",
+        date: pubDate.toISOString().split("T")[0],
+        formatted_date: formattedDate,
+        category_name: post.categories?.[0]?.name || "Uncategorized",
+        category_slug: post.categories?.[0]?.slug || "uncategorized",
+      };
+    });
+
+    return NextResponse.json({ blogs });
   } catch (error) {
     console.error("API Error (GET /api/home-blogs):", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

@@ -10,6 +10,25 @@ import Image from 'next/image';
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [footerConfig, setFooterConfig] = useState(null);
+
+  React.useEffect(() => {
+    async function fetchFooter() {
+      try {
+        const res = await fetch("/api/footer");
+        if (res.ok) {
+          const json = await res.json();
+          const footerData = json.data?.footer || json.footer;
+          if (footerData) {
+            setFooterConfig(footerData);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch footer config:", err);
+      }
+    }
+    fetchFooter();
+  }, []);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -40,6 +59,41 @@ const Footer = () => {
     }
   };
 
+  const defaultCompanyLinks = [
+    { href: "/blogs", label: "Blogs" },
+    { href: "/about-us", label: "About Us" },
+    { href: "/magazine", label: "Magazines" },
+    { href: "/quizzes", label: "Quizzes" },
+    { href: "/contact-us", label: "Contact Us" }
+  ];
+
+  const defaultLegalLinks = [
+    { href: "/terms-and-conditions", label: "Terms of Conditions" },
+    { href: "/information-policy", label: "Information Policy" },
+    { href: "/privacy-policy", label: "Privacy Policy" }
+  ];
+
+  const logoSrc = footerConfig?.logo || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif";
+  const description = footerConfig?.description || "Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories, and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.";
+  const issnLink = footerConfig?.issn_link || "https://portal.issn.org/resource/ISSN/3066-5027";
+  const issnImage = footerConfig?.issn_image || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg";
+  
+  const companyLinks = footerConfig?.company_links || defaultCompanyLinks;
+  const legalLinks = footerConfig?.legal_links || defaultLegalLinks;
+  const contactEmail = footerConfig?.contact_email || "info@earthbyhumans.com";
+  
+  const socialLinks = {
+    linkedin: footerConfig?.social_links?.linkedin || "https://www.linkedin.com/company/earth-by-humans/",
+    instagram: footerConfig?.social_links?.instagram || "https://www.instagram.com/earth_by_humans/",
+    facebook: footerConfig?.social_links?.facebook || "https://www.facebook.com/earthbyhumans",
+    youtube: footerConfig?.social_links?.youtube || "https://www.youtube.com/@EarthByHumans",
+    twitter: footerConfig?.social_links?.twitter || "https://twitter.com/earthbyhumans"
+  };
+
+  const copyrightText = footerConfig?.copyright 
+    ? `© ${new Date().getFullYear()} ${footerConfig.copyright}. All Rights Reserved.`
+    : `© ${new Date().getFullYear()} Earth By Humans (A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM). All Rights Reserved.`;
+
   return (
     <footer
       className="w-full bg-white min-h-[550px] text-black pt-16 border-t border-gray-300"
@@ -51,7 +105,7 @@ const Footer = () => {
           <div>
             <Link href="/">
               <Image
-                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
+                src={logoSrc}
                 alt="Earth by Humans Logo"
                 width={172}     
                 height={74}
@@ -61,15 +115,15 @@ const Footer = () => {
             </Link>
 
             <p className="text-sm text-gray-700 mb-4 text-justify hyphens-auto">
-              Earth by Humans, your online sanctuary for exploring the wonders of our planet and beyond. Immerse yourself in captivating nature posts, inspiring stories, and thought-provoking content that celebrates the beauty of Earth along with fun Quizzes.
+              {description}
             </p>
           </div>
 
           {/* ISSN */}
           <div>
-            <Link href="https://portal.issn.org/resource/ISSN/3066-5027" target="_blank">
+            <Link href={issnLink} target="_blank">
               <Image
-                src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg"
+                src={issnImage}
                 alt="ISSN Barcode"
                 width={500}
                 height={600}
@@ -84,38 +138,40 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold mb-2">Company</h4>
               <ul className="text-sm space-y-1 text-gray-600">
-                <li><ScrollToTopLink href="/blogs" className="hover:text-green-600">Blogs</ScrollToTopLink></li>
-                <li><ScrollToTopLink href="/about-us" className="hover:text-green-600">About Us</ScrollToTopLink></li>
-                <li><ScrollToTopLink href="/magazine" className="hover:text-green-600">Magazines</ScrollToTopLink></li>
-                <li><ScrollToTopLink href="/quizzes" className="hover:text-green-600">Quizzes</ScrollToTopLink></li>
-                <li><ScrollToTopLink href="/contact-us" className="hover:text-green-600">Contact Us</ScrollToTopLink></li>
+                {companyLinks.map((link, idx) => (
+                  <li key={idx}>
+                    <ScrollToTopLink href={link.href} className="hover:text-green-600">
+                      {link.label}
+                    </ScrollToTopLink>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-2">Follow Us</h4>
               <div className="flex gap-4">
-                <Link href="https://www.linkedin.com/company/earth-by-humans/" target="_blank" aria-label="LinkedIn">
+                <Link href={socialLinks.linkedin} target="_blank" aria-label="LinkedIn">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-white transition-all duration-300 hover:bg-green-700">
                     <Linkedin className="h-4 w-4" />
                   </span>
                 </Link>
-                <Link href="https://www.instagram.com/earth_by_humans/" target="_blank" aria-label="Instagram">
+                <Link href={socialLinks.instagram} target="_blank" aria-label="Instagram">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white transition-all duration-300 hover:bg-sky-600">
                     <Instagram className="h-4 w-4" />
                   </span>
                 </Link>
-                <Link href="https://www.facebook.com/earthbyhumans" target="_blank" aria-label="Facebook">
+                <Link href={socialLinks.facebook} target="_blank" aria-label="Facebook">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700">
                     <Facebook className="h-4 w-4" />
                   </span>
                 </Link>
-                <Link href="https://www.youtube.com/@EarthByHumans" target="_blank" aria-label="YouTube">
+                <Link href={socialLinks.youtube} target="_blank" aria-label="YouTube">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-500 text-white transition-all duration-300 hover:bg-gray-600">
                     <Youtube className="h-4 w-4" />
                   </span>
                 </Link>
-                <Link href="https://twitter.com/earthbyhumans" target="_blank" aria-label="Twitter">
+                <Link href={socialLinks.twitter} target="_blank" aria-label="Twitter">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white transition-all duration-300 hover:bg-sky-600">
                     <Twitter className="h-4 w-4" />
                   </span>
@@ -129,7 +185,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-2"> Connect</h4>
             <p className="font-semibold mb-2">Send us an email at</p>
             <p className="text-sm flex items-center gap-2 text-gray-700">
-              <Mail className="h-4 w-4 text-green-600" /> info@earthbyhumans.com
+              <Mail className="h-4 w-4 text-green-600" /> {contactEmail}
             </p>
 
             <form onSubmit={handleSubscribe} className="mt-4">
@@ -159,12 +215,14 @@ const Footer = () => {
         {/* Bottom Links */}
         <div className="flex flex-col md:flex-row justify-between text-sm text-gray-600 px-4">
           <p className="text-center md:text-left mb-4 md:mb-0">
-            © {new Date().getFullYear()}  Earth By Humans <Link href="https://difm.llc" target="_blank" className="hover:text-green-600">(A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM)</Link>. All Rights Reserved.
+            {copyrightText}
           </p>
           <div className="flex justify-center md:justify-end gap-4">
-            <ScrollToTopLink href="/terms-and-conditions" className="hover:text-green-600">Terms of Conditions</ScrollToTopLink>
-            <ScrollToTopLink href="/information-policy" className="hover:text-green-600">Information Policy</ScrollToTopLink>
-            <ScrollToTopLink href="/privacy-policy" className="hover:text-green-600">Privacy Policy</ScrollToTopLink>
+            {legalLinks.map((link, idx) => (
+              <ScrollToTopLink key={idx} href={link.href} className="hover:text-green-600">
+                {link.label}
+              </ScrollToTopLink>
+            ))}
           </div>
         </div>
       </div>
