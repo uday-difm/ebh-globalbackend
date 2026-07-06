@@ -1,6 +1,6 @@
 ## Earth by Humans Web App
 
-Earth by Humans is a content-heavy Next.js 15 application that powers blogs, magazines, quizzes, and dashboard workflows backed by a MySQL database and IONOS S3 assets.
+Earth by Humans is a content-heavy Next.js 16 application that powers blogs, magazines, quizzes, and dashboard workflows backed by a MySQL database and IONOS S3 assets.
 
 ## Prerequisites
 
@@ -13,30 +13,45 @@ Earth by Humans is a content-heavy Next.js 15 application that powers blogs, mag
 ## Project Structure
 
 - `src/app` – App Router routes, API handlers, and layouts
-- `src/common` & `src/component` – Shared UI building blocks
-- `src/lib` – Database, email, configuration utilities
+- `src/components` – Shared UI building blocks, providers, and admin/CRM dashboards (consolidated)
+- `src/common` – Global site layouts (Header, Footer, Cookie Banner)
+- `src/lib` – Database connection, route synchronization, NextAuth config, and utilities
 - `src/utils` – Ancillary helpers (e.g., S3 upload)
 - `public/` – Static assets
 
+## Architecture & Integration Details
+
+### 1. Next.js 16 Proxy Routing
+The application handles redirections, CORS, maintenance locks, and admin authorization guards at the Edge level using Next.js 16's native `src/proxy.js` entrypoint.
+- **Maintenance Mode**: Restores full public traffic redirection to `/maintenance` based on DB flags, while preserving developer access to `/admin`, `/crm`, and `/preview`.
+- **Recursion Guard**: Uses `x-internal-check` to bypass middleware loopbacks and deadlocks for internal loopback API fetch calls.
+
+### 2. Auto-Revalidating Route Sync
+Using Next.js `instrumentation.js` registers, the server dynamically boots `src/lib/routeSync.js` on startup (limited strictly to `process.env.NEXT_RUNTIME === "nodejs"` to avoid Edge runtime exceptions). It scans folder structures, updates routes in the database, and prunes obsolete pages automatically.
+
+### 3. Interactive Quiz Dashboard
+A complete quiz manager is built into the content administration panel:
+- **Admin Dashboard**: `/admin/quizzes` allows editors to manage question banks, correct answers, option lists, and view play counts.
+- **API Endpoints**: `/api/admin/quizzes` and `/api/admin/quizzes/[id]` support full CRUD.
+- **Visitor Page**: `/quizzes` contains dynamic question fetching with loading indicators and fail-safe unseeded datasets.
+
+### 4. GDPR Consent Logs & Telemetry
+- **Telemetry**: `<GlobalAnalytics />` is integrated into the RootLayout to ping visitor stats to `/api/visitors/ping` dynamically.
+- **Consent Banner**: `<CookiesBanner />` records and syncs opt-in choices, dispatches storage change events, and saves consent state directly to the relational `cookieConsentLog` table for live compliance charts in `/crm/consent`.
+
 ## Environment Configuration
 
-Copy `.env.example` to `.env.local` (or `.env`) and fill in real values:
-
-```bash
-cp .env.example .env.local
-```
+Copy `.env.example` to `.env` and fill in real values:
 
 Key variables:
 
 | Variable | Description |
 | --- | --- |
-| `HOST`, `USER`, `PASSWORD`, `DATABASE` | MySQL connection info |
-| `NEXT_PUBLIC_SITE_URL` | Base URL used by client fetch fallbacks |
+| `DATABASE_URL` | MySQL connection string for Prisma client |
+| `NEXT_PUBLIC_SITE_ID` | Site identification tag (e.g. `ebh`) |
 | `ACCESSKEY`, `SECRETKEY`, `REGION`, `BUCKET` | IONOS S3 credentials |
 | `EMAIL_*` | SMTP host/port/credentials |
 | `JWT_SECRET_KEY` | Secret used for auth tokens |
-
-> Never commit secrets. Use `.env.local` for local development and appropriate secret storage in CI/CD.
 
 ## Running the App
 
@@ -52,9 +67,10 @@ The site is served at [http://localhost:3000](http://localhost:3000).
 | Script | Purpose |
 | --- | --- |
 | `npm run dev` | Start the Turbopack dev server |
-| `npm run build` | Create a production bundle |
+| `npm run build` | Generate production build (builds Prisma models first) |
 | `npm run start` | Run the production server |
-| `npm run lint` | Execute ESLint via `next lint` |
+| `npm run db:generate` | Regenerate Prisma client |
+| `npm run db:push` | Push schema changes directly to MySQL |
 
 ## Deployment
 
@@ -66,27 +82,12 @@ For Docker-based deployments provide build stages for the Next.js app and any su
 
 ## API Overview
 
-- **Blogs** – `/api/blogs`, `/api/blogs/[slug]`
+- **Blogs** – `/api/blogs`, `/api/blogs/[slug]` (scoped to `ebh`)
 - **Magazines** – `/api/magazine`, `/api/magazine/[slug]`
-- **Dashboard** – `/api/dashboard/*` endpoints for admin and content operations
-- **Quizzes** – `/api/quizess/*`
+- **Dashboard** – `/api/admin/*` endpoints for admin and content operations
+- **Quizzes** – `/api/admin/quizzes/*` (Admin CRUD) and `/api/quizzes` (Visitor UI)
 - **Auth** – `/api/auth/*`
-
-All routes live under `src/app/api`. Each handler returns JSON and uses the shared MySQL pool from `src/lib/db.js`.
-
-For a Postman collection or Swagger spec, export routes using the above structure or document them in `docs/api.md` (create as needed).
-
-## Testing & Quality
-
-- Linting: `npm run lint`
-- Production build check: `npm run build`
-- Add future unit/integration tests under `__tests__/` or co-located with modules using your preferred runner (Vitest/Jest/Playwright).
-
-## Contributing
-
-1. Create a feature branch from `premm`.
-2. Make changes and ensure lint/build succeed.
-3. Open a PR describing the change, affected routes, and testing performed.
+- **Analytics** – `/api/visitors/ping` and `/api/visitors/consent`
 
 ## License
 
