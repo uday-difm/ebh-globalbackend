@@ -90,9 +90,6 @@ export default function FooterEditor({
   const [editingColIdx, setEditingColIdx] = useState(0);
 
   const getColCount = () => {
-    if (config.layout === "minimal") return 0;
-    if (config.layout === "2-columns") return 2;
-    if (config.layout === "3-columns") return 3;
     return 4;
   };
   const colCount = getColCount();
@@ -104,13 +101,18 @@ export default function FooterEditor({
     setSuccess(null);
 
     try {
+      const savedConfig = {
+        ...config,
+        layout: "4-columns"
+      };
+
       const res = await fetch("/api/admin/footer", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "x-site-id": siteId,
         },
-        body: JSON.stringify(config),
+        body: JSON.stringify(savedConfig),
       });
 
       if (!res.ok) {
