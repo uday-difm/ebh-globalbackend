@@ -17,6 +17,9 @@ const EXCLUDED_PREFIXES = [
   "/maintenance",
   "/all-played-quiz",
   "/yourmove",
+  "/login",
+  "/forgot-password",
+  "/reset-password",
 ];
 
 /**
@@ -142,10 +145,27 @@ export async function register() {
       synced++;
     }
 
+    // Self-cleaning step: Delete obsolete/excluded pages from database
+    const activeSlugs = routes.map((r) => r.slug);
+    const deleteResult = await prisma.page.deleteMany({
+      where: {
+        siteId: SITE_ID,
+        isDiscovered: true,
+        slug: {
+          notIn: activeSlugs,
+        },
+      },
+    });
+
     await prisma.$disconnect();
     console.log(
       `[EBH Startup] ✅ Auto-discovered and synced ${synced} routes to global backend.`
     );
+    if (deleteResult.count > 0) {
+      console.log(
+        `[EBH Startup] 🗑️ Cleaned up ${deleteResult.count} obsolete pages from database.`
+      );
+    }
   } catch (err) {
     console.error("[EBH Startup] ⚠️ Route sync failed:", err.message);
   }
