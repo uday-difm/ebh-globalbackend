@@ -1,5 +1,7 @@
 import { Wrench } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Site Under Maintenance",
   description:
