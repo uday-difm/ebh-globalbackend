@@ -99,8 +99,22 @@ const Footer = () => {
   const issnLink = footerConfig?.issn_link || "https://portal.issn.org/resource/ISSN/3066-5027";
   const issnImage = footerConfig?.issn_image || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg";
   
+  const normalizeLegalLink = (href) => {
+    if (!href) return "/";
+    if (href === "/privacy-policy") return "/legal/privacy";
+    if (href === "/terms-and-conditions") return "/legal/terms";
+    if (href === "/cookie-policy") return "/legal/cookies";
+    if (href === "/disclaimer") return "/legal/disclaimer";
+    if (href === "/refund-policy") return "/legal/refund";
+    if (href === "/information-policy") return "/legal/information-policy";
+    return href;
+  };
+
   const companyLinks = dynamicCompanyLinks || footerConfig?.company_links || defaultCompanyLinks;
-  const legalLinks = footerConfig?.legal_links || defaultLegalLinks;
+  const legalLinks = (footerConfig?.legal_links || defaultLegalLinks).map((link) => ({
+    ...link,
+    href: normalizeLegalLink(link.href),
+  }));
   const contactEmail = footerConfig?.contact_email || "info@earthbyhumans.com";
   
   const socialLinks = {
