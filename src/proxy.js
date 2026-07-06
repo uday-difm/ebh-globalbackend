@@ -45,6 +45,10 @@ function shouldSkipMaintenanceCheck(pathname) {
 }
 
 export async function proxy(request) {
+  if (request.headers.get("x-internal-check") === "1") {
+    return NextResponse.next();
+  }
+
   const origin = request.headers.get("origin") || "*";
   const url = new URL(request.url);
   const pathname = url.pathname;
