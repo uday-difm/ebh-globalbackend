@@ -107,35 +107,8 @@ export default function CookieBanner() {
   const message = config?.cookieConsentMessage || 'We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies.';
   const acceptText = config?.acceptButtonText || 'Accept Cookies';
   const declineText = config?.declineButtonText || 'Close';
-  const position = config?.bannerPosition || 'bottom';
-
-  if (position === 'fade') {
-    return (
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-        <div className="bg-slate-900 text-white p-6 rounded-2xl max-w-md shadow-2xl border border-slate-800 text-center space-y-4 font-sans animate-in fade-in duration-200">
-          <h3 className="font-bold text-lg text-green-400">Cookie Preferences</h3>
-          <p className="text-sm leading-relaxed text-justify">
-            {message} Read our{" "}
-            <a href="/privacy-policy" className="underline font-semibold text-green-400 hover:text-green-300 transition">Privacy Policy</a> and{" "}
-            <a href="/terms-and-conditions" className="underline font-semibold text-green-400 hover:text-green-300 transition">Terms and Conditions</a>.
-          </p>
-          <div className="flex gap-3 justify-center pt-2">
-            <button onClick={handleDecline} className="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2.5 rounded-xl font-bold text-xs transition border border-slate-700">
-              {declineText}
-            </button>
-            <button onClick={handleAccept} className="bg-green-600 hover:bg-green-500 text-black px-5 py-2.5 rounded-xl font-bold text-xs transition shadow-md">
-              {acceptText}
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const isTop = position === 'top';
-
   return (
-    <div className={`fixed left-0 right-0 bg-black text-white p-4 flex flex-col md:flex-row items-center justify-between z-50 shadow-lg ${isTop ? 'top-0 border-b border-slate-800' : 'bottom-0 border-t border-slate-800'}`}>
+    <div className="fixed left-0 right-0 bg-black text-white p-4 flex flex-col md:flex-row items-center justify-between z-50 shadow-lg bottom-0 border-t border-slate-800 font-sans animate-in slide-in-from-bottom duration-250">
       <p className="text-sm text-center md:text-left mb-2 md:mb-0 max-w-5xl">
         {message} Read our{" "} 
         <a href="/privacy-policy" className="underline font-semibold text-green-400 hover:text-green-700 transition">Privacy Policy</a> and{" "}
