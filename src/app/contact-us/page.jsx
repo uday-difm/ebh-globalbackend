@@ -21,7 +21,24 @@ export default function ContactUsPage() {
   });
   const [status, setStatus] = useState({ message: '', type: '' });
   const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [recaptchaSiteKey, setRecaptchaSiteKey] = useState(null);
+  const [isRecaptchaConfigured, setIsRecaptchaConfigured] = useState(false);
   const recaptchaRef = useRef(null);
+
+  React.useEffect(() => {
+    fetch("/api/settings?siteId=ebh")
+      .then(res => res.json())
+      .then(data => {
+        const key = data?.securityControls?.recaptchaSiteKey || null;
+        if (key && key.trim()) {
+          setRecaptchaSiteKey(key);
+          setIsRecaptchaConfigured(true);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to load settings:", err);
+      });
+  }, []);
 
   const handleNameChange = (e) => {
     const value = e.target.value;
@@ -59,7 +76,7 @@ export default function ContactUsPage() {
       return;
     }
 
-    if (!recaptchaToken) {
+    if (isRecaptchaConfigured && !recaptchaToken) {
       setStatus({ message: "Please complete the reCAPTCHA.", type: 'error' });
       return;
     }
@@ -80,7 +97,9 @@ export default function ContactUsPage() {
         setValues({ name: "", email: "", phone: "", subject: "", textArea: "" });
         setErrors({ name: "", phone: "" });
         setRecaptchaToken(null);
-        recaptchaRef.current.reset();
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
 
         setTimeout(() => {
           setStatus({ message: '', type: '' });
@@ -191,17 +210,13 @@ export default function ContactUsPage() {
                       <div>
                         <textarea name="textarea" cols="30" rows="5" value={values.textArea} required onChange={(e) => setValues({ ...values, textArea: e.target.value })} id="textarea" placeholder="Write your message..." className="w-full rounded-md focus:border-green-500 focus:ring-1 focus:ring-green-500 border border-gray-300 py-2 px-3"></textarea>
                       </div>
-                      <div >
-                        {NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                      <div>
+                        {isRecaptchaConfigured && (
                           <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                            sitekey={recaptchaSiteKey}
                             onChange={onRecaptchaChange}
                           />
-                        ) : (
-                          <div className="p-2 border border-red-300 bg-red-50 text-red-600 text-sm rounded">
-                            ReCAPTCHA Site Key is missing. Please check your environment variables.
-                          </div>
                         )}
                       </div>
                     </div>
