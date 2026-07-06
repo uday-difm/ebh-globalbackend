@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import "../pagination.css";
 import dynamic from "next/dynamic";
-import PaginatedBlogList from "../../component/PaginatedBlogList";
+import PaginatedBlogList from "../../components/PaginatedBlogList";
 
-const CategorySlider = dynamic(() => import("../../component/CategorySlider"), {
+const CategorySlider = dynamic(() => import("../../components/CategorySlider"), {
 	ssr: false,
 });
 

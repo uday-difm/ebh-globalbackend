@@ -12,9 +12,9 @@ import AdBanner from '@/components/ads/AdBanner';
 
 // Corrected Import Paths
 // CategorySlider is now in src/components/CategorySlider.jsx
-import CategorySlider from '../../../component/CategorySlider';
+import CategorySlider from '../../../components/CategorySlider';
 // PaginatedBlogList is now in src/components/PaginatedBlogList.jsx
-import PaginatedBlogList from '../../../component/PaginatedBlogList';
+import PaginatedBlogList from '../../../components/PaginatedBlogList';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faCalendarDays, faClock } from "@fortawesome/free-solid-svg-icons";

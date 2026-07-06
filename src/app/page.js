@@ -1,6 +1,6 @@
-import Hero from "../component/home/Hero";
-import LatestBlog from "../component/home/LatestBlog";
-import LatestMagazine from '../component/home/LatestMagazine';
+import Hero from "../components/home/Hero";
+import LatestBlog from "../components/home/LatestBlog";
+import LatestMagazine from '../components/home/LatestMagazine';
 import AdvertiseWithUs from "../common/AdvertiseWithUs";
 import Cta from '../common/Cta'
 

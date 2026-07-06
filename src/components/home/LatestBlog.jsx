@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import BlogCard from "../../component/home/HomeBlogCard";
+import BlogCard from "./HomeBlogCard";
 import { ArrowRight } from "lucide-react";
 import Button from "../../common/Button";
 

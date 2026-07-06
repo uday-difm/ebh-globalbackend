@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import ReduxProviderWrapper from '../app/ReduxProviderWrapper';
 import AuthProvider from '@/components/providers/SessionProvider';
-import ScrollProgressBar from '../component/ScrollProgressBar';
+import ScrollProgressBar from './ScrollProgressBar';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import CookiesBanner from '../common/CookiesBanner';
