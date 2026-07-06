@@ -43,9 +43,12 @@ export async function GET(request, context) {
       return NextResponse.json({ error: "Slug is required" }, { status: 400 });
     }
 
+    const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
     // 1️⃣ Look up blog post by slug
     const post = await prisma.post.findFirst({
       where: {
+        siteId,
         slug,
         status: "PUBLISHED",
         deletedAt: null,
@@ -69,6 +72,7 @@ export async function GET(request, context) {
     // 2️⃣ Look up category by slug
     const category = await prisma.category.findFirst({
       where: {
+        siteId,
         slug,
         deletedAt: null,
       },
@@ -78,6 +82,7 @@ export async function GET(request, context) {
       // Fetch blogs in this category
       const categoryPosts = await prisma.post.findMany({
         where: {
+          siteId,
           status: "PUBLISHED",
           deletedAt: null,
           publishedAt: { lte: new Date() },

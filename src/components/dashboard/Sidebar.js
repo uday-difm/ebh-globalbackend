@@ -189,6 +189,12 @@ const sections = [
         minRole: "AUTHOR",
       },
       {
+        href: "/admin/quizzes",
+        label: "Quizzes",
+        icon: HelpCircle,
+        minRole: "EDITOR",
+      },
+      {
         href: "/admin/services",
         label: "Services",
         icon: Briefcase,

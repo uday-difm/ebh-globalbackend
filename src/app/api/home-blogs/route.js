@@ -7,8 +7,11 @@ export async function GET(request) {
     const categorySlug = searchParams.get("category");
     const limit = parseInt(searchParams.get("limit") || "4", 10);
 
+    const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
     // Build query conditions
     const where = {
+      siteId,
       status: "PUBLISHED",
       deletedAt: null,
       publishedAt: { lte: new Date() },

@@ -14,9 +14,12 @@ export async function GET(request) {
     const limit = Math.min(Math.max(limitParam, 1), 50); // clamp to reasonable size
     const offset = (page - 1) * limit;
 
+    const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
     // Count published posts
     const total = await prisma.post.count({
       where: {
+        siteId,
         status: "PUBLISHED",
         deletedAt: null,
         publishedAt: { lte: new Date() },
@@ -26,6 +29,7 @@ export async function GET(request) {
     // Fetch published posts
     const dbPosts = await prisma.post.findMany({
       where: {
+        siteId,
         status: "PUBLISHED",
         deletedAt: null,
         publishedAt: { lte: new Date() },
@@ -43,7 +47,7 @@ export async function GET(request) {
 
     // Fetch active categories
     const dbCategories = await prisma.category.findMany({
-      where: { deletedAt: null },
+      where: { siteId, deletedAt: null },
       orderBy: { name: "asc" },
     });
 

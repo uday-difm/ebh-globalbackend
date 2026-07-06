@@ -7,9 +7,12 @@ export async function GET(request) {
     const limitParam = url.searchParams.get("limit") ?? url.searchParams.get("blogsLimit") ?? "9";
     const limit = Math.max(1, Math.min(1000, Number(limitParam || 9)));
 
+    const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
     // 1. Get total published count
     const totalPublished = await prisma.post.count({
       where: {
+        siteId,
         status: "PUBLISHED",
         deletedAt: null,
         publishedAt: { lte: new Date() },
@@ -18,13 +21,14 @@ export async function GET(request) {
 
     // 2. Get categories with counts
     const dbCategories = await prisma.category.findMany({
-      where: { deletedAt: null },
+      where: { siteId, deletedAt: null },
       orderBy: { name: "asc" },
       include: {
         _count: {
           select: {
             posts: {
               where: {
+                siteId,
                 status: "PUBLISHED",
                 deletedAt: null,
                 publishedAt: { lte: new Date() },
@@ -38,6 +42,7 @@ export async function GET(request) {
     // 3. Get recent published blogs
     const dbPosts = await prisma.post.findMany({
       where: {
+        siteId,
         status: "PUBLISHED",
         deletedAt: null,
         publishedAt: { lte: new Date() },
