@@ -125,7 +125,7 @@ export async function POST(req) {
     const secControls = settings?.securityControls || {};
 
     // ── Google reCAPTCHA check ──────────────────────────────────────────────────
-    if (secControls.recaptchaSecretKey) {
+    if (secControls.recaptchaSecretKey && process.env.NODE_ENV !== "development") {
       if (!recaptchaToken) {
         try {
           EventBus.emit("form.failed", {

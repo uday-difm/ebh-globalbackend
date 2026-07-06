@@ -6,9 +6,6 @@
  * all discovered public routes into the global backend database.
  */
 
-import path from "path";
-import fs from "fs";
-
 const SITE_ID = "ebh";
 
 // Patterns to exclude from route registration (admin, API, auth internals)
@@ -21,45 +18,6 @@ const EXCLUDED_PREFIXES = [
   "/all-played-quiz",
   "/yourmove",
 ];
-
-/**
- * Recursively walk `src/app` and return all directory paths
- * that contain a page.js or page.jsx file.
- */
-function discoverPageDirs(dir, baseDir, found = []) {
-  let entries;
-  try {
-    entries = fs.readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return found;
-  }
-
-  const hasPage = entries.some(
-    (e) => e.isFile() && (e.name === "page.js" || e.name === "page.jsx")
-  );
-
-  if (hasPage) {
-    found.push(dir);
-  }
-
-  for (const entry of entries) {
-    if (entry.isDirectory()) {
-      discoverPageDirs(path.join(dir, entry.name), baseDir, found);
-    }
-  }
-
-  return found;
-}
-
-/**
- * Convert a filesystem path under src/app into a Next.js URL slug.
- * e.g. src/app/blogs/[slug] => /blogs/[slug]
- *      src/app              => /
- */
-function dirToSlug(dir, appDir) {
-  const relative = path.relative(appDir, dir).replace(/\\/g, "/");
-  return relative === "" ? "/" : `/${relative}`;
-}
 
 /**
  * Derive a human-readable title from a slug.
@@ -88,13 +46,54 @@ export async function register() {
   if (process.env.NEXT_RUNTIME === "edge") return;
 
   try {
+    // Dynamically import node-specific modules to avoid edge runtime errors
+    const path = await import("path");
+    const fs = await import("fs");
+
+    /**
+     * Recursively walk `src/app` and return all directory paths
+     * that contain a page.js or page.jsx file.
+     */
+    function discoverPageDirs(dir, found = []) {
+      let entries;
+      try {
+        entries = fs.readdirSync(dir, { withFileTypes: true });
+      } catch {
+        return found;
+      }
+
+      const hasPage = entries.some(
+        (e) => e.isFile() && (e.name === "page.js" || e.name === "page.jsx")
+      );
+
+      if (hasPage) {
+        found.push(dir);
+      }
+
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          discoverPageDirs(path.join(dir, entry.name), found);
+        }
+      }
+
+      return found;
+    }
+
+    /**
+     * Convert a filesystem path under src/app into a Next.js URL slug.
+     */
+    function dirToSlug(dir, appDir) {
+      const relative = path.relative(appDir, dir).replace(/\\/g, "/");
+      return relative === "" ? "/" : `/${relative}`;
+    }
+
     const { PrismaClient } = await import("@prisma/client");
     const prisma = new PrismaClient();
 
     const appDir = path.join(process.cwd(), "src", "app");
 
     // Discover all directories containing a page file
-    const pageDirs = discoverPageDirs(appDir, appDir);
+    const pageDirs = discoverPageDirs(appDir);
 
     // Convert to slugs and filter out excluded paths
     const routes = pageDirs
