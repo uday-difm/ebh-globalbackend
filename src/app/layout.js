@@ -1,4 +1,5 @@
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import Script from 'next/script';
 import { Poppins } from 'next/font/google';
 import prisma from "@/lib/prisma";
@@ -91,6 +92,20 @@ export default async function RootLayout({ children }) {
     }
   });
   const websiteSettings = settings?.websiteSettings || {};
+
+  // ── Maintenance Mode Check ───────────────────────────────────────────────
+  if (websiteSettings.maintenanceMode === true && !isAdminPath(pathname) && !isPublicAuthPath(pathname)) {
+    const cookieStore = await cookies();
+    const hasSession = cookieStore.has("next-auth.session-token") || cookieStore.has("__Secure-next-auth.session-token");
+    if (!hasSession) {
+      let maintenanceUrl = "/maintenance";
+      if (websiteSettings.maintenanceMessage) {
+        maintenanceUrl += `?message=${encodeURIComponent(websiteSettings.maintenanceMessage)}`;
+      }
+      redirect(maintenanceUrl);
+    }
+  }
+
   const analytics = settings?.analytics || {};
   const scripts = settings?.scripts || {};
   const faviconUrl = websiteSettings.favicon || "/favicon.ico";

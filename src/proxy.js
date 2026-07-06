@@ -45,10 +45,6 @@ function shouldSkipMaintenanceCheck(pathname) {
 }
 
 export async function proxy(request) {
-  if (request.headers.get("x-internal-check") === "1") {
-    return NextResponse.next();
-  }
-
   const origin = request.headers.get("origin") || "*";
   const url = new URL(request.url);
   const pathname = url.pathname;
@@ -104,38 +100,6 @@ export async function proxy(request) {
       const loginUrl = new URL("/admin/login", url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
-    }
-  }
-
-  // --------------- Maintenance Mode Check (public pages only) ---------------
-  if (!shouldSkipMaintenanceCheck(pathname)) {
-    try {
-      const settingsRes = await fetch(
-        `${url.origin}/api/settings?siteId=${encodeURIComponent(siteId)}`,
-        { headers: { "x-internal-check": "1" } }
-      );
-
-      if (settingsRes.ok) {
-        const settingsData = await settingsRes.json();
-        const ws = settingsData?.data?.websiteSettings ?? settingsData?.websiteSettings;
-        const isMaintenanceMode = ws?.maintenanceMode === true;
-
-        if (isMaintenanceMode) {
-          const hasSession =
-            request.cookies.has("next-auth.session-token") ||
-            request.cookies.has("__Secure-next-auth.session-token");
-
-          if (!hasSession) {
-            const maintenanceUrl = new URL("/maintenance", url);
-            if (ws.maintenanceMessage) {
-              maintenanceUrl.searchParams.set("message", ws.maintenanceMessage);
-            }
-            return NextResponse.redirect(maintenanceUrl);
-          }
-        }
-      }
-    } catch (err) {
-      console.error("Maintenance mode check error:", err.message);
     }
   }
 
