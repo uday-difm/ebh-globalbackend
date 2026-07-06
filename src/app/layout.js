@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import Script from 'next/script';
 import { Poppins } from 'next/font/google';
+import prisma from "@/lib/prisma";
 import './globals.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -25,10 +26,30 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-export const metadata = {
-  title: "Earth By Humans",
-  description: "Earth By Humans publishes human-interest stories, environmental features, magazines and curated blog content about people, places and culture.",
-};
+export async function generateMetadata() {
+  const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+  const settings = await prisma.globalSettings.findUnique({
+    where: { siteId },
+    select: { websiteSettings: true }
+  });
+  const websiteSettings = settings?.websiteSettings || {};
+
+  return {
+    title: {
+      default: websiteSettings.title || "Earth By Humans",
+      template: websiteSettings.titleTemplate || "%s | Earth By Humans"
+    },
+    description: websiteSettings.description || "Earth By Humans publishes human-interest stories, environmental features, magazines and curated blog content about people, places and culture.",
+    openGraph: {
+      images: [
+        {
+          url: websiteSettings.ogImageUrl || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif",
+          alt: "Earth By Humans Logo",
+        }
+      ]
+    }
+  };
+}
 
 export const viewport = {
   width: "device-width",
@@ -57,6 +78,22 @@ function isPublicAuthPath(pathname) {
 export default async function RootLayout({ children }) {
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
+
+  const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+  const settings = await prisma.globalSettings.findUnique({
+    where: { siteId },
+    select: {
+      websiteSettings: true,
+      analytics: true,
+      scripts: true,
+    }
+  });
+  const websiteSettings = settings?.websiteSettings || {};
+  const analytics = settings?.analytics || {};
+  const scripts = settings?.scripts || {};
+  const faviconUrl = websiteSettings.favicon || "/favicon.ico";
+  const gaId = analytics.gaMeasurementId || analytics.googleAnalyticsId || "";
+  const gtmId = analytics.gtmId || "";
 
   // ── Admin / CRM / Auth shell ────────────────────────────────────────────
   if (isAdminPath(pathname)) {
@@ -135,7 +172,7 @@ export default async function RootLayout({ children }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={faviconUrl} />
         <meta property="og:image" content="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif" />
         <meta property="og:image:alt" content="Earth By Humans Logo" />
 
@@ -149,24 +186,68 @@ export default async function RootLayout({ children }) {
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-        {/* Analytics */}
-        <Script
-          id="gtag-loader"
-          src="https://www.googletagmanager.com/gtag/js?id=G-NEWID"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-NEWID', { page_path: window.location.pathname });
-            `
-          }}
-        />
+        {/* Google Analytics */}
+        {gaId && (
+          <>
+            <Script
+              id="gtag-loader"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}', { page_path: window.location.pathname });
+                `
+              }}
+            />
+          </>
+        )}
+
+        {/* Google Tag Manager */}
+        {gtmId && (
+          <Script
+            id="gtm-loader"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','${gtmId}');
+              `
+            }}
+          />
+        )}
+
+        {/* Custom Head Scripts from Admin Dashboard */}
+        {scripts?.head && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  const temp = document.createElement('div');
+                  temp.innerHTML = ${JSON.stringify(scripts.head)};
+                  const scripts = Array.from(temp.querySelectorAll('script'));
+                  scripts.forEach(s => {
+                    const newScript = document.createElement('script');
+                    Array.from(s.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(s.innerHTML));
+                    document.head.appendChild(newScript);
+                  });
+                  const nonScripts = Array.from(temp.childNodes).filter(node => node.tagName !== 'SCRIPT');
+                  nonScripts.forEach(node => document.head.appendChild(node));
+                })();
+              `
+            }}
+          />
+        )}
 
         {/* SCHEMA variable here */}
         <script
@@ -184,6 +265,28 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body className="flex flex-col min-h-screen font-poppins" cz-shortcut-listen="true">
+        {/* Custom Body Scripts from Admin Dashboard */}
+        {scripts?.body && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  const temp = document.createElement('div');
+                  temp.innerHTML = ${JSON.stringify(scripts.body)};
+                  const scripts = Array.from(temp.querySelectorAll('script'));
+                  scripts.forEach(s => {
+                    const newScript = document.createElement('script');
+                    Array.from(s.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(s.innerHTML));
+                    document.body.appendChild(newScript);
+                  });
+                  const nonScripts = Array.from(temp.childNodes).filter(node => node.tagName !== 'SCRIPT');
+                  nonScripts.forEach(node => document.body.appendChild(node));
+                })();
+              `
+            }}
+          />
+        )}
         <EbhPublicWrapper>
           {children}
         </EbhPublicWrapper>

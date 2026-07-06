@@ -38,10 +38,10 @@ export default function CookieBanner() {
 
     // 1) save consent (await and check)
     try {
-      const res = await fetch("/api/cookies", {
+      const res = await fetch("/api/visitors/consent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ consent: true, session_id: sessionId, consent_type: "general" }),
+        body: JSON.stringify({ visitorId: sessionId, accepted: true, analytics: true, marketing: true }),
       });
       const json = await res.json().catch(() => null);
       if (!res.ok) {
@@ -64,8 +64,9 @@ export default function CookieBanner() {
         return { name: decodeURIComponent(name), value: decodeURIComponent(value), domain: window.location.hostname, path: "/" };
       });
 
+      // Note: /api/cookies-storage is not implemented in the backend, skipping
+      /*
       if (cookies.length > 0) {
-        // send but don't block UI
         fetch("/api/cookies-storage", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -74,6 +75,7 @@ export default function CookieBanner() {
           if (!res.ok) console.warn("cookies-storage returned", res.status);
         }).catch(err => console.warn("Failed to store cookies:", err));
       }
+      */
     } catch (err) {
       console.warn("Failed to parse/send document.cookie:", err);
     }
@@ -85,10 +87,10 @@ export default function CookieBanner() {
     setIsVisible(false);
 
     try {
-      const res = await fetch("/api/cookies", {
+      const res = await fetch("/api/visitors/consent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ consent: false, session_id: sessionId, consent_type: "general" }),
+        body: JSON.stringify({ visitorId: sessionId, accepted: false, analytics: false, marketing: false }),
       });
       if (!res.ok) console.error("Decline API returned", res.status);
     } catch (err) {

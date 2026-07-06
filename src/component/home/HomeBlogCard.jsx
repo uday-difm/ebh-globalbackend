@@ -38,8 +38,12 @@ export default function HomeBlogCard({ blog, category_name }) {
           {/* Blog Image */}
           <div className="sm:col-span-1 relative overflow-hidden min-h-[120px] h-full flex items-center justify-center rounded-2xl">
             <Image
-              src={blog.blog_feature_image}
-              alt={blog.blog_title}
+              src={
+                (typeof blog.blog_feature_image === 'string' && blog.blog_feature_image.trim() !== '')
+                  ? blog.blog_feature_image
+                  : "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png"
+              }
+              alt={blog.blog_title || "Blog Image"}
               fill
               className="object-cover rounded-2xl"
               sizes="(max-width: 768px) 100vw, 33vw"

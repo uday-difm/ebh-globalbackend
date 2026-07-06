@@ -60,22 +60,44 @@ const Header = () => {
   const [logoSrc, setLogoSrc] = useState("https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif");
 
   useEffect(() => {
-    async function fetchHeader() {
+    const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
+    async function fetchHeaderData() {
       try {
-        const res = await fetch("/api/header");
+        // Fetch header configuration (logo)
+        const res = await fetch(`/api/header?siteId=${siteId}`);
         if (res.ok) {
           const json = await res.json();
           const headerData = json.data?.header || json.header;
           if (headerData) {
-            if (headerData.links) setDynamicNavLinks(headerData.links);
             if (headerData.logo) setLogoSrc(headerData.logo);
           }
         }
       } catch (err) {
         console.error("Failed to fetch header config:", err);
       }
+
+      try {
+        // Fetch main menu navigation items from database settings
+        const navRes = await fetch(`/api/navigation/main?siteId=${siteId}`);
+        if (navRes.ok) {
+          const json = await navRes.json();
+          const items = json.data?.items || json.items;
+          if (Array.isArray(items) && items.length > 0) {
+            const mapped = items.map((item) => ({
+              label: item.label,
+              href: item.url || item.href || "/",
+              badge: item.badge,
+            }));
+            setDynamicNavLinks(mapped);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch main navigation links:", err);
+      }
     }
-    fetchHeader();
+
+    fetchHeaderData();
   }, []);
 
   const navLinks = dynamicNavLinks || defaultNavLinks;

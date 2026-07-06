@@ -137,8 +137,8 @@ const MagazineDetails = () => {
         {/* Tags Section */}
         <div className="flex flex-wrap gap-2 pt-12">
           <p className="text-green-700 text-2xl font-semibold">Tags:</p>
-          {magazine.magazine_tags
-            ? magazine.magazine_tags.split(", ").map((tag, index) => (
+          {magazine.magazine_tags && magazine.magazine_tags.trim()
+            ? magazine.magazine_tags.split(",").map(tag => tag.trim()).filter(Boolean).map((tag, index) => (
               <span
                 key={index}
                 className="border border-gray-300 text-gray-700 px-2 py-1 rounded-md"

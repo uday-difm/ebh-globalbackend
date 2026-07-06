@@ -19,8 +19,8 @@ const Card = ({ data }) => {
       <div className="flex flex-col gap-4 mb-5 transition-transform border border-gray-300 transform hover:-translate-y-2 hover:scale-105 duration-500 ease-in-out shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] rounded-xl bg-gradient-to-br from-white to-gray-50 p-4">
         <Link href={`magazine/${data.magazine_slug}`}>
           <Image
-            src={data.magazine_cover_image}
-            alt={data.magazine_title}
+            src={typeof data.magazine_cover_image === 'string' && data.magazine_cover_image.trim() ? data.magazine_cover_image : "/no-image.png"}
+            alt={data.magazine_title || "Magazine Cover"}
             width={500}
             height={600}
             className="object-cover rounded-xl cursor-pointer transition duration-300 hover:opacity-90 mt-2"

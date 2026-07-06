@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Save, Plus, Trash2, ArrowRight } from "lucide-react";
+import MediaPickerModal from "@/components/media/MediaPickerModal";
 
 export default function FooterEditor({
   siteId,
@@ -78,6 +79,12 @@ export default function FooterEditor({
   const [isSaving, setIsSaving] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
+
+  const handleMediaSelect = (media) => {
+    updateColumnField(editingColIdx, "logoUrl", media.secureUrl || media.url);
+    setShowMediaPicker(false);
+  };
 
   // Active column being edited in panel (0 to 3)
   const [editingColIdx, setEditingColIdx] = useState(0);
@@ -199,14 +206,23 @@ export default function FooterEditor({
               <label className="block text-xs font-semibold text-gray-500 mb-1">
                 Logo URL
               </label>
-              <input
-                type="text"
-                value={col.logoUrl || ""}
-                onChange={(e) =>
-                  updateColumnField(idx, "logoUrl", e.target.value)
-                }
-                className="w-full rounded-lg border border-gray-200 p-2.5 outline-none focus:border-blue-600 text-sm font-mono"
-              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={col.logoUrl || ""}
+                  onChange={(e) =>
+                    updateColumnField(idx, "logoUrl", e.target.value)
+                  }
+                  className="flex-1 rounded-lg border border-gray-200 p-2.5 outline-none focus:border-blue-600 text-sm font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowMediaPicker(true)}
+                  className="px-3 py-2 bg-slate-100 hover:bg-slate-200 border border-gray-200 text-slate-700 text-xs font-semibold rounded-lg transition shrink-0"
+                >
+                  Choose
+                </button>
+              </div>
             </div>
             <div>
               <label className="block text-xs font-semibold text-gray-500 mb-1">
@@ -683,6 +699,14 @@ export default function FooterEditor({
           </div>
         </div>
       </div>
+      {showMediaPicker && (
+        <MediaPickerModal
+          siteId={siteId}
+          filter="images"
+          onSelect={handleMediaSelect}
+          onClose={() => setShowMediaPicker(false)}
+        />
+      )}
     </form>
   );
 }

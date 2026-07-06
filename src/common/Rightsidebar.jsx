@@ -4,6 +4,7 @@ import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faPinterest, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import Link from 'next/link';
 import Image from 'next/image';
+import AdBanner from '@/components/ads/AdBanner';
 
 const Rightsidebar = () => {
 
@@ -35,18 +36,23 @@ const Rightsidebar = () => {
         </div>
 
         {/* Advertisement Section */}
-        <div className="rounded-lg shadow-lg p-5 text-center bg-gradient-to-r from-green-400 via-green-300 to-green-500 text-custom-white">
-          <FontAwesomeIcon icon={faBullhorn} className="text-4xl animate-bounce mb-3" />
-          <h4 className="text-xl font-semibold mb-3">Reach a Wider Audience!</h4>
-          <p className="text-sm mb-4">
-            Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
-          </p>
-          <Link href="/contact-us">
-            <button className="bg-white text-green-600 text-sm font-semibold px-4 py-2 rounded-full shadow-md hover:bg-gray-200 transition-all">
-              Contact Us for Advertising
-            </button>
-          </Link>
-        </div>
+        <AdBanner
+          zone="sidebar"
+          fallback={
+            <div className="rounded-lg shadow-lg p-5 text-center bg-gradient-to-r from-green-400 via-green-300 to-green-500 text-custom-white">
+              <FontAwesomeIcon icon={faBullhorn} className="text-4xl animate-bounce mb-3" />
+              <h4 className="text-xl font-semibold mb-3">Reach a Wider Audience!</h4>
+              <p className="text-sm mb-4">
+                Showcase your brand to our engaged audience of nature enthusiasts and environmental advocates
+              </p>
+              <Link href="/contact-us">
+                <button className="bg-white text-green-600 text-sm font-semibold px-4 py-2 rounded-full shadow-md hover:bg-gray-200 transition-all">
+                  Contact Us for Advertising
+                </button>
+              </Link>
+            </div>
+          }
+        />
 
         {/* Social Share */}
         <div className="rounded-lg shadow-xl p-6 text-center border border-custom-gray-light">

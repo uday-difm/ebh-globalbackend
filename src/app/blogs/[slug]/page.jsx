@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import Cta from '../../../common/Cta';
 import { Loader } from '../../../common/Loader';
 import Rightsidebar from '../../../common/Rightsidebar'
+import AdBanner from '@/components/ads/AdBanner';
 // import Head from "next/head";
 
 // Corrected Import Paths
@@ -258,6 +259,7 @@ const IndividualPostView = ({ blog }) => {
                 className="blog-content text-justify text-gray-800 text-lg md:text-xl leading-relaxed mb-8"
                 dangerouslySetInnerHTML={{ __html: cleanContent }}
               />
+              <AdBanner zone="post-bottom" />
               <PostFooter blog={{ ...blog, blog_url: currentUrl }} />
               <style jsx>{`
           .blog-content a {

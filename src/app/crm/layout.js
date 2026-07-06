@@ -13,6 +13,11 @@ export default async function Layout({ children }) {
     redirect("/login");
   }
 
+  // Visitors cannot access crm pages
+  if (user.globalRole === "VISITOR" || user.role === "visitor") {
+    redirect("/quizzes");
+  }
+
   const site = await getSiteForUser(user);
   const siteId = site ? site.id : null;
 

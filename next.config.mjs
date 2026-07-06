@@ -4,6 +4,8 @@ const nextConfig = {
   serverExternalPackages: ["isomorphic-dompurify", "jsdom", "js-cookie"],
   transpilePackages: ["@yourcompany/global-backend-next"],
   images: {
+    unoptimized: true,
+    qualities: [70, 75],
     remotePatterns: [
       {
         protocol: 'https',

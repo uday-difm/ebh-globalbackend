@@ -104,7 +104,7 @@ export async function proxy(request) {
   }
 
   // --------------- Maintenance Mode Check (public pages only) ---------------
-  if (!shouldSkipMaintenanceCheck(pathname) && process.env.NODE_ENV !== "development") {
+  if (!shouldSkipMaintenanceCheck(pathname)) {
     try {
       const settingsRes = await fetch(
         `${url.origin}/api/settings?siteId=${encodeURIComponent(siteId)}`,
@@ -140,8 +140,7 @@ export async function proxy(request) {
     !pathname.startsWith("/api/") &&
     !pathname.startsWith("/_next") &&
     !pathname.startsWith("/maintenance") &&
-    !isAdminPath &&
-    process.env.NODE_ENV !== "development"
+    !isAdminPath
   ) {
     try {
       const redirectRes = await fetch(

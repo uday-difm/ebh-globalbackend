@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import ReduxProviderWrapper from '../app/ReduxProviderWrapper';
-import AuthProvider from '../app/AuthProvider';
+import AuthProvider from '@/components/providers/SessionProvider';
 import ScrollProgressBar from '../component/ScrollProgressBar';
 import Header from '../common/Header';
 import Footer from '../common/Footer';

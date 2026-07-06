@@ -1,11 +1,43 @@
 import React from "react";
+import prisma from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Information Policy | Earth by Humans",
   description: "Our commitment to providing accurate, timely, and relevant information.",
 };
 
-export default function InformationPolicyPage() {
+export default async function InformationPolicyPage() {
+  const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
+  const dbPage = await prisma.legalPage.findUnique({
+    where: {
+      siteId_type: {
+        siteId,
+        type: "information-policy"
+      }
+    }
+  });
+
+  if (dbPage && dbPage.published && !dbPage.deletedAt) {
+    return (
+      <>
+        <title>{dbPage.title} | Earth by Humans</title>
+        <link rel="icon" href="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/blog-profile-img.png" type="image/png" />
+        <div className="page-shell text-justify py-16 px-4 max-w-[1000px] mx-auto text-black">
+          <h2 className="text-[30px] lg:text-[55px] py-6 text-green-600 text-center font-medium mt-4 sm:mt-2">
+            {dbPage.title}
+          </h2>
+          <div 
+            className="prose max-w-none text-gray-800 leading-relaxed text-justify"
+            dangerouslySetInnerHTML={{ __html: dbPage.content }}
+          />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <title>Information Policy | Earth by Humans Our Commitment</title>

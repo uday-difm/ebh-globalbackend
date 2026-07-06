@@ -60,6 +60,7 @@ export default function Cta() {
                 width={400}
                 height={300}
                 className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
+                style={{ height: "auto" }}
               />
             </div>
           </div>

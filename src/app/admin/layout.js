@@ -22,6 +22,16 @@ export default async function Layout({ children }) {
     redirect("/admin/login");
   }
 
+  // Marketing users cannot access admin pages
+  if (user.globalRole === "MARKETING" || user.role === "marketing") {
+    redirect("/crm");
+  }
+
+  // Visitor users cannot access admin pages
+  if (user.globalRole === "VISITOR" || user.role === "visitor") {
+    redirect("/quizzes");
+  }
+
   const siteId = "ebh";
   const sites = [{ id: "ebh", name: "Earth By Humans" }];
 

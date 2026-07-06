@@ -11,11 +11,14 @@ const Footer = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [footerConfig, setFooterConfig] = useState(null);
+  const [dynamicCompanyLinks, setDynamicCompanyLinks] = useState(null);
 
   React.useEffect(() => {
-    async function fetchFooter() {
+    const siteId = process.env.NEXT_PUBLIC_SITE_ID || "ebh";
+
+    async function fetchFooterData() {
       try {
-        const res = await fetch("/api/footer");
+        const res = await fetch(`/api/footer?siteId=${siteId}`);
         if (res.ok) {
           const json = await res.json();
           const footerData = json.data?.footer || json.footer;
@@ -26,8 +29,26 @@ const Footer = () => {
       } catch (err) {
         console.error("Failed to fetch footer config:", err);
       }
+
+      try {
+        const navRes = await fetch(`/api/navigation/footer?siteId=${siteId}`);
+        if (navRes.ok) {
+          const json = await navRes.json();
+          const items = json.data?.items || json.items;
+          if (Array.isArray(items) && items.length > 0) {
+            const mapped = items.map((item) => ({
+              label: item.label,
+              href: item.url || item.href || "/",
+            }));
+            setDynamicCompanyLinks(mapped);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch footer navigation links:", err);
+      }
     }
-    fetchFooter();
+
+    fetchFooterData();
   }, []);
 
   const handleSubscribe = async (e) => {
@@ -78,7 +99,7 @@ const Footer = () => {
   const issnLink = footerConfig?.issn_link || "https://portal.issn.org/resource/ISSN/3066-5027";
   const issnImage = footerConfig?.issn_image || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/EBH-ISSN.jpg";
   
-  const companyLinks = footerConfig?.company_links || defaultCompanyLinks;
+  const companyLinks = dynamicCompanyLinks || footerConfig?.company_links || defaultCompanyLinks;
   const legalLinks = footerConfig?.legal_links || defaultLegalLinks;
   const contactEmail = footerConfig?.contact_email || "info@earthbyhumans.com";
   
