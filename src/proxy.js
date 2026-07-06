@@ -117,17 +117,11 @@ export async function proxy(request) {
         const isMaintenanceMode = ws?.maintenanceMode === true;
 
         if (isMaintenanceMode) {
-          const hasSession =
-            request.cookies.has("next-auth.session-token") ||
-            request.cookies.has("__Secure-next-auth.session-token");
-
-          if (!hasSession) {
-            const maintenanceUrl = new URL("/maintenance", url);
-            if (ws.maintenanceMessage) {
-              maintenanceUrl.searchParams.set("message", ws.maintenanceMessage);
-            }
-            return NextResponse.redirect(maintenanceUrl);
+          const maintenanceUrl = new URL("/maintenance", url);
+          if (ws.maintenanceMessage) {
+            maintenanceUrl.searchParams.set("message", ws.maintenanceMessage);
           }
+          return NextResponse.redirect(maintenanceUrl);
         }
       }
     } catch (err) {
