@@ -15,6 +15,7 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
   const [isExploding, setIsExploding] = useState(false);
   const [isMobileWidth, setIsMobileWidth] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setIsMobileWidth(window.innerWidth < 1024);
@@ -26,6 +27,8 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
         setQuestions(shuffledQuestions);
       } catch (error) {
         console.error('Error fetching quiz data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -121,10 +124,19 @@ const Quiz = ({ setAnalyticUpdate, userId }) => {
     );
   }
 
+  if (loading) {
+    return (
+      <div className='max-w-screen-xl mx-auto px-6 py-20 text-gray-900 text-center'>
+        <h2 className='text-2xl font-extrabold text-gray-800 animate-pulse'>Loading Quiz...</h2>
+      </div>
+    );
+  }
+
   if (!currentQuestion) {
     return (
       <div className='max-w-screen-xl mx-auto px-6 py-20 text-gray-900 text-center'>
-        <h2 className='text-2xl font-extrabold text-gray-800'>Loading Quiz...</h2>
+        <h2 className='text-2xl font-extrabold text-gray-800'>No Questions Available</h2>
+        <p className='text-md text-gray-500 mt-2'>Please check back later when new quizzes have been added.</p>
       </div>
     );
   }
