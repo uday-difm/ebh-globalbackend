@@ -55,6 +55,10 @@ export default function CookieBanner() {
     const sessionId = ensureSessionId();
 
     try { Cookies.set("cookie_table", "accepted", { expires: 365 }); } catch (e) { console.warn("Set cookie_table failed:", e); }
+    try {
+      localStorage.setItem("cookie_consent", JSON.stringify({ analytics: true, marketing: true }));
+      window.dispatchEvent(new Event("cookieConsentChanged"));
+    } catch (e) {}
     setIsVisible(false);
 
     try {
@@ -88,6 +92,10 @@ export default function CookieBanner() {
   const handleDecline = async () => {
     const sessionId = ensureSessionId();
     try { Cookies.set("cookie_table", "declined", { expires: 1 }); } catch (e) { console.warn(e); }
+    try {
+      localStorage.setItem("cookie_consent", JSON.stringify({ analytics: false, marketing: false }));
+      window.dispatchEvent(new Event("cookieConsentChanged"));
+    } catch (e) {}
     setIsVisible(false);
 
     try {

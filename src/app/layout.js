@@ -17,7 +17,7 @@ import ReduxProviderWrapper from "@/app/ReduxProviderWrapper";
 
 // ── EBH Public wrapper import ─────────────────────────────────────────────
 import EbhPublicWrapper from "@/components/EbhPublicWrapper";
-import { CtaPopups, CtaFloatingButtons } from "@yourcompany/global-backend-next/components";
+import { CtaPopups, CtaFloatingButtons, GlobalAnalytics } from "@yourcompany/global-backend-next/components";
 
 export const dynamic = "force-dynamic";
 
@@ -293,6 +293,7 @@ export default async function RootLayout({ children }) {
         <EbhPublicWrapper>
           {children}
         </EbhPublicWrapper>
+        <GlobalAnalytics settings={settings} />
         <CtaPopups ctaConfig={settings?.ctaConfig} />
         <CtaFloatingButtons ctaConfig={settings?.ctaConfig} />
       </body>
