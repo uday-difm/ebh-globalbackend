@@ -12,7 +12,7 @@ const FormSubmitSchema = z.object({
   email: z.email("Valid email is required"),
   phone: z.string().optional(),
   message: z.string().min(1, "Message is required"),
-  recaptchaToken: z.string().optional(),
+  recaptchaToken: z.string().nullable().optional(),
   // Honeypot field — must be empty
   _hp: z.string().optional(),
 });

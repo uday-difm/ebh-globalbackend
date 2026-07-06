@@ -93,7 +93,7 @@ export default function ContactUsPage() {
           email: values.email,
           phone: values.phone,
           message: values.textArea,
-          recaptchaToken,
+          recaptchaToken: recaptchaToken || undefined,
         }),
       });
 
