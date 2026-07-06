@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Save, AlertCircle, CheckCircle2, Layout, Smartphone, HelpCircle, Eye, EyeOff } from "lucide-react";
+import MediaPickerModal from "@/components/media/MediaPickerModal";
 
 export default function HeaderEditor({ siteId, initialConfig, menuTypes = [], navigation = {} }) {
   const defaultConfig = {
@@ -49,6 +50,15 @@ export default function HeaderEditor({ siteId, initialConfig, menuTypes = [], na
   const [isSaving, setIsSaving] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
+
+  const handleMediaSelect = (media) => {
+    setConfig(prev => ({
+      ...prev,
+      logoUrl: media.secureUrl || media.url
+    }));
+    setShowMediaPicker(false);
+  };
 
   // Active editor tab: "logo_layout", "announcement", "cta_menu", "mobile"
   const [activeTab, setActiveTab] = useState("logo_layout");
@@ -268,14 +278,23 @@ export default function HeaderEditor({ siteId, initialConfig, menuTypes = [], na
                 <>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Logo Image URL</label>
-                    <input
-                      type="text"
-                      required
-                      value={config.logoUrl}
-                      onChange={(e) => setConfig(prev => ({ ...prev, logoUrl: e.target.value }))}
-                      className="w-full rounded-lg border border-gray-200 p-2.5 outline-none focus:border-indigo-600 text-xs font-mono"
-                      placeholder="/next.svg"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        required
+                        value={config.logoUrl}
+                        onChange={(e) => setConfig(prev => ({ ...prev, logoUrl: e.target.value }))}
+                        className="flex-1 rounded-lg border border-gray-200 p-2.5 outline-none focus:border-indigo-600 text-xs font-mono"
+                        placeholder="/next.svg"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowMediaPicker(true)}
+                        className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-3 py-2 text-xs rounded-lg border border-gray-300 transition"
+                      >
+                        Select Media
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -675,6 +694,14 @@ export default function HeaderEditor({ siteId, initialConfig, menuTypes = [], na
           </div>
         </div>
       </div>
+      {showMediaPicker && (
+        <MediaPickerModal
+          siteId={siteId}
+          filter="images"
+          onSelect={handleMediaSelect}
+          onClose={() => setShowMediaPicker(false)}
+        />
+      )}
     </form>
   );
 }
