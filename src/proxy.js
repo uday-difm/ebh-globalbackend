@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { jwtVerify } from "jose";
 
 /** Path prefixes that should never be blocked by maintenance mode */
 const SKIP_PREFIXES = [
@@ -85,54 +84,20 @@ export async function proxy(request) {
     return response;
   }
 
-  // Determine siteId from request, or fall back to environment variable configuration
-  const siteId =
-    request.headers.get("x-site-id") ||
-    url.searchParams.get("siteId") ||
-    process.env.SITE_ID ||
-    process.env.NEXT_PUBLIC_SITE_ID ||
-    "infinium";
-
-  // --------------- Dashboard (Original Project) Auth Guard ---------------
-  if (pathname.startsWith("/dashboard") && pathname !== "/dashboard/login") {
-    const authToken = request.cookies.get("auth_token")?.value;
-    if (!authToken) {
-      console.log("No token found, redirecting to dashboard login.");
-      const loginUrl = new URL("/dashboard/login", url);
-      return NextResponse.redirect(loginUrl);
-    }
-    if (!process.env.JWT_SECRET_KEY) {
-      console.error("JWT_SECRET_KEY is not set in environment variables");
-      const loginUrl = new URL("/dashboard/login", url);
-      return NextResponse.redirect(loginUrl);
-    }
-    try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
-      await jwtVerify(authToken, secret);
-    } catch (error) {
-      console.error("JWT verification failed:", error.message);
-      const loginUrl = new URL("/dashboard/login", url);
-      const redirectResponse = NextResponse.redirect(loginUrl);
-      redirectResponse.cookies.set("auth_token", "", {
-        httpOnly: false,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-        expires: new Date(0),
-      });
-      return redirectResponse;
-    }
-  }
+  // Default siteId to "ebh" for single-tenant mode
+  const siteId = "ebh";
 
   // --------------- Admin/CRM Auth Guard ---------------
   const ADMIN_PATHS = ["/admin", "/crm", "/preview"];
   const isAdminPath = ADMIN_PATHS.some((p) => pathname.startsWith(p));
-  if (isAdminPath) {
+  const isAdminAuthPath = pathname.startsWith("/admin/login");
+
+  if (isAdminPath && !isAdminAuthPath) {
     const hasSession =
       request.cookies.has("next-auth.session-token") ||
       request.cookies.has("__Secure-next-auth.session-token");
     if (!hasSession) {
-      const loginUrl = new URL("/login", url);
+      const loginUrl = new URL("/admin/login", url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
     }

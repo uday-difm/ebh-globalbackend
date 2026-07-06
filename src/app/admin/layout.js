@@ -4,27 +4,26 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { requireAuth } from "@/lib/requireAuth";
 import { getSiteForUser } from "@/lib/getSiteForUser";
 
+import { headers } from "next/headers";
+
 export const dynamic = "force-dynamic";
 
 export default async function Layout({ children }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+
+  if (pathname.startsWith("/admin/login")) {
+    return <>{children}</>;
+  }
+
   const user = await requireAuth();
 
   if (!user) {
-    redirect("/login");
+    redirect("/admin/login");
   }
 
-  const site = await getSiteForUser(user);
-  const siteId = site ? site.id : null;
-
-  const connectedSiteId = process.env.NEXT_PUBLIC_SITE_ID || process.env.SITE_ID || "infinium";
-  let sites = [];
-  const connectedSite = await prisma.site.findUnique({
-    where: { id: connectedSiteId, deletedAt: null },
-    select: { id: true, name: true }
-  });
-  if (connectedSite) {
-    sites = [connectedSite];
-  }
+  const siteId = "ebh";
+  const sites = [{ id: "ebh", name: "Earth By Humans" }];
 
   return (
     <DashboardLayout siteId={siteId} sites={sites}>

@@ -14,8 +14,7 @@ import {
   Trash2,
   CheckCircle2,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
-import { useSession } from "@/lib/useSession";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -203,39 +202,7 @@ export default function Topbar({ siteId, sites = [], onMenuClick }) {
               </p>
             </div>
  
-            {sites.length > 1 && (
-              <div className="relative ml-1 sm:ml-2">
-                <select
-                  value={siteId || ""}
-                  onChange={async (e) => {
-                    const newSiteId = e.target.value;
-                    if (!newSiteId || newSiteId === siteId) return;
-                    try {
-                      const res = await fetch("/api/admin/switch-site", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ siteId: newSiteId }),
-                      });
-                      if (res.ok) {
-                        window.location.reload();
-                      } else {
-                        const err = await res.json();
-                        toast.error(err.error || "Failed to switch site");
-                      }
-                    } catch (err) {
-                      console.error(err);
-                    }
-                  }}
-                  className="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-slate-100 text-[11px] font-bold rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block p-1.5 px-2.5 outline-none cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors max-w-[120px] xs:max-w-[160px] sm:max-w-xs truncate"
-                >
-                  {sites.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      🌐 {s.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+
           </div>
  
           {/* Right */}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "@/lib/useSession";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import {
@@ -35,6 +35,7 @@ import {
   ChevronDown,
   ChevronRight,
   Globe,
+  BookOpen,
 } from "lucide-react";
 
 const ROLE_LEVEL = {
@@ -153,17 +154,7 @@ const crmSections = [
 ];
 
 const sections = [
-  {
-    title: "Management",
-    links: [
-      {
-        href: "/admin/sites",
-        label: "Sites",
-        icon: Globe,
-        minRole: "ADMIN",
-      },
-    ],
-  },
+
   {
     title: "Overview",
     links: [
@@ -189,6 +180,12 @@ const sections = [
         href: "/admin/blogs",
         label: "Blogs",
         icon: Newspaper,
+        minRole: "AUTHOR",
+      },
+      {
+        href: "/admin/magazines",
+        label: "Magazines",
+        icon: BookOpen,
         minRole: "AUTHOR",
       },
       {

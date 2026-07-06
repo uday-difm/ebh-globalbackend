@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { signOut } from "next-auth/react";
-import { useSession } from "@/lib/useSession";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function SessionTimeoutHandler({ timeoutMinutes = 30 }) {
@@ -30,7 +29,7 @@ export default function SessionTimeoutHandler({ timeoutMinutes = 30 }) {
       if (now - lastActivity > timeoutMs) {
         console.warn("Session inactivity timeout reached. Logging out...");
         signOut({ redirect: false }).then(() => {
-          router.push("/login?reason=timeout");
+          router.push("/admin/login?reason=timeout");
         });
       }
     }, 10000); // Check every 10 seconds
@@ -48,7 +47,7 @@ export default function SessionTimeoutHandler({ timeoutMinutes = 30 }) {
   useEffect(() => {
     if (session?.error === "SessionExpired") {
       signOut({ redirect: false }).then(() => {
-        router.push("/login?reason=timeout");
+        router.push("/admin/login?reason=timeout");
       });
     }
   }, [session, router]);

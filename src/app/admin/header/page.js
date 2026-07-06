@@ -13,16 +13,7 @@ export default async function HeaderPage() {
   const user = await requireAuth();
   if (!user) return null;
 
-  const site = await getSiteForUser(user);
-
-  if (!site) {
-    return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold">Header Builder</h1>
-        <p className="mt-4 text-sm text-red-600">No active site found. Please configure a site first.</p>
-      </div>
-    );
-  }
+  const site = { id: "ebh", name: "Earth By Humans", domain: "earthbyhumans.com" };
 
   if (user.globalRole !== "SUPERADMIN" && user.globalRole !== "ADMIN") {
     redirect("/admin/dashboard");

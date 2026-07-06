@@ -1,21 +1,11 @@
 import prisma from "@/lib/prisma";
 import { requireAuth } from "@/lib/requireAuth";
-import { getSiteForUser } from "@/lib/getSiteForUser";
 import { redirect } from "next/navigation";
 import FooterEditor from "./FooterEditor";
 
 export default async function FooterPage() {
   const user = await requireAuth();
-  const site = await getSiteForUser(user);
-
-  if (!site) {
-    return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold">Footer Builder</h1>
-        <p className="mt-4 text-sm text-red-600">No active site found. Please configure a site in the database.</p>
-      </div>
-    );
-  }
+  const site = { id: "ebh", name: "Earth By Humans", domain: "earthbyhumans.com" };
 
   if (user.globalRole !== "SUPERADMIN" && user.globalRole !== "ADMIN") {
     redirect("/admin/dashboard");

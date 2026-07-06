@@ -50,18 +50,7 @@ export default async function PagesAdmin() {
   if (!user) return null;
   if (user.globalRole === "VIEWER") redirect("/admin/dashboard");
 
-  const site = await getSiteForUser(user);
-
-  if (!site) {
-    return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold text-gray-900">Pages</h1>
-        <p className="mt-4 text-sm text-red-655">
-          No active tenant site configured for your profile.
-        </p>
-      </div>
-    );
-  }
+  const site = { id: "ebh", name: "Earth By Humans", domain: "earthbyhumans.com" };
 
   // Fetch frontend URL from settings
   const settings = await prisma.globalSettings.findUnique({

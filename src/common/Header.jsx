@@ -48,13 +48,37 @@ const Header = () => {
     }
   };
 
-  const navLinks = [
+  const defaultNavLinks = [
     { href: '/', label: 'Home' },
     { href: '/about-us', label: 'About Us' },
     { href: '/blogs', label: 'Blogs' },
     { href: '/magazine', label: 'Magazines' },
     { href: '/contact-us', label: 'Contact Us' },
   ];
+
+  const [dynamicNavLinks, setDynamicNavLinks] = useState(null);
+  const [logoSrc, setLogoSrc] = useState("https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif");
+
+  useEffect(() => {
+    async function fetchHeader() {
+      try {
+        const res = await fetch("/api/header");
+        if (res.ok) {
+          const json = await res.json();
+          const headerData = json.data?.header || json.header;
+          if (headerData) {
+            if (headerData.links) setDynamicNavLinks(headerData.links);
+            if (headerData.logo) setLogoSrc(headerData.logo);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch header config:", err);
+      }
+    }
+    fetchHeader();
+  }, []);
+
+  const navLinks = dynamicNavLinks || defaultNavLinks;
 
   return (
     <header className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
@@ -63,7 +87,7 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif"
+              src={logoSrc}
               alt="Earth by Humans Logo"
               width={40} // optional for layout
               height={40} // optional for layout

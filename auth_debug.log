@@ -1,6 +1,12 @@
-[2026-07-03T12:23:06.546Z] [Auth] Attempt started. Email: admin@example.com
-[2026-07-03T12:23:06.547Z] [Auth] Request Host: localhost:3000
-[2026-07-03T12:23:06.547Z] [Auth] Detected local, IP, or Ngrok host. Swapping secretKey to Google test key.
-[2026-07-03T12:23:06.547Z] [Auth] Skipping reCAPTCHA verification (no secret key configured).
-[2026-07-03T12:23:06.554Z] [Auth] Authenticating against authService for: admin@example.com
-[2026-07-03T12:23:06.869Z] [Auth] Authentication successful for: admin@example.com. User ID: cmr1tur660001uh0kxrxvyam8
+[2026-07-04T19:44:05.405Z] [Auth] Attempt started. Email: admin@example.com
+[2026-07-04T19:44:05.406Z] [Auth] Request Host: localhost:3000
+[2026-07-04T19:44:05.407Z] [Auth] Detected local, IP, or Ngrok host. Swapping secretKey to Google test key.
+[2026-07-04T19:44:05.407Z] [Auth] Skipping reCAPTCHA verification (no secret key configured).
+[2026-07-04T19:44:05.414Z] [Auth] Authenticating against authService for: admin@example.com
+[2026-07-04T19:44:05.908Z] [Auth] Authentication successful for: admin@example.com. User ID: cmr6qd0fg0001w2xg11y3fre9
+[2026-07-04T19:45:54.502Z] [Auth] Attempt started. Email: admin@example.com
+[2026-07-04T19:45:54.505Z] [Auth] Request Host: localhost:3000
+[2026-07-04T19:45:54.508Z] [Auth] Detected local, IP, or Ngrok host. Swapping secretKey to Google test key.
+[2026-07-04T19:45:54.509Z] [Auth] Skipping reCAPTCHA verification (no secret key configured).
+[2026-07-04T19:45:54.510Z] [Auth] Authenticating against authService for: admin@example.com
+[2026-07-04T19:45:55.116Z] [Auth] Authentication successful for: admin@example.com. User ID: cmr6qd0fg0001w2xg11y3fre9
