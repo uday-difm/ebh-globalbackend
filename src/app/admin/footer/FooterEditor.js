@@ -581,35 +581,7 @@ export default function FooterEditor({
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1">
-                Footer Layout Presets
-              </label>
-              <select
-                value={config.layout || "4-columns"}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  setConfig((prev) => ({ ...prev, layout: val }));
-                  let maxIdx = 3;
-                  if (val === "minimal") maxIdx = -1;
-                  else if (val === "2-columns") maxIdx = 1;
-                  else if (val === "3-columns") maxIdx = 2;
 
-                  setEditingColIdx((prevIdx) => {
-                    if (prevIdx > maxIdx) {
-                      return Math.max(0, maxIdx);
-                    }
-                    return prevIdx;
-                  });
-                }}
-                className="w-full rounded-lg border border-gray-200 p-2.5 outline-none focus:border-blue-600 text-sm bg-white"
-              >
-                <option value="4-columns">4 Columns Grid</option>
-                <option value="3-columns">3 Columns Grid</option>
-                <option value="2-columns">2 Columns Grid</option>
-                <option value="minimal">Minimalist Row</option>
-              </select>
-            </div>
 
             {colCount > 0 ? (
               <div className="border-t pt-4">
