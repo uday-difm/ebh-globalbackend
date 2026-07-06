@@ -17,6 +17,7 @@ import ReduxProviderWrapper from "@/app/ReduxProviderWrapper";
 
 // ── EBH Public wrapper import ─────────────────────────────────────────────
 import EbhPublicWrapper from "@/components/EbhPublicWrapper";
+import { CtaPopups, CtaFloatingButtons } from "@yourcompany/global-backend-next/components";
 
 export const dynamic = "force-dynamic";
 
@@ -86,6 +87,7 @@ export default async function RootLayout({ children }) {
       websiteSettings: true,
       analytics: true,
       scripts: true,
+      ctaConfig: true,
     }
   });
   const websiteSettings = settings?.websiteSettings || {};
@@ -290,6 +292,8 @@ export default async function RootLayout({ children }) {
         <EbhPublicWrapper>
           {children}
         </EbhPublicWrapper>
+        <CtaPopups ctaConfig={settings?.ctaConfig} />
+        <CtaFloatingButtons ctaConfig={settings?.ctaConfig} />
       </body>
     </html>
   );
