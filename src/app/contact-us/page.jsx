@@ -84,10 +84,17 @@ export default function ContactUsPage() {
     setStatus({ message: "Sending...", type: 'loading' });
 
     try {
-      const response = await fetch(`/api/contact-us`, {
+      const response = await fetch(`/api/forms/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, recaptchaToken }),
+        body: JSON.stringify({
+          siteId: "ebh",
+          name: values.name,
+          email: values.email,
+          phone: values.phone,
+          message: values.textArea,
+          recaptchaToken,
+        }),
       });
 
       const result = await response.json();
@@ -105,7 +112,7 @@ export default function ContactUsPage() {
           setStatus({ message: '', type: '' });
         }, 3000);
       } else {
-        setStatus({ message: `Error: ${result.message}`, type: 'error' });
+        setStatus({ message: `Error: ${result.message || result.error || "Failed to submit"}`, type: 'error' });
       }
     } catch (error) {
       console.error("Submission Error:", error);

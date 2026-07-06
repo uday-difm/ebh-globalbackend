@@ -47,6 +47,20 @@ export async function POST(req) {
       listIds: [],
     });
 
+    // 3. Dashboard notification alert
+    try {
+      await prisma.notificationAlert.create({
+        data: {
+          siteId,
+          title: "New Newsletter Subscriber",
+          message: `Subscriber email: ${cleanEmail} has signed up via footer newsletter form.`,
+          type: "NEW_LEAD",
+        },
+      });
+    } catch (e) {
+      console.error("Failed to log subscriber notification alert:", e);
+    }
+
     return NextResponse.json(apiSuccess({ subscriber, message: "Subscribed successfully" }));
   } catch (err) {
     console.error("POST /api/subscribe error:", err);
