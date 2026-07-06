@@ -103,6 +103,38 @@ export async function proxy(request) {
     }
   }
 
+  // --------------- Maintenance Mode Check (public pages only) ---------------
+  if (!shouldSkipMaintenanceCheck(pathname)) {
+    try {
+      const settingsRes = await fetch(
+        `${url.origin}/api/settings?siteId=${encodeURIComponent(siteId)}`,
+        { headers: { "x-internal-check": "1" } }
+      );
+
+      if (settingsRes.ok) {
+        const settingsData = await settingsRes.json();
+        const ws = settingsData?.data?.websiteSettings ?? settingsData?.websiteSettings;
+        const isMaintenanceMode = ws?.maintenanceMode === true;
+
+        if (isMaintenanceMode) {
+          const hasSession =
+            request.cookies.has("next-auth.session-token") ||
+            request.cookies.has("__Secure-next-auth.session-token");
+
+          if (!hasSession) {
+            const maintenanceUrl = new URL("/maintenance", url);
+            if (ws.maintenanceMessage) {
+              maintenanceUrl.searchParams.set("message", ws.maintenanceMessage);
+            }
+            return NextResponse.redirect(maintenanceUrl);
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Maintenance mode check error:", err.message);
+    }
+  }
+
   // --------------- Redirect Resolution ---------------
   if (
     !pathname.startsWith("/api/") &&
