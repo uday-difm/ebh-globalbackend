@@ -36,8 +36,8 @@ const PaginatedBlogList = ({ blogs, isAnimationEnabl }) => {
                 >
                     <div className="relative h-3/5 w-full overflow-hidden">
                         <Image
-                            src={blog.blog_feature_image}
-                            alt={blog.blog_title}
+                            src={typeof blog.blog_feature_image === "string" && blog.blog_feature_image.trim() ? blog.blog_feature_image : "/no-image.png"}
+                            alt={blog.blog_title || "Blog Post Feature Image"}
                             className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${isHovered ? 'scale-110' : 'scale-100'}`}
                             width={400}
                             height={250}

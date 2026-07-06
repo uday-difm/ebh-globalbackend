@@ -9,8 +9,8 @@ export default function BlogCard({ blog }) {
             <div className="flex flex-col h-full border border-gray-200 rounded-xl overflow-hidden transition-shadow hover:shadow-lg">
                 <div className="relative w-full h-48">
                     <Image
-                        src={blog.blog_feature_image}
-                        alt={blog.blog_title}
+                        src={typeof blog.blog_feature_image === "string" && blog.blog_feature_image.trim() ? blog.blog_feature_image : "/no-image.png"}
+                        alt={blog.blog_title || "Blog Post"}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 33vw"

@@ -89,7 +89,7 @@ export default function Sidebar({ categories = [], allBlogs = [], isSidebarOpen,
             <div className="mt-4 space-y-4">
               {filteredBlogs.map(blog => (
                 <Link key={blog.blog_id} href={`/blogs/post/${blog.blog_slug}`} className="flex items-center gap-3 group" onClick={() => setIsSidebarOpen(false)}>
-                  <Image src={blog.blog_feature_image} alt={blog.blog_title} className="w-16 h-16 object-cover rounded-md flex-shrink-0" priority />
+                  <Image src={typeof blog.blog_feature_image === "string" && blog.blog_feature_image.trim() ? blog.blog_feature_image : "/no-image.png"} alt={blog.blog_title} className="w-16 h-16 object-cover rounded-md flex-shrink-0" width={64} height={64} priority />
                   <div>
                     <p className="font-bold leading-tight group-hover:text-green-600 transition-colors">{blog.blog_title}</p>
                     <p className="text-sm text-gray-500">{blog.formatted_date}</p>

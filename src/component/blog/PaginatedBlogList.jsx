@@ -26,10 +26,12 @@ function BlogCard({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabl
                     onMouseLeave={() => setHoveredIndex(null)}
                 >
                     <Image
-                        src={blog.blog_feature_image}
-                        alt={blog.blog_title}
+                        src={typeof blog.blog_feature_image === "string" && blog.blog_feature_image.trim() ? blog.blog_feature_image : "/no-image.png"}
+                        alt={blog.blog_title || "Blog Post"}
                         className={`absolute inset-0 w-full h-full rounded-2xl object-cover shadow-lg transition-all duration-1000 ${isHovered ? "!-rotate-[9deg] -translate-y-18" : ""}`}
                         style={{ transformOrigin: "bottom left" }}
+                        width={400}
+                        height={250}
                         priority
                     />
                     <div
@@ -65,8 +67,8 @@ function BlogCard({ blog, index, hoveredIndex, setHoveredIndex, isAnimationEnabl
             <div className="flex flex-col h-full border border-gray-200 rounded-xl overflow-hidden transition-shadow hover:shadow-lg">
                 <div className="relative w-full h-48">
                     <Image
-                        src={blog.blog_feature_image}
-                        alt={blog.blog_title}
+                        src={typeof blog.blog_feature_image === "string" && blog.blog_feature_image.trim() ? blog.blog_feature_image : "/no-image.png"}
+                        alt={blog.blog_title || "Blog Post"}
                         width={500}
                         height={600}
                         fill
