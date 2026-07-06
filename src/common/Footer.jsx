@@ -89,9 +89,9 @@ const Footer = () => {
   ];
 
   const defaultLegalLinks = [
-    { href: "/terms-and-conditions", label: "Terms of Conditions" },
-    { href: "/information-policy", label: "Information Policy" },
-    { href: "/privacy-policy", label: "Privacy Policy" }
+    { href: "/legal/terms", label: "Terms of Conditions" },
+    { href: "/legal/information-policy", label: "Information Policy" },
+    { href: "/legal/privacy", label: "Privacy Policy" }
   ];
 
   const logoSrc = footerConfig?.logo || "https://earthbyhumans.s3-eu-central-2.ionoscloud.com/statics/Final-logo-ebh.gif";

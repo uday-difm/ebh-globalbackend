@@ -32,6 +32,13 @@ const nextConfig = {
         destination: 'https://www.earthbyhumans.com/:path*',
         permanent: true,
       },
+      // Redirect old hardcoded legal pages to the dynamic route
+      { source: '/privacy-policy', destination: '/legal/privacy', permanent: true },
+      { source: '/terms-and-conditions', destination: '/legal/terms', permanent: true },
+      { source: '/cookie-policy', destination: '/legal/cookies', permanent: true },
+      { source: '/disclaimer', destination: '/legal/disclaimer', permanent: true },
+      { source: '/refund-policy', destination: '/legal/refund', permanent: true },
+      { source: '/information-policy', destination: '/legal/information-policy', permanent: true },
     ];
   },
   webpack: (config, { isServer, nextRuntime }) => {

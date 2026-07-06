@@ -35,9 +35,9 @@ export async function GET(req) {
         contact_email: "info@earthbyhumans.com",
         copyright: "Earth By Humans (A Brand Concept Within The DO IT FOR ME LLC ECOSYSTEM)",
         legal_links: [
-          { href: "/terms-and-conditions", label: "Terms of Conditions" },
-          { href: "/information-policy", label: "Information Policy" },
-          { href: "/privacy-policy", label: "Privacy Policy" }
+          { href: "/legal/terms", label: "Terms of Conditions" },
+          { href: "/legal/information-policy", label: "Information Policy" },
+          { href: "/legal/privacy", label: "Privacy Policy" }
         ]
       };
 

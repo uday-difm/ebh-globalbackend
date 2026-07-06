@@ -111,8 +111,8 @@ export default function CookieBanner() {
     <div className="fixed left-0 right-0 bg-black text-white p-4 flex flex-col md:flex-row items-center justify-between z-50 shadow-lg bottom-0 border-t border-slate-800 font-sans animate-in slide-in-from-bottom duration-250">
       <p className="text-sm text-center md:text-left mb-2 md:mb-0 max-w-5xl">
         {message} Read our{" "} 
-        <a href="/privacy-policy" className="underline font-semibold text-green-400 hover:text-green-700 transition">Privacy Policy</a> and{" "}
-        <a href="/terms-and-conditions" className="underline font-semibold text-green-400 hover:text-green-700 transition">Terms and Conditions</a>.
+        <a href="/legal/privacy" className="underline font-semibold text-green-400 hover:text-green-700 transition">Privacy Policy</a> and{" "}
+        <a href="/legal/terms" className="underline font-semibold text-green-400 hover:text-green-700 transition">Terms and Conditions</a>.
       </p>
 
       <div className="flex space-x-2 mt-2 md:mt-0 shrink-0">
